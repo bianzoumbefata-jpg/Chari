@@ -196,7 +196,10 @@ label,.lbl{display:block;font-weight:600;font-size:14px;color:var(--ink);margin:
 .plan{border:2px solid var(--gold);border-radius:24px;padding:20px;background:var(--surf);box-shadow:var(--sh-md)}
 .plan h2{font-size:20px;font-weight:700}.plan p{margin:4px 0 0}
 .price{display:block;font:800 34px "Bricolage Grotesque",system-ui,sans-serif;margin-top:6px;color:var(--gold)}
-.selfie{width:170px;height:170px;border-radius:50%;border:4px solid #fff;box-shadow:0 12px 30px rgba(0,0,0,0.15);display:grid;place-items:center;overflow:hidden;margin:12px auto;background:#E2E8F0}
+.selfie{width:210px;height:210px;border-radius:50%;border:4px solid var(--brand);box-shadow:0 12px 30px rgba(30,58,138,0.22);display:grid;place-items:center;overflow:hidden;margin:14px auto;background:#0F172A;position:relative}
+.selfie video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:block}
+.selfie .selfie-captured{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:3}
+.selfie-ring{position:absolute;inset:6px;border:2px dashed rgba(255,255,255,0.7);border-radius:50%;pointer-events:none;z-index:2}
 .selfie .i{width:56px;height:56px;color:var(--mut)}
 .av img,.selfie img{width:100%;height:100%;object-fit:cover;display:block}
 .cnt{margin:0 0 8px;font-size:13px;font-weight:600;color:var(--mut)}
@@ -244,6 +247,18 @@ label,.lbl{display:block;font-weight:600;font-size:14px;color:var(--ink);margin:
 .voice-dur{font-size:12px;font-weight:700;opacity:0.85;flex:none}
 .rec-pulse{background:#E11D48!important;color:#fff!important;animation:pulse-rec 1.2s infinite ease-in-out}
 @keyframes pulse-rec{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(225,29,72,0.4)}50%{transform:scale(1.1);box-shadow:0 0 0 8px rgba(225,29,72,0)}}
+.visa-card-box{background:linear-gradient(135deg,#1A1F71 0%,#0D47A1 50%,#1565C0 100%);color:#fff;border-radius:20px;padding:20px 22px;margin:14px 0;box-shadow:0 12px 28px rgba(26,31,113,0.35);position:relative;overflow:hidden;font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,monospace}
+.visa-card-box::before{content:"";position:absolute;top:-40px;right:-40px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,0.18) 0%,transparent 70%)}
+.visa-card-chip{width:38px;height:27px;border-radius:6px;background:linear-gradient(135deg,#F9D976 0%,#E9B646 100%);box-shadow:inset 0 1px 2px rgba(0,0,0,0.3);margin-bottom:14px;position:relative}
+.visa-card-chip::after{content:"";position:absolute;inset:3px;border:1px solid rgba(0,0,0,0.22);border-radius:3px}
+.visa-logo-white{position:absolute;top:20px;right:22px}
+[dir="rtl"] .visa-logo-white{right:auto;left:22px}
+.visa-card-num{font-size:18px;letter-spacing:2.5px;font-weight:600;margin-bottom:14px;text-shadow:0 1px 2px rgba(0,0,0,0.35);direction:ltr;text-align:start}
+.visa-card-bottom{display:flex;justify-content:space-between;align-items:flex-end}
+.visa-card-lbl{font-size:8px;letter-spacing:1px;opacity:0.75;margin-bottom:2px;font-weight:700}
+.visa-card-val{font-size:12px;font-weight:700;letter-spacing:1px}
+.visa-sec-badge{display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(30,58,138,0.06);border:1px solid rgba(30,58,138,0.14);border-radius:12px;padding:9px 12px;color:#1E3A8A;font-size:12px;font-weight:600;margin:10px 0}
+.visa-sec-badge svg{flex:none;color:#2563EB}
 </style>
 </head>
 <body>
@@ -275,13 +290,13 @@ label,.lbl{display:block;font-weight:600;font-size:14px;color:var(--ink);margin:
 const LIM=20,B="#1E3A8A",G="#D97706",R="#E11D48";
 const T={
 fr:{d:"Découvrir",m:"Messages",p:"Profil",pass:"Passer",like:"J'aime",mt:"C'est un match !",ms:"Vous vous plaisez mutuellement.",wr:"Écrire à ",ct:"Continuer",done:"Vous avez tout vu pour aujourd'hui.",again:"Revoir les profils",none:"Pas encore de conversation.",nh:"Aimez des profils pour en démarrer une.",ph:"Écrire un message",snd:"Envoyer",bk:"Retour",my:"Mon profil",vg:"Vérification…",vd:"Profil vérifié",blur:"Visage masqué jusqu'au match",lite:"Économie de données",sf:"Conseils de sécurité",st:"Ne partagez jamais d'argent ni de codes. Retrouvez-vous dans un lieu public et prévenez un proche.",age:"Réservé aux 22 ans et plus.",demo:"Les profils sont fictifs. Code de confirmation, selfie, photos et paiement sont simulés (démonstration).",lgb:"العربية",r:["Bonjour ! Ravi(e) de faire ta connaissance.","Tu es de quelle ville ?"],
-wl:"Bienvenue sur Chari",wl2:"Des rencontres amoureuses entre un homme et une femme, avec des profils vérifiés.",phl:"Votre numéro de téléphone",ph8:"Entrez un numéro à 8 chiffres.",otp:"Code de confirmation",otps:"Code envoyé à ",otpd:"Démo : aucun message n'est envoyé. Utilisez le code 123456.",cod:"Code à 6 chiffres",bad:"Code incorrect.",pr:"Votre profil",nm:"Prénom",job:"Profession / Métier",jobPh:"Ex: Enseignant, Commerçante, Infirmière...",tcty:"Ville de rencontre",allC:"Toutes les villes (Tchad)",noCity:"Aucun profil dans cette ville",noCityD:"Aucun profil disponible actuellement dans cette ville. Essayez d'élargir à tout le Tchad !",iam:"Je suis",fem:"Une femme",mal:"Un homme",ag:"Âge",agE:"Chari est réservé aux 22 ans et plus.",cty:"Votre ville",kd:"Nombre d'enfants",it:"Je cherche",req:"Complétez tous les champs.",sf1:"Vérifiez votre profil",sf2:"Prenez un selfie : il est obligatoire pour entrer sur Chari.",shot:"Prendre un selfie",sf3:"Le selfie confirme que vous êtes bien la personne du profil. Dans cette démo, il reste sur votre appareil.",pj:"profils vus aujourd'hui",unl:"Premium actif : profils illimités aujourd'hui",pw:"Limite du jour atteinte",pw2:"Vous avez vu vos 20 profils gratuits aujourd'hui.",pss:"Pass Premium du jour",pss2:"Profils illimités jusqu'à minuit et mode incognito.",op:"Payer avec",pn:"Numéro de paiement",pb:"Payer 5 000 FCFA",pg:"Paiement en cours…",pd:"Démo : aucun paiement réel n'est effectué.",paid:"Paiement reçu. Premium activé.",plan:"Votre formule",free:"Gratuite : 20 profils par jour",prem:"Pass Premium du jour actif",up:"Passer Premium (5 000 FCFA)",dm:"Démo : passer à 19 profils vus",
+wl:"Bienvenue sur Chari",wl2:"Des rencontres amoureuses entre un homme et une femme, avec des profils vérifiés.",phl:"Votre numéro de téléphone",ph8:"Entrez un numéro à 8 chiffres.",otp:"Code de confirmation",otps:"Code envoyé à ",otpd:"Démo : aucun message n'est envoyé. Utilisez le code 123456.",cod:"Code à 6 chiffres",bad:"Code incorrect.",pr:"Votre profil",nm:"Prénom",job:"Profession / Métier",jobPh:"Ex: Enseignant, Commerçante, Infirmière...",tcty:"Ville de rencontre",allC:"Toutes les villes (Tchad)",noCity:"Aucun profil dans cette ville",noCityD:"Aucun profil disponible actuellement dans cette ville. Essayez d'élargir à tout le Tchad !",iam:"Je suis",fem:"Une femme",mal:"Un homme",ag:"Âge",agE:"Chari est réservé aux 22 ans et plus.",cty:"Votre ville",kd:"Nombre d'enfants",it:"Je cherche",req:"Complétez tous les champs.",sf1:"Vérifiez votre profil",sf2:"Prenez un selfie : il est obligatoire pour entrer sur Chari.",shot:"Prendre un selfie",sf3:"Le selfie confirme que vous êtes bien la personne du profil. Dans cette démo, il reste sur votre appareil.",pj:"profils vus aujourd'hui",unl:"Premium actif : profils illimités aujourd'hui",pw:"Limite du jour atteinte",pw2:"Vous avez vu vos 20 profils gratuits aujourd'hui.",pss:"Pass Premium du jour",pss2:"Profils illimités jusqu'à minuit et mode incognito.",op:"Payer avec",pn:"Numéro de paiement",pb:"Payer 5 000 FCFA",pg:"Paiement en cours…",pd:"Démo : aucun paiement réel n'est effectué.",paid:"Paiement reçu. Premium activé.",plan:"Votre formule",free:"Gratuite : 20 profils par jour",prem:"Pass Premium du jour actif",up:"Passer Premium (5 000 FCFA)",dm:"Démo : passer à 19 profils vus",opVisa:"Carte Visa",cardNum:"Numéro de carte Visa",cardExp:"Date d'expiration (MM/AA)",cardCvv:"Code CVV (3 chiffres)",cardNom:"Nom du porteur",cardNomPh:"Ex: MAHAMAT ADAM",cardSec:"Paiement 100% sécurisé Visa 3D Secure",cardNumE:"Numéro de carte incomplet (16 chiffres requis).",cardExpE:"Date d'expiration invalide (format MM/AA).",cardCvvE:"Code CVV invalide (3 chiffres).",cardNomE:"Entrez le nom présent sur la carte.",visaPaid:"Paiement Visa validé ! Pass Premium du jour activé.",
 gBtn:"Continuer avec Google (Vérifié)",or:"ou inscription classique",gVerif:"Compte Google vérifié",gModalT:"Connexion Google",gModalD:"Sélectionnez votre compte pour une vérification instantanée :",gConfirm:"Valider mon compte",cityFilt:"Ville",seekCity:"Recherche",heroTag:"Rencontres au Tchad",hob:"Passe-temps & Centres d'intérêt",hobLbl:"Vos passe-temps favoris",hobHint:"Choisissez vos passe-temps et passions :",edHb:"Modifier mes passe-temps",saveHb:"Enregistrer",bio:"À propos de moi",bioLbl:"Petite description",bioPh:"Ex: Souriant(e), j'aime les discussions sincères, les voyages et je cherche du sérieux...",bioHint:"Présentez-vous en quelques mots :",edBio:"Modifier ma description",saveBio:"Enregistrer ma description",bioDef:"Je recherche une relation sincère, durable et basée sur le respect mutuel.",
 mailb:"E-mail",telb:"Téléphone",eml:"Votre adresse e-mail",emE:"Entrez une adresse e-mail valide.",phs:"Mes photos",rm:"Retirer la photo",add:"Ajouter une photo",ph5i:"Ajoutez jusqu'à 5 photos. Les autres voient la version protégée (visage pixelisé) tant qu'il n'y a pas de match ; l'original n'est jamais affiché avant.",edt:"Masquer le visage",edh:"Placez le cercle sur votre visage : il sera pixelisé de façon irréversible, le reste de la photo reste net.",edx:"Position horizontale",edy:"Position verticale",eds:"Taille du masque",eda:"Ajouter la photo",edc:"Annuler",incog:"Mode incognito",incd:"Votre profil reste invisible : seules les personnes que vous aimez peuvent le voir.",incl:"Réservé à Premium",incb:"Incognito",
 kid:["Sans enfant","1 enfant","2 enfants","3 enfants ou plus"],
 k:{ser:"Relation amoureuse",mar:"Mariage",fam:"Famille",etu:"Études",ent:"Entrepreneuriat",foi:"Foi",mus:"Musique",foo:"Football",cui:"Cuisine",voy:"Voyage",fr:"Français",ar:"Arabe",sa:"Sara"}},
 ar:{d:"اكتشف",m:"الرسائل",p:"ملفي",pass:"تخطَّ",like:"إعجاب",mt:"تطابق!",ms:"أنتما معجبان ببعضكما.",wr:"راسل ",ct:"متابعة",done:"شاهدت كل شيء لهذا اليوم.",again:"إعادة العرض",none:"لا توجد محادثات بعد.",nh:"أعجب بملفات لبدء محادثة.",ph:"اكتب رسالة",snd:"إرسال",bk:"رجوع",my:"ملفي الشخصي",vg:"جارٍ التحقق…",vd:"ملف موثّق",blur:"الوجه مخفي حتى التطابق",lite:"توفير البيانات",sf:"نصائح للأمان",st:"لا ترسل المال أو الرموز أبداً. التقِ في مكان عام وأخبر شخصاً مقرباً.",age:"للبالغين 22 سنة فأكثر فقط.",demo:"الملفات خيالية. الرمز والسيلفي والصور والدفع كلها محاكاة (عرض تجريبي).",lgb:"Français",r:["مرحباً! سعيد بالتعرف عليك.","من أي مدينة أنت؟"],
-wl:"مرحباً بك في شاري",wl2:"علاقات عاطفية بين رجل وامرأة، مع ملفات موثّقة.",phl:"رقم هاتفك",ph8:"أدخل رقماً من 8 أرقام.",otp:"رمز التأكيد",otps:"تم إرسال الرمز إلى ",otpd:"تجريبي: لا تُرسل أي رسالة. استخدم الرمز 123456.",cod:"الرمز المكوّن من 6 أرقام",bad:"الرمز غير صحيح.",pr:"ملفك الشخصي",nm:"الاسم الأول",job:"المهنة / العمل",jobPh:"مثال: معلم، تاجر، ممرضة...",tcty:"المدينة المراد التعارف فيها",allC:"جميع المدن (تشاد)",noCity:"لا توجد ملفات في هذه المدينة",noCityD:"لا توجد ملفات متوفرة حالياً في هذه المدينة. جرب توسيع البحث ليشمل جميع المدن!",iam:"أنا",fem:"امرأة",mal:"رجل",ag:"العمر",agE:"التطبيق مخصص لمن بلغ 22 سنة فأكثر.",cty:"مدينتك",kd:"عدد الأطفال",it:"أبحث عن",req:"أكمل جميع الحقول.",sf1:"وثّق ملفك",sf2:"التقط صورة سيلفي: إلزامية للدخول إلى التطبيق.",shot:"التقاط سيلفي",sf3:"تؤكد الصورة أنك صاحب الملف. في هذا العرض التجريبي تبقى على جهازك.",pj:"ملفاً شاهدته اليوم",unl:"بريميوم مفعّل: ملفات غير محدودة اليوم",pw:"بلغت حد اليوم",pw2:"شاهدت ملفاتك المجانية العشرين اليوم.",pss:"باقة بريميوم لليوم",pss2:"ملفات غير محدودة حتى منتصف الليل ووضع التخفّي.",op:"الدفع عبر",pn:"رقم الدفع",pb:"ادفع 5 000 FCFA",pg:"جارٍ الدفع…",pd:"تجريبي: لا يتم أي دفع حقيقي.",paid:"تم استلام الدفع. تم تفعيل بريميوم.",plan:"باقتك",free:"مجانية: 20 ملفاً في اليوم",prem:"باقة بريميوم لليوم مفعّلة",up:"الترقية إلى بريميوم (5 000 FCFA)",dm:"تجريبي: الانتقال إلى 19 ملفاً",
+wl:"مرحباً بك في شاري",wl2:"علاقات عاطفية بين رجل وامرأة، مع ملفات موثّقة.",phl:"رقم هاتفك",ph8:"أدخل رقماً من 8 أرقام.",otp:"رمز التأكيد",otps:"تم إرسال الرمز إلى ",otpd:"تجريبي: لا تُرسل أي رسالة. استخدم الرمز 123456.",cod:"الرمز المكوّن من 6 أرقام",bad:"الرمز غير صحيح.",pr:"ملفك الشخصي",nm:"الاسم الأول",job:"المهنة / العمل",jobPh:"مثال: معلم، تاجر، ممرضة...",tcty:"المدينة المراد التعارف فيها",allC:"جميع المدن (تشاد)",noCity:"لا توجد ملفات في هذه المدينة",noCityD:"لا توجد ملفات متوفرة حالياً في هذه المدينة. جرب توسيع البحث ليشمل جميع المدن!",iam:"أنا",fem:"امرأة",mal:"رجل",ag:"العمر",agE:"التطبيق مخصص لمن بلغ 22 سنة فأكثر.",cty:"مدينتك",kd:"عدد الأطفال",it:"أبحث عن",req:"أكمل جميع الحقول.",sf1:"وثّق ملفك",sf2:"التقط صورة سيلفي: إلزامية للدخول إلى التطبيق.",shot:"التقاط سيلفي",sf3:"تؤكد الصورة أنك صاحب الملف. في هذا العرض التجريبي تبقى على جهازك.",pj:"ملفاً شاهدته اليوم",unl:"بريميوم مفعّل: ملفات غير محدودة اليوم",pw:"بلغت حد اليوم",pw2:"شاهدت ملفاتك المجانية العشرين اليوم.",pss:"باقة بريميوم لليوم",pss2:"ملفات غير محدودة حتى منتصف الليل ووضع التخفّي.",op:"الدفع عبر",pn:"رقم الدفع",pb:"ادفع 5 000 FCFA",pg:"جارٍ الدفع…",pd:"تجريبي: لا يتم أي دفع حقيقي.",paid:"تم استلام الدفع. تم تفعيل بريميوم.",plan:"باقتك",free:"مجانية: 20 ملفاً في اليوم",prem:"باقة بريميوم لليوم مفعّلة",up:"الترقية إلى بريميوم (5 000 FCFA)",dm:"تجريبي: الانتقال إلى 19 ملفاً",opVisa:"بطاقة Visa",cardNum:"رقم بطاقة Visa",cardExp:"تاريخ الانتهاء (MM/AA)",cardCvv:"رمز الأمان (3 أرقام)",cardNom:"اسم صاحب البطاقة",cardNomPh:"مثال: MAHAMAT ADAM",cardSec:"دفع آمن 100% عبر Visa و 3D Secure",cardNumE:"رقم بطاقة Visa غير مكتمل (16 رقماً).",cardExpE:"تاريخ انتهاء غير صحيح (MM/AA).",cardCvvE:"رمز CVV غير صحيح (3 أرقام).",cardNomE:"يرجى كتابة اسم صاحب البطاقة.",visaPaid:"تم التحقق من بطاقة Visa بنجاح! تم تفعيل بريميوم.",
 gBtn:"المتابعة باستخدام Google (موثّق)",or:"أو التسجيل العادي",gVerif:"حساب Google موثّق",gModalT:"تسجيل الدخول عبر Google",gModalD:"اختر حسابك للحصول على توثيق فوري:",gConfirm:"تأكيد الحساب",cityFilt:"المدينة",seekCity:"البحث في",heroTag:"علاقات عاطفية موثّقة",hob:"الهوايات والاهتمامات",hobLbl:"هواياتك المفضلة",hobHint:"اختر هواياتك واهتماماتك المفضلة:",edHb:"تعديل هواياتي",saveHb:"حفظ",bio:"نبذة عني",bioLbl:"وصف قصير",bioPh:"مثال: شخص بشوش، أحب الحوار الصادق، السفر وأبحث عن الاستقرار...",bioHint:"عرّف بنفسك في بضع كلمات:",edBio:"تعديل الوصف",saveBio:"حفظ الوصف",bioDef:"أبحث عن علاقة صادقة ومبنية على الاحترام المتبادل.",
 mailb:"البريد الإلكتروني",telb:"الهاتف",eml:"عنوان بريدك الإلكتروني",emE:"أدخل عنوان بريد إلكتروني صالحاً.",phs:"صوري",rm:"حذف الصورة",add:"إضافة صورة",ph5i:"أضف حتى 5 صور. يرى الآخرون النسخة المحمية (وجه مشوّش) حتى يحدث تطابق، ولا تُعرض النسخة الأصلية قبل ذلك أبداً.",edt:"إخفاء الوجه",edh:"ضع الدائرة على وجهك: سيتم تشويشه بشكل لا رجعة فيه، وتبقى بقية الصورة واضحة.",edx:"الموضع الأفقي",edy:"الموضع العمودي",eds:"حجم القناع",eda:"إضافة الصورة",edc:"إلغاء",incog:"وضع التخفّي",incd:"يبقى ملفك غير مرئي: لا يراه إلا من تعجب به.",incl:"حصري لبريميوم",incb:"تخفّي",
 kid:["بلا أطفال","طفل واحد","طفلان","3 أطفال أو أكثر"],
@@ -296,7 +311,7 @@ const mk=(g,N,Bi)=>N.map((n,i)=>({id:(g==="f"?0:100)+i+1,g,n,a:22+(i*7+3)%14,c:C
 const P=[...mk("f",FN,BF),...mk("m",MN,BM)];
 const ME={n:"",bg:[G,B],cl:"#C3CCDB",sk:"#9AA7BB"};
 const $=s=>document.querySelector(s),byId=id=>P.find(p=>p.id===id),pool=()=>P.filter(p=>p.g!==st.u.g&&(!st.tc||st.tc==="all"||p.c===st.tc));
-const st={lang:"fr",blur:true,lite:false,tc:"all",mode:"tel",em:"",ph5:[],inc:false,ed:null,step:0,u:{hb:["spo","cui"],bio:""},g:"",ph:"",i:0,seen:0,prem:0,pay:0,op:"",pp:0,vs:0,selfie:"",tab:"d",chat:null,mt:[],ms:{},busy:0};
+const st={lang:"fr",blur:true,lite:false,tc:"all",mode:"tel",em:"",ph5:[],inc:false,ed:null,step:0,u:{hb:["spo","cui"],bio:""},card:{num:"",exp:"",cvv:"",nom:""},g:"",ph:"",i:0,seen:0,prem:0,pay:0,op:"",pp:0,vs:0,selfie:"",tab:"d",chat:null,mt:[],ms:{},busy:0};
 try{const s=JSON.parse(localStorage.getItem("chari")||"{}");["lang","blur","lite","tc"].forEach(k=>{if(k in s)st[k]=s[k]});if(s.u)st.u=Object.assign({hb:["spo","cui"],bio:""},s.u);if(!st.u.hb)st.u.hb=["spo","cui"]}catch(e){}
 const save=()=>{try{localStorage.setItem("chari",JSON.stringify({lang:st.lang,blur:st.blur,lite:st.lite,tc:st.tc,u:st.u}))}catch(e){}};
 const x=()=>T[st.lang],ic=n=>`<svg class="i" aria-hidden="true"><use href="#i-${n}"/></svg>`,say=s=>{$("#live").textContent=s};
@@ -309,9 +324,11 @@ function onb(){const t=x(),s=st.step;
 if(s===0)return`<div class="pf"><div class="hero-box"><img src="couple.jpg" alt="Chari" class="hero-img"><div class="hero-overlay"><span class="hero-tag">${t.heroTag}</span></div></div><h1>${t.wl}</h1><p>${t.wl2}</p><button class="btn-google" data-a="gauth" type="button"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg><span>${t.gBtn}</span></button><div class="div-or"><span>${t.or}</span></div><div class="seg" role="group" aria-label="${t.wl}"><button data-a="md" data-k="tel" aria-pressed="${st.mode==="tel"}">${t.telb}</button><button data-a="md" data-k="mail" aria-pressed="${st.mode==="mail"}">${t.mailb}</button></div><div>${st.mode==="mail"?`<label for="em">${t.eml}</label><input class="fld" id="em" type="email" autocomplete="email" value="${esc(st.em)}">`:`<label for="ph">${t.phl}</label><div class="ph2"><span>+235</span><input class="fld" id="ph" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="66 00 00 00" value="${esc(st.ph)}"></div>`}<p class="err" id="e0" role="alert"></p></div><button class="btn" data-a="s0">${t.ct}</button></div>`;
 if(s===1)return`<div class="pf"><h1>${t.otp}</h1><p>${t.otps}${esc(st.mode==="mail"?st.em:"+235 "+st.ph)}</p><p class="mut">${t.otpd}</p><div><label for="cd">${t.cod}</label><input class="fld" id="cd" type="text" inputmode="numeric" maxlength="6" dir="ltr" autocomplete="one-time-code"><p class="err" id="e1" role="alert"></p></div><button class="btn" data-a="s1">${t.ct}</button></div>`;
 if(s===2)return`<div class="pf"><h1>${t.pr}</h1><div><label for="nm">${t.nm}</label><input class="fld" id="nm" type="text" autocomplete="given-name" maxlength="20" value="${esc(st.u.n||"")}"></div><div><label for="jb">${t.job}</label><input class="fld" id="jb" type="text" placeholder="${t.jobPh}" maxlength="30" value="${esc(st.u.jb||"")}"></div><div><label for="bio">${t.bioLbl}</label><input class="fld" id="bio" type="text" placeholder="${t.bioPh}" maxlength="160" value="${esc(st.u.bio||"")}"></div><div><label id="gl">${t.iam}</label><div class="seg" role="group" aria-labelledby="gl"><button data-a="gd" data-k="f" aria-pressed="${st.g==="f"}">${t.fem}</button><button data-a="gd" data-k="m" aria-pressed="${st.g==="m"}">${t.mal}</button></div></div><div><label for="ag">${t.ag}</label><input class="fld" id="ag" type="number" inputmode="numeric" min="22" max="99" value="${st.u.a||""}"><p class="err" id="eA" role="alert"></p></div><div><label for="cy">${t.cty}</label><select class="fld" id="cy">${CI.map(c=>`<option ${st.u.c===c?"selected":""}>${c}</option>`).join("")}</select></div><div><label for="tc">${t.tcty}</label><select class="fld" id="tc"><option value="all" ${(!st.u.tc||st.u.tc==="all")?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.u.tc===c?"selected":""}>${c}</option>`).join("")}</select></div><div><label>${t.hobLbl}</label><p class="mut" style="margin:2px 0 6px">${t.hobHint}</p><div class="h-chips" role="group" aria-label="${t.hobLbl}">${HOBBIES.map(h=>{const on=(st.u.hb||[]).includes(h.id);return`<button type="button" class="h-chip ${on?"on":""}" data-a="toghb" data-h="${h.id}" aria-pressed="${on}"><span>${h[st.lang]}</span></button>`}).join("")}</div></div><div><label for="kd">${t.kd}</label><select class="fld" id="kd">${t.kid.map((k,i)=>`<option value="${i}" ${st.u.kd===i?"selected":""}>${k}</option>`).join("")}</select></div><div><label for="it">${t.it}</label><select class="fld" id="it"><option value="ser" ${st.u.i==="ser"?"selected":""}>${t.k.ser}</option><option value="mar" ${st.u.i==="mar"?"selected":""}>${t.k.mar}</option></select></div><p class="err" id="e2" role="alert"></p><button class="btn" data-a="s2">${t.ct}</button></div>`;
-return`<div class="pf"><h1>${t.sf1}</h1><p>${t.sf2}</p><div class="selfie">${st.selfie?`<img src="${st.selfie}" alt="">`:ic("cam")}</div><input id="sf" type="file" accept="image/*" capture="user" hidden><button class="btn" data-a="shot" ${st.vs?"disabled":""}>${st.vs===1?t.vg:t.shot}</button><p class="mut">${t.sf3}</p></div>`}
-function payv(){const t=x(),lim=!st.prem&&st.seen>=LIM;
-return`<div class="pf"><h1>${lim?t.pw:t.pss}</h1>${lim?`<p>${t.pw2}</p>`:""}<div class="plan"><h2>${t.pss}</h2><span class="price">5 000 FCFA</span><p>${t.pss2}</p></div><div><p id="ol" class="lbl">${t.op}</p><div class="ops" role="group" aria-labelledby="ol"><button class="opb" data-a="op" data-k="moov" aria-pressed="${st.op==="moov"}">Moov Money</button><button class="opb" data-a="op" data-k="airtel" aria-pressed="${st.op==="airtel"}">Airtel Money</button></div></div><div><label for="pp">${t.pn}</label><div class="ph2"><span>+235</span><input class="fld" id="pp" type="tel" inputmode="numeric" placeholder="66 00 00 00" value="${esc(st.ph)}"></div><p class="err" id="eP" role="alert"></p></div><button class="btn" data-a="pay" ${!st.op||st.pp?"disabled":""}>${st.pp?t.pg:t.pb}</button><p class="mut">${t.pd}</p><button class="btn sec" data-a="${lim?"tab":"np"}" data-k="m">${lim?t.m:t.bk}</button></div>`}
+return`<div class="pf"><h1>${t.sf1}</h1><p>${t.sf2}</p><div class="selfie">${st.selfie?`<img src="${st.selfie}" class="selfie-captured" alt="Selfie">`:`<video id="camera-stream" autoplay playsinline muted></video><div class="selfie-ring"></div>`}</div><p class="err" id="cam-err" role="alert"></p>${st.selfie?`<button class="btn" data-a="val-selfie">${t.vd}</button><button class="btn sec" data-a="retake-selfie" style="margin-top:8px">Reprendre avec la caméra</button>`:`<button class="btn" data-a="snap-cam" id="btn-snap">${t.shot}</button>`}<p class="mut">${t.sf3}</p></div>`}
+function payv(){
+const t=x(),lim=!st.prem&&st.seen>=LIM,isV=st.op==="visa";
+const cn=(st.card&&st.card.num)||"",ce=(st.card&&st.card.exp)||"",cv=(st.card&&st.card.cvv)||"",cm=(st.card&&st.card.nom)||(st.u&&st.u.n?(st.u.n.toUpperCase()+" ADAM"):"");
+return`<div class="pf"><h1>${lim?t.pw:t.pss}</h1>${lim?`<p>${t.pw2}</p>`:""}<div class="plan"><h2>${t.pss}</h2><span class="price">5 000 FCFA</span><p>${t.pss2}</p></div><div><p id="ol" class="lbl">${t.op}</p><div class="ops" role="group" aria-labelledby="ol"><button class="opb" data-a="op" data-k="moov" aria-pressed="${st.op==="moov"}">Moov Money</button><button class="opb" data-a="op" data-k="airtel" aria-pressed="${st.op==="airtel"}">Airtel Money</button><button class="opb" data-a="op" data-k="visa" aria-pressed="${st.op==="visa"}"><svg viewBox="0 0 36 22" width="28" height="17" style="vertical-align:middle;margin-inline-end:4px" aria-hidden="true"><rect width="36" height="22" rx="3" fill="#1A1F71"/><path d="M14.5 16.5l2.2-11h2.5l-2.2 11h-2.5zm10.7-10.7c-.5-.2-1.3-.4-2.2-.4-2.4 0-4.1 1.2-4.1 3 0 1.3 1.2 2 2.1 2.4.9.4 1.2.7 1.2 1.1 0 .6-.7.9-1.4.9-1 0-1.5-.1-2.3-.5l-.3-.2-.3 1.9c.5.2 1.5.4 2.5.4 2.6 0 4.2-1.2 4.2-3.1 0-1-.6-1.8-2-2.4-.8-.4-1.3-.7-1.3-1.1 0-.4.4-.8 1.3-.8.7 0 1.3.1 1.7.3l.2.1.4-1.7zm6.8 0h-1.9c-.6 0-1 .2-1.3.8l-3.6 8.9h2.6l.5-1.4h3.2l.3 1.4h2.3l-2.1-9.7zm-2.8 6.4l1-2.7.6 2.7h-1.6zm-17.8-6.4l-2.4 6.7-.3-1.3c-.4-1.5-1.8-3.1-3.3-3.9l2.2 8.2h2.6l3.9-9.7h-2.7z" fill="#FFF"/><path d="M4.6 5.8l-2.4 8.2c-.3 1.1.6 1.8 1.6 1.8h3.8l.6-1.5H5.8L4.6 5.8z" fill="#F7B600"/></svg>Visa</button></div></div>${isV?`<div class="visa-card-box"><div class="visa-card-chip"></div><svg class="visa-logo-white" viewBox="0 0 50 16" width="46" height="15" aria-hidden="true"><path d="M19.7 15.2l2.9-14.4h3.3l-2.9 14.4h-3.3zm14.1-14c-.7-.3-1.7-.5-2.9-.5-3.2 0-5.4 1.6-5.4 3.9 0 1.7 1.6 2.7 2.8 3.2 1.2.6 1.6.9 1.6 1.4 0 .8-.9 1.2-1.8 1.2-1.3 0-2-.2-3.1-.7l-.4-.2-.4 2.5c.7.3 2 .5 3.3.5 3.4 0 5.5-1.6 5.5-4.1 0-1.4-.8-2.4-2.7-3.2-1.1-.5-1.7-.9-1.7-1.4 0-.5.5-1 1.7-1 .9 0 1.7.2 2.2.4l.3.1.4-2.1zm8.9 0h-2.5c-.8 0-1.3.2-1.7 1.1l-4.7 11.7h3.4l.7-1.9h4.2l.4 1.9h3l-2.8-12.8zm-3.7 8.4l1.3-3.6.8 3.6h-2.1zm-23.4-8.4l-3.2 8.8-.4-1.7c-.6-2-2.4-4.1-4.4-5.1l2.9 10.8h3.4l5.1-12.8h-3.4z" fill="#FFF"/><path d="M6.1 1.2L2.9 12c-.4 1.4.8 2.4 2.1 2.4h5l.8-2H7.7L6.1 1.2z" fill="#F7B600"/></svg><div class="visa-card-num">${cn?cn:"•••• •••• •••• ••••"}</div><div class="visa-card-bottom"><div><div class="visa-card-lbl">TITULAIRE</div><div class="visa-card-val visa-card-nom-val">${cm?esc(cm):"NOM PRENOM"}</div></div><div><div class="visa-card-lbl">EXPIRE</div><div class="visa-card-val visa-card-exp-val">${ce?esc(ce):"MM/AA"}</div></div></div></div><div><label for="c-num">${t.cardNum}</label><input class="fld" id="c-num" type="tel" inputmode="numeric" placeholder="4000 1234 5678 9010" maxlength="19" value="${esc(cn)}"></div><div style="display:flex;gap:10px"><div><label for="c-exp">${t.cardExp}</label><input class="fld" id="c-exp" type="text" inputmode="numeric" placeholder="12/28" maxlength="5" value="${esc(ce)}"></div><div><label for="c-cvv">${t.cardCvv}</label><input class="fld" id="c-cvv" type="password" inputmode="numeric" placeholder="123" maxlength="3" value="${esc(cv)}"></div></div><div><label for="c-nom">${t.cardNom}</label><input class="fld" id="c-nom" type="text" placeholder="${t.cardNomPh}" maxlength="30" value="${esc(cm)}"></div><p class="err" id="eP" role="alert"></p><div class="visa-sec-badge"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg><span>${t.cardSec}</span></div>`:`<div><label for="pp">${t.pn}</label><div class="ph2"><span>+235</span><input class="fld" id="pp" type="tel" inputmode="numeric" placeholder="66 00 00 00" value="${esc(st.ph)}"></div><p class="err" id="eP" role="alert"></p></div>`}<button class="btn" data-a="pay" ${!st.op||st.pp?"disabled":""}>${st.pp?(isV?"Vérification 3D Secure…":t.pg):(isV?"Payer 5 000 FCFA (Visa)":t.pb)}</button><p class="mut">${t.pd}</p><button class="btn sec" data-a="${lim?"tab":"np"}" data-k="m">${lim?t.m:t.bk}</button></div>`}
 function dis(){const t=x(),p=pool()[st.i];
 if(st.pay||(!st.prem&&st.seen>=LIM))return payv();
 const cbar=`<div class="cbar"><span class="ctag">${t.cityFilt}</span><select class="csel" id="sel-tc" aria-label="${t.tcty}"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.tc===c?"selected":""}>${c}</option>`).join("")}</select></div>`;
@@ -353,7 +370,50 @@ $("#nav").innerHTML=on?"":[["d","compass",t.d],["m","chat",t.m],["p","user",t.p]
 $("#v").innerHTML=on?onb():st.tab==="d"?dis():st.tab==="m"?(st.chat?chat():msgs()):(st.ed?edv():prof());
 if(st.ed&&!on&&st.tab==="p")drawEd();
 if(!on&&st.tab==="m"&&st.chat){const l=$("#log");st.ms[st.chat].forEach(m=>bub(l,m));l.scrollTop=l.scrollHeight}}
-function go(n,sel){st.step=n;render();$("#v").scrollTop=0;const e=sel&&$(sel);if(e)e.focus()}
+let camStream=null;
+function startCam(){
+if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
+navigator.mediaDevices.getUserMedia({video:{facingMode:"user",width:{ideal:480},height:{ideal:480}}})
+.then(s=>{
+camStream=s;
+const v=$("#camera-stream");
+if(v){v.srcObject=s;v.play().catch(()=>{});}
+})
+.catch(()=>{
+const e=$("#cam-err");
+if(e)e.textContent=st.lang==="ar"?"يرجى السماح بالوصول إلى الكاميرا":"Veuillez autoriser l'accès à la caméra pour continuer.";
+});
+}else{
+const e=$("#cam-err");
+if(e)e.textContent=st.lang==="ar"?"الكاميرا غير متوفرة":"Caméra indisponible sur cet appareil.";
+}
+}
+function stopCam(){
+if(camStream){
+camStream.getTracks().forEach(tr=>tr.stop());
+camStream=null;
+}
+}
+function snapCam(){
+const v=$("#camera-stream");
+if(!v)return;
+const c=document.createElement("canvas");
+c.width=300;c.height=300;
+const ctx=c.getContext("2d");
+ctx.translate(300,0);ctx.scale(-1,1);
+const vw=v.videoWidth||300,vh=v.videoHeight||300,sz=Math.min(vw,vh);
+ctx.drawImage(v,(vw-sz)/2,(vh-sz)/2,sz,sz,0,0,300,300);
+st.selfie=c.toDataURL("image/jpeg",.85);
+stopCam();
+st.vs=1;render();
+setTimeout(()=>{st.vs=2;go(4);say(x().vd)},1600);
+}
+function go(n,sel){
+if(st.step===3&&n!==3)stopCam();
+st.step=n;render();$("#v").scrollTop=0;
+if(n===3&&!st.selfie)setTimeout(startCam,120);
+const e=sel&&$(sel);if(e)e.focus();
+}
 function match(p){if(!st.mt.includes(p.id)){st.mt.push(p.id);st.ms[p.id]=[]}
 const t=x(),o=$("#ov");
 o.innerHTML=`<div class="strip" aria-hidden="true"></div><div class="mi"><h2>${t.mt}</h2><p>${t.ms}</p><div class="pair"><span class="av l">${me(1)}</span>${ic("heart")}<span class="av l">${av(p)}</span></div><button class="btn gold" data-a="wr" data-id="${p.id}">${t.wr}${p.n}</button><button class="btn ghost" data-a="cm">${t.ct}</button></div><div class="strip" aria-hidden="true"></div>`;
@@ -491,9 +551,29 @@ else if(a==="addp")$("#pf").click();
 else if(a==="rmp"){st.ph5.splice(+k,1);render()}
 else if(a==="eda"){st.ph5.push({o:st.ed.src.toDataURL("image/jpeg",.85),p:prot(st.ed.src,st.ed).toDataURL("image/jpeg",.85)});st.ed=null;render()}
 else if(a==="edc"){st.ed=null;render()}
-else if(a==="shot")$("#sf").click();
+else if(a==="snap-cam")snapCam();
+else if(a==="retake-selfie"){st.selfie="";st.vs=0;render();setTimeout(startCam,120);}
+else if(a==="val-selfie"){stopCam();go(4);say(x().vd);}
 else if(a==="op"){st.op=k;render();$(`[data-a=op][data-k=${k}]`).focus()}
-else if(a==="pay"){const v=$("#pp").value.replace(/\D/g,"");if(v.length!==8){$("#eP").textContent=t.ph8;$("#pp").focus();return}st.ph=v.replace(/(\d\d)(?=\d)/g,"$1 ");st.pp=1;render();setTimeout(()=>{st.pp=0;st.prem=1;st.pay=0;st.op="";render();say(x().paid)},2000)}
+else if(a==="pay"){
+if(st.op==="visa"){
+const cn=$("#c-num")?$("#c-num").value.replace(/\D/g,""):"";
+const ce=$("#c-exp")?$("#c-exp").value.trim():"";
+const cv=$("#c-cvv")?$("#c-cvv").value.trim():"";
+const cm=$("#c-nom")?$("#c-nom").value.trim():"";
+if(cn.length<16){$("#eP").textContent=t.cardNumE;$("#c-num").focus();return}
+if(!/^\d{2}\/\d{2}$/.test(ce)){$("#eP").textContent=t.cardExpE;$("#c-exp").focus();return}
+if(cv.length!==3){$("#eP").textContent=t.cardCvvE;$("#c-cvv").focus();return}
+if(cm.length<2){$("#eP").textContent=t.cardNomE;$("#c-nom").focus();return}
+st.pp=1;render();
+setTimeout(()=>{st.pp=0;st.prem=1;st.pay=0;st.op="";render();say(x().visaPaid)},2200);
+}else{
+const v=$("#pp")?$("#pp").value.replace(/\D/g,""):"";
+if(v.length!==8){$("#eP").textContent=t.ph8;$("#pp").focus();return}
+st.ph=v.replace(/(\d\d)(?=\d)/g,"$1 ");st.pp=1;render();
+setTimeout(()=>{st.pp=0;st.prem=1;st.pay=0;st.op="";render();say(x().paid)},2000);
+}
+}
 else if(a==="up"){st.pay=1;st.tab="d";render()}
 else if(a==="np"){st.pay=0;render()}
 else if(a==="d19"){st.seen=19;st.tab="d";render()}
@@ -516,13 +596,38 @@ setTimeout(()=>{if(st.ms[st.chat]){add(st.chat,{w:"th",t:st.lang==="ar"?"ما ش
 };
 fr.readAsDataURL(f);e.target.value="";return;
 }
-const f=e.target.id==="sf"&&e.target.files[0];if(!f)return;
-st.vs=1;
-createImageBitmap(f).then(bm=>{const c=document.createElement("canvas"),s=Math.min(bm.width,bm.height);c.width=c.height=240;c.getContext("2d").drawImage(bm,(bm.width-s)/2,(bm.height-s)/2,s,s,0,0,240,240);st.selfie=c.toDataURL("image/jpeg",.8)}).catch(()=>{}).finally(()=>{render();setTimeout(()=>{st.vs=2;go(4);say(x().vd)},1800)})});
+});
 document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="in")send();if(e.key==="Escape"&&!$("#ov").hidden){closeM();render()}});
 document.addEventListener("change",e=>{const f=e.target.id==="pf"&&e.target.files[0];if(!f)return;
 createImageBitmap(f).then(bm=>{const c=document.createElement("canvas"),s=Math.min(bm.width,bm.height);c.width=c.height=360;c.getContext("2d").drawImage(bm,(bm.width-s)/2,(bm.height-s)/2,s,s,0,0,360,360);st.ed={src:c,x:50,y:38,r:24};render()}).catch(()=>{})});
-document.addEventListener("input",e=>{const d=e.target.dataset.e;if(d&&st.ed){st.ed[d]=+e.target.value;drawEd()}if(e.target.id==="pp")st.ph=e.target.value});
+document.addEventListener("input",e=>{
+const d=e.target.dataset.e;if(d&&st.ed){st.ed[d]=+e.target.value;drawEd()}
+if(e.target.id==="pp")st.ph=e.target.value;
+if(e.target.id==="c-num"){
+let v=e.target.value.replace(/\D/g,"").slice(0,16);
+v=v.replace(/(\d{4})(?=\d)/g,"$1 ").trim();
+e.target.value=v;
+if(!st.card)st.card={};st.card.num=v;
+const el=$(".visa-card-num");if(el)el.textContent=v||"•••• •••• •••• ••••";
+}
+if(e.target.id==="c-exp"){
+let v=e.target.value.replace(/\D/g,"").slice(0,4);
+if(v.length>=3)v=v.slice(0,2)+"/"+v.slice(2);
+e.target.value=v;
+if(!st.card)st.card={};st.card.exp=v;
+const el=$(".visa-card-exp-val");if(el)el.textContent=v||"MM/AA";
+}
+if(e.target.id==="c-cvv"){
+let v=e.target.value.replace(/\D/g,"").slice(0,3);
+e.target.value=v;
+if(!st.card)st.card={};st.card.cvv=v;
+}
+if(e.target.id==="c-nom"){
+let v=e.target.value.toUpperCase();
+if(!st.card)st.card={};st.card.nom=v;
+const el=$(".visa-card-nom-val");if(el)el.textContent=v||"NOM PRENOM";
+}
+});
 render();
 
 // Enregistrement du Service Worker pour installation PWA hors ligne
