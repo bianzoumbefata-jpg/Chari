@@ -358,7 +358,7 @@ if(m.t){const p=document.createElement("p");p.style.margin="4px 0 0";p.textConte
 }else if(m.voice){
 const vb=document.createElement("div");vb.className="voice-bubble";
 const bars=[8,14,20,12,18,10,16,22,14,10,18,12].map(h=>`<span class="voice-bar" style="height:${h}px"></span>`).join("");
-vb.innerHTML=`<button class="voice-btn" data-a="play-voice" data-dur="${m.dur||"0:08"}" aria-label="Play">${ic("play")}</button><div class="voice-wave">${bars}</div><span class="voice-dur">${m.dur||"0:08"}</span>`;
+vb.innerHTML=`<button class="voice-btn" data-a="play-voice" data-dur="${m.dur||"0:08"}" aria-label="Play">${ic("play")}</button><div class="voice-wave">${bars}</div><span class="voice-dur">${m.dur||"0:08"}</span>${m.audioSrc?`<audio src="${m.audioSrc}" preload="auto" playsinline></audio>`:""}`;
 d.append(vb);
 }else{d.textContent=m.t}
 l.append(d);
@@ -442,32 +442,47 @@ if(!st.prem&&st.seen>=LIM)say(x().pw2);
 if(a==="like"&&p.y)match(p);else{const b=$("[data-a=like]");if(b)b.focus()}};
 const rm=st.lite||matchMedia("(prefers-reduced-motion: reduce)").matches;
 if(c&&!rm&&c.animate)c.animate([{transform:"none",opacity:1},{transform:`translateX(${d*90}px) rotate(${d*7}deg)`,opacity:0}],{duration:220}).onfinish=go2;else go2()}
-let recState={active:false,sec:0,timer:null,mr:null,chunks:[]};
+let recState={active:false,sec:0,timer:null,mr:null,chunks:[],stream:null};
 function toggleVoiceRec(){
-const btn=$("#btn-rec");
+const btn=$("#btn-rec"),inp=$("#in");
 if(!recState.active){
-recState.active=true;recState.sec=0;
-if(btn)btn.classList.add("rec-pulse");
-recState.timer=setInterval(()=>{recState.sec++;if(recState.sec>=60)toggleVoiceRec()},1000);
-if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
-navigator.mediaDevices.getUserMedia({audio:true}).then(stream=>{
-try{
-recState.mr=new MediaRecorder(stream);recState.chunks=[];
-recState.mr.ondataavailable=ev=>{recState.chunks.push(ev.data)};
-recState.mr.onstop=()=>{
-const blob=new Blob(recState.chunks,{type:"audio/webm"});
-stream.getTracks().forEach(t=>t.stop());
-sendVoiceNote(URL.createObjectURL(blob),Math.max(2,recState.sec));
-};
-recState.mr.start();
-}catch(err){}
-}).catch(()=>{});
+if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+alert(st.lang==="ar"?"المتصفح لا يدعم تسجيل الصوت":"Votre appareil ne supporte pas l'enregistrement direct.");
+return;
 }
+navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}}).then(stream=>{
+recState.active=true;recState.sec=0;recState.chunks=[];recState.stream=stream;
+if(btn)btn.classList.add("rec-pulse");
+recState.timer=setInterval(()=>{
+recState.sec++;const m=Math.floor(recState.sec/60),s=(recState.sec%60).toString().padStart(2,"0");
+if(inp)inp.placeholder=st.lang==="ar"?`جارٍ تسجيل الصوت... ${m}:${s}`:`Enregistrement vocal direct... ${m}:${s}`;
+if(recState.sec>=120)toggleVoiceRec();
+},1000);
+const mime=MediaRecorder.isTypeSupported('audio/webm;codecs=opus')?'audio/webm;codecs=opus':
+MediaRecorder.isTypeSupported('audio/mp4')?'audio/mp4':
+MediaRecorder.isTypeSupported('audio/ogg')?'audio/ogg':'';
+const mr=new MediaRecorder(stream,mime?{mimeType:mime}:{});
+recState.mr=mr;
+mr.ondataavailable=ev=>{if(ev.data&&ev.data.size>0)recState.chunks.push(ev.data)};
+mr.onstop=()=>{
+const bType=mr.mimeType||'audio/webm';
+const blob=new Blob(recState.chunks,{type:bType});
+if(recState.stream){recState.stream.getTracks().forEach(t=>t.stop());recState.stream=null;}
+const reader=new FileReader();
+reader.onloadend=()=>{
+sendVoiceNote(reader.result,Math.max(1,recState.sec));
+};
+reader.readAsDataURL(blob);
+};
+mr.start(100);
+}).catch(()=>{
+alert(st.lang==="ar"?"يرجى السماح بالوصول إلى الميكروفون":"Veuillez autoriser l'accès au microphone pour enregistrer votre voix.");
+});
 }else{
 recState.active=false;clearInterval(recState.timer);
 if(btn)btn.classList.remove("rec-pulse");
+if(inp)inp.placeholder=x().ph;
 if(recState.mr&&recState.mr.state==="recording"){recState.mr.stop()}
-else{sendVoiceNote("",Math.max(2,recState.sec))}
 }
 }
 function sendVoiceNote(url,sec){
@@ -476,7 +491,7 @@ const m=Math.floor(sec/60),s=(sec%60).toString().padStart(2,"0");
 add(st.chat,{w:"me",voice:true,dur:`${m}:${s}`,audioSrc:url});
 setTimeout(()=>{
 if(st.ms[st.chat]){
-add(st.chat,{w:"th",voice:true,dur:"0:08",t:""});
+add(st.chat,{w:"th",voice:true,dur:"0:04",t:""});
 }
 },2000);
 }
@@ -489,25 +504,32 @@ btn.dataset.playing="0";btn.innerHTML=ic("play");
 if(aud)aud.pause();
 bars.forEach(b=>b.style.height="");
 }else{
+document.querySelectorAll(".voice-btn[data-playing='1']").forEach(ob=>{
+ob.dataset.playing="0";ob.innerHTML=ic("play");
+const oAud=ob.closest(".voice-bubble").querySelector("audio");if(oAud)oAud.pause();
+});
 btn.dataset.playing="1";btn.innerHTML=ic("pause");
 let anim=setInterval(()=>{
 if(btn.dataset.playing!=="1"){clearInterval(anim);return}
-bars.forEach(b=>{b.style.height=(6+Math.floor(Math.random()*16))+"px"});
-},120);
+bars.forEach(b=>{b.style.height=(5+Math.floor(Math.random()*18))+"px"});
+},110);
 if(aud&&aud.src){
-aud.play().catch(()=>{});
+aud.currentTime=0;
+aud.play().then(()=>{
 aud.onended=()=>{btn.dataset.playing="0";btn.innerHTML=ic("play");clearInterval(anim);bars.forEach(b=>b.style.height="")};
+}).catch(()=>{
+btn.dataset.playing="0";btn.innerHTML=ic("play");clearInterval(anim);bars.forEach(b=>b.style.height="");
+});
 }else{
-try{
-const ctx=new(window.AudioContext||window.webkitAudioContext)();
-const osc=ctx.createOscillator(),gain=ctx.createGain();
-osc.type="sine";osc.frequency.setValueAtTime(420,ctx.currentTime);
-osc.frequency.exponentialRampToValueAtTime(740,ctx.currentTime+0.3);
-gain.gain.setValueAtTime(0.08,ctx.currentTime);
-gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+2.5);
-osc.connect(gain);gain.connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+2.5);
-}catch(e){}
-setTimeout(()=>{btn.dataset.playing="0";btn.innerHTML=ic("play");clearInterval(anim);bars.forEach(b=>b.style.height="")},2800);
+if(window.speechSynthesis){
+const utt=new SpeechSynthesisUtterance(st.lang==="ar"?"مرحباً بك! أنا سعيدة جداً بالتعرف عليك":"Bonjour ! Enchantée de faire ta connaissance, comment vas-tu ?");
+utt.lang=st.lang==="ar"?"ar-SA":"fr-FR";utt.rate=0.95;
+utt.onend=()=>{btn.dataset.playing="0";btn.innerHTML=ic("play");clearInterval(anim);bars.forEach(b=>b.style.height="")};
+utt.onerror=()=>{btn.dataset.playing="0";btn.innerHTML=ic("play");clearInterval(anim);bars.forEach(b=>b.style.height="")};
+window.speechSynthesis.speak(utt);
+}else{
+setTimeout(()=>{btn.dataset.playing="0";btn.innerHTML=ic("play");clearInterval(anim);bars.forEach(b=>b.style.height="")},2400);
+}
 }
 }
 }
