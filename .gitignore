@@ -11,11 +11,43 @@ android/.gradle/
 ios/App/App.xcworkspace/
 ios/App/Pods/
 
-# Environment and IDE
+# Environment, API Keys & Secrets (CRITIQUE: Ne jamais envoyer sur GitHub)
 .env
-.env.local
-.DS_Store
-Thumbs.db
-.idea/
-.vscode/
+.env.*
+*.env
+*.env.*
+!.env.example
+*.local
+secrets.json
+secret.*
+credentials.json
+*_keys.*
+*api_key*
+*apikey*
+
+# Keystores, Certificates & Signatures mobiles
+*.jks
+*.keystore
+*.p12
+*.pem
+*.key
+*.cer
+*.crt
+*.p8
+*.mobileprovision
+
+# Google & Firebase Services (Contiennent les cles de projet privees)
+google-services.json
+GoogleService-Info.plist
+firebase-adminsdk*.json
+
+# Android & iOS Local Properties & Secrets
+android/local.properties
+android/.gradle/
+local.properties
+
+# Logs & Temporary files
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
