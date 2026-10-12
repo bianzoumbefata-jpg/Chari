@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Chari</string>
+    <string name="title_activity_main">Chari</string>
+    <string name="package_name">td.chari.app</string>
+    <string name="custom_url_scheme">td.chari.app</string>
+</resources>
