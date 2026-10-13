@@ -917,6 +917,12 @@ label,.lbl{
 .rep-option{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surf);cursor:pointer;font-size:13px;font-weight:600;color:var(--ink);transition:all .15s;text-align:start}
 .rep-option:hover{border-color:var(--brand);background:var(--highlight-lightest)}
 .bb.sys{align-self:center;background:var(--highlight-lightest);color:var(--brand);border:1px solid rgba(0,111,253,0.18);font-size:12px;font-weight:600;padding:6px 14px;border-radius:999px;box-shadow:none;text-align:center;max-width:90%}
+.selfie-badge{position:absolute;bottom:6px;inset-inline-start:6px;background:var(--brand);color:#fff;padding:2px 7px;border-radius:999px;font-size:10px;font-weight:700;display:inline-flex;align-items:center;gap:4px;box-shadow:0 2px 6px rgba(0,0,0,0.3);z-index:2;white-space:nowrap}
+.selfie-badge .i{width:12px;height:12px;stroke-width:2.5}
+.pt.pt-selfie{border:2px solid var(--brand)!important}
+.fb-stars{display:flex;justify-content:center;gap:10px;margin:6px 0}
+.fb-star{background:none;border:0;font-size:32px;color:#D1D5DB;cursor:pointer;transition:transform .15s, color .15s;padding:0;line-height:1}
+.fb-star.on{color:#F59E0B;transform:scale(1.15)}
 </style>
 </head>
 <body>
@@ -965,6 +971,19 @@ rel:"Religion",relMus:"Musulman(e)",relChr:"Chrétien(ne)",relOth:"Autre religio
 relMap:{mus:"🕌 Musulman(e)",chr:"✝️ Chrétien(ne)",oth:"🕊️ Autre religion"},
 mailb:"E-mail",telb:"Téléphone",eml:"Votre adresse e-mail",emE:"Entrez une adresse e-mail valide.",phs:"Mes photos",rm:"Retirer la photo",add:"Ajouter une photo",ph5i:"Ajoutez jusqu'à 5 photos. Les autres voient la version protégée (visage pixelisé) tant qu'il n'y a pas de match ; l'original n'est jamais affiché avant.",edt:"Masquer le visage",edh:"Placez le cercle sur votre visage : il sera pixelisé de façon irréversible, le reste de la photo reste net.",edx:"Position horizontale",edy:"Position verticale",eds:"Taille du masque",eda:"Ajouter la photo",edc:"Annuler",incog:"Mode incognito",incd:"Votre profil reste invisible : seules les personnes que vous aimez peuvent le voir.",incl:"Réservé à Premium",incb:"Incognito",
 kid:["Sans enfant","1 enfant","2 enfants","3 enfants ou plus"],
+selfieBadge:"Selfie vérifié",selfieLock:"Le selfie certifié est obligatoire et ne peut pas être supprimé.",
+fbTitle:"Donnez votre avis",fbSub:"Partagez vos suggestions ou signalez une amélioration.",fbBtn:"Écrire un avis",
+fbModalT:"Votre avis compte pour nous",fbModalD:"Aidez-nous à améliorer Chari au Tchad. Partagez votre expérience :",
+fbRatingLbl:"Votre note globale",
+fbRatingNames:["Très insatisfait","Peu satisfait","Correct","Très bon","Excellent !"],
+fbCatLbl:"Catégorie de retour",
+fbCatSugg:"💡 Suggestion d'amélioration",
+fbCatBug:"🛠️ Problème technique / Bug",
+fbCatLove:"❤️ Compliment / Témoignage",
+fbCatSec:"🛡️ Sécurité & modération",
+fbMsgPh:"Dites-nous ce que vous pensez de Chari, vos souhaits ou vos remarques...",
+fbMsgErr:"Veuillez écrire quelques mots pour expliquer votre avis.",
+fbSuccess:"Merci infiniment pour votre retour ! Notre équipe au Tchad en prendra compte.",
 k:{ser:"Relation amoureuse",mar:"Mariage",fam:"Famille",etu:"Études",ent:"Entrepreneuriat",foi:"Foi",mus:"Musique",foo:"Football",cui:"Cuisine",voy:"Voyage",fr:"Français",ar:"Arabe",sa:"Sara"}},
 ar:{d:"اكتشف",m:"الرسائل",p:"ملفي",pass:"تخطَّ",like:"إعجاب",mt:"تطابق!",ms:"أنتما معجبان ببعضكما.",wr:"راسل ",ct:"متابعة",done:"شاهدت كل شيء لهذا اليوم.",again:"إعادة العرض",none:"لا توجد محادثات بعد.",nh:"أعجب بملفات لبدء محادثة.",ph:"اكتب رسالة",snd:"إرسال",bk:"رجوع",my:"ملفي الشخصي",vg:"جارٍ التحقق…",vd:"ملف موثّق",blur:"الوجه مخفي حتى التطابق",lite:"توفير البيانات",sf:"نصائح للأمان",st:"لا ترسل المال أو الرموز أبداً. التقِ في مكان عام وأخبر شخصاً مقرباً.",age:"للبالغين 22 سنة فأكثر فقط.",demo:"الملفات خيالية. الرمز والسيلفي والصور والدفع كلها محاكاة (عرض تجريبي).",lgb:"Français",r:["مرحباً! سعيد بالتعرف عليك.","من أي مدينة أنت؟"],
 wl:"مرحباً بك في شاري",wl2:"علاقات عاطفية بين رجل وامرأة، مع ملفات موثّقة.",phl:"رقم هاتفك",ph8:"أدخل رقماً من 8 أرقام.",otp:"رمز التأكيد",otps:"تم إرسال الرمز إلى ",otpd:"تجريبي: لا تُرسل أي رسالة. استخدم الرمز 123456.",cod:"الرمز المكوّن من 6 أرقام",bad:"الرمز غير صحيح.",pr:"ملفك الشخصي",nm:"الاسم الأول",job:"المهنة / العمل",jobPh:"مثال: معلم، تاجر، ممرضة...",tcty:"المدينة المراد التعارف فيها",allC:"جميع المدن (تشاد)",noCity:"لا توجد ملفات في هذه المدينة",noCityD:"لا توجد ملفات متوفرة حالياً في هذه المدينة. جرب توسيع البحث ليشمل جميع المدن!",iam:"أنا",fem:"امرأة",mal:"رجل",ag:"العمر",agE:"التطبيق مخصص لمن بلغ 22 سنة فأكثر.",cty:"مدينتك",kd:"عدد الأطفال",it:"أبحث عن",req:"أكمل جميع الحقول.",sf1:"وثّق ملفك",sf2:"التقط صورة سيلفي: إلزامية للدخول إلى التطبيق.",shot:"التقاط سيلفي",sf3:"تؤكد الصورة أنك صاحب الملف. في هذا العرض التجريبي تبقى على جهازك.",pj:"ملفاً شاهدته اليوم",unl:"بريميوم مفعّل: ملفات غير محدودة اليوم",pw:"بلغت حد اليوم",pw2:"شاهدت ملفاتك المجانية العشرين اليوم.",pss:"باقة بريميوم لليوم",pss2:"ملفات غير محدودة حتى منتصف الليل ووضع التخفّي.",op:"الدفع عبر",pn:"رقم الدفع",pb:"ادفع 5 000 FCFA",pg:"جارٍ الدفع…",pd:"تجريبي: لا يتم أي دفع حقيقي.",paid:"تم استلام الدفع. تم تفعيل بريميوم.",plan:"باقتك",free:"مجانية: 20 ملفاً في اليوم",prem:"باقة بريميوم لليوم مفعّلة",up:"الترقية إلى بريميوم (5 000 FCFA)",dm:"تجريبي: الانتقال إلى 19 ملفاً",opVisa:"بطاقة Visa",cardNum:"رقم بطاقة Visa",cardExp:"تاريخ الانتهاء (MM/AA)",cardCvv:"رمز الأمان (3 أرقام)",cardNom:"اسم صاحب البطاقة",cardNomPh:"مثال: MAHAMAT ADAM",cardSec:"دفع آمن 100% عبر Visa و 3D Secure",cardNumE:"رقم بطاقة Visa غير مكتمل (16 رقماً).",cardExpE:"تاريخ انتهاء غير صحيح (MM/AA).",cardCvvE:"رمز CVV غير صحيح (3 أرقام).",cardNomE:"يرجى كتابة اسم صاحب البطاقة.",visaPaid:"تم التحقق من بطاقة Visa بنجاح! تم تفعيل بريميوم.",
@@ -976,6 +995,19 @@ rel:"الديانة",relMus:"مسلم(ة)",relChr:"مسيحي(ة)",relOth:"دي�
 relMap:{mus:"🕌 مسلم(ة)",chr:"✝️ مسيحي(ة)",oth:"🕊️ ديانة أخرى"},
 mailb:"البريد الإلكتروني",telb:"الهاتف",eml:"عنوان بريدك الإلكتروني",emE:"أدخل عنوان بريد إلكتروني صالحاً.",phs:"صوري",rm:"حذف الصورة",add:"إضافة صورة",ph5i:"أضف حتى 5 صور. يرى الآخرون النسخة المحمية (وجه مشوّش) حتى يحدث تطابق، ولا تُعرض النسخة الأصلية قبل ذلك أبداً.",edt:"إخفاء الوجه",edh:"ضع الدائرة على وجهك: سيتم تشويشه بشكل لا رجعة فيه، وتبقى بقية الصورة واضحة.",edx:"الموضع الأفقي",edy:"الموضع العمودي",eds:"حجم القناع",eda:"إضافة الصورة",edc:"إلغاء",incog:"وضع التخفّي",incd:"يبقى ملفك غير مرئي: لا يراه إلا من تعجب به.",incl:"حصري لبريميوم",incb:"تخفّي",
 kid:["بلا أطفال","طفل واحد","طفلان","3 أطفال أو أكثر"],
+selfieBadge:"سيلفي موثّق",selfieLock:"صورة السيلفي الموثقة إلزامية ولا يمكن حذفها.",
+fbTitle:"شاركنا رأيك وملاحظاتك",fbSub:"شاركنا اقتراحاتك أو أفكارك لتحسين التطبيق.",fbBtn:"كتابة تقييم",
+fbModalT:"رأيك يهمنا كثيراً",fbModalD:"ساعدنا في تطوير تطبيق شاري في تشاد. شاركنا تجربتك ومقترحاتك:",
+fbRatingLbl:"تقييمك العام",
+fbRatingNames:["غير راضٍ تماماً","غير راضٍ","مقبول","جيد جداً","ممتاز جداً !"],
+fbCatLbl:"نوع الملاحظة",
+fbCatSugg:"💡 اقتراح تحسين",
+fbCatBug:"🛠️ مشكلة تقنية / عطل",
+fbCatLove:"❤️ إعجاب وتجربة جميلة",
+fbCatSec:"🛡️ الأمان والخصوصية",
+fbMsgPh:"اكتب ملاحظاتك، اقتراحاتك أو تجربتك مع التطبيق هنا...",
+fbMsgErr:"يرجى كتابة بضع كلمات توضح رأيك.",
+fbSuccess:"شكراً جزيلاً على تقييمك وملاحظاتك! سيهتم فريقنا في تشاد باقتراحك.",
 k:{ser:"علاقة عاطفية",mar:"زواج",fam:"العائلة",etu:"الدراسة",ent:"ريادة الأعمال",foi:"الإيمان",mus:"الموسيقى",foo:"كرة القدم",cui:"الطبخ",voy:"السفر",fr:"الفرنسية",ar:"العربية",sa:"السارا"}}};
 const FN=["Achta","Fatimé","Hawa","Khadidja","Kaltouma","Mariam","Zara","Halimé","Amina","Aïcha","Rahma","Nadjma","Esther","Grace","Rachel","Prisca","Judith","Ruth","Sarah","Dorcas","Béatrice","Claudine","Odette","Léa"];
 const MN=["Mahamat","Abakar","Idriss","Hassan","Moussa","Ibrahim","Ousmane","Adam","Oumar","Youssouf","Daniel","Joseph","Samuel","Emmanuel","Moïse","Nathan","David","Paul","Pierre","Jean","Michel","Éric","Franck","Ali"];
@@ -987,9 +1019,15 @@ const mk=(g,N,Bi)=>N.map((n,i)=>({id:(g==="f"?0:100)+i+1,g,n,a:22+(i*7+3)%14,c:C
 const P=[...mk("f",FN,BF),...mk("m",MN,BM)];
 const ME={n:"",bg:[G,B],cl:"#C3CCDB",sk:"#9AA7BB"};
 const $=s=>document.querySelector(s),byId=id=>P.find(p=>p.id===id),pool=()=>P.filter(p=>p.g!==st.u.g&&(!st.tc||st.tc==="all"||p.c===st.tc)&&!(st.blocked||[]).includes(p.id));
-const st={lang:"fr",blur:true,lite:false,tc:"all",mode:"tel",em:"",ph5:[],inc:false,ed:null,step:0,u:{hb:["spo","cui"],bio:"",lng:"fr",rel:"mus"},card:{num:"",exp:"",cvv:"",nom:""},g:"",ph:"",i:0,seen:0,prem:0,pay:0,op:"",pp:0,vs:0,selfie:"",tab:"d",chat:null,mt:[],ms:{},busy:0,blocked:[]};
-try{const s=JSON.parse(localStorage.getItem("chari")||"{}");["lang","blur","lite","tc"].forEach(k=>{if(k in s)st[k]=s[k]});if(s.blocked)st.blocked=s.blocked;if(s.u)st.u=Object.assign({hb:["spo","cui"],bio:"",lng:"fr",rel:"mus"},s.u);if(!st.u.hb)st.u.hb=["spo","cui"]}catch(e){}
-const save=()=>{try{localStorage.setItem("chari",JSON.stringify({lang:st.lang,blur:st.blur,lite:st.lite,tc:st.tc,u:st.u,blocked:st.blocked||[]}))}catch(e){}};
+const st={lang:"fr",blur:true,lite:false,tc:"all",mode:"tel",em:"",ph5:[],inc:false,ed:null,step:0,u:{hb:["spo","cui"],bio:"",lng:"fr",rel:"mus"},card:{num:"",exp:"",cvv:"",nom:""},g:"",ph:"",i:0,seen:0,prem:0,pay:0,op:"",pp:0,vs:0,selfie:"",tab:"d",chat:null,mt:[],ms:{},busy:0,blocked:[],feedbacks:[]};
+function ensureSelfieInPh5(){
+if(!st.selfie)return;
+const idx=st.ph5.findIndex(p=>p.isSelfie||p.p===st.selfie||p.o===st.selfie);
+const itm={o:st.selfie,p:st.selfie,isSelfie:true};
+if(idx>=0){st.ph5[idx]=itm}else{st.ph5.unshift(itm);if(st.ph5.length>5)st.ph5=st.ph5.slice(0,5)}
+}
+try{const s=JSON.parse(localStorage.getItem("chari")||"{}");["lang","blur","lite","tc","selfie","step","g","ph","em","prem"].forEach(k=>{if(k in s)st[k]=s[k]});if(Array.isArray(s.ph5))st.ph5=s.ph5;if(Array.isArray(s.feedbacks))st.feedbacks=s.feedbacks;if(s.blocked)st.blocked=s.blocked;if(s.u)st.u=Object.assign({hb:["spo","cui"],bio:"",lng:"fr",rel:"mus"},s.u);if(!st.u.hb)st.u.hb=["spo","cui"];ensureSelfieInPh5()}catch(e){}
+const save=()=>{try{localStorage.setItem("chari",JSON.stringify({lang:st.lang,blur:st.blur,lite:st.lite,tc:st.tc,u:st.u,blocked:st.blocked||[],selfie:st.selfie,ph5:st.ph5,feedbacks:st.feedbacks||[],step:st.step,g:st.g,ph:st.ph,em:st.em,prem:st.prem}))}catch(e){}};
 const x=()=>T[st.lang],ic=n=>`<svg class="i" aria-hidden="true"><use href="#i-${n}"/></svg>`,say=s=>{$("#live").textContent=s};
 const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const me=r=>st.ph5.length?`<img src="${st.ph5[0][r?"o":"p"]}" alt="">`:av(ME);
@@ -1020,7 +1058,7 @@ function prof(){const t=x(),u=st.u,n=st.ph5.length;
 const hbList=(u.hb||[]);
 const uBio=u.bio||t.bioDef;
 const blkCount=(st.blocked||[]).length;
-return`<div class="pf"><h1>${t.my}</h1><div class="card"><div class="bd"><div class="chh"><span class="av l">${me(0)}</span><div><h2>${esc(u.n||"")}, ${u.a}${ic("ok")}</h2><p class="mut">${u.jb?esc(u.jb)+" · ":""}${u.c} ${flagSvg}</p></div></div><p class="b" style="margin:10px 0 8px;font-style:italic;color:var(--ink);background:rgba(0,0,0,.03);padding:10px 14px;border-radius:12px;border-inline-start:3px solid var(--brand);cursor:pointer" data-a="edbio" title="${t.edBio}">“${esc(uBio)}”</p><ul class="chips"><li>${t.vd}</li><li style="cursor:pointer" data-a="edj" title="${t.job}">${esc(u.jb||"")}</li><li style="cursor:pointer" data-a="edc" title="${t.cty}">${esc(u.c)}</li><li style="cursor:pointer" data-a="edtc" title="${t.tcty}">${t.seekCity}: ${esc(st.tc==="all"?t.allC:st.tc)}</li><li style="cursor:pointer" data-a="edrel" title="${t.rel}">${(t.relMap&&t.relMap[u.rel])||t.relMus}</li><li style="cursor:pointer" data-a="edlng" title="${t.langSpk}">${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</li><li>${t.kid[u.kd]}</li><li>${t.k[u.i]}</li>${u.gVerif?`<li style="border-color:#34A853;color:#1e7e34">${t.gVerif}</li>`:""}${st.inc?`<li>${t.incb}</li>`:""}</ul></div></div><div class="sf"><div><h3>${t.rel} & ${t.langSpk}</h3><p>${(t.relMap&&t.relMap[u.rel])||t.relMus} · ${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edrel">${t.rel}</button></div><div class="sf"><div><h3>${t.bio}</h3><p style="white-space:pre-wrap;color:var(--ink)">${esc(uBio)}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edbio">${t.edBio}</button></div><div class="sf"><div><h3>${t.hob}</h3><p>${hbList.length?hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?h[st.lang]:""}).filter(Boolean).join(" · "):t.hobHint}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-edhb">${t.edHb}</button></div><div class="h-chips" style="margin-top:-6px;margin-bottom:12px">${hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?`<span class="h-chip on" style="cursor:pointer" data-a="open-edhb"><span>${h[st.lang]}</span></span>`:""}).join("")}</div><div class="sf"><div><h3>${t.tcty}</h3><p>${st.tc==="all"?t.allC:st.tc} ${flagSvg}</p></div><select class="fld" style="width:auto;min-height:38px;padding:4px 8px;margin-inline-start:auto" id="p-tc"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.tc===c?"selected":""}>${c}</option>`).join("")}</select></div><div class="sf"><div><h3>${t.phs} (${n}/5)</h3><p>${t.ph5i}</p></div></div><div class="grid5">${st.ph5.map((q,i)=>`<div class="pt"><img src="${q.p}" alt=""><button class="ib rmb" data-a="rmp" data-k="${i}" aria-label="${t.rm}">${ic("x")}</button></div>`).join("")}${n<5?`<button class="pt add" data-a="addp">${ic("cam")}<span>${t.add}</span></button>`:""}</div><input id="pf" type="file" accept="image/*" hidden><div class="sf"><div><h3>${t.blkedList} (${blkCount})</h3><p>${blkCount?blkCount+" "+(st.lang==="ar"?"مستخدم محظور":"utilisateur(s) bloqué(s)"):t.noBlked}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-blocked">${t.blkedList}</button></div><div class="sf"><div><h3>${t.plan}</h3><p>${st.prem?t.prem:t.free}</p></div></div>${st.prem?"":`<button class="btn" data-a="up">${t.up}</button><button class="btn sec" data-a="d19">${t.dm}</button>`}${st.prem?sw("inc",t.incog)+`<p class="mut">${t.incd}</p>`:`<button class="sw" data-a="up"><span>${t.incog}<br><small>${t.incl}</small></span>${ic("lock")}</button>`}${sw("blur",t.blur)}${sw("lite",t.lite)}<div class="sf">${ic("shield")}<div><h3>${t.sf}</h3><p>${t.st}</p></div></div><p class="mut">${t.age}</p><p class="mut">${t.demo}</p></div>`}
+return`<div class="pf"><h1>${t.my}</h1><div class="card"><div class="bd"><div class="chh"><span class="av l">${me(0)}</span><div><h2>${esc(u.n||"")}, ${u.a}${ic("ok")}</h2><p class="mut">${u.jb?esc(u.jb)+" · ":""}${u.c} ${flagSvg}</p></div></div><p class="b" style="margin:10px 0 8px;font-style:italic;color:var(--ink);background:rgba(0,0,0,.03);padding:10px 14px;border-radius:12px;border-inline-start:3px solid var(--brand);cursor:pointer" data-a="edbio" title="${t.edBio}">“${esc(uBio)}”</p><ul class="chips"><li>${t.vd}</li><li style="cursor:pointer" data-a="edj" title="${t.job}">${esc(u.jb||"")}</li><li style="cursor:pointer" data-a="edc" title="${t.cty}">${esc(u.c)}</li><li style="cursor:pointer" data-a="edtc" title="${t.tcty}">${t.seekCity}: ${esc(st.tc==="all"?t.allC:st.tc)}</li><li style="cursor:pointer" data-a="edrel" title="${t.rel}">${(t.relMap&&t.relMap[u.rel])||t.relMus}</li><li style="cursor:pointer" data-a="edlng" title="${t.langSpk}">${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</li><li>${t.kid[u.kd]}</li><li>${t.k[u.i]}</li>${u.gVerif?`<li style="border-color:#34A853;color:#1e7e34">${t.gVerif}</li>`:""}${st.inc?`<li>${t.incb}</li>`:""}</ul></div></div><div class="sf"><div><h3>${t.rel} & ${t.langSpk}</h3><p>${(t.relMap&&t.relMap[u.rel])||t.relMus} · ${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edrel">${t.rel}</button></div><div class="sf"><div><h3>${t.bio}</h3><p style="white-space:pre-wrap;color:var(--ink)">${esc(uBio)}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edbio">${t.edBio}</button></div><div class="sf"><div><h3>${t.hob}</h3><p>${hbList.length?hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?h[st.lang]:""}).filter(Boolean).join(" · "):t.hobHint}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-edhb">${t.edHb}</button></div><div class="h-chips" style="margin-top:-6px;margin-bottom:12px">${hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?`<span class="h-chip on" style="cursor:pointer" data-a="open-edhb"><span>${h[st.lang]}</span></span>`:""}).join("")}</div><div class="sf"><div><h3>${t.tcty}</h3><p>${st.tc==="all"?t.allC:st.tc} ${flagSvg}</p></div><select class="fld" style="width:auto;min-height:38px;padding:4px 8px;margin-inline-start:auto" id="p-tc"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.tc===c?"selected":""}>${c}</option>`).join("")}</select></div><div class="sf"><div><h3>${t.phs} (${n}/5)</h3><p>${t.ph5i}</p></div></div><div class="grid5">${st.ph5.map((q,i)=>`<div class="pt ${q.isSelfie?'pt-selfie':''}"><img src="${q.p}" alt="">${q.isSelfie?`<span class="selfie-badge">${ic("ok")} ${t.selfieBadge}</span>`:`<button class="ib rmb" data-a="rmp" data-k="${i}" aria-label="${t.rm}">${ic("x")}</button>`}</div>`).join("")}${n<5?`<button class="pt add" data-a="addp">${ic("cam")}<span>${t.add}</span></button>`:""}</div><input id="pf" type="file" accept="image/*" hidden><div class="sf"><div><h3>${t.blkedList} (${blkCount})</h3><p>${blkCount?blkCount+" "+(st.lang==="ar"?"مستخدم محظور":"utilisateur(s) bloqué(s)"):t.noBlked}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-blocked">${t.blkedList}</button></div><div class="sf" style="border:1.5px solid rgba(0,111,253,0.3);background:var(--neutral-light-light);cursor:pointer" data-a="open-fb"><div><h3 style="color:var(--brand);display:flex;align-items:center;gap:6px">⭐ ${t.fbTitle}</h3><p style="color:var(--ink);font-size:13px">${t.fbSub}</p></div><button class="btn" style="width:auto;min-height:36px;padding:4px 14px;margin-inline-start:auto" data-a="open-fb">${t.fbBtn}</button></div><div class="sf"><div><h3>${t.plan}</h3><p>${st.prem?t.prem:t.free}</p></div></div>${st.prem?"":`<button class="btn" data-a="up">${t.up}</button><button class="btn sec" data-a="d19">${t.dm}</button>`}${st.prem?sw("inc",t.incog)+`<p class="mut">${t.incd}</p>`:`<button class="sw" data-a="up"><span>${t.incog}<br><small>${t.incl}</small></span>${ic("lock")}</button>`}${sw("blur",t.blur)}${sw("lite",t.lite)}<div class="sf">${ic("shield")}<div><h3>${t.sf}</h3><p>${t.st}</p></div></div><p class="mut">${t.age}</p><p class="mut">${t.demo}</p></div>`}
 function prot(src,e){const c=document.createElement("canvas");c.width=c.height=360;const g=c.getContext("2d");g.drawImage(src,0,0);
 const X=e.x*3.6,Y=e.y*3.6,R=e.r*3.6,m=document.createElement("canvas");m.width=m.height=8;m.getContext("2d").drawImage(src,X-R,Y-R,2*R,2*R,0,0,8,8);
 g.save();g.beginPath();g.ellipse(X,Y,R*.8,R,0,0,7);g.clip();g.imageSmoothingEnabled=false;g.drawImage(m,X-R,Y-R,2*R,2*R);g.restore();return c}
@@ -1081,6 +1119,8 @@ ctx.translate(300,0);ctx.scale(-1,1);
 const vw=v.videoWidth||300,vh=v.videoHeight||300,sz=Math.min(vw,vh);
 ctx.drawImage(v,(vw-sz)/2,(vh-sz)/2,sz,sz,0,0,300,300);
 st.selfie=c.toDataURL("image/jpeg",.85);
+ensureSelfieInPh5();
+save();
 stopCam();
 st.vs=1;render();
 setTimeout(()=>{st.vs=2;go(4);say(x().vd)},1600);
@@ -1299,6 +1339,31 @@ function unblock(id){
 if(st.blocked){st.blocked=st.blocked.filter(x=>x!==id);save()}
 openBlockedListModal();render();say(x().unblkDone);
 }
+let fbState={rating:5,cat:"sugg"};
+function renderFeedbackModalContent(){
+const t=x(),r=fbState.rating;
+const stars=[1,2,3,4,5].map(n=>`<button type="button" class="fb-star ${n<=r?'on':''}" data-a="fb-rate" data-r="${n}" aria-label="${n} / 5">★</button>`).join("");
+const rName=(t.fbRatingNames&&t.fbRatingNames[r-1])||"";
+return`<div style="flex:1;display:flex;align-items:center;justify-content:center;padding:16px"><div class="g-modal" style="max-width:440px;text-align:start"><h2 style="font-size:20px;color:var(--ink);margin:0;display:flex;align-items:center;gap:8px">⭐ ${t.fbModalT}</h2><p style="margin:0;color:var(--mut);font-size:13px">${t.fbModalD}</p><div style="margin:10px 0 6px;text-align:center"><label style="font-size:13px;font-weight:700;color:var(--ink);display:block">${t.fbRatingLbl}</label><div class="fb-stars" role="group" aria-label="${t.fbRatingLbl}">${stars}</div><span id="fb-rating-name" style="font-size:13px;font-weight:600;color:var(--brand)">${rName}</span></div><div style="margin:8px 0"><label for="fb-cat" style="font-size:13px;font-weight:700;color:var(--ink);display:block;margin-bottom:4px">${t.fbCatLbl}</label><select class="fld" id="fb-cat" style="margin-bottom:0"><option value="sugg" ${fbState.cat==="sugg"?"selected":""}>${t.fbCatSugg}</option><option value="bug" ${fbState.cat==="bug"?"selected":""}>${t.fbCatBug}</option><option value="love" ${fbState.cat==="love"?"selected":""}>${t.fbCatLove}</option><option value="sec" ${fbState.cat==="sec"?"selected":""}>${t.fbCatSec}</option></select></div><div style="margin:8px 0"><label for="fb-msg" style="font-size:13px;font-weight:700;color:var(--ink);display:block;margin-bottom:4px">${t.m}</label><textarea class="fld" id="fb-msg" rows="3" style="resize:vertical;font-family:inherit;padding:10px;line-height:1.4" placeholder="${t.fbMsgPh}" maxlength="400"></textarea><p class="err" id="fb-err" role="alert" style="margin-top:4px"></p></div><button class="btn" data-a="submit-fb">${t.snd}</button><button class="btn sec" data-a="cm" style="min-height:40px">${t.bk}</button></div></div>`;
+}
+function openFeedbackModal(){
+const o=$("#ov");o.innerHTML=renderFeedbackModalContent();o.hidden=false;
+const ta=$("#fb-msg");if(ta)setTimeout(()=>ta.focus(),60);
+}
+function setFeedbackRating(r){
+fbState.rating=r;
+document.querySelectorAll(".fb-star").forEach(st=>{const nr=+st.dataset.r;st.classList.toggle("on",nr<=r)});
+const rName=(x().fbRatingNames&&x().fbRatingNames[r-1])||"";
+const lbl=$("#fb-rating-name");if(lbl)lbl.textContent=rName;
+}
+function submitFeedback(){
+const t=x(),catEl=$("#fb-cat"),msgEl=$("#fb-msg"),msg=msgEl?msgEl.value.trim():"";
+if(!msg){const err=$("#fb-err");if(err)err.textContent=t.fbMsgErr;if(msgEl)msgEl.focus();return}
+const cat=catEl?catEl.value:"sugg";
+if(!st.feedbacks)st.feedbacks=[];
+st.feedbacks.push({rating:fbState.rating,cat:cat,msg:msg,user:(st.u&&st.u.n)||"Utilisateur",date:new Date().toISOString()});
+save();closeM();alert(t.fbSuccess);say(t.fbSuccess);
+}
 function send(){const i=$("#in"),v=i.value.trim(),id=st.chat;if(!v)return;
 add(id,{w:"me",t:v});i.value="";
 setTimeout(()=>{if(st.ms[id])add(id,{w:"th",t:x().r[st.ms[id].filter(m=>m.w==="th").length%2]})},900)}
@@ -1348,13 +1413,16 @@ else if(a==="edj"){const nj=prompt(t.job,st.u.jb||"");if(nj&&nj.trim()){st.u.jb=
 else if(a==="edc"){const nc=prompt(t.cty,st.u.c||"");if(nc&&nc.trim()){st.u.c=nc.trim();render()}}
 else if(a==="edtc"){st.tab="d";render();if($("#sel-tc"))$("#sel-tc").focus()}
 else if(a==="reset-tc"){st.tc="all";if(st.u)st.u.tc="all";st.i=0;save();render()}
+else if(a==="open-fb"){openFeedbackModal()}
+else if(a==="fb-rate"){setFeedbackRating(+b.dataset.r)}
+else if(a==="submit-fb"){submitFeedback()}
 else if(a==="addp")$("#pf").click();
-else if(a==="rmp"){st.ph5.splice(+k,1);render()}
-else if(a==="eda"){st.ph5.push({o:st.ed.src.toDataURL("image/jpeg",.85),p:prot(st.ed.src,st.ed).toDataURL("image/jpeg",.85)});st.ed=null;render()}
+else if(a==="rmp"){if(st.ph5[+k]&&st.ph5[+k].isSelfie){alert(t.selfieLock);return}st.ph5.splice(+k,1);save();render()}
+else if(a==="eda"){st.ph5.push({o:st.ed.src.toDataURL("image/jpeg",.85),p:prot(st.ed.src,st.ed).toDataURL("image/jpeg",.85)});st.ed=null;save();render()}
 else if(a==="edc"){st.ed=null;render()}
 else if(a==="snap-cam")snapCam();
-else if(a==="retake-selfie"){st.selfie="";st.vs=0;render();setTimeout(startCam,120);}
-else if(a==="val-selfie"){stopCam();go(4);say(x().vd);}
+else if(a==="retake-selfie"){st.selfie="";st.ph5=st.ph5.filter(p=>!p.isSelfie);st.vs=0;save();render();setTimeout(startCam,120);}
+else if(a==="val-selfie"){ensureSelfieInPh5();save();stopCam();go(4);say(x().vd);}
 else if(a==="op"){st.op=k;render();$(`[data-a=op][data-k=${k}]`).focus()}
 else if(a==="pay"){
 if(st.op==="visa"){
