@@ -923,6 +923,16 @@ label,.lbl{
 .fb-stars{display:flex;justify-content:center;gap:10px;margin:6px 0}
 .fb-star{background:none;border:0;font-size:32px;color:#D1D5DB;cursor:pointer;transition:transform .15s, color .15s;padding:0;line-height:1}
 .fb-star.on{color:#F59E0B;transform:scale(1.15)}
+*, *::before, *::after{-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-touch-callout:none}
+input, textarea, [contenteditable="true"]{-webkit-user-select:text;-moz-user-select:text;user-select:text}
+img{-webkit-user-drag:none;user-drag:none}
+@media print{html,body{display:none!important;visibility:hidden!important}}
+.screen-shield{position:fixed;inset:0;background:#0B132B;color:#fff;z-index:999999;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 24px}
+.screen-shield-icon{width:72px;height:72px;border-radius:50%;background:rgba(237,50,65,0.15);color:#ED3241;display:grid;place-items:center;margin-bottom:18px}
+.screen-shield h2{font-size:22px;font-weight:800;margin:0 0 10px;color:#fff}
+.screen-shield p{font-size:14px;color:#94A3B8;max-width:320px;line-height:1.5;margin:0 0 24px}
+body.screen-protected .app{filter:blur(28px)!important;opacity:0.04!important;pointer-events:none!important}
+body.screen-protected .screen-shield{display:flex!important}
 </style>
 </head>
 <body>
@@ -957,6 +967,12 @@ label,.lbl{
 </div>
 <div id="ov" class="ov" role="dialog" aria-modal="true" hidden></div>
 <div id="live" class="sr" aria-live="polite"></div>
+<div id="screen-shield" class="screen-shield" role="alert" aria-live="assertive">
+<div class="screen-shield-icon"><svg viewBox="0 0 24 24" width="38" height="38" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+<h2 id="sc-shield-t">Capture d'écran interdite</h2>
+<p id="sc-shield-d">Pour protéger l'intimité et la sécurité des membres sur Chari, les captures d'écran et enregistrements sont strictement interdits.</p>
+<button type="button" class="btn" style="width:auto;min-height:44px;padding:0 24px" data-a="dismiss-shield">Continuer sur Chari</button>
+</div>
 <script>
 const LIM=20,B="#1E3A8A",G="#D97706",R="#E11D48";
 const flagSvg=`<span class="flag-mini" title="Tchad" aria-label="Tchad"><svg viewBox="0 0 30 20" width="18" height="12"><rect width="10" height="20" x="0" fill="#002664"/><rect width="10" height="20" x="10" fill="#FECB00"/><rect width="10" height="20" x="20" fill="#C60C30"/></svg></span>`;
@@ -984,6 +1000,7 @@ fbCatSec:"🛡️ Sécurité & modération",
 fbMsgPh:"Dites-nous ce que vous pensez de Chari, vos souhaits ou vos remarques...",
 fbMsgErr:"Veuillez écrire quelques mots pour expliquer votre avis.",
 fbSuccess:"Merci infiniment pour votre retour ! Notre équipe au Tchad en prendra compte.",
+scBlockT:"Capture d'écran interdite",scBlockD:"Pour préserver l'intimité et la sécurité des membres sur Chari, les captures d'écran et enregistrements vidéo sont strictement interdits.",scToast:"⚠️ Capture d'écran bloquée : la vie privée des membres est protégée sur Chari.",scDismiss:"Continuer sur Chari",
 k:{ser:"Relation amoureuse",mar:"Mariage",fam:"Famille",etu:"Études",ent:"Entrepreneuriat",foi:"Foi",mus:"Musique",foo:"Football",cui:"Cuisine",voy:"Voyage",fr:"Français",ar:"Arabe",sa:"Sara"}},
 ar:{d:"اكتشف",m:"الرسائل",p:"ملفي",pass:"تخطَّ",like:"إعجاب",mt:"تطابق!",ms:"أنتما معجبان ببعضكما.",wr:"راسل ",ct:"متابعة",done:"شاهدت كل شيء لهذا اليوم.",again:"إعادة العرض",none:"لا توجد محادثات بعد.",nh:"أعجب بملفات لبدء محادثة.",ph:"اكتب رسالة",snd:"إرسال",bk:"رجوع",my:"ملفي الشخصي",vg:"جارٍ التحقق…",vd:"ملف موثّق",blur:"الوجه مخفي حتى التطابق",lite:"توفير البيانات",sf:"نصائح للأمان",st:"لا ترسل المال أو الرموز أبداً. التقِ في مكان عام وأخبر شخصاً مقرباً.",age:"للبالغين 22 سنة فأكثر فقط.",demo:"الملفات خيالية. الرمز والسيلفي والصور والدفع كلها محاكاة (عرض تجريبي).",lgb:"Français",r:["مرحباً! سعيد بالتعرف عليك.","من أي مدينة أنت؟"],
 wl:"مرحباً بك في شاري",wl2:"علاقات عاطفية بين رجل وامرأة، مع ملفات موثّقة.",phl:"رقم هاتفك",ph8:"أدخل رقماً من 8 أرقام.",otp:"رمز التأكيد",otps:"تم إرسال الرمز إلى ",otpd:"تجريبي: لا تُرسل أي رسالة. استخدم الرمز 123456.",cod:"الرمز المكوّن من 6 أرقام",bad:"الرمز غير صحيح.",pr:"ملفك الشخصي",nm:"الاسم الأول",job:"المهنة / العمل",jobPh:"مثال: معلم، تاجر، ممرضة...",tcty:"المدينة المراد التعارف فيها",allC:"جميع المدن (تشاد)",noCity:"لا توجد ملفات في هذه المدينة",noCityD:"لا توجد ملفات متوفرة حالياً في هذه المدينة. جرب توسيع البحث ليشمل جميع المدن!",iam:"أنا",fem:"امرأة",mal:"رجل",ag:"العمر",agE:"التطبيق مخصص لمن بلغ 22 سنة فأكثر.",cty:"مدينتك",kd:"عدد الأطفال",it:"أبحث عن",req:"أكمل جميع الحقول.",sf1:"وثّق ملفك",sf2:"التقط صورة سيلفي: إلزامية للدخول إلى التطبيق.",shot:"التقاط سيلفي",sf3:"تؤكد الصورة أنك صاحب الملف. في هذا العرض التجريبي تبقى على جهازك.",pj:"ملفاً شاهدته اليوم",unl:"بريميوم مفعّل: ملفات غير محدودة اليوم",pw:"بلغت حد اليوم",pw2:"شاهدت ملفاتك المجانية العشرين اليوم.",pss:"باقة بريميوم لليوم",pss2:"ملفات غير محدودة حتى منتصف الليل ووضع التخفّي.",op:"الدفع عبر",pn:"رقم الدفع",pb:"ادفع 5 000 FCFA",pg:"جارٍ الدفع…",pd:"تجريبي: لا يتم أي دفع حقيقي.",paid:"تم استلام الدفع. تم تفعيل بريميوم.",plan:"باقتك",free:"مجانية: 20 ملفاً في اليوم",prem:"باقة بريميوم لليوم مفعّلة",up:"الترقية إلى بريميوم (5 000 FCFA)",dm:"تجريبي: الانتقال إلى 19 ملفاً",opVisa:"بطاقة Visa",cardNum:"رقم بطاقة Visa",cardExp:"تاريخ الانتهاء (MM/AA)",cardCvv:"رمز الأمان (3 أرقام)",cardNom:"اسم صاحب البطاقة",cardNomPh:"مثال: MAHAMAT ADAM",cardSec:"دفع آمن 100% عبر Visa و 3D Secure",cardNumE:"رقم بطاقة Visa غير مكتمل (16 رقماً).",cardExpE:"تاريخ انتهاء غير صحيح (MM/AA).",cardCvvE:"رمز CVV غير صحيح (3 أرقام).",cardNomE:"يرجى كتابة اسم صاحب البطاقة.",visaPaid:"تم التحقق من بطاقة Visa بنجاح! تم تفعيل بريميوم.",
@@ -1008,6 +1025,7 @@ fbCatSec:"🛡️ الأمان والخصوصية",
 fbMsgPh:"اكتب ملاحظاتك، اقتراحاتك أو تجربتك مع التطبيق هنا...",
 fbMsgErr:"يرجى كتابة بضع كلمات توضح رأيك.",
 fbSuccess:"شكراً جزيلاً على تقييمك وملاحظاتك! سيهتم فريقنا في تشاد باقتراحك.",
+scBlockT:"التقاط الشاشة ممنوع",scBlockD:"لحماية خصوصية وأمان المشتركين في شاري، يمنع منعاً باتاً تصوير أو تسجيل الشاشة.",scToast:"⚠️ تم حظر التقاط الشاشة: خصوصية الأعضاء محمية في شاري.",scDismiss:"المتابعة في شاري",
 k:{ser:"علاقة عاطفية",mar:"زواج",fam:"العائلة",etu:"الدراسة",ent:"ريادة الأعمال",foi:"الإيمان",mus:"الموسيقى",foo:"كرة القدم",cui:"الطبخ",voy:"السفر",fr:"الفرنسية",ar:"العربية",sa:"السارا"}}};
 const FN=["Achta","Fatimé","Hawa","Khadidja","Kaltouma","Mariam","Zara","Halimé","Amina","Aïcha","Rahma","Nadjma","Esther","Grace","Rachel","Prisca","Judith","Ruth","Sarah","Dorcas","Béatrice","Claudine","Odette","Léa"];
 const MN=["Mahamat","Abakar","Idriss","Hassan","Moussa","Ibrahim","Ousmane","Adam","Oumar","Youssouf","Daniel","Joseph","Samuel","Emmanuel","Moïse","Nathan","David","Paul","Pierre","Jean","Michel","Éric","Franck","Ali"];
@@ -1081,6 +1099,8 @@ l.append(d);
 function add(id,m){st.ms[id].push(m);const l=$("#log");if(l&&st.chat===id){bub(l,m);l.scrollTop=l.scrollHeight}}
 function render(){const t=x(),h=document.documentElement,on=st.step<4;
 h.lang=st.lang;h.dir=st.lang==="ar"?"rtl":"ltr";h.classList.toggle("lite",st.lite);$("#lang").textContent=t.lgb;
+const stEl=$("#sc-shield-t"),sdEl=$("#sc-shield-d"),sbEl=$("[data-a=dismiss-shield]");
+if(stEl)stEl.textContent=t.scBlockT;if(sdEl)sdEl.textContent=t.scBlockD;if(sbEl)sbEl.textContent=t.scDismiss;
 $("#nav").innerHTML=on?"":[["d","compass",t.d],["m","chat",t.m],["p","user",t.p]].map(([k,i,l])=>`<button data-a="tab" data-k="${k}" ${st.tab===k?'aria-current="page"':""}>${ic(i)}<span>${l}</span></button>`).join("");
 $("#v").innerHTML=on?onb():st.tab==="d"?dis():st.tab==="m"?(st.chat?chat():msgs()):(st.ed?edv():prof());
 if(st.ed&&!on&&st.tab==="p")drawEd();
@@ -1453,6 +1473,7 @@ else if(a==="back"){st.chat=null;render()}
 else if(a==="send"){send();$("#in").focus()}
 else if(a==="sw"){if(k==="inc"&&!st.prem){st.pay=1;st.tab="d";render();return}st[k]=!st[k];save();b.setAttribute("aria-checked",st[k]);document.documentElement.classList.toggle("lite",st.lite)}
 else if(a==="wr"){closeM();st.tab="m";st.chat=+b.dataset.id;render();$("#in").focus()}
+else if(a==="dismiss-shield"){document.body.classList.remove("screen-protected")}
 else if(a==="cm"){closeM();render();const l=$("[data-a=like]");if(l)l.focus()}});
 document.addEventListener("change",e=>{if(e.target.id==="sel-tc"||e.target.id==="p-tc"){st.tc=e.target.value;if(st.u)st.u.tc=st.tc;st.i=0;save();render();return}
 if(e.target.id==="chat-file"&&e.target.files[0]){
@@ -1496,6 +1517,28 @@ let v=e.target.value.toUpperCase();
 if(!st.card)st.card={};st.card.nom=v;
 const el=$(".visa-card-nom-val");if(el)el.textContent=v||"NOM PRENOM";
 }
+});
+function triggerScreenshotBlocked(){
+const t=x();
+document.body.classList.add("screen-protected");
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText("").catch(()=>{})}
+say(t.scToast);
+}
+document.addEventListener("contextmenu",e=>e.preventDefault());
+document.addEventListener("dragstart",e=>e.preventDefault());
+document.addEventListener("keyup",e=>{if(e.key==="PrintScreen")triggerScreenshotBlocked()});
+document.addEventListener("keydown",e=>{
+if(e.key==="PrintScreen"){e.preventDefault();triggerScreenshotBlocked();return}
+const ctrl=e.ctrlKey||e.metaKey;
+if(ctrl&&(e.key==="p"||e.key==="P"||e.key==="s"||e.key==="S")){e.preventDefault();triggerScreenshotBlocked();return}
+if(ctrl&&e.shiftKey&&(e.key==="s"||e.key==="S"||e.key==="i"||e.key==="I")){e.preventDefault();triggerScreenshotBlocked();return}
+if(e.key==="F12"){e.preventDefault();return}
+});
+window.addEventListener("blur",()=>{document.body.classList.add("screen-protected")});
+window.addEventListener("focus",()=>{document.body.classList.remove("screen-protected")});
+document.addEventListener("visibilitychange",()=>{
+if(document.hidden){document.body.classList.add("screen-protected")}
+else{document.body.classList.remove("screen-protected")}
 });
 render();
 
