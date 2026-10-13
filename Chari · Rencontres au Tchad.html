@@ -982,12 +982,53 @@ if(window.supabase&&window.CHARI_SUPABASE&&window.CHARI_SUPABASE.url&&window.CHA
 sbClient=window.supabase.createClient(window.CHARI_SUPABASE.url,window.CHARI_SUPABASE.anonKey);
 }
 }catch(e){console.warn("Supabase init:",e)}
-function syncProfileToSupabase(){
+async function uploadImageToSupabase(dataUrl,fileName){
+if(!sbClient||!dataUrl||!dataUrl.startsWith("data:"))return dataUrl;
+try{
+const b=(window.CHARI_SUPABASE&&window.CHARI_SUPABASE.bucket)||"photo";
+const res=await fetch(dataUrl);const blob=await res.blob();
+const clean=(fileName||`img_${Date.now()}.jpg`).replace(/[^a-zA-Z0-9_.-]/g,'_');
+const path=`uploads/${clean}`;
+const {data,error}=await sbClient.storage.from(b).upload(path,blob,{contentType:'image/jpeg',upsert:true});
+if(!error&&data){
+const {data:pub}=sbClient.storage.from(b).getPublicUrl(path);
+if(pub&&pub.publicUrl)return pub.publicUrl;
+}
+}catch(e){console.warn("Storage upload:",e)}
+return dataUrl;
+}
+async function syncProfileToSupabase(){
 if(!sbClient||!st.u||!st.u.n)return;
-const pData={name:st.u.n,gender:st.g,age:st.u.a,city:st.u.c,target_city:st.u.tc||'all',job:st.u.jb,bio:st.u.bio||'',language:st.u.lng||'fr',religion:st.u.rel||'mus',children:st.u.kd||0,intention:st.u.i||'ser',hobbies:st.u.hb||[],selfie_url:st.selfie||null,is_verified:!!st.selfie,is_premium:!!st.prem};
+let sUrl=st.selfie||null;
+if(sUrl&&sUrl.startsWith("data:")){
+const up=await uploadImageToSupabase(sUrl,`selfie_${st.u.n}_${Date.now()}.jpg`);
+if(up&&!up.startsWith("data:")){sUrl=up;st.selfie=up;save();}
+}
+const pData={name:st.u.n,gender:st.g,age:st.u.a,city:st.u.c,target_city:st.u.tc||'all',job:st.u.jb,bio:st.u.bio||'',language:st.u.lng||'fr',religion:st.u.rel||'mus',children:st.u.kd||0,intention:st.u.i||'ser',hobbies:st.u.hb||[],selfie_url:sUrl,is_verified:!!st.selfie,is_premium:!!st.prem};
 if(st.mode==="mail"&&st.em)pData.email=st.em;
 if(st.mode==="tel"&&st.ph)pData.phone=st.ph;
-sbClient.from('profiles').upsert(pData).then(({error})=>{if(error)console.warn("Supabase profile sync:",error)}).catch(()=>{});
+try{
+const onC=st.mode==="mail"&&st.em?'email':(st.ph?'phone':undefined);
+const opts=onC?{onConflict:onC}:{};
+sbClient.from('profiles').upsert(pData,opts).then(async({data,error})=>{
+if(error)console.warn("Supabase profile sync:",error);
+if(st.ph5&&st.ph5.length){
+let chg=false;
+for(let idx=0;idx<st.ph5.length;idx++){
+const itm=st.ph5[idx];
+if(itm.o&&itm.o.startsWith("data:")){
+const upO=await uploadImageToSupabase(itm.o,`photo_${st.u.n}_${idx}_orig_${Date.now()}.jpg`);
+if(upO&&!upO.startsWith("data:")){itm.o=upO;chg=true;}
+}
+if(itm.p&&itm.p.startsWith("data:")){
+const upP=await uploadImageToSupabase(itm.p,`photo_${st.u.n}_${idx}_blur_${Date.now()}.jpg`);
+if(upP&&!upP.startsWith("data:")){itm.p=upP;chg=true;}
+}
+}
+if(chg)save();
+}
+}).catch(()=>{});
+}catch(e){console.warn("Supabase profile err:",e)}
 }
 const LIM=20,B="#1E3A8A",G="#D97706",R="#E11D48";
 const flagSvg=`<span class="flag-mini" title="Tchad" aria-label="Tchad"><svg viewBox="0 0 30 20" width="18" height="12"><rect width="10" height="20" x="0" fill="#002664"/><rect width="10" height="20" x="10" fill="#FECB00"/><rect width="10" height="20" x="20" fill="#C60C30"/></svg></span>`;
@@ -1349,7 +1390,13 @@ o.innerHTML=`<div style="flex:1;display:flex;align-items:center;justify-content:
 o.hidden=false;
 }
 function submitReport(id){
-const t=x();closeM();alert(t.repDone);say(t.repDone);
+const t=x();
+const rEl=document.querySelector('input[name="rep-r"]:checked');
+const reason=rEl?rEl.value:'other';
+closeM();alert(t.repDone);say(t.repDone);
+if(sbClient){
+sbClient.from('user_blocks').insert({reason:'report:'+reason+':'+id}).then(({error})=>{if(error)console.warn("Supabase report err:",error)}).catch(()=>{});
+}
 }
 function openBlockModal(id){
 const p=byId(id);if(!p)return;
@@ -1364,6 +1411,9 @@ save();closeM();
 if(st.chat===id){st.chat=null;st.tab="m"}
 const pCur=pool()[st.i];if(pCur&&pCur.id===id)st.i++;
 render();say(x().blkDone);alert(x().blkDone);
+if(sbClient){
+sbClient.from('user_blocks').insert({reason:'block:'+id}).then(({error})=>{if(error)console.warn("Supabase block err:",error)}).catch(()=>{});
+}
 }
 function openBlockedListModal(){
 const t=x(),o=$("#ov");
@@ -1457,8 +1507,8 @@ else if(a==="open-fb"){openFeedbackModal()}
 else if(a==="fb-rate"){setFeedbackRating(+b.dataset.r)}
 else if(a==="submit-fb"){submitFeedback()}
 else if(a==="addp")$("#pf").click();
-else if(a==="rmp"){if(st.ph5[+k]&&st.ph5[+k].isSelfie){alert(t.selfieLock);return}st.ph5.splice(+k,1);save();render()}
-else if(a==="eda"){st.ph5.push({o:st.ed.src.toDataURL("image/jpeg",.85),p:prot(st.ed.src,st.ed).toDataURL("image/jpeg",.85)});st.ed=null;save();render()}
+else if(a==="rmp"){if(st.ph5[+k]&&st.ph5[+k].isSelfie){alert(t.selfieLock);return}st.ph5.splice(+k,1);save();syncProfileToSupabase();render()}
+else if(a==="eda"){st.ph5.push({o:st.ed.src.toDataURL("image/jpeg",.85),p:prot(st.ed.src,st.ed).toDataURL("image/jpeg",.85)});st.ed=null;save();syncProfileToSupabase();render()}
 else if(a==="edc"){st.ed=null;render()}
 else if(a==="snap-cam")snapCam();
 else if(a==="retake-selfie"){st.selfie="";st.ph5=st.ph5.filter(p=>!p.isSelfie);st.vs=0;save();render();setTimeout(startCam,120);}
