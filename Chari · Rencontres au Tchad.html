@@ -973,7 +973,22 @@ body.screen-protected .screen-shield{display:flex!important}
 <p id="sc-shield-d">Pour protéger l'intimité et la sécurité des membres sur Chari, les captures d'écran et enregistrements sont strictement interdits.</p>
 <button type="button" class="btn" style="width:auto;min-height:44px;padding:0 24px" data-a="dismiss-shield">Continuer sur Chari</button>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 <script>
+let sbClient=null;
+try{
+if(window.supabase&&window.CHARI_SUPABASE&&window.CHARI_SUPABASE.url&&window.CHARI_SUPABASE.anonKey){
+sbClient=window.supabase.createClient(window.CHARI_SUPABASE.url,window.CHARI_SUPABASE.anonKey);
+}
+}catch(e){console.warn("Supabase init:",e)}
+function syncProfileToSupabase(){
+if(!sbClient||!st.u||!st.u.n)return;
+const pData={name:st.u.n,gender:st.g,age:st.u.a,city:st.u.c,target_city:st.u.tc||'all',job:st.u.jb,bio:st.u.bio||'',language:st.u.lng||'fr',religion:st.u.rel||'mus',children:st.u.kd||0,intention:st.u.i||'ser',hobbies:st.u.hb||[],selfie_url:st.selfie||null,is_verified:!!st.selfie,is_premium:!!st.prem};
+if(st.mode==="mail"&&st.em)pData.email=st.em;
+if(st.mode==="tel"&&st.ph)pData.phone=st.ph;
+sbClient.from('profiles').upsert(pData).then(({error})=>{if(error)console.warn("Supabase profile sync:",error)}).catch(()=>{});
+}
 const LIM=20,B="#1E3A8A",G="#D97706",R="#E11D48";
 const flagSvg=`<span class="flag-mini" title="Tchad" aria-label="Tchad"><svg viewBox="0 0 30 20" width="18" height="12"><rect width="10" height="20" x="0" fill="#002664"/><rect width="10" height="20" x="10" fill="#FECB00"/><rect width="10" height="20" x="20" fill="#C60C30"/></svg></span>`;
 const T={
@@ -1141,6 +1156,7 @@ ctx.drawImage(v,(vw-sz)/2,(vh-sz)/2,sz,sz,0,0,300,300);
 st.selfie=c.toDataURL("image/jpeg",.85);
 ensureSelfieInPh5();
 save();
+syncProfileToSupabase();
 stopCam();
 st.vs=1;render();
 setTimeout(()=>{st.vs=2;go(4);say(x().vd)},1600);
@@ -1381,8 +1397,12 @@ const t=x(),catEl=$("#fb-cat"),msgEl=$("#fb-msg"),msg=msgEl?msgEl.value.trim():"
 if(!msg){const err=$("#fb-err");if(err)err.textContent=t.fbMsgErr;if(msgEl)msgEl.focus();return}
 const cat=catEl?catEl.value:"sugg";
 if(!st.feedbacks)st.feedbacks=[];
-st.feedbacks.push({rating:fbState.rating,cat:cat,msg:msg,user:(st.u&&st.u.n)||"Utilisateur",date:new Date().toISOString()});
+const fbItem={rating:fbState.rating,cat:cat,msg:msg,user:(st.u&&st.u.n)||"Utilisateur",date:new Date().toISOString()};
+st.feedbacks.push(fbItem);
 save();closeM();alert(t.fbSuccess);say(t.fbSuccess);
+if(sbClient){
+sbClient.from('feedbacks').insert({user_name:fbItem.user,rating:fbItem.rating,category:fbItem.cat,message:fbItem.msg}).then(({error})=>{if(error)console.warn("Supabase feedback error:",error)}).catch(()=>{});
+}
 }
 function send(){const i=$("#in"),v=i.value.trim(),id=st.chat;if(!v)return;
 add(id,{w:"me",t:v});i.value="";
@@ -1426,13 +1446,13 @@ else if(a==="gd"){st.g=k;document.querySelectorAll("[data-a=gd]").forEach(n=>n.s
 else if(a==="s2"){const nm=$("#nm").value.trim(),jb=$("#jb").value.trim(),bio=$("#bio")?$("#bio").value.trim():"",ag=$("#ag").value,tc=$("#tc")?$("#tc").value:"all",lng=$("#lng")?$("#lng").value:"fr",rel=$("#rel")?$("#rel").value:"mus";$("#eA").textContent="";$("#e2").textContent="";
 if(nm.length<2||!st.g||!ag||jb.length<2){$("#e2").textContent=t.req;return}
 if(+ag<22){$("#eA").textContent=t.agE;$("#ag").focus();return}
-st.tc=tc;st.u=Object.assign({},st.u,{n:nm,jb:jb,bio:bio,g:st.g,a:+ag,c:$("#cy").value,tc:tc,lng:lng,rel:rel,kd:+$("#kd").value,i:$("#it").value,hb:st.u.hb||[]});save();go(3)}
-else if(a==="edrel"){const n=prompt(`${t.rel}\n1: ${t.relMus}\n2: ${t.relChr}\n3: ${t.relOth}`,st.u.rel==="chr"?"2":(st.u.rel==="oth"?"3":"1"));if(n==="1")st.u.rel="mus";else if(n==="2")st.u.rel="chr";else if(n==="3")st.u.rel="oth";save();render()}
-else if(a==="edlng"){const n=prompt(`${t.langSpk}\n1: ${t.lngFr}\n2: ${t.lngAr}\n3: ${t.lngBoth}`,st.u.lng==="ar"?"2":(st.u.lng==="both"?"3":"1"));if(n==="1")st.u.lng="fr";else if(n==="2")st.u.lng="ar";else if(n==="3")st.u.lng="both";save();render()}
-else if(a==="edj"){const nj=prompt(t.job,st.u.jb||"");if(nj&&nj.trim()){st.u.jb=nj.trim();render()}}
-else if(a==="edc"){const nc=prompt(t.cty,st.u.c||"");if(nc&&nc.trim()){st.u.c=nc.trim();render()}}
+st.tc=tc;st.u=Object.assign({},st.u,{n:nm,jb:jb,bio:bio,g:st.g,a:+ag,c:$("#cy").value,tc:tc,lng:lng,rel:rel,kd:+$("#kd").value,i:$("#it").value,hb:st.u.hb||[]});save();syncProfileToSupabase();go(3)}
+else if(a==="edrel"){const n=prompt(`${t.rel}\n1: ${t.relMus}\n2: ${t.relChr}\n3: ${t.relOth}`,st.u.rel==="chr"?"2":(st.u.rel==="oth"?"3":"1"));if(n==="1")st.u.rel="mus";else if(n==="2")st.u.rel="chr";else if(n==="3")st.u.rel="oth";save();syncProfileToSupabase();render()}
+else if(a==="edlng"){const n=prompt(`${t.langSpk}\n1: ${t.lngFr}\n2: ${t.lngAr}\n3: ${t.lngBoth}`,st.u.lng==="ar"?"2":(st.u.lng==="both"?"3":"1"));if(n==="1")st.u.lng="fr";else if(n==="2")st.u.lng="ar";else if(n==="3")st.u.lng="both";save();syncProfileToSupabase();render()}
+else if(a==="edj"){const nj=prompt(t.job,st.u.jb||"");if(nj&&nj.trim()){st.u.jb=nj.trim();save();syncProfileToSupabase();render()}}
+else if(a==="edc"){const nc=prompt(t.cty,st.u.c||"");if(nc&&nc.trim()){st.u.c=nc.trim();save();syncProfileToSupabase();render()}}
 else if(a==="edtc"){st.tab="d";render();if($("#sel-tc"))$("#sel-tc").focus()}
-else if(a==="reset-tc"){st.tc="all";if(st.u)st.u.tc="all";st.i=0;save();render()}
+else if(a==="reset-tc"){st.tc="all";if(st.u)st.u.tc="all";st.i=0;save();syncProfileToSupabase();render()}
 else if(a==="open-fb"){openFeedbackModal()}
 else if(a==="fb-rate"){setFeedbackRating(+b.dataset.r)}
 else if(a==="submit-fb"){submitFeedback()}
@@ -1442,7 +1462,7 @@ else if(a==="eda"){st.ph5.push({o:st.ed.src.toDataURL("image/jpeg",.85),p:prot(s
 else if(a==="edc"){st.ed=null;render()}
 else if(a==="snap-cam")snapCam();
 else if(a==="retake-selfie"){st.selfie="";st.ph5=st.ph5.filter(p=>!p.isSelfie);st.vs=0;save();render();setTimeout(startCam,120);}
-else if(a==="val-selfie"){ensureSelfieInPh5();save();stopCam();go(4);say(x().vd);}
+else if(a==="val-selfie"){ensureSelfieInPh5();save();syncProfileToSupabase();stopCam();go(4);say(x().vd);}
 else if(a==="op"){st.op=k;render();$(`[data-a=op][data-k=${k}]`).focus()}
 else if(a==="pay"){
 if(st.op==="visa"){

@@ -24,6 +24,8 @@ credentials.json
 *_keys.*
 *api_key*
 *apikey*
+*supabase-config.js
+!*supabase-config.example.js
 
 # Keystores, Certificates & Signatures mobiles
 *.jks
