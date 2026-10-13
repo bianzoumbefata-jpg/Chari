@@ -1213,9 +1213,40 @@ const t=x(),o=$("#ov");
 o.innerHTML=`<div class="strip" aria-hidden="true"></div><div class="mi"><h2>${t.mt}</h2><p>${t.ms}</p><div class="pair"><span class="av l">${me(1)}</span>${ic("heart")}<span class="av l">${av(p)}</span></div><button class="btn gold" data-a="wr" data-id="${p.id}">${t.wr}${p.n}</button><button class="btn ghost" data-a="cm">${t.ct}</button></div><div class="strip" aria-hidden="true"></div>`;
 o.hidden=false;say(t.mt);o.querySelector(".btn").focus()}
 function closeM(){$("#ov").hidden=true}
-function openGoogleAuth(){
+async function signInWithGoogle(){
+if(!sbClient){
+alert(st.lang==="ar"?"خدمة Supabase غير متصلة.":"Supabase n'est pas connecté.");
+return;
+}
+try{
+const redir=window.location.origin+window.location.pathname;
+const {data,error}=await sbClient.auth.signInWithOAuth({
+provider:'google',
+options:{
+redirectTo:redir,
+queryParams:{
+access_type:'offline',
+prompt:'select_account'
+}
+}
+});
+if(error){
+console.warn("Google OAuth error:",error);
+if(error.message&&(error.message.toLowerCase().includes("provider is not enabled")||error.message.toLowerCase().includes("not enabled"))){
+openGoogleSetupModal();
+}else{
+alert("Erreur Google : "+error.message);
+}
+}
+}catch(e){
+console.error("signInWithGoogle catch:",e);
+alert("Erreur de connexion Google : "+(e.message||e));
+}
+}
+function openGoogleSetupModal(){
 const t=x(),o=$("#ov");
-o.innerHTML=`<div style="flex:1;display:flex;align-items:center;justify-content:center;padding:16px"><div class="g-modal"><svg viewBox="0 0 24 24" width="44" height="44" style="margin:0 auto" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg><h2 style="font-size:22px;color:var(--ink);margin:0">${t.gModalT}</h2><p style="margin:0;color:var(--mut);font-size:14px">${t.gModalD}</p><button class="g-acc" data-a="gpick" data-n="Mahamat" data-e="mahamat.adam@gmail.com"><span class="g-av">M</span><span style="flex:1;min-width:0"><strong style="color:var(--ink);font-size:15px;display:block">Mahamat Adam</strong><span style="color:var(--mut);font-size:13px;display:block">mahamat.adam@gmail.com</span><span style="display:inline-block;margin-top:2px;font-size:11px;font-weight:700;color:#1e7e34;background:rgba(52,168,83,.15);padding:1px 8px;border-radius:99px">${t.gVerif}</span></span></button><button class="btn" data-a="gpick" data-n="Mahamat" data-e="mahamat.adam@gmail.com">${t.gConfirm}</button><button class="btn sec" data-a="cm" style="min-height:40px">${t.bk}</button></div></div>`;
+const isAr=st.lang==="ar";
+o.innerHTML=`<div style="flex:1;display:flex;align-items:center;justify-content:center;padding:16px"><div class="g-modal" style="max-width:440px;text-align:start"><div style="text-align:center;margin-bottom:8px"><svg viewBox="0 0 24 24" width="40" height="40" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg><h2 style="font-size:18px;color:var(--ink);margin:6px 0 2px">${isAr?"تفعيل الدخول عبر Google في Supabase":"Activer la vraie connexion Google"}</h2></div><p style="margin:0 0 10px;color:var(--mut);font-size:13px;line-height:1.4">${isAr?"لتسجيل الدخول الحقيقي بحسابات Google، يجب تفعيل موفر Google في لوحة تحكم Supabase:":"Pour permettre la véritable connexion Google avec vos comptes réels, le fournisseur Google doit être activé dans votre console Supabase :"}</p><div style="background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--ink);line-height:1.5;margin-bottom:12px"><strong>1. Supabase Dashboard :</strong> Authentication &gt; Providers &gt; Google (Enable)<br><strong>2. Google Cloud Console :</strong> Créer un Client ID Web<br><strong>3. Callback URL :</strong><br><code style="font-size:11px;background:rgba(0,0,0,0.06);padding:2px 6px;border-radius:4px;word-break:break-all;display:block;margin-top:3px">https://xitiqkemodqxbitgwihi.supabase.co/auth/v1/callback</code></div><a class="btn" href="https://supabase.com/dashboard/project/xitiqkemodqxbitgwihi/auth/providers" target="_blank" rel="noopener" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px"><span>⚙️ Ouvrir la configuration Supabase</span></a><button class="btn sec" data-a="cm" style="min-height:38px;margin-top:6px">${t.bk}</button></div></div>`;
 o.hidden=false;
 }
 function openHobbyModal(){
@@ -1460,8 +1491,7 @@ setTimeout(()=>{if(st.ms[id])add(id,{w:"th",t:x().r[st.ms[id].filter(m=>m.w==="t
 document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,k=b.dataset.k,t=x();
 if(a==="tab"){st.tab=k;st.chat=null;render()}
 else if(a==="lang"){st.lang=st.lang==="fr"?"ar":"fr";save();render();$("#lang").focus()}
-else if(a==="gauth"){openGoogleAuth()}
-else if(a==="gpick"){closeM();const n=b.dataset.n||"Mahamat",em=b.dataset.e||"mahamat.adam@gmail.com";st.u.n=n;st.u.gVerif=true;st.em=em;st.mode="mail";st.g="m";go(2,"#jb");say(x().gVerif)}
+else if(a==="gauth"){signInWithGoogle()}
 else if(a==="toghb"){
 const hid=b.dataset.h;
 if(!st.u.hb)st.u.hb=[];
@@ -1611,6 +1641,58 @@ if(document.hidden){document.body.classList.add("screen-protected")}
 else{document.body.classList.remove("screen-protected")}
 });
 render();
+function initGoogleAuthListener(){
+if(!sbClient)return;
+try{
+sbClient.auth.onAuthStateChange(async(evt,session)=>{
+if((evt==="SIGNED_IN"||evt==="INITIAL_SESSION"||evt==="USER_UPDATED")&&session&&session.user){
+const u=session.user;
+const meta=u.user_metadata||{};
+const gName=meta.full_name||meta.name||(u.email?u.email.split('@')[0]:"Membre");
+const gEmail=u.email||"";
+const gAvatar=meta.avatar_url||meta.picture||"";
+
+if(!st.u)st.u={};
+st.u.gVerif=true;
+if(gName&&(!st.u.n||st.u.n==="Mahamat"))st.u.n=gName;
+if(gEmail)st.em=gEmail;
+st.mode="mail";
+if(!st.g)st.g="m";
+
+if(gAvatar&&!st.selfie){
+st.selfie=gAvatar;
+ensureSelfieInPh5();
+}
+
+if(st.step<2){
+st.step=2;
+say(x().gVerif);
+}
+save();
+render();
+syncProfileToSupabase();
+}
+});
+
+if(window.location.hash&&window.location.hash.includes('access_token')){
+history.replaceState(null,null,window.location.pathname+window.location.search);
+}
+
+sbClient.auth.getSession().then(({data:{session}})=>{
+if(session&&session.user&&st.step===0){
+const u=session.user;
+const meta=u.user_metadata||{};
+st.u.gVerif=true;
+if(!st.u.n)st.u.n=meta.full_name||meta.name||"";
+if(!st.em)st.em=u.email||"";
+st.mode="mail";
+if(st.step<2)st.step=2;
+save();render();
+}
+}).catch(()=>{});
+}catch(e){console.warn("Auth init error:",e)}
+}
+initGoogleAuthListener();
 
 // Enregistrement du Service Worker pour installation PWA hors ligne
 if ('serviceWorker' in navigator) {
