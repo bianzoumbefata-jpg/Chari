@@ -9,9 +9,11 @@
     "cap:open:ios": "cap open ios"
   },
   "dependencies": {
-    "@capacitor/core": "^6.0.0",
     "@capacitor/android": "^6.0.0",
-    "@capacitor/ios": "^6.0.0"
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/ios": "^6.0.0",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.117.3"
   },
   "devDependencies": {
     "@capacitor/cli": "^6.0.0"
