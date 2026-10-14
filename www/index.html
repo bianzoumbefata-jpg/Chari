@@ -1132,6 +1132,41 @@ body.screen-protected .screen-shield{display:flex!important}
 .btn-accept-req:hover{
   background: linear-gradient(135deg, #0056C7 0%, #004399 100%);
 }
+.nav-badge{
+  position: absolute;
+  top: 4px;
+  right: calc(50% - 18px);
+  background: var(--heart);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  min-width: 17px;
+  height: 17px;
+  line-height: 17px;
+  border-radius: 999px;
+  text-align: center;
+  padding: 0 4px;
+  border: 1.5px solid var(--surf);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.selfie-ring.error{
+  border-color: var(--heart) !important;
+  box-shadow: 0 0 0 5px rgba(237, 50, 65, 0.45) !important;
+  animation: selfieShake 0.4s ease-in-out;
+}
+@keyframes selfieShake{
+  0%, 100%{ transform: translate(-50%, -50%) rotate(0deg); }
+  20%, 60%{ transform: translate(calc(-50% - 6px), -50%) rotate(-1.5deg); }
+  40%, 80%{ transform: translate(calc(-50% + 6px), -50%) rotate(1.5deg); }
+}
+.call-ringing-pulse{
+  animation: callPulse 1.5s infinite ease-out;
+}
+@keyframes callPulse{
+  0%{ box-shadow: 0 0 0 0 rgba(0, 111, 253, 0.7); }
+  70%{ box-shadow: 0 0 0 28px rgba(0, 111, 253, 0); }
+  100%{ box-shadow: 0 0 0 0 rgba(0, 111, 253, 0); }
+}
 </style>
 </head>
 <body>
@@ -1378,17 +1413,16 @@ async function loadProfilesFromSupabase(){
 if(!sbClient)return;
 try{
 const {data,error}=await sbClient.from('profiles').select('*').order('created_at',{ascending:false});
-if(!error&&data&&data.length>0){
+if(!error&&data){
 const mapped=data.filter(r=>{
-if(r.name==='Test Col')return false;
+if(!r.name||r.name==='__DELETED__'||r.name==='Test Col')return false;
 if(st.u&&st.u.id&&r.id===st.u.id)return false;
 if(st.u&&r.name===st.u.n)return false;
 const isIncog=r.is_incognito===true||(Array.isArray(r.hobbies)&&r.hobbies.includes('__incognito__'));
 if(isIncog)return false;
 return true;
 }).map(row=>{
-const seedMatch=SEED_PROFILES.find(s=>s.id===row.id||s.n.toLowerCase()===(row.name||'').toLowerCase());
-const bioObj=typeof row.bio==='string'?{fr:row.bio,ar:(seedMatch&&seedMatch.b&&seedMatch.b.ar)||row.bio}:(row.bio||{fr:'',ar:''});
+const bioObj=typeof row.bio==='string'?{fr:row.bio,ar:row.bio}:(row.bio||{fr:'',ar:''});
 return{
 id:row.id,
 n:row.name,
@@ -1406,33 +1440,34 @@ i:row.intention||"ser",
 hb:row.hobbies||["spo"],
 l:row.language==="both"?["fr","ar"]:[row.language||"fr"],
 v:(row.hobbies&&row.hobbies.length)?row.hobbies:["fam"],
-selfie_url:row.selfie_url||(seedMatch?seedMatch.selfie_url:"photos/achte.jpg"),
+selfie_url:row.selfie_url||"photos/achte.jpg",
 is_verified:!!row.is_verified,
 is_premium:!!row.is_premium,
-y:seedMatch?seedMatch.y:1
+y:1
 };
 });
-if(mapped.length>0){
 P=mapped;
 if(st.tab==='d')render();
-}
 }
 }catch(e){console.warn("loadProfilesFromSupabase err:",e)}
 }
 const LIM=20,B="#1E3A8A",G="#D97706",R="#E11D48";
 const flagSvg=`<span class="flag-mini" title="Tchad" aria-label="Tchad"><svg viewBox="0 0 30 20" width="18" height="12"><rect width="10" height="20" x="0" fill="#002664"/><rect width="10" height="20" x="10" fill="#FECB00"/><rect width="10" height="20" x="20" fill="#C60C30"/></svg></span>`;
 const T={
-fr:{d:"Découvrir",m:"Messages",p:"Profil",pass:"Passer",like:"J'aime",mt:"C'est un match !",ms:"Vous vous plaisez mutuellement.",wr:"Écrire à ",ct:"Continuer",done:"Vous avez tout vu pour aujourd'hui.",again:"Revoir les profils",none:"Pas encore de conversation.",nh:"Aimez des profils pour en démarrer une.",ph:"Écrire un message",snd:"Envoyer",bk:"Retour",my:"Mon profil",vg:"Vérification…",vd:"Profil vérifié",blur:"Visage masqué jusqu'au match",lite:"Économie de données",sf:"Conseils de sécurité",st:"Ne partagez jamais d'argent ni de codes. Retrouvez-vous dans un lieu public et prévenez un proche.",age:"Réservé aux 22 ans et plus.",demo:"Chari · Profils et photos réels du Tchad certifiés par selfie. Données enregistrées dans Supabase.",lgb:"العربية",r:["Bonjour ! Ravi(e) de faire ta connaissance.","Tu es de quelle ville ?"],
-wl:"Bienvenue sur Chari",wl2:"Des rencontres amoureuses entre un homme et une femme, avec des profils vérifiés.",phl:"Numéro de téléphone",ph8:"Entrez un numéro à 8 chiffres (ex: 66 00 00 00).",orPhone:"ou avec votre numéro de téléphone au Tchad",sndOtp:"Recevoir mon code par SMS",otp:"Confirmation du numéro",otps:"Code envoyé par SMS au ",otpd:"Entrez le code de confirmation à 6 chiffres reçu par SMS.",cod:"Code à 6 chiffres",bad:"Code incorrect.",pr:"Votre profil",nm:"Prénom",job:"Profession / Métier",jobPh:"Ex: Enseignant, Commerçante, Infirmière...",tcty:"Ville de rencontre",allC:"Toutes les villes (Tchad)",noCity:"Aucun profil dans cette ville",noCityD:"Aucun profil disponible actuellement dans cette ville. Essayez d'élargir à tout le Tchad !",iam:"Je suis",fem:"Une femme",mal:"Un homme",ag:"Âge",agE:"Chari est réservé aux 22 ans et plus.",cty:"Votre ville",kd:"Nombre d'enfants",it:"Je cherche",req:"Complétez tous les champs.",sf1:"Identification par selfie obligatoire",sf2:"Prenez un selfie en direct avec votre caméra : il est obligatoire pour certifier votre authenticité et débloquer l'accès à Chari.",shot:"Prendre mon selfie certifié",sf3:"Ce selfie confirme votre identité réelle. Il reste indélébile parmi vos photos et protège la communauté.",pj:"profils vus aujourd'hui",unl:"Premium actif : profils illimités aujourd'hui",pw:"Limite du jour atteinte",pw2:"Vous avez vu vos 20 profils gratuits aujourd'hui.",pss:"Pass Premium du jour",pss2:"Profils illimités jusqu'à minuit et mode incognito.",op:"Payer avec",pn:"Numéro de paiement",pb:"Payer 5 000 FCFA",pg:"Paiement en cours…",pd:"Démo : aucun paiement réel n'est effectué.",paid:"Paiement reçu. Premium activé.",plan:"Votre formule",free:"Gratuite : 20 profils par jour",prem:"Pass Premium du jour actif",up:"Passer Premium (5 000 FCFA)",dm:"Démo : passer à 19 profils vus",opVisa:"Carte Visa",cardNum:"Numéro de carte Visa",cardExp:"Date d'expiration (MM/AA)",cardCvv:"Code CVV (3 chiffres)",cardNom:"Nom du porteur",cardNomPh:"Ex: MAHAMAT ADAM",cardSec:"Paiement 100% sécurisé Visa 3D Secure",cardNumE:"Numéro de carte incomplet (16 chiffres requis).",cardExpE:"Date d'expiration invalide (format MM/AA).",cardCvvE:"Code CVV invalide (3 chiffres).",cardNomE:"Entrez le nom présent sur la carte.",visaPaid:"Paiement Visa validé ! Pass Premium du jour activé.",
-gBtn:"Continuer avec Google",fbAuthBtn:"Continuer avec Facebook",gNote:"🛡️ Inscription sécurisée par Google, Facebook ou Téléphone. L'identification par selfie en direct est obligatoire pour certifier votre authenticité et débloquer l'accès à Chari.",gVerif:"Compte Google vérifié",fbAuthVerif:"Compte Facebook vérifié",logout:"Se déconnecter",logoutConfirm:"Voulez-vous vraiment vous déconnecter de Chari ? Vous devrez vous ré-authentifier pour accéder à l'application.",gModalT:"Connexion Google",gModalD:"Sélectionnez votre compte pour une vérification instantanée :",gConfirm:"Valider mon compte",cityFilt:"Ville",seekCity:"Recherche",heroTag:"Rencontres au Tchad",hob:"Passe-temps & Centres d'intérêt",hobLbl:"Vos passe-temps favoris",hobHint:"Choisissez vos passe-temps et passions :",edHb:"Modifier mes passe-temps",saveHb:"Enregistrer",bio:"À propos de moi",bioLbl:"Petite description",bioPh:"Ex: Souriant(e), j'aime les discussions sincères, les voyages et je cherche du sérieux...",bioHint:"Présentez-vous en quelques mots :",edBio:"Modifier ma description",saveBio:"Enregistrer ma description",bioDef:"Je recherche une relation sincère, durable et basée sur le respect mutuel.",
-vidCall:"Appel vidéo",callHd:"Appel vidéo HD",calling:"Appel en cours…",callEnd:"Appel vidéo terminé",opt:"Options",repUser:"Signaler ce profil",blkUser:"Bloquer cet utilisateur",blkConfirmT:"Bloquer cet utilisateur ?",blkConfirmD:"Vous ne verrez plus ce profil et vos messages seront masqués.",blkBtn:"Bloquer",blkDone:"Utilisateur bloqué avec succès.",repTitle:"Signaler ce profil",repDesc:"Pour quelle raison souhaitez-vous signaler ce profil ?",repDone:"Signalement envoyé. Notre équipe au Tchad examinera ce profil sous 24h.",repFake:"Faux profil ou usurpation",repHarass:"Comportement inapproprié ou harcèlement",repScam:"Arnaque financière ou demande d'argent",repOther:"Autre motif",unblk:"Débloquer",blkedList:"Utilisateurs bloqués",noBlked:"Aucun utilisateur bloqué.",unblkDone:"Utilisateur débloqué.",
+fr:{d:"Découvrir",m:"Messages",p:"Profil",pass:"Passer",like:"J'aime",mt:"C'est un match !",ms:"Vous vous plaisez mutuellement.",wr:"Écrire à ",ct:"Continuer",done:"Vous avez tout vu pour aujourd'hui.",again:"Revoir les profils",none:"Pas encore de conversation.",nh:"Aimez des profils pour en démarrer une.",ph:"Écrire un message",snd:"Envoyer",bk:"Retour",my:"Mon profil",vg:"Vérification…",vd:"Profil vérifié",blur:"Visage masqué jusqu'au match",lite:"Économie de données",sf:"Conseils de sécurité",st:"Ne partagez jamais d'argent ni de codes. Retrouvez-vous dans un lieu public et prévenez un proche.",age:"Réservé aux 22 ans et plus.",demo:"Chari · Profils réels certifiés par selfie au Tchad.",lgb:"العربية",r:["Bonjour ! Ravi(e) de faire ta connaissance.","Tu es de quelle ville ?"],
+wl:"Bienvenue sur Chari",wl2:"Des rencontres amoureuses sérieuses entre un homme et une femme au Tchad, avec des profils vérifiés.",phl:"Numéro de téléphone",ph8:"Entrez un numéro à 8 chiffres.",orPhone:"ou avec votre numéro de téléphone",sndOtp:"Recevoir mon code par SMS",otp:"Confirmation du numéro",otps:"Code envoyé par SMS au ",otpd:"Entrez le code de confirmation.",cod:"Code à 6 chiffres",bad:"Code incorrect.",pr:"Votre profil",nm:"Prénom",job:"Profession / Métier",jobPh:"Ex: Enseignant, Commerçante, Infirmière...",tcty:"Ville de rencontre",allC:"Toutes les villes (Tchad)",noCity:"Aucun profil dans cette ville",noCityD:"Aucun profil disponible actuellement dans cette ville. Essayez d'élargir à tout le Tchad !",iam:"Je suis",fem:"Une femme",mal:"Un homme",ag:"Âge",agE:"Chari est réservé aux 22 ans et plus.",cty:"Votre ville",kd:"Nombre d'enfants",it:"Je cherche",req:"Complétez tous les champs.",sf1:"Identification par selfie obligatoire",sf2:"Prenez un selfie en direct avec votre caméra : notre intelligence artificielle analyse et certifie l'authenticité de votre visage.",shot:"Prendre mon selfie certifié",sf3:"Ce selfie confirme votre identité réelle. Il reste indélébile parmi vos photos et protège la communauté.",pj:"profils vus aujourd'hui",unl:"Premium actif : profils illimités aujourd'hui",pw:"Limite du jour atteinte",pw2:"Vous avez vu vos 20 profils gratuits aujourd'hui.",pss:"Pass Premium du jour",pss2:"Profils illimités jusqu'à minuit et mode incognito.",op:"Payer avec",pn:"Numéro de paiement",pb:"Payer 5 000 FCFA",pg:"Paiement en cours…",pd:"Démo : aucun paiement réel n'est effectué.",paid:"Paiement reçu. Premium activé.",plan:"Votre formule",free:"Gratuite : 20 profils par jour",prem:"Pass Premium du jour actif",up:"Passer Premium (5 000 FCFA)",dm:"Démo : passer à 19 profils vus",opVisa:"Carte Visa",cardNum:"Numéro de carte Visa",cardExp:"Date d'expiration (MM/AA)",cardCvv:"Code CVV (3 chiffres)",cardNom:"Nom du porteur",cardNomPh:"Ex: MAHAMAT ADAM",cardSec:"Paiement 100% sécurisé Visa 3D Secure",cardNumE:"Numéro de carte incomplet (16 chiffres requis).",cardExpE:"Date d'expiration invalide (format MM/AA).",cardCvvE:"Code CVV invalide (3 chiffres).",cardNomE:"Entrez le nom présent sur la carte.",visaPaid:"Paiement Visa validé ! Pass Premium du jour activé.",
+gBtn:"Continuer avec Google",fbAuthBtn:"Continuer avec Google",gNote:"🛡️ Inscription et connexion 100% sécurisées avec votre compte Google. La certification de votre visage par selfie direct est obligatoire pour garantir des rencontres authentiques.",gVerif:"Compte Google vérifié",fbAuthVerif:"Compte Google vérifié",logout:"Se déconnecter",logoutConfirm:"Voulez-vous vous déconnecter de Chari ? Vos coordonnées et messages seront conservés et vous reprendrez exactement au même endroit.",gModalT:"Connexion Google",gModalD:"Sélectionnez votre compte Google pour une vérification instantanée :",gConfirm:"Valider mon compte",cityFilt:"Ville",seekCity:"Recherche",heroTag:"Rencontres au Tchad",hob:"Passe-temps & Centres d'intérêt",hobLbl:"Vos passe-temps favoris",hobHint:"Choisissez vos passe-temps et passions :",edHb:"Modifier mes passe-temps",saveHb:"Enregistrer",bio:"À propos de moi",bioLbl:"Petite description",bioPh:"Ex: Souriant(e), j'aime les discussions sincères, les voyages et je cherche du sérieux...",bioHint:"Présentez-vous en quelques mots :",edBio:"Modifier ma description",saveBio:"Enregistrer ma description",bioDef:"Je recherche une relation sincère, durable et basée sur le respect mutuel.",
+vidCall:"Appel vidéo",callHd:"Appel vidéo HD",calling:"Appel en cours…",callingContact:"Appel en cours…",ringingContact:"Sonnerie chez ",callAnswered:"En communication HD",callEnd:"Appel vidéo terminé",callHangup:"Raccrocher",opt:"Options",repUser:"Signaler ce profil",blkUser:"Bloquer cet utilisateur",blkConfirmT:"Bloquer cet utilisateur ?",blkConfirmD:"Vous ne verrez plus ce profil et vos messages seront masqués.",blkBtn:"Bloquer",blkDone:"Utilisateur bloqué avec succès.",repTitle:"Signaler ce profil",repDesc:"Pour quelle raison souhaitez-vous signaler ce profil ?",repDone:"Signalement envoyé. Notre équipe au Tchad examinera ce profil sous 24h.",repFake:"Faux profil ou usurpation",repHarass:"Comportement inapproprié ou harcèlement",repScam:"Arnaque financière ou demande d'argent",repOther:"Autre motif",unblk:"Débloquer",blkedList:"Utilisateurs bloqués",noBlked:"Aucun utilisateur bloqué.",unblkDone:"Utilisateur débloqué.",
 langSpk:"Langue parlée",lngFr:"Français",lngAr:"Arabe",lngBoth:"Français & Arabe",
 lngMap:{fr:"🗣️ Français",ar:"🗣️ Arabe",both:"🗣️ Français & Arabe"},
 rel:"Religion",relMus:"Musulman(e)",relChr:"Chrétien(ne)",relOth:"Autre religion",
 relMap:{mus:"🕌 Musulman(e)",chr:"✝️ Chrétien(ne)",oth:"🕊️ Autre religion"},
-mailb:"E-mail",telb:"Téléphone",eml:"Votre adresse e-mail",emE:"Entrez une adresse e-mail valide.",pwd:"Mot de passe",pwdPh:"Au moins 6 caractères",pwdE:"Entrez un mot de passe d'au moins 6 caractères.",emReg:"S'inscrire avec mon E-mail",emLog:"Se connecter",orDivider:"ou",haveAcc:"Déjà un compte ? Se connecter",swMail:"E-mail (Supabase)",swTel:"Téléphone (+235)",phs:"Mes photos",rm:"Retirer la photo",add:"Ajouter une photo",ph5i:"Ajoutez jusqu'à 5 photos. Les autres voient la version protégée (visage pixelisé) tant qu'il n'y a pas de match ; l'original n'est jamais affiché avant.",edt:"Masquer le visage",edh:"Placez le cercle sur votre visage : il sera pixelisé de façon irréversible, le reste de la photo reste net.",edx:"Position horizontale",edy:"Position verticale",eds:"Taille du masque",eda:"Ajouter la photo",edc:"Annuler",incog:"Mode incognito",incd:"Votre profil reste invisible : seules les personnes que vous aimez peuvent le voir.",incl:"Réservé à Premium",incb:"Incognito",
+mailb:"Google",telb:"Google",eml:"Adresse Gmail",emE:"Entrez une adresse valide.",pwd:"Mot de passe",pwdPh:"Au moins 6 caractères",pwdE:"Mot de passe requis.",emReg:"Connexion Google",emLog:"Connexion Google",orDivider:"ou",haveAcc:"Se connecter avec Google",swMail:"Google",swTel:"Google",phs:"Mes photos",rm:"Retirer la photo",add:"Ajouter une photo",ph5i:"Ajoutez jusqu'à 5 photos. Les autres voient la version protégée (visage pixelisé) tant qu'il n'y a pas de match.",edt:"Masquer le visage",edh:"Placez le cercle sur votre visage.",edx:"Position horizontale",edy:"Position verticale",eds:"Taille du masque",eda:"Ajouter la photo",edc:"Annuler",incog:"Mode incognito",incd:"Votre profil reste invisible : vous pouvez voir les autres, mais personne ne voit le vôtre.",incl:"Réservé à Premium",incb:"Incognito",
 kid:["Sans enfant","1 enfant","2 enfants","3 enfants ou plus"],
 selfieBadge:"Selfie vérifié",selfieLock:"Le selfie certifié est obligatoire et ne peut pas être supprimé.",
+selfieNoFace:"❌ Aucun visage humain détecté. Veuillez cadrer clairement votre visage face à la caméra dans un endroit bien éclairé et réessayer.",selfieAnalyzing:"Analyse du visage…",selfieVerified:"Visage humain certifié avec succès !",
+noProfilesYet:"Bienvenue sur Chari !",noProfilesDesc:"La communauté repart à zéro ! Soyez parmi les premiers membres certifiés du Tchad en complétant votre profil.",
+reqTabName:"Demandes",reqSentTab:"Envoyées",reqReceivedTab:"Reçues",noReqSent:"Aucune demande envoyée pour l'instant",noReqSentDesc:"Les profils que vous likez apparaîtront ici en attente de match.",
 fbTitle:"Donnez votre avis",fbSub:"Partagez vos suggestions ou signalez une amélioration.",fbBtn:"Écrire un avis",
 fbModalT:"Votre avis compte pour nous",fbModalD:"Aidez-nous à améliorer Chari au Tchad. Partagez votre expérience :",
 fbRatingLbl:"Votre note globale",
@@ -1446,19 +1481,22 @@ fbMsgPh:"Dites-nous ce que vous pensez de Chari, vos souhaits ou vos remarques..
 fbMsgErr:"Veuillez écrire quelques mots pour expliquer votre avis.",
 fbSuccess:"Merci infiniment pour votre retour ! Notre équipe au Tchad en prendra compte.",
 scBlockT:"Capture d'écran interdite",scBlockD:"Pour préserver l'intimité et la sécurité des membres sur Chari, les captures d'écran et enregistrements vidéo sont strictement interdits.",scToast:"⚠️ Capture d'écran bloquée : la vie privée des membres est protégée sur Chari.",scDismiss:"Continuer sur Chari",
-chatTab:"Discussions",reqTab:"Demandes reçues",noReq:"Aucune demande reçue pour l'instant",noReqDesc:"Vos nouveaux admirateurs et personnes souhaitant vous contacter apparaîtront ici.",acceptReq:"Accepter & Matcher",declineReq:"Passer",dailyReqLimit:"Limite quotidienne atteinte (20/20 demandes envoyées aujourd'hui). Réinitialisation quotidienne à 00h00 ou passez à Chari Premium pour des likes illimités !",dailyAcceptLimit:"Limite quotidienne atteinte (10/10 demandes acceptées aujourd'hui). Réinitialisation quotidienne à 00h00 ou passez à Chari Premium !",dailyReqQuota:"Demandes envoyées",dailyAcceptQuota:"Demandes acceptées",resetMidnight:"Réinitialisation à 00h00",editMsg:"Modifier le message",editMsgTimeLeft:"Délai restant pour modifier ce message : ",saveEdit:"Enregistrer",cancelEdit:"Annuler",msgEditedTag:"(modifié)",editExpired:"Le délai de 10 minutes pour modifier ce message est expiré.",incogActive:"Mode Incognito activé : vous pouvez explorer tous les profils en toute discrétion, mais personne ne peut voir le vôtre.",incogInactive:"Mode Incognito désactivé : votre profil est de nouveau visible.",incogBanner:"Mode Incognito actif : votre profil est masqué pour tous les autres membres.",
+chatTab:"Discussions",reqTab:"Demandes de Matchs",noReq:"Aucune demande reçue pour l'instant",noReqDesc:"Vos nouveaux admirateurs et personnes souhaitant vous contacter apparaîtront ici.",acceptReq:"Accepter & Matcher",declineReq:"Passer",dailyReqLimit:"Limite quotidienne atteinte (20/20 demandes envoyées aujourd'hui). Réinitialisation quotidienne à 00h00 ou passez à Chari Premium pour des likes illimités !",dailyAcceptLimit:"Limite quotidienne atteinte (10/10 demandes acceptées aujourd'hui). Réinitialisation quotidienne à 00h00 ou passez à Chari Premium !",dailyReqQuota:"Demandes envoyées",dailyAcceptQuota:"Demandes acceptées",resetMidnight:"Réinitialisation à 00h00",editMsg:"Modifier le message",editMsgTimeLeft:"Délai restant pour modifier ce message : ",saveEdit:"Enregistrer",cancelEdit:"Annuler",msgEditedTag:"(modifié)",editExpired:"Le délai de 10 minutes pour modifier ce message est expiré.",incogActive:"Mode Incognito activé : vous pouvez explorer tous les profils en toute discrétion, mais personne ne peut voir le vôtre.",incogInactive:"Mode Incognito désactivé : votre profil est de nouveau visible.",incogBanner:"Mode Incognito actif : votre profil est masqué pour tous les autres membres.",
 k:{ser:"Relation amoureuse",mar:"Mariage",fam:"Famille",etu:"Études",ent:"Entrepreneuriat",foi:"Foi",mus:"Musique",foo:"Football",cui:"Cuisine",voy:"Voyage",fr:"Français",ar:"Arabe",sa:"Sara"}},
-ar:{d:"اكتشف",m:"الرسائل",p:"ملفي",pass:"تخطَّ",like:"إعجاب",mt:"تطابق!",ms:"أنتما معجبان ببعضكما.",wr:"راسل ",ct:"متابعة",done:"شاهدت كل شيء لهذا اليوم.",again:"إعادة العرض",none:"لا توجد محادثات بعد.",nh:"أعجب بملفات لبدء محادثة.",ph:"اكتب رسالة",snd:"إرسال",bk:"رجوع",my:"ملفي الشخصي",vg:"جارٍ التحقق…",vd:"ملف موثّق",blur:"الوجه مخفي حتى التطابق",lite:"توفير البيانات",sf:"نصائح للأمان",st:"لا ترسل المال أو الرموز أبداً. التقِ في مكان عام وأخبر شخصاً مقرباً.",age:"للبالغين 22 سنة فأكثر فقط.",demo:"شاري · ملفات وصور حقيقية من تشاد موثقة بالسيلفي. البيانات مسجلة في سوبابيز.",lgb:"Français",r:["مرحباً! سعيد بالتعرف عليك.","من أي مدينة أنت؟"],
-wl:"مرحباً بك في شاري",wl2:"علاقات عاطفية بين رجل وامرأة، مع ملفات موثّقة.",phl:"رقم الهاتف",ph8:"أدخل 8 أرقام لرقمك (مثال: 66 00 00 00).",orPhone:"أو عبر رقم هاتفك في تشاد",sndOtp:"استلام الرمز عبر SMS",otp:"تأكيد رقم الهاتف",otps:"تم إرسال الرمز عبر رسالة قصيرة إلى ",otpd:"أدخل الرمز المكوّن من 6 أرقام المستلم عبر SMS.",cod:"الرمز المكوّن من 6 أرقام",bad:"الرمز غير صحيح.",pr:"ملفك الشخصي",nm:"الاسم الأول",job:"المهنة / العمل",jobPh:"مثال: معلم، تاجر، ممرضة...",tcty:"المدينة المراد التعارف فيها",allC:"جميع المدن (تشاد)",noCity:"لا توجد ملفات في هذه المدينة",noCityD:"لا توجد ملفات متوفرة حالياً في هذه المدينة. جرب توسيع البحث ليشمل جميع المدن!",iam:"أنا",fem:"امرأة",mal:"رجل",ag:"العمر",agE:"التطبيق مخصص لمن بلغ 22 سنة فأكثر.",cty:"مدينتك",kd:"عدد الأطفال",it:"أبحث عن",req:"أكمل جميع الحقول.",sf1:"توثيق الهوية عبر السيلفي الإلزامي",sf2:"التقط صورة سيلفي مباشرة عبر الكاميرا: إلزامية لتوثيق هويتك وتأكيد دخولك إلى شاري.",shot:"التقاط السيلفي الموثق",sf3:"تؤكد هذه الصورة هويتك الحقيقية وتحمي المجتمع في تشاد من الحسابات المزيفة وتبقى ثابتة في ملفك الشخصي.",pj:"ملفاً شاهدته اليوم",unl:"بريميوم مفعّل: ملفات غير محدودة اليوم",pw:"بلغت حد اليوم",pw2:"شاهدت ملفاتك المجانية العشرين اليوم.",pss:"باقة بريميوم لليوم",pss2:"ملفات غير محدودة حتى منتصف الليل ووضع التخفّي.",op:"الدفع عبر",pn:"رقم الدفع",pb:"ادفع 5 000 FCFA",pg:"جارٍ الدفع…",pd:"تجريبي: لا يتم أي دفع حقيقي.",paid:"تم استلام الدفع. تم تفعيل بريميوم.",plan:"باقتك",free:"مجانية: 20 ملفاً في اليوم",prem:"باقة بريميوم لليوم مفعّلة",up:"الترقية إلى بريميوم (5 000 FCFA)",dm:"تجريبي: الانتقال إلى 19 ملفاً",opVisa:"بطاقة Visa",cardNum:"رقم بطاقة Visa",cardExp:"تاريخ الانتهاء (MM/AA)",cardCvv:"رمز الأمان (3 أرقام)",cardNom:"اسم صاحب البطاقة",cardNomPh:"مثال: MAHAMAT ADAM",cardSec:"دفع آمن 100% عبر Visa و 3D Secure",cardNumE:"رقم بطاقة Visa غير مكتمل (16 رقماً).",cardExpE:"تاريخ انتهاء غير صحيح (MM/AA).",cardCvvE:"رمز CVV غير صحيح (3 أرقام).",cardNomE:"يرجى كتابة اسم صاحب البطاقة.",visaPaid:"تم التحقق من بطاقة Visa بنجاح! تم تفعيل بريميوم.",
-gBtn:"المتابعة باستخدام Google",fbAuthBtn:"المتابعة عبر Facebook",gNote:"🛡️ تسجيل آمن عبر Google أو Facebook أو الهاتف. التحقق عبر صورة سيلفي مباشرة إلزامي لتوثيق الحساب والدخول إلى شاري.",gVerif:"حساب Google موثّق",fbAuthVerif:"حساب Facebook موثّق",logout:"تسجيل الخروج",logoutConfirm:"هل تريد بالتأكيد تسجيل الخروج من التطبيق؟ سيتعين عليك تأكيد هويتك للدخول مجدداً.",gModalT:"تسجيل الدخول عبر Google",gModalD:"اختر حسابك للحصول على توثيق فوري:",gConfirm:"تأكيد الحساب",cityFilt:"المدينة",seekCity:"البحث في",heroTag:"علاقات عاطفية موثّقة",hob:"الهوايات والاهتمامات",hobLbl:"هواياتك المفضلة",hobHint:"اختر هواياتك واهتماماتك المفضلة:",edHb:"تعديل هواياتي",saveHb:"حفظ",bio:"نبذة عني",bioLbl:"وصف قصير",bioPh:"مثال: شخص بشوش، أحب الحوار الصادق، السفر وأبحث عن الاستقرار...",bioHint:"عرّف بنفسك في بضع كلمات:",edBio:"تعديل الوصف",saveBio:"حفظ الوصف",bioDef:"أبحث عن علاقة صادقة ومبنية على الاحترام المتبادل.",
-vidCall:"مكالمة فيديو",callHd:"مكالمة فيديو HD",calling:"جارٍ الاتصال…",callEnd:"انتهت المكالمة",opt:"خيارات",repUser:"الإبلاغ عن هذا الملف",blkUser:"حظر هذا المستخدم",blkConfirmT:"هل تريد حظر هذا المستخدم؟",blkConfirmD:"لن يظهر هذا الملف مجدداً وستختفي الرسائل.",blkBtn:"حظر",blkDone:"تم حظر المستخدم بنجاح.",repTitle:"الإبلاغ عن الملف",repDesc:"ما هو سبب إبلاغك عن هذا الملف الشخصي؟",repDone:"تم إرسال البلاغ. سيقوم فريقنا في تشاد بمراجعة الملف خلال 24 ساعة.",repFake:"ملف مزيف أو انتحال شخصية",repHarass:"مضايقة أو سلوك غير لائق",repScam:"احتيال مالي أو طلب أموال",repOther:"سبب آخر",unblk:"إلغاء الحظر",blkedList:"المستخدمون المحظورون",noBlked:"لا يوجد أي مستخدم محظور.",unblkDone:"تم إلغاء حظر المستخدم.",
+ar:{d:"اكتشف",m:"الرسائل",p:"ملفي",pass:"تخطَّ",like:"إعجاب",mt:"تطابق!",ms:"أنتما معجبان ببعضكما.",wr:"راسل ",ct:"متابعة",done:"شاهدت كل شيء لهذا اليوم.",again:"إعادة العرض",none:"لا توجد محادثات بعد.",nh:"أعجب بملفات لبدء محادثة.",ph:"اكتب رسالة",snd:"إرسال",bk:"رجوع",my:"ملفي الشخصي",vg:"جارٍ التحقق…",vd:"ملف موثّق",blur:"الوجه مخفي حتى التطابق",lite:"توفير البيانات",sf:"نصائح للأمان",st:"لا ترسل المال أو الرموز أبداً. التقِ في مكان عام وأخبر شخصاً مقرباً.",age:"للبالغين 22 سنة فأكثر فقط.",demo:"شاري · ملفات حقيقية موثقة بالسيلفي في تشاد.",lgb:"Français",r:["مرحباً! سعيد بالتعرف عليك.","من أي مدينة أنت؟"],
+wl:"مرحباً بك في شاري",wl2:"علاقات عاطفية جادة بين رجل وامرأة في تشاد، مع ملفات موثّقة.",phl:"رقم الهاتف",ph8:"أدخل 8 أرقام لرقمك.",orPhone:"أو عبر حساب Google",sndOtp:"استلام الرمز",otp:"تأكيد الحساب",otps:"تم إرسال الرمز إلى ",otpd:"أدخل رمز التأكيد.",cod:"الرمز المكوّن من 6 أرقام",bad:"الرمز غير صحيح.",pr:"ملفك الشخصي",nm:"الاسم الأول",job:"المهنة / العمل",jobPh:"مثال: معلم، تاجر، ممرضة...",tcty:"المدينة المراد التعارف فيها",allC:"جميع المدن (تشاد)",noCity:"لا توجد ملفات في هذه المدينة",noCityD:"لا توجد ملفات متوفرة حالياً في هذه المدينة. جرب توسيع البحث ليشمل جميع المدن!",iam:"أنا",fem:"امرأة",mal:"رجل",ag:"العمر",agE:"التطبيق مخصص لمن بلغ 22 سنة فأكثر.",cty:"مدينتك",kd:"عدد الأطفال",it:"أبحث عن",req:"أكمل جميع الحقول.",sf1:"توثيق الهوية عبر السيلفي الإلزامي",sf2:"التقط صورة سيلفي مباشرة عبر الكاميرا: يقوم الذكاء الاصطناعي بالتحقق الصارم من ملامح الوجه البشري.",shot:"التقاط السيلفي الموثق",sf3:"تؤكد هذه الصورة هويتك الحقيقية وتحمي المجتمع في تشاد من الحسابات المزيفة وتبقى ثابتة في ملفك الشخصي.",pj:"ملفاً شاهدته اليوم",unl:"بريميوم مفعّل: ملفات غير محدودة اليوم",pw:"بلغت حد اليوم",pw2:"شاهدت ملفاتك المجانية العشرين اليوم.",pss:"باقة بريميوم لليوم",pss2:"ملفات غير محدودة حتى منتصف الليل ووضع التخفّي.",op:"الدفع عبر",pn:"رقم الدفع",pb:"ادفع 5 000 FCFA",pg:"جارٍ الدفع…",pd:"تجريبي: لا يتم أي دفع حقيقي.",paid:"تم استلام الدفع. تم تفعيل بريميوم.",plan:"باقتك",free:"مجانية: 20 ملفاً في اليوم",prem:"باقة بريميوم لليوم مفعّلة",up:"الترقية إلى بريميوم (5 000 FCFA)",dm:"تجريبي: الانتقال إلى 19 ملفاً",opVisa:"بطاقة Visa",cardNum:"رقم بطاقة Visa",cardExp:"تاريخ الانتهاء (MM/AA)",cardCvv:"رمز الأمان (3 أرقام)",cardNom:"اسم صاحب البطاقة",cardNomPh:"مثال: MAHAMAT ADAM",cardSec:"دفع آمن 100% عبر Visa و 3D Secure",cardNumE:"رقم بطاقة Visa غير مكتمل (16 رقماً).",cardExpE:"تاريخ انتهاء غير صحيح (MM/AA).",cardCvvE:"رمز CVV غير صحيح (3 أرقام).",cardNomE:"يرجى كتابة اسم صاحب البطاقة.",visaPaid:"تم التحقق من بطاقة Visa بنجاح! تم تفعيل بريميوم.",
+gBtn:"المتابعة باستخدام Google",fbAuthBtn:"المتابعة باستخدام Google",gNote:"🛡️ تسجيل حصري وآمن 100% باستخدام حساب Google. التوثيق بسيلفي مباشر إلزامي للتحقق من الوجه البشري وحماية مجتمعنا في تشاد.",gVerif:"حساب Google موثّق",fbAuthVerif:"حساب Google موثّق",logout:"تسجيل الخروج",logoutConfirm:"هل تريد بالتأكيد تسجيل الخروج؟ سيتم الاحتفاظ بجميع بياناتك وملفك وتعود فوراً لنفس المكان عند الدخول مجدداً.",gModalT:"تسجيل الدخول عبر Google",gModalD:"اختر حسابك للحصول على توثيق فوري:",gConfirm:"تأكيد الحساب",cityFilt:"المدينة",seekCity:"البحث في",heroTag:"علاقات عاطفية موثّقة",hob:"الهوايات والاهتمامات",hobLbl:"هواياتك المفضلة",hobHint:"اختر هواياتك واهتماماتك المفضلة:",edHb:"تعديل هواياتي",saveHb:"حفظ",bio:"نبذة عني",bioLbl:"وصف قصير",bioPh:"مثال: شخص بشوش، أحب الحوار الصادق، السفر وأبحث عن الاستقرار...",bioHint:"عرّف بنفسك في بضع كلمات:",edBio:"تعديل الوصف",saveBio:"حفظ الوصف",bioDef:"أبحث عن علاقة صادقة ومبنية على الاحترام المتبادل.",
+vidCall:"مكالمة فيديو",callHd:"مكالمة فيديو HD",calling:"جارٍ الاتصال…",callingContact:"جارٍ الاتصال…",ringingContact:"يرن لدى ",callAnswered:"مكالمة نشطة بجودة HD",callEnd:"انتهت المكالمة",callHangup:"إنهاء المكالمة",opt:"خيارات",repUser:"الإبلاغ عن هذا الملف",blkUser:"حظر هذا المستخدم",blkConfirmT:"هل تريد حظر هذا المستخدم؟",blkConfirmD:"لن يظهر هذا الملف مجدداً وستختفي الرسائل.",blkBtn:"حظر",blkDone:"تم حظر المستخدم بنجاح.",repTitle:"الإبلاغ عن الملف",repDesc:"ما هو سبب إبلاغك عن هذا الملف الشخصي؟",repDone:"تم إرسال البلاغ. سيقوم فريقنا في تشاد بمراجعة الملف خلال 24 ساعة.",repFake:"ملف مزيف أو انتحال شخصية",repHarass:"مضايقة أو سلوك غير لائق",repScam:"احتيال مالي أو طلب أموال",repOther:"سبب آخر",unblk:"إلغاء الحظر",blkedList:"المستخدمون المحظورون",noBlked:"لا يوجد أي مستخدم محظور.",unblkDone:"تم إلغاء حظر المستخدم.",
 langSpk:"اللغة المنطوقة",lngFr:"الفرنسية",lngAr:"العربية",lngBoth:"الفرنسية والعربية",
 lngMap:{fr:"🗣️ الفرنسية",ar:"🗣️ العربية",both:"🗣️ الفرنسية والعربية"},
 rel:"الديانة",relMus:"مسلم(ة)",relChr:"مسيحي(ة)",relOth:"ديانة أخرى",
 relMap:{mus:"🕌 مسلم(ة)",chr:"✝️ مسيحي(ة)",oth:"🕊️ ديانة أخرى"},
-mailb:"البريد الإلكتروني",telb:"الهاتف",eml:"عنوان بريدك الإلكتروني",emE:"أدخل عنوان بريد إلكتروني صالحاً.",pwd:"كلمة المرور",pwdPh:"6 أحرف على الأقل",pwdE:"أدخل كلمة مرور لا تقل عن 6 أحرف.",emReg:"إنشاء حساب بالبريد",emLog:"تسجيل الدخول",orDivider:"أو",haveAcc:"لديك حساب بالفعل؟ تسجيل الدخول",swMail:"البريد الإلكتروني",swTel:"الهاتف (+235)",phs:"صوري",rm:"حذف الصورة",add:"إضافة صورة",ph5i:"أضف حتى 5 صور. يرى الآخرون النسخة المحمية (وجه مشوّش) حتى يحدث تطابق، ولا تُعرض النسخة الأصلية قبل ذلك أبداً.",edt:"إخفاء الوجه",edh:"ضع الدائرة على وجهك: سيتم تشويشه بشكل لا رجعة فيه، وتبقى بقية الصورة واضحة.",edx:"الموضع الأفقي",edy:"الموضع العمودي",eds:"حجم القناع",eda:"إضافة الصورة",edc:"إلغاء",incog:"وضع التخفّي",incd:"يبقى ملفك غير مرئي: لا يراه إلا من تعجب به.",incl:"حصري لبريميوم",incb:"تخفّي",
+mailb:"Google",telb:"Google",eml:"بريد Gmail",emE:"أدخل بريداً إلكترونياً صالحاً.",pwd:"كلمة المرور",pwdPh:"6 أحرف على الأقل",pwdE:"كلمة المرور مطلوبة.",emReg:"دخول عبر Google",emLog:"دخول عبر Google",orDivider:"أو",haveAcc:"تسجيل الدخول عبر Google",swMail:"Google",swTel:"Google",phs:"صوري",rm:"حذف الصورة",add:"إضافة صورة",ph5i:"أضف حتى 5 صور. يرى الآخرون النسخة المحمية (وجه مشوّش) حتى يحدث تطابق.",edt:"إخفاء الوجه",edh:"ضع الدائرة على وجهك.",edx:"الموضع الأفقي",edy:"الموضع العمودي",eds:"حجم القناع",eda:"إضافة الصورة",edc:"إلغاء",incog:"وضع التخفّي",incd:"يبقى ملفك غير مرئي: يمكنك رؤية الآخرين ولكن لا أحد يرى ملفك.",incl:"حصري لبريميوم",incb:"تخفّي",
 kid:["بلا أطفال","طفل واحد","طفلان","3 أطفال أو أكثر"],
 selfieBadge:"سيلفي موثّق",selfieLock:"صورة السيلفي الموثقة إلزامية ولا يمكن حذفها.",
+selfieNoFace:"❌ لم يتم اكتشاف وجه بشري. يرجى توجيه وجهك بوضوح أمام الكاميرا في مكان جيد الإضاءة وإعادة المحاولة.",selfieAnalyzing:"جارٍ التحقق من ملامح الوجه…",selfieVerified:"تم توثيق الوجه البشري بنجاح!",
+noProfilesYet:"مرحباً بك في شاري!",noProfilesDesc:"بدأ المجتمع من جديد من الصفر! كن من أول الأعضاء الموثقين في تشاد بإكمال ملفك وسيلفيك.",
+reqTabName:"الطلبات",reqSentTab:"المرسلة",reqReceivedTab:"المستلمة",noReqSent:"لم تقم بإرسال طلبات بعد",noReqSentDesc:"الملفات التي تعجب بها ستظهر هنا في انتظار التطابق.",
 fbTitle:"شاركنا رأيك وملاحظاتك",fbSub:"شاركنا اقتراحاتك أو أفكارك لتحسين التطبيق.",fbBtn:"كتابة تقييم",
 fbModalT:"رأيك يهمنا كثيراً",fbModalD:"ساعدنا في تطوير تطبيق شاري في تشاد. شاركنا تجربتك ومقترحاتك:",
 fbRatingLbl:"تقييمك العام",
@@ -1472,7 +1510,7 @@ fbMsgPh:"اكتب ملاحظاتك، اقتراحاتك أو تجربتك مع �
 fbMsgErr:"يرجى كتابة بضع كلمات توضح رأيك.",
 fbSuccess:"شكراً جزيلاً على تقييمك وملاحظاتك! سيهتم فريقنا في تشاد باقتراحك.",
 scBlockT:"التقاط الشاشة ممنوع",scBlockD:"لحماية خصوصية وأمان المشتركين في شاري، يمنع منعاً باتاً تصوير أو تسجيل الشاشة.",scToast:"⚠️ تم حظر التقاط الشاشة: خصوصية الأعضاء محمية في شاري.",scDismiss:"المتابعة في شاري",
-chatTab:"المحادثات",reqTab:"الطلبات المستلمة",noReq:"لا توجد طلبات مستلمة حالياً",noReqDesc:"المعجبون والأشخاص الذين يرغبون في التعارف معك سيظهرون هنا.",acceptReq:"قبول وتطابق",declineReq:"تخطَّ",dailyReqLimit:"تم بلوغ الحد اليومي (20/20 طلباً مرسلاً اليوم). تتم إعادة التعيين يومياً عند الساعة 00:00 منتصف الليل. ترقَّ إلى بريميوم لإعجابات غير محدودة!",dailyAcceptLimit:"تم بلوغ الحد اليومي (10/10 طلبات مقبولة اليوم). تتم إعادة التعيين يومياً عند الساعة 00:00 منتصف الليل. ترقَّ إلى بريميوم لقبول غير محدود!",dailyReqQuota:"الطلبات المرسلة",dailyAcceptQuota:"الطلبات المقبولة",resetMidnight:"إعادة التعيين عند 00:00",editMsg:"تعديل الرسالة",editMsgTimeLeft:"الوقت المتبقي لتعديل الرسالة: ",saveEdit:"حفظ التعديل",cancelEdit:"إلغاء",msgEditedTag:"(معدلة)",editExpired:"انتهت مهلة الـ 10 دقائق لتعديل هذه الرسالة.",incogActive:"وضع التخفّي مفعّل: يمكنك مشاهدة جميع الملفات بسرية تامة، ولن يظهر ملفك لأحد.",incogInactive:"تم إيقاف وضع التخفّي: ملفك الشخصي مرئي الآن للجميع.",incogBanner:"وضع التخفّي مفعّل: ملفك الشخصي محجوب عن جميع الأعضاء الآخرين.",
+chatTab:"المحادثات",reqTab:"طلبات التطابق",noReq:"لا توجد طلبات مستلمة حالياً",noReqDesc:"المعجبون والأشخاص الذين يرغبون في التعارف معك سيظهرون هنا.",acceptReq:"قبول وتطابق",declineReq:"تخطَّ",dailyReqLimit:"تم بلوغ الحد اليومي (20/20 طلباً مرسلاً اليوم). تتم إعادة التعيين يومياً عند الساعة 00:00 منتصف الليل. ترقَّ إلى بريميوم لإعجابات غير محدودة!",dailyAcceptLimit:"تم بلوغ الحد اليومي (10/10 طلبات مقبولة اليوم). تتم إعادة التعيين يومياً عند الساعة 00:00 منتصف الليل. ترقَّ إلى بريميوم لقبول غير محدود!",dailyReqQuota:"الطلبات المرسلة",dailyAcceptQuota:"الطلبات المقبولة",resetMidnight:"إعادة التعيين عند 00:00",editMsg:"تعديل الرسالة",editMsgTimeLeft:"الوقت المتبقي لتعديل الرسالة: ",saveEdit:"حفظ التعديل",cancelEdit:"إلغاء",msgEditedTag:"(معدلة)",editExpired:"انتهت مهلة الـ 10 دقائق لتعديل هذه الرسالة.",incogActive:"وضع التخفّي مفعّل: يمكنك مشاهدة جميع الملفات بسرية تامة، ولن يظهر ملفك لأحد.",incogInactive:"تم إيقاف وضع التخفّي: ملفك الشخصي مرئي الآن للجميع.",incogBanner:"وضع التخفّي مفعّل: ملفك الشخصي محجوب عن جميع الأعضاء الآخرين.",
 k:{ser:"علاقة عاطفية",mar:"زواج",fam:"العائلة",etu:"الدراسة",ent:"ريادة الأعمال",foi:"الإيمان",mus:"الموسيقى",foo:"كرة القدم",cui:"الطبخ",voy:"السفر",fr:"الفرنسية",ar:"العربية",sa:"السارا"}}};
 const FN=["Achta","Fatimé","Hawa","Khadidja","Kaltouma","Mariam","Zara","Halimé","Amina","Aïcha","Rahma","Nadjma","Esther","Grace","Rachel","Prisca","Judith","Ruth","Sarah","Dorcas","Béatrice","Claudine","Odette","Léa"];
 const MN=["Mahamat","Abakar","Idriss","Hassan","Moussa","Ibrahim","Ousmane","Adam","Oumar","Youssouf","Daniel","Joseph","Samuel","Emmanuel","Moïse","Nathan","David","Paul","Pierre","Jean","Michel","Éric","Franck","Ali"];
@@ -1659,14 +1697,37 @@ const SEED_PROFILES = [
     y: 1
   }
 ];
-let P = [...SEED_PROFILES];
+let P = [];
 const ME={n:"",bg:[G,B],cl:"#C3CCDB",sk:"#9AA7BB"};
-const $=s=>document.querySelector(s),byId=id=>P.find(p=>String(p.id)===String(id)),pool=()=>P.filter(p=>(!st.g||p.g!==st.g)&&(!st.tc||st.tc==="all"||p.c===st.tc)&&!(st.blocked||[]).includes(p.id));
+const $=s=>document.querySelector(s),byId=id=>P.find(p=>String(p.id)===String(id));
+const pool=()=>{
+  const currentUserId = (st.u && st.u.id) || (sbClient && sbClient.auth && sbClient.auth.currentUser ? sbClient.auth.currentUser.id : null);
+  const currentUserName = (st.u && st.u.n) ? st.u.n.trim().toLowerCase() : "";
+  const passedSet = new Set((st.passed || []).map(String));
+  const matchedSet = new Set((st.mt || []).map(String));
+  const blockedSet = new Set((st.blocked || []).map(String));
+
+  return P.filter(p => {
+    if (!p || !p.n || p.n === '__DELETED__') return false;
+    const pid = String(p.id);
+    if (st.g && p.g === st.g) return false;
+    if (st.tc && st.tc !== "all" && p.c !== st.tc) return false;
+    if (blockedSet.has(pid)) return false;
+    // Permanent exclusion of passed profiles
+    if (passedSet.has(pid)) return false;
+    // Permanent exclusion of matched profiles
+    if (matchedSet.has(pid)) return false;
+    // Exclude own profile
+    if (currentUserId && pid === String(currentUserId)) return false;
+    if (currentUserName && p.n && p.n.trim().toLowerCase() === currentUserName) return false;
+    return true;
+  });
+};
 function getDailyDateKey(){
 const d=new Date();
 return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
-const st={lang:"fr",blur:true,lite:false,tc:"all",mode:"tel",em:"",ph5:[],inc:false,ed:null,step:0,u:{hb:["spo","cui"],bio:"",lng:"fr",rel:"mus"},card:{num:"",exp:"",cvv:"",nom:""},g:"",ph:"",i:0,seen:0,prem:0,pay:0,op:"",pp:0,vs:0,selfie:"",tab:"d",chat:null,mt:[],ms:{},busy:0,blocked:[],feedbacks:[],mSubTab:"chat",incomingRequests:[],dailyLimits:{date:getDailyDateKey(),sent:0,accepted:0}};
+const st={lang:"fr",blur:true,lite:false,tc:"all",mode:"google",em:"",ph5:[],inc:false,ed:null,step:0,savedStep:4,u:{hb:["spo","cui"],bio:"",lng:"fr",rel:"mus"},card:{num:"",exp:"",cvv:"",nom:""},g:"",ph:"",i:0,seen:0,prem:0,pay:0,op:"",pp:0,vs:0,selfie:"",tab:"d",chat:null,mt:[],ms:{},busy:0,blocked:[],feedbacks:[],mSubTab:"chat",reqSubTab:"rec",incomingRequests:[],sentRequests:[],passed:[],dailyLimits:{date:getDailyDateKey(),sent:0,accepted:0}};
 function ensureSelfieInPh5(){
 if(!st.selfie)return;
 const idx=st.ph5.findIndex(p=>p.isSelfie||p.p===st.selfie||p.o===st.selfie);
@@ -1682,30 +1743,18 @@ save();
 }
 function initIncomingRequests(){
 if(!Array.isArray(st.incomingRequests))st.incomingRequests=[];
-if(st.incomingRequests.length===0){
-const targetG=(st.g==="f"||(st.u&&st.u.g==="f"))?"m":"f";
-const candidates=SEED_PROFILES.filter(p=>p.g===targetG&&!(st.mt||[]).includes(p.id));
-st.incomingRequests=candidates.slice(0,2).map(p=>({
-id:p.id,
-n:p.n,
-g:p.g,
-a:p.a,
-c:p.c,
-jb:p.jb,
-bio:p.bio,
-selfie_url:p.selfie_url,
-time:Date.now()-1800000
-}));
-save();
-}
+if(!Array.isArray(st.sentRequests))st.sentRequests=[];
+if(!Array.isArray(st.passed))st.passed=[];
 }
 try{
 const s=JSON.parse(localStorage.getItem("chari")||"{}");
-["lang","blur","lite","tc","selfie","step","g","ph","em","prem","inc","mSubTab"].forEach(k=>{if(k in s)st[k]=s[k]});
+["lang","blur","lite","tc","selfie","step","savedStep","g","ph","em","prem","inc","mSubTab","reqSubTab"].forEach(k=>{if(k in s)st[k]=s[k]});
 if(Array.isArray(s.ph5))st.ph5=s.ph5;
 if(Array.isArray(s.feedbacks))st.feedbacks=s.feedbacks;
 if(Array.isArray(s.blocked))st.blocked=s.blocked;
 if(Array.isArray(s.mt))st.mt=s.mt;
+if(Array.isArray(s.passed))st.passed=s.passed;
+if(Array.isArray(s.sentRequests))st.sentRequests=s.sentRequests;
 if(s.ms&&typeof s.ms==="object")st.ms=s.ms;
 if(Array.isArray(s.incomingRequests))st.incomingRequests=s.incomingRequests;
 if(s.dailyLimits&&s.dailyLimits.date)st.dailyLimits=s.dailyLimits;
@@ -1714,13 +1763,13 @@ if(!st.u.hb)st.u.hb=["spo","cui"];
 ensureSelfieInPh5();
 checkAndResetDailyLimits();
 initIncomingRequests();
-if(st.step>=4&&((!st.em&&!st.ph)||!st.selfie)){st.step=(!st.em&&!st.ph)?0:3;}
+if(st.step>=4&&(!st.em||!st.selfie)){st.step=!st.em?0:3;}
 }catch(e){}
 const save=()=>{try{localStorage.setItem("chari",JSON.stringify({
 lang:st.lang,blur:st.blur,lite:st.lite,tc:st.tc,u:st.u,blocked:st.blocked||[],
-selfie:st.selfie,ph5:st.ph5,feedbacks:st.feedbacks||[],step:st.step,g:st.g,ph:st.ph,
-em:st.em,prem:st.prem,inc:st.inc,mt:st.mt||[],ms:st.ms||{},
-incomingRequests:st.incomingRequests||[],dailyLimits:st.dailyLimits,mSubTab:st.mSubTab||"chat"
+selfie:st.selfie,ph5:st.ph5,feedbacks:st.feedbacks||[],step:st.step,savedStep:st.savedStep||st.step,g:st.g,ph:st.ph,
+em:st.em,prem:st.prem,inc:st.inc,mt:st.mt||[],ms:st.ms||{},passed:st.passed||[],sentRequests:st.sentRequests||[],
+incomingRequests:st.incomingRequests||[],dailyLimits:st.dailyLimits,mSubTab:st.mSubTab||"chat",reqSubTab:st.reqSubTab||"rec"
 }))}catch(e){}};
 setInterval(checkAndResetDailyLimits,60000);
 const x=()=>T[st.lang],ic=n=>`<svg class="i" aria-hidden="true"><use href="#i-${n}"/></svg>`,say=s=>{$("#live").textContent=s};
@@ -1732,10 +1781,27 @@ const sw=(k,l)=>`<button class="sw" role="switch" aria-checked="${st[k]}" data-a
 function onb(){const t=x(),s=st.step;
 if(s===0){
 const isFile=window.location.protocol==="file:";
-const isMail=st.mode==="mail";
-return`<div class="pf"><div class="hero-box"><img src="couple.jpg" alt="Chari" class="hero-img"><div class="hero-overlay"><span class="hero-tag">${t.heroTag} ${flagSvg}</span></div></div><h1>${t.wl}</h1><p>${t.wl2}</p>${isFile?`<div style="background:rgba(0,111,253,0.10);border:1px solid rgba(0,111,253,0.3);border-radius:12px;padding:10px 12px;margin:12px 0 8px;font-size:12px;color:var(--ink);display:flex;align-items:center;gap:10px"><span style="font-size:18px">🌐</span><div style="flex:1"><strong>Application en ligne :</strong> Accédez à la version officielle en ligne sur <a href="https://chari-flame.vercel.app" style="color:var(--brand);font-weight:700">chari-flame.vercel.app</a></div><a class="btn" href="https://chari-flame.vercel.app" style="width:auto;min-height:30px;padding:2px 10px;font-size:11px;text-decoration:none">Ouvrir</a></div>`:''}<div style="margin:20px 0 6px;display:flex;flex-direction:column;gap:10px"><button class="btn-google" data-a="gauth" type="button" style="width:100%;box-shadow:0 4px 14px rgba(66,133,244,0.28)"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg><span>${t.gBtn}</span></button><button class="btn-fb" data-a="fbauth" type="button" style="width:100%"><svg viewBox="0 0 24 24" width="22" height="22" fill="#fff" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg><span>${t.fbAuthBtn}</span></button></div><div style="display:flex;align-items:center;gap:12px;margin:16px 0 12px"><div style="flex:1;height:1px;background:var(--line)"></div><span style="font-size:12px;color:var(--mut);font-weight:700;text-transform:uppercase">${t.orDivider}</span><div style="flex:1;height:1px;background:var(--line)"></div></div><div class="seg" role="tablist" style="margin-bottom:12px"><button type="button" class="opb" data-a="md" data-k="mail" aria-pressed="${isMail}">${ic("mail")} <span>${t.swMail}</span></button><button type="button" class="opb" data-a="md" data-k="tel" aria-pressed="${!isMail}">${ic("phone")} <span>${t.swTel}</span></button></div>${isMail?`<div><div><label for="em">${t.eml}</label><input class="fld" id="em" type="email" placeholder="votre.email@gmail.com" autocomplete="email" value="${esc(st.em||"")}"></div><div><label for="pw">${t.pwd}</label><input class="fld" id="pw" type="password" placeholder="${t.pwdPh}" autocomplete="current-password"></div><p class="err" id="e0" role="alert"></p><button class="btn" data-a="s0-email-signup" id="btn-em-signup">${t.emReg}</button><button class="btn sec" data-a="s0-email-login" id="btn-em-login" style="margin-top:8px">${t.haveAcc}</button></div>`:`<div><label for="ph">${t.phl} ${flagSvg}</label><div class="ph2"><span>+235</span><input class="fld" id="ph" type="tel" inputmode="numeric" placeholder="66 00 00 00" maxlength="11" value="${esc(st.ph||"")}"></div><p class="err" id="e0" role="alert"></p><button class="btn" data-a="s0" id="btn-send-otp">${t.sndOtp}</button></div>`}<div class="sf" style="margin:16px 0 8px;background:rgba(217,119,6,0.08);border:1px solid rgba(217,119,6,0.25)"><div style="display:flex;align-items:flex-start;gap:10px">${ic("shield")}<p style="margin:0;font-size:13px;line-height:1.4;color:var(--ink)">${t.gNote}</p></div></div><p class="mut" style="font-size:12px;margin-top:10px">${t.age}</p></div>`;
+return`<div class="pf">
+<div class="hero-box"><img src="couple.jpg" alt="Chari" class="hero-img"><div class="hero-overlay"><span class="hero-tag">${t.heroTag} ${flagSvg}</span></div></div>
+<h1>${t.wl}</h1>
+<p>${t.wl2}</p>
+${isFile?`<div style="background:rgba(0,111,253,0.10);border:1px solid rgba(0,111,253,0.3);border-radius:12px;padding:10px 12px;margin:12px 0 8px;font-size:12px;color:var(--ink);display:flex;align-items:center;gap:10px"><span style="font-size:18px">🌐</span><div style="flex:1"><strong>Application en ligne :</strong> Accédez à la version officielle en ligne sur <a href="https://chari-flame.vercel.app" style="color:var(--brand);font-weight:700">chari-flame.vercel.app</a></div><a class="btn" href="https://chari-flame.vercel.app" style="width:auto;min-height:30px;padding:2px 10px;font-size:11px;text-decoration:none">Ouvrir</a></div>`:''}
+<div style="margin:26px 0 16px;display:flex;flex-direction:column;gap:12px">
+<button class="btn-google" data-a="gauth" type="button" style="width:100%;min-height:52px;font-size:16px;box-shadow:0 6px 20px rgba(66,133,244,0.32)">
+<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+<span>${t.gBtn}</span>
+</button>
+</div>
+<div class="sf" style="margin:16px 0 8px;background:rgba(217,119,6,0.08);border:1px solid rgba(217,119,6,0.25)">
+<div style="display:flex;align-items:flex-start;gap:10px">
+${ic("shield")}
+<p style="margin:0;font-size:13px;line-height:1.45;color:var(--ink)">${t.gNote}</p>
+</div>
+</div>
+<p class="mut" style="font-size:12px;margin-top:14px;text-align:center">${t.age}</p>
+</div>`;
 }
-if(s===1)return`<div class="pf"><button class="ib" data-a="go-back-auth" aria-label="${t.bk}" style="align-self:flex-start;margin-bottom:8px">${ic("back")}</button><h1>${t.otp}</h1><p>${t.otps}<strong>+235 ${esc(st.ph||"")}</strong></p><p class="mut" style="font-size:13px">${t.otpd}</p><div><label for="cd">${t.cod}</label><input class="fld" id="cd" type="tel" inputmode="numeric" maxlength="6" placeholder="123456" autofocus autocomplete="one-time-code"><p class="err" id="e1" role="alert"></p></div><button class="btn" data-a="s1" id="btn-val-otp">${t.ct}</button><button class="btn sec" data-a="go-back-auth" style="margin-top:8px">${t.bk}</button></div>`;
+if(s===1){go(3);return"";}
 if(s===2)return`<div class="pf"><h1>${t.pr}</h1>${st.u.gVerif?`<div style="display:flex;align-items:center;gap:8px;background:rgba(52,168,83,0.12);color:#1e7e34;padding:8px 12px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:12px"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="#34A853" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg><span>${t.gVerif}${st.em?" : "+esc(st.em):""}</span></div>`:""}<div><label for="nm">${t.nm}</label><input class="fld" id="nm" type="text" autocomplete="given-name" maxlength="20" value="${esc(st.u.n||"")}"></div><div><label for="jb">${t.job}</label><input class="fld" id="jb" type="text" placeholder="${t.jobPh}" maxlength="30" value="${esc(st.u.jb||"")}"></div><div><label for="bio">${t.bioLbl}</label><input class="fld" id="bio" type="text" placeholder="${t.bioPh}" maxlength="160" value="${esc(st.u.bio||"")}"></div><div><label id="gl">${t.iam}</label><div class="seg" role="group" aria-labelledby="gl"><button data-a="gd" data-k="f" aria-pressed="${st.g==="f"}">${t.fem}</button><button data-a="gd" data-k="m" aria-pressed="${st.g==="m"}">${t.mal}</button></div></div><div><label for="ag">${t.ag}</label><input class="fld" id="ag" type="number" inputmode="numeric" min="22" max="99" value="${st.u.a||""}"><p class="err" id="eA" role="alert"></p></div><div><label for="cy">${t.cty} ${flagSvg}</label><select class="fld" id="cy">${CI.map(c=>`<option ${st.u.c===c?"selected":""}>${c}</option>`).join("")}</select></div><div><label for="tc">${t.tcty} ${flagSvg}</label><select class="fld" id="tc"><option value="all" ${(!st.u.tc||st.u.tc==="all")?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.u.tc===c?"selected":""}>${c}</option>`).join("")}</select></div><div><label for="lng">${t.langSpk}</label><select class="fld" id="lng"><option value="fr" ${(st.u.lng||"fr")==="fr"?"selected":""}>${t.lngFr}</option><option value="ar" ${st.u.lng==="ar"?"selected":""}>${t.lngAr}</option><option value="both" ${st.u.lng==="both"?"selected":""}>${t.lngBoth}</option></select></div><div><label for="rel">${t.rel}</label><select class="fld" id="rel"><option value="mus" ${(st.u.rel||"mus")==="mus"?"selected":""}>${t.relMus}</option><option value="chr" ${st.u.rel==="chr"?"selected":""}>${t.relChr}</option><option value="oth" ${st.u.rel==="oth"?"selected":""}>${t.relOth}</option></select></div><div><label>${t.hobLbl}</label><p class="mut" style="margin:2px 0 6px">${t.hobHint}</p><div class="h-chips" role="group" aria-label="${t.hobLbl}">${HOBBIES.map(h=>{const on=(st.u.hb||[]).includes(h.id);return`<button type="button" class="h-chip ${on?"on":""}" data-a="toghb" data-h="${h.id}" aria-pressed="${on}"><span>${h[st.lang]}</span></button>`}).join("")}</div></div><div><label for="kd">${t.kd}</label><select class="fld" id="kd">${t.kid.map((k,i)=>`<option value="${i}" ${st.u.kd===i?"selected":""}>${k}</option>`).join("")}</select></div><div><label for="it">${t.it}</label><select class="fld" id="it"><option value="ser" ${st.u.i==="ser"?"selected":""}>${t.k.ser}</option><option value="mar" ${st.u.i==="mar"?"selected":""}>${t.k.mar}</option></select></div><p class="err" id="e2" role="alert"></p><button class="btn" data-a="s2">${t.ct}</button></div>`;
 return`<div class="pf"><h1>${t.sf1}</h1><p>${t.sf2}</p><div class="selfie">${st.selfie?`<img src="${st.selfie}" class="selfie-captured" alt="Selfie">`:`<video id="camera-stream" autoplay playsinline muted></video><div class="selfie-ring"></div>`}</div><p class="err" id="cam-err" role="alert"></p>${st.selfie?`<button class="btn" data-a="val-selfie">${t.vd}</button><button class="btn sec" data-a="retake-selfie" style="margin-top:8px">Reprendre avec la caméra</button>`:`<button class="btn" data-a="snap-cam" id="btn-snap">${t.shot}</button>`}<p class="mut">${t.sf3}</p></div>`}
 function payv(){
@@ -1754,30 +1820,30 @@ const qBadge=st.prem
 ? `<div class="quota-banner prem"><span class="quota-left">✨ <strong>${t.prem}</strong> • ${t.dailyReqQuota} illimitées</span>${st.inc?`<span class="badge" style="background:#1E293B;color:#fff">🕶️ ${t.incb}</span>`:""}</div>`
 : `<div class="quota-banner"><span class="quota-left">💌 ${t.dailyReqQuota} : <strong>${sentCount}/20</strong> (reste ${sentRem})</span><span style="font-size:11px;color:var(--mut)">⏳ 00h00</span></div>`;
 const incBanner=st.inc?`<div style="display:flex;align-items:center;gap:8px;background:rgba(30,41,59,0.08);border:1px solid #1E293B;border-radius:10px;padding:6px 12px;margin-bottom:8px;font-size:12px;color:var(--ink)"><span>🕶️</span><span style="font-weight:600">${t.incogBanner}</span></div>`:"";
-if(!p)return cbar+incBanner+qBadge+cnt+`<div class="empty"><h2>${st.tc!=="all"?t.noCity:t.done}</h2><p>${st.tc!=="all"?t.noCityD:""}</p><button class="btn" data-a="${st.tc!=="all"?"reset-tc":"again"}">${st.tc!=="all"?t.allC:t.again}</button></div>`;
+if(!p)return cbar+incBanner+qBadge+cnt+`<div class="empty"><div style="font-size:42px;margin-bottom:8px">🌟</div><h2>${st.tc!=="all"?t.noCity:(t.noProfilesYet||t.done)}</h2><p>${st.tc!=="all"?t.noCityD:(t.noProfilesDesc||"")}</p><button class="btn" data-a="${st.tc!=="all"?"reset-tc":"tab"}" data-k="${st.tc!=="all"?"":"p"}" style="max-width:260px;margin:12px auto 0">${st.tc!=="all"?t.allC:t.my}</button></div>`;
 const bioText=(p.b&&p.b[st.lang])||p.bio||(p.b&&p.b.fr)||"";
 const photoHtml=p.selfie_url?`<img src="${p.selfie_url}" class="card-real-photo" alt="${esc(p.n)}" onerror="this.onerror=null;this.src='photos/achte.jpg'">`:av(p,st.blur);
 return cbar+incBanner+qBadge+cnt+`<article class="card ${st.blur?'blur':''}"><div class="ph">${photoHtml}${st.blur?`<span class="pill">${t.blur}</span>`:""}<button class="ib" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.5);color:#fff;border-radius:50%;width:36px;height:36px;backdrop-filter:blur(4px)" data-a="open-opt" data-id="${p.id}" aria-label="${t.opt}" title="${t.opt}">${ic("dots")}</button></div><div class="bd"><h2>${esc(p.n)}, ${p.a}${ic("ok")}</h2><p class="mut">${esc(p.c)} ${flagSvg}<span class="badge">${(t.k&&t.k[p.i])||t.k.ser}</span></p><p class="b">${esc(bioText)}</p><ul class="chips"><li>${(t.relMap&&t.relMap[p.rel])||t.relMus}</li><li>${(t.lngMap&&t.lngMap[p.lng])||t.lngFr}</li><li>${(t.kid&&t.kid[p.kd])||t.kid[0]}</li>${[...(p.l||[]),...(p.v||[])].map(k=>`<li>${(t.k&&t.k[k])||k}</li>`).join("")}</ul></div></article><div class="acts"><button class="act" data-a="pass">${ic("x")}<span>${t.pass}</span></button><button class="act like" data-a="like">${ic("heart")}<span>${t.like}</span></button></div>`;
 }
-function msgs(){
+function reqView(){
 checkAndResetDailyLimits();
 const t=x();
-const mtList=(st.mt||[]).filter(id=>!(st.blocked||[]).includes(id));
-const reqList=(st.incomingRequests||[]).filter(r=>!(st.blocked||[]).includes(r.id)&&!(st.mt||[]).includes(r.id));
-const subTab=st.mSubTab||"chat";
+const reqSub=st.reqSubTab||"rec";
+const reqList=(st.incomingRequests||[]).filter(r=>!(st.blocked||[]).includes(r.id)&&!(st.mt||[]).includes(r.id)&&!(st.passed||[]).includes(r.id));
+const sentList=(st.sentRequests||[]).filter(s=>!(st.blocked||[]).includes(s.id)&&!(st.mt||[]).includes(s.id));
 
 const subtabsHtml=`<div class="m-subtabs" role="tablist">
-<button type="button" class="m-subtab ${subTab!=='req'?'active':''}" data-a="m-subtab" data-k="chat">
-<span>💬 ${t.chatTab}</span>
-<span class="m-badge">${mtList.length}</span>
-</button>
-<button type="button" class="m-subtab ${subTab==='req'?'active':''}" data-a="m-subtab" data-k="req">
-<span>💌 ${t.reqTab}</span>
+<button type="button" class="m-subtab ${reqSub==='rec'?'active':''}" data-a="req-subtab" data-k="rec">
+<span>💌 ${t.reqReceivedTab||"Reçues"}</span>
 ${reqList.length?`<span class="m-badge">${reqList.length}</span>`:''}
+</button>
+<button type="button" class="m-subtab ${reqSub==='sent'?'active':''}" data-a="req-subtab" data-k="sent">
+<span>📤 ${t.reqSentTab||"Envoyées"}</span>
+${sentList.length?`<span class="m-badge">${sentList.length}</span>`:''}
 </button>
 </div>`;
 
-if(subTab==="req"){
+if(reqSub==="rec"){
 const accCount=(st.dailyLimits&&st.dailyLimits.accepted)||0;
 const accRem=Math.max(0,10-accCount);
 const quotaHtml=st.prem
@@ -1785,7 +1851,7 @@ const quotaHtml=st.prem
 : `<div class="quota-banner"><span class="quota-left">✅ ${t.dailyAcceptQuota} : <strong>${accCount}/10</strong> (reste ${accRem})</span><span style="font-size:11px;color:var(--mut)">⏳ 00h00</span></div>`;
 
 if(!reqList.length){
-return subtabsHtml+quotaHtml+`<div class="empty"><div style="font-size:42px;margin-bottom:8px">💌</div><h2>${t.noReq}</h2><p>${t.noReqDesc}</p><button class="btn" data-a="tab" data-k="d">${t.d}</button></div>`;
+return subtabsHtml+quotaHtml+`<div class="empty"><div style="font-size:42px;margin-bottom:8px">💌</div><h2>${t.noReq}</h2><p>${t.noReqDesc}</p><button class="btn" data-a="tab" data-k="d" style="max-width:240px;margin:12px auto 0">${t.d}</button></div>`;
 }
 
 const reqCards=reqList.map(r=>{
@@ -1807,10 +1873,40 @@ ${r.bio?`<p class="req-bio">“${esc(r.bio)}”</p>`:""}
 }).join("");
 
 return subtabsHtml+quotaHtml+`<div class="req-list">${reqCards}</div>`;
+}else{
+const sentCount=(st.dailyLimits&&st.dailyLimits.sent)||0;
+const sentRem=Math.max(0,20-sentCount);
+const quotaHtml=st.prem
+? `<div class="quota-banner prem"><span class="quota-left">✨ <strong>${t.prem}</strong> • ${t.dailyReqQuota} illimitées</span></div>`
+: `<div class="quota-banner"><span class="quota-left">💌 ${t.dailyReqQuota} : <strong>${sentCount}/20</strong> (reste ${sentRem})</span><span style="font-size:11px;color:var(--mut)">⏳ 00h00</span></div>`;
+
+if(!sentList.length){
+return subtabsHtml+quotaHtml+`<div class="empty"><div style="font-size:42px;margin-bottom:8px">📤</div><h2>${t.noReqSent||"Aucune demande envoyée"}</h2><p>${t.noReqSentDesc||"Les profils que vous likez apparaîtront ici en attente de match."}</p><button class="btn" data-a="tab" data-k="d" style="max-width:240px;margin:12px auto 0">${t.d}</button></div>`;
 }
 
-if(!mtList.length)return subtabsHtml+`<div class="empty"><h2>${t.none}</h2><p>${t.nh}</p><button class="btn" data-a="tab" data-k="d">${t.d}</button></div>`;
-return subtabsHtml+`<ul class="list">${mtList.map(id=>{const p=byId(id);if(!p)return"";const l=st.ms[id]&&st.ms[id].slice(-1)[0];return`<li><button class="row" data-a="open" data-id="${id}"><span class="av">${av(p)}</span><span><strong>${esc(p.n)}</strong><br><span class="mut">${l?(l.img?"[Photo]":(l.voice?"[Note vocale]":(esc(l.t)+(l.isEdited?(" "+t.msgEditedTag):"")))):t.mt}</span></span></button></li>`}).join("")}</ul>`;
+const sentCards=sentList.map(s=>{
+const pObj=byId(s.id)||s;
+return `<div class="req-card" style="border-inline-start:4px solid var(--highlight-dark)">
+<div class="req-header">
+<span class="av s" style="width:50px;height:50px">${av(pObj)}</span>
+<div class="req-info">
+<h3>${esc(s.n)}, ${s.a}${ic("ok")}</h3>
+<p>${s.jb?esc(s.jb)+" · ":""}${esc(s.c)} ${flagSvg}</p>
+</div>
+<span style="font-size:11px;background:var(--highlight-lightest);color:var(--highlight-darkest);padding:3px 8px;border-radius:999px;font-weight:700">⏳ En attente</span>
+</div>
+</div>`;
+}).join("");
+
+return subtabsHtml+quotaHtml+`<div class="req-list">${sentCards}</div>`;
+}
+}
+function msgs(){
+checkAndResetDailyLimits();
+const t=x();
+const mtList=(st.mt||[]).filter(id=>!(st.blocked||[]).includes(id));
+if(!mtList.length)return`<div class="empty"><div style="font-size:42px;margin-bottom:8px">💬</div><h2>${t.none}</h2><p>${t.nh}</p><button class="btn" data-a="tab" data-k="d" style="max-width:240px;margin:12px auto 0">${t.d}</button></div>`;
+return`<div class="pf" style="padding-top:8px"><h1 style="font-size:22px;margin-bottom:12px">💬 ${t.chatTab}</h1><ul class="list">${mtList.map(id=>{const p=byId(id);if(!p)return"";const l=st.ms[id]&&st.ms[id].slice(-1)[0];return`<li><button class="row" data-a="open" data-id="${id}"><span class="av">${av(p)}</span><span><strong>${esc(p.n)}</strong><br><span class="mut">${l?(l.img?"[Photo]":(l.voice?"[Note vocale]":(esc(l.t)+(l.isEdited?(" "+t.msgEditedTag):"")))):t.mt}</span></span></button></li>`}).join("")}</ul></div>`;
 }
 function chat(){const t=x(),p=byId(st.chat);if(!p)return msgs();
 return`<div class="ch"><div class="chh"><button class="ib" data-a="back" aria-label="${t.bk}">${ic("back")}</button><span class="av s">${av(p)}</span><h2 style="flex:1;min-width:0;display:flex;align-items:center;gap:6px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.n)}</span>${flagSvg}</h2><button class="ib" data-a="start-call" data-id="${p.id}" style="color:var(--brand)" title="${t.vidCall}" aria-label="${t.vidCall}">${ic("video")}</button><button class="ib" data-a="open-opt" data-id="${p.id}" title="${t.opt}" aria-label="${t.opt}">${ic("dots")}</button></div><p class="note">${ic("shield")}<span>${t.st}</span></p><div id="log" class="log" aria-live="polite"></div><div class="inp"><input id="chat-file" type="file" accept="image/*" hidden><button class="ib" data-a="chat-pic" title="Photo" aria-label="Photo">${ic("cam")}</button><button class="ib" data-a="chat-rec" id="btn-rec" title="Vocale" aria-label="Vocale">${ic("mic")}</button><input id="in" type="text" placeholder="${t.ph}" aria-label="${t.ph}" autocomplete="off"><button class="send" data-a="send" aria-label="${t.snd}">${ic("send")}</button></div></div>`}
@@ -1912,13 +2008,20 @@ const l=$("#log");if(l){l.innerHTML="";st.ms[chatId].forEach((m,i)=>bub(l,m,i,ch
 editMessageInSupabase(msg.id,chatId,newT);
 }
 function render(){
-if(st.step>=4&&((!st.em&&!st.ph)||!st.selfie)){st.step=(!st.em&&!st.ph)?0:3;}
+if(st.step>=4&&(!st.em||!st.selfie)){st.step=!st.em?0:3;}
 const t=x(),h=document.documentElement,on=st.step<4;
 h.lang=st.lang;h.dir=st.lang==="ar"?"rtl":"ltr";h.classList.toggle("lite",st.lite);$("#lang").textContent=t.lgb;
 const stEl=$("#sc-shield-t"),sdEl=$("#sc-shield-d"),sbEl=$("[data-a=dismiss-shield]");
 if(stEl)stEl.textContent=t.scBlockT;if(sdEl)sdEl.textContent=t.scBlockD;if(sbEl)sbEl.textContent=t.scDismiss;
-$("#nav").innerHTML=on?"":[["d","compass",t.d],["m","chat",t.m],["p","user",t.p]].map(([k,i,l])=>`<button data-a="tab" data-k="${k}" ${st.tab===k?'aria-current="page"':""}>${ic(i)}<span>${l}</span></button>`).join("");
-$("#v").innerHTML=on?onb():st.tab==="d"?dis():st.tab==="m"?(st.chat?chat():msgs()):(st.ed?edv():prof());
+const reqCount=(st.incomingRequests||[]).filter(r=>!(st.blocked||[]).includes(r.id)&&!(st.mt||[]).includes(r.id)&&!(st.passed||[]).includes(r.id)).length;
+const msgCount=(st.mt||[]).filter(id=>!(st.blocked||[]).includes(id)).length;
+$("#nav").innerHTML=on?"":[
+["d","compass",t.d,0],
+["req","heart",t.reqTabName||"Demandes",reqCount],
+["m","chat",t.m,msgCount],
+["p","user",t.p,0]
+].map(([k,i,l,cnt])=>`<button data-a="tab" data-k="${k}" ${st.tab===k?'aria-current="page"':""} style="position:relative">${ic(i)}<span>${l}</span>${cnt>0?`<span class="nav-badge">${cnt}</span>`:""}</button>`).join("");
+$("#v").innerHTML=on?onb():st.tab==="d"?dis():st.tab==="req"?reqView():st.tab==="m"?(st.chat?chat():msgs()):(st.ed?edv():prof());
 if(st.ed&&!on&&st.tab==="p")drawEd();
 if(!on&&st.tab==="m"&&st.chat){const l=$("#log");if(l){l.innerHTML="";(st.ms[st.chat]||[]).forEach((m,idx)=>bub(l,m,idx,st.chat));l.scrollTop=l.scrollHeight;}}}
 let camStream=null;
@@ -1945,15 +2048,100 @@ camStream.getTracks().forEach(tr=>tr.stop());
 camStream=null;
 }
 }
-function snapCam(){
+async function validateSelfieFace(canvas, ctx){
+if(typeof window!=="undefined" && "FaceDetector" in window){
+try{
+const detector=new window.FaceDetector({maxDetectedFaces:2,fastMode:false});
+const faces=await detector.detect(canvas);
+if(faces&&faces.length>0){
+const f=faces[0],bb=f.boundingBox;
+if(bb&&bb.width>=40&&bb.height>=40)return {ok:true};
+}
+return {ok:false,reason:"no_face_detected"};
+}catch(e){console.warn("FaceDetector fallback:",e)}
+}
+
+const W=canvas.width,H=canvas.height;
+const imgData=ctx.getImageData(0,0,W,H);
+const data=imgData.data;
+const cx=W/2,cy=H/2;
+const rx=W*0.28,ry=H*0.36;
+
+let totalCenter=0,sumLum=0,sumLumSq=0,skinPixels=0,edges=0;
+const step=2;
+
+for(let y=1;y<H-1;y+=step){
+for(let x=1;x<W-1;x+=step){
+const idx=(y*W+x)*4;
+const r=data[idx],g=data[idx+1],b=data[idx+2];
+const lum=0.299*r+0.587*g+0.114*b;
+const dx=(x-cx)/rx,dy=(y-cy)/ry;
+if((dx*dx+dy*dy)<=1.0){
+totalCenter++;
+sumLum+=lum;
+sumLumSq+=lum*lum;
+
+const cb=128-0.168736*r-0.331264*g+0.5*b;
+const cr=128+0.5*r-0.418688*g-0.081312*b;
+const isSkinYCbCr=(cb>=77&&cb<=140&&cr>=128&&cr<=182);
+const isWarmTone=(r>b&&(r-b)>=6&&lum>=22&&lum<=200&&cb>=80&&cb<=142&&cr>=125&&cr<=180);
+
+if(isSkinYCbCr||isWarmTone)skinPixels++;
+
+const leftIdx=(y*W+(x-1))*4,rightIdx=(y*W+(x+1))*4;
+const upIdx=((y-1)*W+x)*4,downIdx=((y+1)*W+x)*4;
+const gx=Math.abs(data[rightIdx]-data[leftIdx]);
+const gy=Math.abs(data[downIdx]-data[upIdx]);
+if((gx+gy)>26)edges++;
+}
+}
+}
+
+if(totalCenter<100)return {ok:false,reason:"frame_error"};
+const meanLum=sumLum/totalCenter;
+const stdDev=Math.sqrt(Math.max(0,(sumLumSq/totalCenter)-(meanLum*meanLum)));
+const skinRatio=skinPixels/totalCenter;
+const edgeRatio=edges/totalCenter;
+
+if(meanLum<20||meanLum>248)return {ok:false,reason:"bad_lighting"};
+if(stdDev<15)return {ok:false,reason:"flat_surface"};
+if(skinRatio<0.12)return {ok:false,reason:"no_skin"};
+if(skinRatio>0.96&&stdDev<20)return {ok:false,reason:"too_uniform"};
+if(edgeRatio<0.03)return {ok:false,reason:"no_features"};
+
+return {ok:true};
+}
+
+async function snapCam(){
 const v=$("#camera-stream");
 if(!v)return;
+const btn=$("#btn-snap");
+if(btn){btn.disabled=true;btn.textContent=x().selfieAnalyzing||"Analyse du visage…";}
+const errEl=$("#cam-err");
+if(errEl)errEl.textContent="";
+
 const c=document.createElement("canvas");
 c.width=300;c.height=300;
 const ctx=c.getContext("2d");
 ctx.translate(300,0);ctx.scale(-1,1);
 const vw=v.videoWidth||300,vh=v.videoHeight||300,sz=Math.min(vw,vh);
 ctx.drawImage(v,(vw-sz)/2,(vh-sz)/2,sz,sz,0,0,300,300);
+
+const faceCheck=await validateSelfieFace(c, ctx);
+if(!faceCheck.ok){
+if(btn){btn.disabled=false;btn.textContent=x().shot;}
+const ring=$(".selfie-ring");
+if(ring){
+ring.classList.add("error");
+setTimeout(()=>{if(ring)ring.classList.remove("error");},2500);
+}
+if(errEl){
+errEl.textContent=x().selfieNoFace;
+errEl.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+return;
+}
+
 st.selfie=c.toDataURL("image/jpeg",.85);
 ensureSelfieInPh5();
 save();
@@ -1967,8 +2155,8 @@ go(2,"#jb");
 }else{
 go(4);
 }
-say(x().vd);
-},1600);
+say(x().selfieVerified||x().vd);
+},1400);
 }
 function go(n,sel){
 if(st.step===3&&n!==3)stopCam();
@@ -2253,16 +2441,31 @@ st.payFrom=st.tab;st.pay=1;st.tab="d";render();
 return;
 }
 st.busy=1;
-const isMatch=isL&&(p.y||Math.random()<0.5);
+const isMatch=isL&&(p.y||Math.random()<0.35);
 if(isL){
 st.dailyLimits.sent++;
+if(!st.sentRequests)st.sentRequests=[];
+if(!st.sentRequests.find(r=>String(r.id)===String(p.id))){
+st.sentRequests.push({id:p.id,n:p.n,a:p.a,c:p.c,jb:p.jb,selfie_url:p.selfie_url,time:Date.now()});
+}
 save();
 recordLikeInSupabase(p.id,isMatch);
+}else{
+if(!st.passed)st.passed=[];
+if(!st.passed.includes(p.id)){
+st.passed.push(p.id);
+save();
+}
 }
 const c=$(".card"),d=(isL?1:-1)*(st.lang==="ar"?-1:1);
-const go2=()=>{st.busy=0;st.i++;st.seen++;render();
+const go2=()=>{
+st.busy=0;
+st.i=0;
+st.seen++;
+render();
 if(!st.prem&&st.seen>=LIM)say(x().pw2);
-if(isMatch)match(p);else{const b=$("[data-a=like]");if(b)b.focus()}};
+if(isMatch)match(p);else{const b=$("[data-a=like]");if(b)b.focus()}
+};
 const rm=st.lite||matchMedia("(prefers-reduced-motion: reduce)").matches;
 if(c&&!rm&&c.animate)c.animate([{transform:"none",opacity:1},{transform:`translateX(${d*90}px) rotate(${d*7}deg)`,opacity:0}],{duration:220}).onfinish=go2;else go2()}
 let recState={active:false,sec:0,timer:null,mr:null,chunks:[],stream:null};
@@ -2362,18 +2565,129 @@ setTimeout(()=>{btn.dataset.playing="0";btn.innerHTML=ic("play");clearInterval(a
 }
 }
 }
-let callState={active:false,targetId:null,stream:null,timer:null,sec:0,micOn:true,camOn:true};
+let phoneAudioCtx=null,ringToneTimer=null,ringToneOscs=[];
+function getPhoneAudioCtx(){
+if(!phoneAudioCtx||phoneAudioCtx.state==='closed'){
+const Ctx=window.AudioContext||window.webkitAudioContext;
+if(Ctx)phoneAudioCtx=new Ctx();
+}
+if(phoneAudioCtx&&phoneAudioCtx.state==='suspended'){
+phoneAudioCtx.resume().catch(()=>{});
+}
+return phoneAudioCtx;
+}
+
+function startOutgoingPhoneRingtone(){
+stopPhoneRingtone();
+const ctx=getPhoneAudioCtx();
+if(!ctx)return;
+function burst(){
+try{
+const now=ctx.currentTime;
+const o1=ctx.createOscillator(),o2=ctx.createOscillator(),g=ctx.createGain();
+o1.type="sine";o1.frequency.setValueAtTime(400,now);
+o2.type="sine";o2.frequency.setValueAtTime(450,now);
+g.gain.setValueAtTime(0,now);
+g.gain.linearRampToValueAtTime(0.2,now+0.04);
+g.gain.setValueAtTime(0.2,now+1.35);
+g.gain.linearRampToValueAtTime(0,now+1.45);
+o1.connect(g);o2.connect(g);g.connect(ctx.destination);
+o1.start(now);o2.start(now);
+o1.stop(now+1.5);o2.stop(now+1.5);
+ringToneOscs=[o1,o2];
+}catch(e){}
+}
+burst();
+ringToneTimer=setInterval(burst,4000);
+}
+
+function playHangupTone(){
+stopPhoneRingtone();
+const ctx=getPhoneAudioCtx();
+if(!ctx)return;
+try{
+const now=ctx.currentTime;
+[0, 0.35, 0.7].forEach(offset=>{
+const t=now+offset;
+const osc=ctx.createOscillator(),g=ctx.createGain();
+osc.type="sine";osc.frequency.setValueAtTime(425,t);
+g.gain.setValueAtTime(0.18,t);
+g.gain.linearRampToValueAtTime(0,t+0.22);
+osc.connect(g);g.connect(ctx.destination);
+osc.start(t);osc.stop(t+0.23);
+});
+}catch(e){}
+}
+
+function stopPhoneRingtone(){
+if(ringToneTimer){clearInterval(ringToneTimer);ringToneTimer=null;}
+ringToneOscs.forEach(o=>{try{o.stop();}catch(e){}});
+ringToneOscs=[];
+if(navigator.vibrate){try{navigator.vibrate(0);}catch(e){}}
+}
+
+let callState={active:false,status:"idle",targetId:null,stream:null,timer:null,connectTimeout:null,sec:0,micOn:true,camOn:true};
+
 function renderCallOverlay(){
 const p=byId(callState.targetId);if(!p)return;
 const t=x();let ov=$("#call-ov");
 if(!ov){ov=document.createElement("div");ov.id="call-ov";ov.className="call-box";document.body.append(ov)}
+const isRinging=(callState.status==="ringing");
 const min=Math.floor(callState.sec/60).toString().padStart(2,"0"),s=(callState.sec%60).toString().padStart(2,"0");
-ov.innerHTML=`<div class="call-top"><div class="call-user"><span class="av s" style="width:38px;height:38px">${av(p)}</span><div><h3>${esc(p.n)} ${flagSvg}</h3><span class="call-badge"><span class="call-dot"></span>${t.callHd}</span></div></div><span class="call-dur" id="call-timer-display">${min}:${s}</span></div><div class="call-stage"><div class="call-remote-art"><div class="call-waves"></div><div class="call-remote-av">${av(p)}</div><p style="margin:0;font-weight:700;font-size:16px;color:#fff">${esc(p.n)} · ${esc(p.c)} ${flagSvg}</p></div><div class="call-pip"><video id="call-self-video" autoplay playsinline muted></video></div></div><div class="call-bottom"><button class="c-btn ${callState.micOn?'':'off'}" data-a="call-toggle-mic" title="Microphone" aria-label="Microphone">${ic(callState.micOn?'mic':'mic-off')}</button><button class="c-btn hangup" data-a="call-hangup" title="Raccrocher" aria-label="Raccrocher">${ic('phone-off')}</button><button class="c-btn ${callState.camOn?'':'off'}" data-a="call-toggle-cam" title="Caméra" aria-label="Caméra">${ic(callState.camOn?'cam':'cam-off')}</button></div>`;
+
+ov.innerHTML=`
+<div class="call-top">
+<div class="call-user">
+<span class="av s" style="width:38px;height:38px">${av(p)}</span>
+<div>
+<h3 style="margin:0;font-size:15px;color:#fff">${esc(p.n)} ${flagSvg}</h3>
+<span class="call-badge ${isRinging?'ringing':''}">
+<span class="call-dot" style="${isRinging?'background:#F59E0B;animation:callPulse 1.2s infinite':''}"></span>
+${isRinging?(t.callingContact||"Appel en cours…"):t.callHd}
+</span>
+</div>
+</div>
+<span class="call-dur" id="call-timer-display">${isRinging?'📞':`${min}:${s}`}</span>
+</div>
+<div class="call-stage">
+<div class="call-remote-art">
+<div class="call-waves ${isRinging?'call-ringing-pulse':''}"></div>
+<div class="call-remote-av" style="${isRinging?'border:3px solid var(--highlight-light)':''}">${av(p)}</div>
+<p style="margin:8px 0 4px;font-weight:700;font-size:18px;color:#fff">${esc(p.n)} · ${esc(p.c)} ${flagSvg}</p>
+<p style="margin:0;font-size:13px;color:rgba(255,255,255,0.85);font-weight:600">
+${isRinging?`📞 ${(t.ringingContact||"Sonnerie chez ")+esc(p.n)+"…"}`:`🟢 ${t.callAnswered||"En communication HD"}`}
+</p>
+</div>
+<div class="call-pip" style="${isRinging?'display:none':''}">
+<video id="call-self-video" autoplay playsinline muted></video>
+</div>
+</div>
+<div class="call-bottom">
+<button class="c-btn ${callState.micOn?'':'off'}" data-a="call-toggle-mic" title="Microphone" aria-label="Microphone" ${isRinging?'disabled':''}>${ic(callState.micOn?'mic':'mic-off')}</button>
+<button class="c-btn hangup" data-a="call-hangup" title="${t.callHangup||'Raccrocher'}" aria-label="${t.callHangup||'Raccrocher'}">${ic('phone-off')}</button>
+<button class="c-btn ${callState.camOn?'':'off'}" data-a="call-toggle-cam" title="Caméra" aria-label="Caméra" ${isRinging?'disabled':''}>${ic(callState.camOn?'cam':'cam-off')}</button>
+</div>
+`;
 }
+
 function startVideoCall(id){
 const p=byId(id);if(!p)return;
-callState.active=true;callState.targetId=id;callState.sec=0;callState.micOn=true;callState.camOn=true;
+callState.active=true;
+callState.status="ringing";
+callState.targetId=id;
+callState.sec=0;
+callState.micOn=true;
+callState.camOn=true;
 renderCallOverlay();
+startOutgoingPhoneRingtone();
+
+clearTimeout(callState.connectTimeout);
+callState.connectTimeout=setTimeout(()=>{
+if(!callState.active)return;
+stopPhoneRingtone();
+callState.status="connected";
+renderCallOverlay();
+
 if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
 navigator.mediaDevices.getUserMedia({video:{facingMode:"user",width:{ideal:640},height:{ideal:480}},audio:true})
 .then(s=>{
@@ -2381,19 +2695,26 @@ callState.stream=s;
 const v=$("#call-self-video");if(v){v.srcObject=s;v.play().catch(()=>{});}
 }).catch(err=>{console.warn("Media error:",err);});
 }
+
 clearInterval(callState.timer);
 callState.timer=setInterval(()=>{
 callState.sec++;
 const min=Math.floor(callState.sec/60).toString().padStart(2,"0"),s=(callState.sec%60).toString().padStart(2,"0");
 const disp=$("#call-timer-display");if(disp)disp.textContent=`${min}:${s}`;
 },1000);
+},4500);
 }
+
 function stopVideoCall(){
 if(!callState.active)return;
+clearTimeout(callState.connectTimeout);
+stopPhoneRingtone();
+playHangupTone();
 const tid=callState.targetId,dur=callState.sec;
 clearInterval(callState.timer);
 if(callState.stream){callState.stream.getTracks().forEach(tr=>tr.stop());callState.stream=null}
 callState.active=false;
+callState.status="idle";
 const ov=$("#call-ov");if(ov)ov.remove();
 if(tid){
 const min=Math.floor(dur/60).toString().padStart(2,"0"),s=(dur%60).toString().padStart(2,"0");
@@ -2516,10 +2837,10 @@ sbClient.from('messages').insert({sender_id:id,receiver_id:st.u.id,content:rep})
 }
 },900)}
 document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,k=b.dataset.k,t=x();
-if(a==="tab"){st.tab=k;st.chat=null;render();if(k==="d")loadProfilesFromSupabase();if(k==="m")loadLikesAndMatchesFromSupabase();}
+if(a==="tab"){st.tab=k;st.chat=null;render();if(k==="d")loadProfilesFromSupabase();if(k==="m"||k==="req")loadLikesAndMatchesFromSupabase();}
 else if(a==="lang"){st.lang=st.lang==="fr"?"ar":"fr";save();render();$("#lang").focus()}
 else if(a==="gauth"){signInWithGoogle()}
-else if(a==="fbauth"){signInWithFacebook()}
+else if(a==="req-subtab"){st.reqSubTab=k;render();}
 else if(a==="toghb"){
 const hid=b.dataset.h;
 if(!st.u.hb)st.u.hb=[];
@@ -2547,20 +2868,10 @@ else if(a==="open-block"){openBlockModal(b.dataset.id)}
 else if(a==="do-block"){doBlock(b.dataset.id)}
 else if(a==="open-blocked"){openBlockedListModal()}
 else if(a==="unblock"){unblock(b.dataset.id)}
-else if(a==="md"){st.mode=k;render()}
-else if(a==="s0-email-signup"){signUpWithEmail()}
-else if(a==="s0-email-login"){loginWithEmail()}
-else if(a==="switch-mail-gmail"){closeM();st.mode="mail";render();setTimeout(()=>{const em=$("#em");if(em){em.focus();}},100);}
-else if(a==="resend-conf"){resendConfirmationEmail()}
-else if(a==="s0"){sendPhoneOtp()}
-else if(a==="s1"){verifyPhoneOtp()}
-else if(a==="go-back-auth"){go(0,"#ph")}
 else if(a==="logout"){
 if(confirm(t.logoutConfirm)){
 if(sbClient&&sbClient.auth){sbClient.auth.signOut().catch(()=>{});}
-st.em="";st.ph="";st.selfie="";
-if(st.u)st.u.gVerif=false;
-st.ph5=st.ph5.filter(p=>!p.isSelfie);
+st.savedStep=st.step>=4?st.step:4;
 st.step=0;
 save();render();
 }
@@ -2642,12 +2953,14 @@ sbClient.from('likes').upsert({sender_id:uid,receiver_id:rid,is_match:true},{onC
 }
 });
 }
-const reqUser=byId(rid)||SEED_PROFILES.find(s=>s.id===rid)||{id:rid,n:"Membre",selfie_url:"photos/achte.jpg",g:"f"};
+const reqUser=byId(rid)||{id:rid,n:"Membre",selfie_url:"photos/achte.jpg",g:st.g==="m"?"f":"m"};
 match(reqUser);
 }
 else if(a==="decline-req"){
 const rid=b.dataset.id;
 st.incomingRequests=(st.incomingRequests||[]).filter(r=>r.id!==rid);
+if(!st.passed)st.passed=[];
+if(!st.passed.includes(rid))st.passed.push(rid);
 save();render();
 }
 else if(a==="open-edit-msg"){openEditMessageModal(b.dataset.cid,b.dataset.mid,b.dataset.idx)}
@@ -2771,7 +3084,7 @@ if(!st.u)st.u={};
 st.u.gVerif=true;
 if(gName&&(!st.u.n||st.u.n==="Mahamat"))st.u.n=gName;
 if(gEmail)st.em=gEmail;
-st.mode="mail";
+st.mode="google";
 if(!st.g)st.g="m";
 
 if(!st.selfie){
@@ -2779,9 +3092,9 @@ go(3);
 }else if(!st.u||!st.u.jb||!st.u.a||!st.u.c){
 go(2,"#jb");
 }else{
-go(4);
+go(st.savedStep||4);
 }
-say((u.app_metadata&&u.app_metadata.provider)==="facebook"?(x().fbAuthVerif||"Compte Facebook vérifié"):(x().gVerif||"Compte Google vérifié"));
+say(x().gVerif||"Compte Google vérifié");
 save();
 render();
 syncProfileToSupabase();
@@ -2801,13 +3114,13 @@ const meta=u.user_metadata||{};
 st.u.gVerif=true;
 if(!st.u.n)st.u.n=meta.full_name||meta.name||"";
 if(!st.em)st.em=u.email||"";
-st.mode="mail";
+st.mode="google";
 if(!st.selfie){
 go(3);
 }else if(!st.u||!st.u.jb||!st.u.a||!st.u.c){
 go(2,"#jb");
 }else{
-go(4);
+go(st.savedStep||4);
 }
 save();render();
 }
