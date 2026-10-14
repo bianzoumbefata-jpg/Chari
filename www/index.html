@@ -961,6 +961,177 @@ img{-webkit-user-drag:none;user-drag:none}
 .screen-shield p{font-size:14px;color:#94A3B8;max-width:320px;line-height:1.5;margin:0 0 24px}
 body.screen-protected .app{filter:blur(28px)!important;opacity:0.04!important;pointer-events:none!important}
 body.screen-protected .screen-shield{display:flex!important}
+
+/* Quota Badges & Counters */
+.quota-banner{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 12px;
+  background: var(--neutral-light-light);
+  border: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--ink);
+  margin: 4px 0 12px;
+  font-weight: 600;
+}
+.quota-banner.prem{
+  background: linear-gradient(135deg, rgba(0, 111, 253, 0.08) 0%, rgba(254, 203, 0, 0.12) 100%);
+  border-color: rgba(254, 203, 0, 0.38);
+}
+.quota-left{display: flex; align-items: center; gap: 6px;}
+
+/* Message Editing & Meta */
+.bb-meta{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-top: 4px;
+  font-size: 11px;
+  opacity: 0.82;
+}
+.msg-edit-btn{
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 4px;
+  font-size: 12px;
+  opacity: 0.7;
+  color: inherit;
+  transition: transform .15s, opacity .15s;
+  display: inline-flex;
+  align-items: center;
+}
+.msg-edit-btn:hover{opacity: 1; transform: scale(1.2);}
+.msg-edited-tag{
+  font-size: 10px;
+  font-style: italic;
+  opacity: 0.78;
+  margin-inline-start: 4px;
+}
+
+/* Subtabs for Messages & Requests */
+.m-subtabs{
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  background: var(--neutral-light-medium);
+  padding: 4px;
+  border-radius: 14px;
+}
+.m-subtab{
+  flex: 1;
+  min-height: 40px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--mut);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all .18s;
+}
+.m-subtab.active{
+  background: var(--surf);
+  color: var(--ink);
+  box-shadow: var(--sh-sm);
+}
+.m-badge{
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 700;
+}
+.m-subtab:not(.active) .m-badge{
+  background: var(--neutral-dark-lightest);
+  color: var(--ink);
+}
+
+/* Incoming Request Cards */
+.req-list{
+  display: grid;
+  gap: 12px;
+  margin-top: 8px;
+}
+.req-card{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--surf);
+  box-shadow: var(--sh-sm);
+  transition: transform .15s, box-shadow .15s;
+}
+.req-card:hover{
+  box-shadow: var(--sh-md);
+}
+.req-header{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.req-info{
+  flex: 1;
+  min-width: 0;
+}
+.req-info h3{
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.req-info p{
+  margin: 2px 0 0;
+  color: var(--mut);
+  font-size: 13px;
+}
+.req-bio{
+  font-size: 13px;
+  color: var(--ink);
+  background: rgba(0, 0, 0, 0.025);
+  padding: 10px 14px;
+  border-radius: 12px;
+  margin: 0;
+  line-height: 1.45;
+  border-inline-start: 3px solid var(--brand);
+  font-style: italic;
+}
+.req-actions{
+  display: flex;
+  gap: 10px;
+}
+.req-actions .btn{
+  flex: 1;
+  min-height: 42px;
+  font-size: 13px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.btn-accept-req{
+  background: linear-gradient(135deg, #006FFD 0%, #0056C7 100%);
+  color: #fff;
+  border: none;
+}
+.btn-accept-req:hover{
+  background: linear-gradient(135deg, #0056C7 0%, #004399 100%);
+}
 </style>
 </head>
 <body>
@@ -1068,7 +1239,11 @@ if(sUrl&&sUrl.startsWith("data:")){
 const up=await uploadImageToSupabase(sUrl,`selfie_${st.u.n}_${Date.now()}.jpg`);
 if(up&&!up.startsWith("data:")){sUrl=up;st.selfie=up;save();}
 }
-const pData={name:st.u.n,gender:st.g,age:st.u.a,city:st.u.c,target_city:st.u.tc||'all',job:st.u.jb,bio:st.u.bio||'',language:st.u.lng||'fr',religion:st.u.rel||'mus',children:st.u.kd||0,intention:st.u.i||'ser',hobbies:st.u.hb||[],selfie_url:sUrl,is_verified:!!st.selfie,is_premium:!!st.prem};
+const pHobbies=[...(st.u.hb||[])];
+if(st.inc){if(!pHobbies.includes('__incognito__'))pHobbies.push('__incognito__');}
+else{const idx=pHobbies.indexOf('__incognito__');if(idx>=0)pHobbies.splice(idx,1);}
+const pData={name:st.u.n,gender:st.g,age:st.u.a,city:st.u.c,target_city:st.u.tc||'all',job:st.u.jb,bio:st.u.bio||'',language:st.u.lng||'fr',religion:st.u.rel||'mus',children:st.u.kd||0,intention:st.u.i||'ser',hobbies:pHobbies,selfie_url:sUrl,is_verified:!!st.selfie,is_premium:!!st.prem,is_incognito:!!st.inc};
+if(st.dailyLimits){pData.daily_likes_sent=st.dailyLimits.sent;pData.daily_likes_accepted=st.dailyLimits.accepted;pData.daily_reset_date=st.dailyLimits.date;}
 if(st.u.id)pData.id=st.u.id;
 if(st.mode==="mail"&&st.em)pData.email=st.em;
 if(st.mode==="tel"&&st.ph)pData.phone=st.ph;
@@ -1076,8 +1251,13 @@ try{
 const onC=st.u.id?'id':(st.mode==="mail"&&st.em?'email':(st.ph?'phone':undefined));
 const opts=onC?{onConflict:onC}:{};
 const {data,error}=await sbClient.from('profiles').upsert(pData,opts).select('id');
-if(error)console.warn("Supabase profile sync:",error);
-else if(data&&data.length>0){st.u.id=data[0].id;save();}
+if(error){
+if(error.message&&error.message.includes('column')){
+delete pData.is_incognito;delete pData.daily_likes_sent;delete pData.daily_likes_accepted;delete pData.daily_reset_date;
+const {data:d2,error:e2}=await sbClient.from('profiles').upsert(pData,opts).select('id');
+if(!e2&&d2&&d2.length>0){st.u.id=d2[0].id;save();}
+}else{console.warn("Supabase profile sync:",error);}
+}else if(data&&data.length>0){st.u.id=data[0].id;save();}
 if(st.ph5&&st.ph5.length){
 let chg=false;
 for(let idx=0;idx<st.ph5.length;idx++){
@@ -1103,13 +1283,35 @@ try{
 await sbClient.from('likes').upsert({sender_id:uid,receiver_id:receiverProfileId,is_match:!!isMatch},{onConflict:'sender_id,receiver_id'});
 }catch(e){console.warn("recordLikeInSupabase err:",e)}
 }
-async function recordMessageInSupabase(receiverProfileId,content,imgUrl,voiceUrl,dur){
+async function recordMessageInSupabase(receiverProfileId,content,imgUrl,voiceUrl,dur,localMsgObj){
 if(!sbClient)return;
 const uid=await ensureUserProfileId();
 if(!uid||!receiverProfileId)return;
 try{
-await sbClient.from('messages').insert({sender_id:uid,receiver_id:receiverProfileId,content:content||null,image_url:imgUrl||null,voice_url:voiceUrl||null,duration:dur||null});
+const payload={sender_id:uid,receiver_id:receiverProfileId,content:content||null,image_url:imgUrl||null,voice_url:voiceUrl||null,duration:dur||null};
+const {data,error}=await sbClient.from('messages').insert(payload).select('id,created_at');
+if(!error&&data&&data.length>0){
+if(localMsgObj){
+localMsgObj.id=data[0].id;
+if(data[0].created_at)localMsgObj.time=new Date(data[0].created_at).getTime();
+save();
+}
+}
 }catch(e){console.warn("recordMessageInSupabase err:",e)}
+}
+async function editMessageInSupabase(msgId,targetUserId,newText){
+if(!sbClient)return;
+const uid=await ensureUserProfileId();
+if(!uid)return;
+try{
+const payload={content:newText,is_edited:true,updated_at:new Date().toISOString()};
+let q=sbClient.from('messages').update(payload);
+if(msgId&&typeof msgId==='string'&&msgId.length>20&&!msgId.startsWith('msg_')&&!msgId.startsWith('idx_')){
+await q.eq('id',msgId);
+}else{
+await q.eq('sender_id',uid).eq('receiver_id',targetUserId).order('created_at',{ascending:false}).limit(1);
+}
+}catch(e){console.warn("editMessageInSupabase err:",e)}
 }
 async function loadMessagesFromSupabase(targetProfileId){
 if(!sbClient||!targetProfileId)return;
@@ -1118,8 +1320,19 @@ if(!uid)return;
 try{
 const {data,error}=await sbClient.from('messages').select('*').or(`and(sender_id.eq.${uid},receiver_id.eq.${targetProfileId}),and(sender_id.eq.${targetProfileId},receiver_id.eq.${uid})`).order('created_at',{ascending:true});
 if(!error&&data&&data.length>0){
-st.ms[targetProfileId]=data.map(m=>({w:m.sender_id===uid?"me":"th",t:m.content||"",img:m.image_url||undefined,voice:!!m.voice_url,audioSrc:m.voice_url||undefined,dur:m.duration||"0:08"}));
-if(st.tab==='m'&&st.chat===targetProfileId){const l=$("#log");if(l){l.innerHTML="";st.ms[targetProfileId].forEach(msg=>bub(l,msg));l.scrollTop=l.scrollHeight;}}
+st.ms[targetProfileId]=data.map(m=>({
+id:m.id,
+w:m.sender_id===uid?"me":"th",
+t:m.content||"",
+img:m.image_url||undefined,
+voice:!!m.voice_url,
+audioSrc:m.voice_url||undefined,
+dur:m.duration||"0:08",
+time:m.created_at?new Date(m.created_at).getTime():Date.now(),
+isEdited:!!m.is_edited
+}));
+save();
+if(st.tab==='m'&&st.chat===targetProfileId){const l=$("#log");if(l){l.innerHTML="";st.ms[targetProfileId].forEach((msg,idx)=>bub(l,msg,idx,targetProfileId));l.scrollTop=l.scrollHeight;}}
 }
 }catch(e){console.warn("loadMessagesFromSupabase err:",e)}
 }
@@ -1135,8 +1348,28 @@ if(l.is_match){
 const otherId=l.sender_id===uid?l.receiver_id:l.sender_id;
 if(!st.mt.includes(otherId))st.mt.push(otherId);
 if(!st.ms[otherId])st.ms[otherId]=[];
+if(st.incomingRequests)st.incomingRequests=st.incomingRequests.filter(r=>r.id!==otherId);
+}else if(l.receiver_id===uid&&l.sender_id!==uid){
+if(!st.mt.includes(l.sender_id)){
+if(!st.incomingRequests)st.incomingRequests=[];
+if(!st.incomingRequests.some(r=>r.id===l.sender_id)){
+const pObj=byId(l.sender_id)||SEED_PROFILES.find(s=>s.id===l.sender_id);
+st.incomingRequests.push({
+id:l.sender_id,
+n:pObj?pObj.n:"Membre Chari",
+g:pObj?pObj.g:(st.g==="m"?"f":"m"),
+a:pObj?pObj.a:25,
+c:pObj?pObj.c:"N'Djamena",
+jb:pObj?pObj.jb:"Profil certifié",
+bio:pObj?pObj.bio:"",
+selfie_url:pObj?pObj.selfie_url:"photos/achte.jpg",
+time:l.created_at?new Date(l.created_at).getTime():Date.now()
+});
+}
+}
 }
 });
+save();
 if(st.tab==='m')render();
 }
 }catch(e){console.warn("loadLikes err:",e)}
@@ -1146,7 +1379,14 @@ if(!sbClient)return;
 try{
 const {data,error}=await sbClient.from('profiles').select('*').order('created_at',{ascending:false});
 if(!error&&data&&data.length>0){
-const mapped=data.filter(r=>r.name!=='Test Col'&&(!st.u||!st.u.id||r.id!==st.u.id)&&(!st.u||r.name!==st.u.n)).map(row=>{
+const mapped=data.filter(r=>{
+if(r.name==='Test Col')return false;
+if(st.u&&st.u.id&&r.id===st.u.id)return false;
+if(st.u&&r.name===st.u.n)return false;
+const isIncog=r.is_incognito===true||(Array.isArray(r.hobbies)&&r.hobbies.includes('__incognito__'));
+if(isIncog)return false;
+return true;
+}).map(row=>{
 const seedMatch=SEED_PROFILES.find(s=>s.id===row.id||s.n.toLowerCase()===(row.name||'').toLowerCase());
 const bioObj=typeof row.bio==='string'?{fr:row.bio,ar:(seedMatch&&seedMatch.b&&seedMatch.b.ar)||row.bio}:(row.bio||{fr:'',ar:''});
 return{
@@ -1206,6 +1446,7 @@ fbMsgPh:"Dites-nous ce que vous pensez de Chari, vos souhaits ou vos remarques..
 fbMsgErr:"Veuillez écrire quelques mots pour expliquer votre avis.",
 fbSuccess:"Merci infiniment pour votre retour ! Notre équipe au Tchad en prendra compte.",
 scBlockT:"Capture d'écran interdite",scBlockD:"Pour préserver l'intimité et la sécurité des membres sur Chari, les captures d'écran et enregistrements vidéo sont strictement interdits.",scToast:"⚠️ Capture d'écran bloquée : la vie privée des membres est protégée sur Chari.",scDismiss:"Continuer sur Chari",
+chatTab:"Discussions",reqTab:"Demandes reçues",noReq:"Aucune demande reçue pour l'instant",noReqDesc:"Vos nouveaux admirateurs et personnes souhaitant vous contacter apparaîtront ici.",acceptReq:"Accepter & Matcher",declineReq:"Passer",dailyReqLimit:"Limite quotidienne atteinte (20/20 demandes envoyées aujourd'hui). Réinitialisation quotidienne à 00h00 ou passez à Chari Premium pour des likes illimités !",dailyAcceptLimit:"Limite quotidienne atteinte (10/10 demandes acceptées aujourd'hui). Réinitialisation quotidienne à 00h00 ou passez à Chari Premium !",dailyReqQuota:"Demandes envoyées",dailyAcceptQuota:"Demandes acceptées",resetMidnight:"Réinitialisation à 00h00",editMsg:"Modifier le message",editMsgTimeLeft:"Délai restant pour modifier ce message : ",saveEdit:"Enregistrer",cancelEdit:"Annuler",msgEditedTag:"(modifié)",editExpired:"Le délai de 10 minutes pour modifier ce message est expiré.",incogActive:"Mode Incognito activé : vous pouvez explorer tous les profils en toute discrétion, mais personne ne peut voir le vôtre.",incogInactive:"Mode Incognito désactivé : votre profil est de nouveau visible.",incogBanner:"Mode Incognito actif : votre profil est masqué pour tous les autres membres.",
 k:{ser:"Relation amoureuse",mar:"Mariage",fam:"Famille",etu:"Études",ent:"Entrepreneuriat",foi:"Foi",mus:"Musique",foo:"Football",cui:"Cuisine",voy:"Voyage",fr:"Français",ar:"Arabe",sa:"Sara"}},
 ar:{d:"اكتشف",m:"الرسائل",p:"ملفي",pass:"تخطَّ",like:"إعجاب",mt:"تطابق!",ms:"أنتما معجبان ببعضكما.",wr:"راسل ",ct:"متابعة",done:"شاهدت كل شيء لهذا اليوم.",again:"إعادة العرض",none:"لا توجد محادثات بعد.",nh:"أعجب بملفات لبدء محادثة.",ph:"اكتب رسالة",snd:"إرسال",bk:"رجوع",my:"ملفي الشخصي",vg:"جارٍ التحقق…",vd:"ملف موثّق",blur:"الوجه مخفي حتى التطابق",lite:"توفير البيانات",sf:"نصائح للأمان",st:"لا ترسل المال أو الرموز أبداً. التقِ في مكان عام وأخبر شخصاً مقرباً.",age:"للبالغين 22 سنة فأكثر فقط.",demo:"شاري · ملفات وصور حقيقية من تشاد موثقة بالسيلفي. البيانات مسجلة في سوبابيز.",lgb:"Français",r:["مرحباً! سعيد بالتعرف عليك.","من أي مدينة أنت؟"],
 wl:"مرحباً بك في شاري",wl2:"علاقات عاطفية بين رجل وامرأة، مع ملفات موثّقة.",phl:"رقم الهاتف",ph8:"أدخل 8 أرقام لرقمك (مثال: 66 00 00 00).",orPhone:"أو عبر رقم هاتفك في تشاد",sndOtp:"استلام الرمز عبر SMS",otp:"تأكيد رقم الهاتف",otps:"تم إرسال الرمز عبر رسالة قصيرة إلى ",otpd:"أدخل الرمز المكوّن من 6 أرقام المستلم عبر SMS.",cod:"الرمز المكوّن من 6 أرقام",bad:"الرمز غير صحيح.",pr:"ملفك الشخصي",nm:"الاسم الأول",job:"المهنة / العمل",jobPh:"مثال: معلم، تاجر، ممرضة...",tcty:"المدينة المراد التعارف فيها",allC:"جميع المدن (تشاد)",noCity:"لا توجد ملفات في هذه المدينة",noCityD:"لا توجد ملفات متوفرة حالياً في هذه المدينة. جرب توسيع البحث ليشمل جميع المدن!",iam:"أنا",fem:"امرأة",mal:"رجل",ag:"العمر",agE:"التطبيق مخصص لمن بلغ 22 سنة فأكثر.",cty:"مدينتك",kd:"عدد الأطفال",it:"أبحث عن",req:"أكمل جميع الحقول.",sf1:"توثيق الهوية عبر السيلفي الإلزامي",sf2:"التقط صورة سيلفي مباشرة عبر الكاميرا: إلزامية لتوثيق هويتك وتأكيد دخولك إلى شاري.",shot:"التقاط السيلفي الموثق",sf3:"تؤكد هذه الصورة هويتك الحقيقية وتحمي المجتمع في تشاد من الحسابات المزيفة وتبقى ثابتة في ملفك الشخصي.",pj:"ملفاً شاهدته اليوم",unl:"بريميوم مفعّل: ملفات غير محدودة اليوم",pw:"بلغت حد اليوم",pw2:"شاهدت ملفاتك المجانية العشرين اليوم.",pss:"باقة بريميوم لليوم",pss2:"ملفات غير محدودة حتى منتصف الليل ووضع التخفّي.",op:"الدفع عبر",pn:"رقم الدفع",pb:"ادفع 5 000 FCFA",pg:"جارٍ الدفع…",pd:"تجريبي: لا يتم أي دفع حقيقي.",paid:"تم استلام الدفع. تم تفعيل بريميوم.",plan:"باقتك",free:"مجانية: 20 ملفاً في اليوم",prem:"باقة بريميوم لليوم مفعّلة",up:"الترقية إلى بريميوم (5 000 FCFA)",dm:"تجريبي: الانتقال إلى 19 ملفاً",opVisa:"بطاقة Visa",cardNum:"رقم بطاقة Visa",cardExp:"تاريخ الانتهاء (MM/AA)",cardCvv:"رمز الأمان (3 أرقام)",cardNom:"اسم صاحب البطاقة",cardNomPh:"مثال: MAHAMAT ADAM",cardSec:"دفع آمن 100% عبر Visa و 3D Secure",cardNumE:"رقم بطاقة Visa غير مكتمل (16 رقماً).",cardExpE:"تاريخ انتهاء غير صحيح (MM/AA).",cardCvvE:"رمز CVV غير صحيح (3 أرقام).",cardNomE:"يرجى كتابة اسم صاحب البطاقة.",visaPaid:"تم التحقق من بطاقة Visa بنجاح! تم تفعيل بريميوم.",
@@ -1231,6 +1472,7 @@ fbMsgPh:"اكتب ملاحظاتك، اقتراحاتك أو تجربتك مع �
 fbMsgErr:"يرجى كتابة بضع كلمات توضح رأيك.",
 fbSuccess:"شكراً جزيلاً على تقييمك وملاحظاتك! سيهتم فريقنا في تشاد باقتراحك.",
 scBlockT:"التقاط الشاشة ممنوع",scBlockD:"لحماية خصوصية وأمان المشتركين في شاري، يمنع منعاً باتاً تصوير أو تسجيل الشاشة.",scToast:"⚠️ تم حظر التقاط الشاشة: خصوصية الأعضاء محمية في شاري.",scDismiss:"المتابعة في شاري",
+chatTab:"المحادثات",reqTab:"الطلبات المستلمة",noReq:"لا توجد طلبات مستلمة حالياً",noReqDesc:"المعجبون والأشخاص الذين يرغبون في التعارف معك سيظهرون هنا.",acceptReq:"قبول وتطابق",declineReq:"تخطَّ",dailyReqLimit:"تم بلوغ الحد اليومي (20/20 طلباً مرسلاً اليوم). تتم إعادة التعيين يومياً عند الساعة 00:00 منتصف الليل. ترقَّ إلى بريميوم لإعجابات غير محدودة!",dailyAcceptLimit:"تم بلوغ الحد اليومي (10/10 طلبات مقبولة اليوم). تتم إعادة التعيين يومياً عند الساعة 00:00 منتصف الليل. ترقَّ إلى بريميوم لقبول غير محدود!",dailyReqQuota:"الطلبات المرسلة",dailyAcceptQuota:"الطلبات المقبولة",resetMidnight:"إعادة التعيين عند 00:00",editMsg:"تعديل الرسالة",editMsgTimeLeft:"الوقت المتبقي لتعديل الرسالة: ",saveEdit:"حفظ التعديل",cancelEdit:"إلغاء",msgEditedTag:"(معدلة)",editExpired:"انتهت مهلة الـ 10 دقائق لتعديل هذه الرسالة.",incogActive:"وضع التخفّي مفعّل: يمكنك مشاهدة جميع الملفات بسرية تامة، ولن يظهر ملفك لأحد.",incogInactive:"تم إيقاف وضع التخفّي: ملفك الشخصي مرئي الآن للجميع.",incogBanner:"وضع التخفّي مفعّل: ملفك الشخصي محجوب عن جميع الأعضاء الآخرين.",
 k:{ser:"علاقة عاطفية",mar:"زواج",fam:"العائلة",etu:"الدراسة",ent:"ريادة الأعمال",foi:"الإيمان",mus:"الموسيقى",foo:"كرة القدم",cui:"الطبخ",voy:"السفر",fr:"الفرنسية",ar:"العربية",sa:"السارا"}}};
 const FN=["Achta","Fatimé","Hawa","Khadidja","Kaltouma","Mariam","Zara","Halimé","Amina","Aïcha","Rahma","Nadjma","Esther","Grace","Rachel","Prisca","Judith","Ruth","Sarah","Dorcas","Béatrice","Claudine","Odette","Léa"];
 const MN=["Mahamat","Abakar","Idriss","Hassan","Moussa","Ibrahim","Ousmane","Adam","Oumar","Youssouf","Daniel","Joseph","Samuel","Emmanuel","Moïse","Nathan","David","Paul","Pierre","Jean","Michel","Éric","Franck","Ali"];
@@ -1420,15 +1662,67 @@ const SEED_PROFILES = [
 let P = [...SEED_PROFILES];
 const ME={n:"",bg:[G,B],cl:"#C3CCDB",sk:"#9AA7BB"};
 const $=s=>document.querySelector(s),byId=id=>P.find(p=>String(p.id)===String(id)),pool=()=>P.filter(p=>(!st.g||p.g!==st.g)&&(!st.tc||st.tc==="all"||p.c===st.tc)&&!(st.blocked||[]).includes(p.id));
-const st={lang:"fr",blur:true,lite:false,tc:"all",mode:"tel",em:"",ph5:[],inc:false,ed:null,step:0,u:{hb:["spo","cui"],bio:"",lng:"fr",rel:"mus"},card:{num:"",exp:"",cvv:"",nom:""},g:"",ph:"",i:0,seen:0,prem:0,pay:0,op:"",pp:0,vs:0,selfie:"",tab:"d",chat:null,mt:[],ms:{},busy:0,blocked:[],feedbacks:[]};
+function getDailyDateKey(){
+const d=new Date();
+return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+const st={lang:"fr",blur:true,lite:false,tc:"all",mode:"tel",em:"",ph5:[],inc:false,ed:null,step:0,u:{hb:["spo","cui"],bio:"",lng:"fr",rel:"mus"},card:{num:"",exp:"",cvv:"",nom:""},g:"",ph:"",i:0,seen:0,prem:0,pay:0,op:"",pp:0,vs:0,selfie:"",tab:"d",chat:null,mt:[],ms:{},busy:0,blocked:[],feedbacks:[],mSubTab:"chat",incomingRequests:[],dailyLimits:{date:getDailyDateKey(),sent:0,accepted:0}};
 function ensureSelfieInPh5(){
 if(!st.selfie)return;
 const idx=st.ph5.findIndex(p=>p.isSelfie||p.p===st.selfie||p.o===st.selfie);
 const itm={o:st.selfie,p:st.selfie,isSelfie:true};
 if(idx>=0){st.ph5[idx]=itm}else{st.ph5.unshift(itm);if(st.ph5.length>5)st.ph5=st.ph5.slice(0,5)}
 }
-try{const s=JSON.parse(localStorage.getItem("chari")||"{}");["lang","blur","lite","tc","selfie","step","g","ph","em","prem"].forEach(k=>{if(k in s)st[k]=s[k]});if(Array.isArray(s.ph5))st.ph5=s.ph5;if(Array.isArray(s.feedbacks))st.feedbacks=s.feedbacks;if(s.blocked)st.blocked=s.blocked;if(s.u)st.u=Object.assign({hb:["spo","cui"],bio:"",lng:"fr",rel:"mus"},s.u);if(!st.u.hb)st.u.hb=["spo","cui"];ensureSelfieInPh5();if(st.step>=4&&((!st.em&&!st.ph)||!st.selfie)){st.step=(!st.em&&!st.ph)?0:3;}}catch(e){}
-const save=()=>{try{localStorage.setItem("chari",JSON.stringify({lang:st.lang,blur:st.blur,lite:st.lite,tc:st.tc,u:st.u,blocked:st.blocked||[],selfie:st.selfie,ph5:st.ph5,feedbacks:st.feedbacks||[],step:st.step,g:st.g,ph:st.ph,em:st.em,prem:st.prem}))}catch(e){}};
+function checkAndResetDailyLimits(){
+const today=getDailyDateKey();
+if(!st.dailyLimits||st.dailyLimits.date!==today){
+st.dailyLimits={date:today,sent:0,accepted:0};
+save();
+}
+}
+function initIncomingRequests(){
+if(!Array.isArray(st.incomingRequests))st.incomingRequests=[];
+if(st.incomingRequests.length===0){
+const targetG=(st.g==="f"||(st.u&&st.u.g==="f"))?"m":"f";
+const candidates=SEED_PROFILES.filter(p=>p.g===targetG&&!(st.mt||[]).includes(p.id));
+st.incomingRequests=candidates.slice(0,2).map(p=>({
+id:p.id,
+n:p.n,
+g:p.g,
+a:p.a,
+c:p.c,
+jb:p.jb,
+bio:p.bio,
+selfie_url:p.selfie_url,
+time:Date.now()-1800000
+}));
+save();
+}
+}
+try{
+const s=JSON.parse(localStorage.getItem("chari")||"{}");
+["lang","blur","lite","tc","selfie","step","g","ph","em","prem","inc","mSubTab"].forEach(k=>{if(k in s)st[k]=s[k]});
+if(Array.isArray(s.ph5))st.ph5=s.ph5;
+if(Array.isArray(s.feedbacks))st.feedbacks=s.feedbacks;
+if(Array.isArray(s.blocked))st.blocked=s.blocked;
+if(Array.isArray(s.mt))st.mt=s.mt;
+if(s.ms&&typeof s.ms==="object")st.ms=s.ms;
+if(Array.isArray(s.incomingRequests))st.incomingRequests=s.incomingRequests;
+if(s.dailyLimits&&s.dailyLimits.date)st.dailyLimits=s.dailyLimits;
+if(s.u)st.u=Object.assign({hb:["spo","cui"],bio:"",lng:"fr",rel:"mus"},s.u);
+if(!st.u.hb)st.u.hb=["spo","cui"];
+ensureSelfieInPh5();
+checkAndResetDailyLimits();
+initIncomingRequests();
+if(st.step>=4&&((!st.em&&!st.ph)||!st.selfie)){st.step=(!st.em&&!st.ph)?0:3;}
+}catch(e){}
+const save=()=>{try{localStorage.setItem("chari",JSON.stringify({
+lang:st.lang,blur:st.blur,lite:st.lite,tc:st.tc,u:st.u,blocked:st.blocked||[],
+selfie:st.selfie,ph5:st.ph5,feedbacks:st.feedbacks||[],step:st.step,g:st.g,ph:st.ph,
+em:st.em,prem:st.prem,inc:st.inc,mt:st.mt||[],ms:st.ms||{},
+incomingRequests:st.incomingRequests||[],dailyLimits:st.dailyLimits,mSubTab:st.mSubTab||"chat"
+}))}catch(e){}};
+setInterval(checkAndResetDailyLimits,60000);
 const x=()=>T[st.lang],ic=n=>`<svg class="i" aria-hidden="true"><use href="#i-${n}"/></svg>`,say=s=>{$("#live").textContent=s};
 const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const me=r=>st.ph5.length?`<img src="${st.ph5[0][r?"o":"p"]}" alt="">`:av(ME);
@@ -1448,32 +1742,95 @@ function payv(){
 const t=x(),lim=!st.prem&&st.seen>=LIM,isV=st.op==="visa";
 const cn=(st.card&&st.card.num)||"",ce=(st.card&&st.card.exp)||"",cv=(st.card&&st.card.cvv)||"",cm=(st.card&&st.card.nom)||(st.u&&st.u.n?(st.u.n.toUpperCase()+" ADAM"):"");
 return`<div class="pf"><div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><button class="ib" data-a="pay-back" aria-label="${t.bk}" title="${t.bk}">${ic("back")}</button><h1 style="margin:0;font-size:22px">${lim?t.pw:t.pss}</h1></div>${lim?`<p>${t.pw2}</p>`:""}<div class="plan"><h2>${t.pss}</h2><span class="price">5 000 FCFA</span><p>${t.pss2}</p></div><div><p id="ol" class="lbl">${t.op}</p><div class="ops" role="group" aria-labelledby="ol"><button class="opb" data-a="op" data-k="moov" aria-pressed="${st.op==="moov"}">Moov Money</button><button class="opb" data-a="op" data-k="airtel" aria-pressed="${st.op==="airtel"}">Airtel Money</button><button class="opb" data-a="op" data-k="visa" aria-pressed="${st.op==="visa"}"><svg viewBox="0 0 36 22" width="28" height="17" style="vertical-align:middle;margin-inline-end:4px" aria-hidden="true"><rect width="36" height="22" rx="3" fill="#1A1F71"/><path d="M14.5 16.5l2.2-11h2.5l-2.2 11h-2.5zm10.7-10.7c-.5-.2-1.3-.4-2.2-.4-2.4 0-4.1 1.2-4.1 3 0 1.3 1.2 2 2.1 2.4.9.4 1.2.7 1.2 1.1 0 .6-.7.9-1.4.9-1 0-1.5-.1-2.3-.5l-.3-.2-.3 1.9c.5.2 1.5.4 2.5.4 2.6 0 4.2-1.2 4.2-3.1 0-1-.6-1.8-2-2.4-.8-.4-1.3-.7-1.3-1.1 0-.4.4-.8 1.3-.8.7 0 1.3.1 1.7.3l.2.1.4-1.7zm6.8 0h-1.9c-.6 0-1 .2-1.3.8l-3.6 8.9h2.6l.5-1.4h3.2l.3 1.4h2.3l-2.1-9.7zm-2.8 6.4l1-2.7.6 2.7h-1.6zm-17.8-6.4l-2.4 6.7-.3-1.3c-.4-1.5-1.8-3.1-3.3-3.9l2.2 8.2h2.6l3.9-9.7h-2.7z" fill="#FFF"/><path d="M4.6 5.8l-2.4 8.2c-.3 1.1.6 1.8 1.6 1.8h3.8l.6-1.5H5.8L4.6 5.8z" fill="#F7B600"/></svg>Visa</button></div></div>${isV?`<div class="visa-card-box"><div class="visa-card-chip"></div><svg class="visa-logo-white" viewBox="0 0 50 16" width="46" height="15" aria-hidden="true"><path d="M19.7 15.2l2.9-14.4h3.3l-2.9 14.4h-3.3zm14.1-14c-.7-.3-1.7-.5-2.9-.5-3.2 0-5.4 1.6-5.4 3.9 0 1.7 1.6 2.7 2.8 3.2 1.2.6 1.6.9 1.6 1.4 0 .8-.9 1.2-1.8 1.2-1.3 0-2-.2-3.1-.7l-.4-.2-.4 2.5c.7.3 2 .5 3.3.5 3.4 0 5.5-1.6 5.5-4.1 0-1.4-.8-2.4-2.7-3.2-1.1-.5-1.7-.9-1.7-1.4 0-.5.5-1 1.7-1 .9 0 1.7.2 2.2.4l.3.1.4-2.1zm8.9 0h-2.5c-.8 0-1.3.2-1.7 1.1l-4.7 11.7h3.4l.7-1.9h4.2l.4 1.9h3l-2.8-12.8zm-3.7 8.4l1.3-3.6.8 3.6h-2.1zm-23.4-8.4l-3.2 8.8-.4-1.7c-.6-2-2.4-4.1-4.4-5.1l2.9 10.8h3.4l5.1-12.8h-3.4z" fill="#FFF"/><path d="M6.1 1.2L2.9 12c-.4 1.4.8 2.4 2.1 2.4h5l.8-2H7.7L6.1 1.2z" fill="#F7B600"/></svg><div class="visa-card-num">${cn?cn:"•••• •••• •••• ••••"}</div><div class="visa-card-bottom"><div><div class="visa-card-lbl">TITULAIRE</div><div class="visa-card-val visa-card-nom-val">${cm?esc(cm):"NOM PRENOM"}</div></div><div><div class="visa-card-lbl">EXPIRE</div><div class="visa-card-val visa-card-exp-val">${ce?esc(ce):"MM/AA"}</div></div></div></div><div><label for="c-num">${t.cardNum}</label><input class="fld" id="c-num" type="tel" inputmode="numeric" placeholder="4000 1234 5678 9010" maxlength="19" value="${esc(cn)}"></div><div style="display:flex;gap:10px"><div><label for="c-exp">${t.cardExp}</label><input class="fld" id="c-exp" type="text" inputmode="numeric" placeholder="12/28" maxlength="5" value="${esc(ce)}"></div><div><label for="c-cvv">${t.cardCvv}</label><input class="fld" id="c-cvv" type="password" inputmode="numeric" placeholder="123" maxlength="3" value="${esc(cv)}"></div></div><div><label for="c-nom">${t.cardNom}</label><input class="fld" id="c-nom" type="text" placeholder="${t.cardNomPh}" maxlength="30" value="${esc(cm)}"></div><p class="err" id="eP" role="alert"></p><div class="visa-sec-badge"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg><span>${t.cardSec}</span></div>`:`<div><label for="pp">${t.pn}</label><div class="ph2"><span>+235</span><input class="fld" id="pp" type="tel" inputmode="numeric" placeholder="66 00 00 00" value="${esc(st.ph)}"></div><p class="err" id="eP" role="alert"></p></div>`}<button class="btn" data-a="pay" ${!st.op||st.pp?"disabled":""}>${st.pp?(isV?"Vérification 3D Secure…":t.pg):(isV?"Payer 5 000 FCFA (Visa)":t.pb)}</button><p class="mut">${t.pd}</p><button class="btn sec" data-a="pay-back" style="margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px">${ic("back")}<span>${t.bk}</span></button></div>`}
-function dis(){const t=x(),p=pool()[st.i];
+function dis(){
+checkAndResetDailyLimits();
+const t=x(),p=pool()[st.i];
 if(st.pay||(!st.prem&&st.seen>=LIM))return payv();
 const cbar=`<div class="cbar"><span class="ctag">${t.cityFilt} ${flagSvg}</span><select class="csel" id="sel-tc" aria-label="${t.tcty}"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.tc===c?"selected":""}>${c}</option>`).join("")}</select></div>`;
-const cnt=`<p class="cnt">${st.prem?t.unl:`${st.seen}/${LIM} ${t.pj}`}${st.inc?`<span class="badge">${t.incb}</span>`:""}</p>${st.prem?"":`<div class="bar" aria-hidden="true"><i style="width:${st.seen*100/LIM}%"></i></div>`}`;
-if(!p)return cbar+cnt+`<div class="empty"><h2>${st.tc!=="all"?t.noCity:t.done}</h2><p>${st.tc!=="all"?t.noCityD:""}</p><button class="btn" data-a="${st.tc!=="all"?"reset-tc":"again"}">${st.tc!=="all"?t.allC:t.again}</button></div>`;
+const cnt=`<p class="cnt">${st.prem?t.unl:`${st.seen}/${LIM} ${t.pj}`}${st.inc?`<span class="badge" style="background:#1E293B;color:#fff">🕶️ ${t.incb}</span>`:""}</p>${st.prem?"":`<div class="bar" aria-hidden="true"><i style="width:${st.seen*100/LIM}%"></i></div>`}`;
+const sentCount=(st.dailyLimits&&st.dailyLimits.sent)||0;
+const sentRem=Math.max(0,20-sentCount);
+const qBadge=st.prem
+? `<div class="quota-banner prem"><span class="quota-left">✨ <strong>${t.prem}</strong> • ${t.dailyReqQuota} illimitées</span>${st.inc?`<span class="badge" style="background:#1E293B;color:#fff">🕶️ ${t.incb}</span>`:""}</div>`
+: `<div class="quota-banner"><span class="quota-left">💌 ${t.dailyReqQuota} : <strong>${sentCount}/20</strong> (reste ${sentRem})</span><span style="font-size:11px;color:var(--mut)">⏳ 00h00</span></div>`;
+const incBanner=st.inc?`<div style="display:flex;align-items:center;gap:8px;background:rgba(30,41,59,0.08);border:1px solid #1E293B;border-radius:10px;padding:6px 12px;margin-bottom:8px;font-size:12px;color:var(--ink)"><span>🕶️</span><span style="font-weight:600">${t.incogBanner}</span></div>`:"";
+if(!p)return cbar+incBanner+qBadge+cnt+`<div class="empty"><h2>${st.tc!=="all"?t.noCity:t.done}</h2><p>${st.tc!=="all"?t.noCityD:""}</p><button class="btn" data-a="${st.tc!=="all"?"reset-tc":"again"}">${st.tc!=="all"?t.allC:t.again}</button></div>`;
 const bioText=(p.b&&p.b[st.lang])||p.bio||(p.b&&p.b.fr)||"";
 const photoHtml=p.selfie_url?`<img src="${p.selfie_url}" class="card-real-photo" alt="${esc(p.n)}" onerror="this.onerror=null;this.src='photos/achte.jpg'">`:av(p,st.blur);
-return cbar+cnt+`<article class="card ${st.blur?'blur':''}"><div class="ph">${photoHtml}${st.blur?`<span class="pill">${t.blur}</span>`:""}<button class="ib" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.5);color:#fff;border-radius:50%;width:36px;height:36px;backdrop-filter:blur(4px)" data-a="open-opt" data-id="${p.id}" aria-label="${t.opt}" title="${t.opt}">${ic("dots")}</button></div><div class="bd"><h2>${esc(p.n)}, ${p.a}${ic("ok")}</h2><p class="mut">${esc(p.c)} ${flagSvg}<span class="badge">${(t.k&&t.k[p.i])||t.k.ser}</span></p><p class="b">${esc(bioText)}</p><ul class="chips"><li>${(t.relMap&&t.relMap[p.rel])||t.relMus}</li><li>${(t.lngMap&&t.lngMap[p.lng])||t.lngFr}</li><li>${(t.kid&&t.kid[p.kd])||t.kid[0]}</li>${[...(p.l||[]),...(p.v||[])].map(k=>`<li>${(t.k&&t.k[k])||k}</li>`).join("")}</ul></div></article><div class="acts"><button class="act" data-a="pass">${ic("x")}<span>${t.pass}</span></button><button class="act like" data-a="like">${ic("heart")}<span>${t.like}</span></button></div>`}
-function msgs(){const t=x(),mtList=st.mt.filter(id=>!(st.blocked||[]).includes(id));
-if(!mtList.length)return`<div class="empty"><h2>${t.none}</h2><p>${t.nh}</p><button class="btn" data-a="tab" data-k="d">${t.d}</button></div>`;
-return`<ul class="list">${mtList.map(id=>{const p=byId(id);if(!p)return"";const l=st.ms[id]&&st.ms[id].slice(-1)[0];return`<li><button class="row" data-a="open" data-id="${id}"><span class="av">${av(p)}</span><span><strong>${esc(p.n)}</strong><br><span class="mut">${l?(l.img?"[Photo]":(l.voice?"[Note vocale]":esc(l.t))):t.mt}</span></span></button></li>`}).join("")}</ul>`}
+return cbar+incBanner+qBadge+cnt+`<article class="card ${st.blur?'blur':''}"><div class="ph">${photoHtml}${st.blur?`<span class="pill">${t.blur}</span>`:""}<button class="ib" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.5);color:#fff;border-radius:50%;width:36px;height:36px;backdrop-filter:blur(4px)" data-a="open-opt" data-id="${p.id}" aria-label="${t.opt}" title="${t.opt}">${ic("dots")}</button></div><div class="bd"><h2>${esc(p.n)}, ${p.a}${ic("ok")}</h2><p class="mut">${esc(p.c)} ${flagSvg}<span class="badge">${(t.k&&t.k[p.i])||t.k.ser}</span></p><p class="b">${esc(bioText)}</p><ul class="chips"><li>${(t.relMap&&t.relMap[p.rel])||t.relMus}</li><li>${(t.lngMap&&t.lngMap[p.lng])||t.lngFr}</li><li>${(t.kid&&t.kid[p.kd])||t.kid[0]}</li>${[...(p.l||[]),...(p.v||[])].map(k=>`<li>${(t.k&&t.k[k])||k}</li>`).join("")}</ul></div></article><div class="acts"><button class="act" data-a="pass">${ic("x")}<span>${t.pass}</span></button><button class="act like" data-a="like">${ic("heart")}<span>${t.like}</span></button></div>`;
+}
+function msgs(){
+checkAndResetDailyLimits();
+const t=x();
+const mtList=(st.mt||[]).filter(id=>!(st.blocked||[]).includes(id));
+const reqList=(st.incomingRequests||[]).filter(r=>!(st.blocked||[]).includes(r.id)&&!(st.mt||[]).includes(r.id));
+const subTab=st.mSubTab||"chat";
+
+const subtabsHtml=`<div class="m-subtabs" role="tablist">
+<button type="button" class="m-subtab ${subTab!=='req'?'active':''}" data-a="m-subtab" data-k="chat">
+<span>💬 ${t.chatTab}</span>
+<span class="m-badge">${mtList.length}</span>
+</button>
+<button type="button" class="m-subtab ${subTab==='req'?'active':''}" data-a="m-subtab" data-k="req">
+<span>💌 ${t.reqTab}</span>
+${reqList.length?`<span class="m-badge">${reqList.length}</span>`:''}
+</button>
+</div>`;
+
+if(subTab==="req"){
+const accCount=(st.dailyLimits&&st.dailyLimits.accepted)||0;
+const accRem=Math.max(0,10-accCount);
+const quotaHtml=st.prem
+? `<div class="quota-banner prem"><span class="quota-left">✨ <strong>${t.prem}</strong> • ${t.dailyAcceptQuota} illimitées</span></div>`
+: `<div class="quota-banner"><span class="quota-left">✅ ${t.dailyAcceptQuota} : <strong>${accCount}/10</strong> (reste ${accRem})</span><span style="font-size:11px;color:var(--mut)">⏳ 00h00</span></div>`;
+
+if(!reqList.length){
+return subtabsHtml+quotaHtml+`<div class="empty"><div style="font-size:42px;margin-bottom:8px">💌</div><h2>${t.noReq}</h2><p>${t.noReqDesc}</p><button class="btn" data-a="tab" data-k="d">${t.d}</button></div>`;
+}
+
+const reqCards=reqList.map(r=>{
+const pObj=byId(r.id)||r;
+return `<div class="req-card">
+<div class="req-header">
+<span class="av s" style="width:50px;height:50px">${av(pObj)}</span>
+<div class="req-info">
+<h3>${esc(r.n)}, ${r.a}${ic("ok")}</h3>
+<p>${r.jb?esc(r.jb)+" · ":""}${esc(r.c)} ${flagSvg}</p>
+</div>
+</div>
+${r.bio?`<p class="req-bio">“${esc(r.bio)}”</p>`:""}
+<div class="req-actions">
+<button class="btn btn-accept-req" data-a="accept-req" data-id="${r.id}">${ic("heart")}<span>${t.acceptReq}</span></button>
+<button class="btn sec btn-decline-req" data-a="decline-req" data-id="${r.id}">${ic("x")}<span>${t.declineReq}</span></button>
+</div>
+</div>`;
+}).join("");
+
+return subtabsHtml+quotaHtml+`<div class="req-list">${reqCards}</div>`;
+}
+
+if(!mtList.length)return subtabsHtml+`<div class="empty"><h2>${t.none}</h2><p>${t.nh}</p><button class="btn" data-a="tab" data-k="d">${t.d}</button></div>`;
+return subtabsHtml+`<ul class="list">${mtList.map(id=>{const p=byId(id);if(!p)return"";const l=st.ms[id]&&st.ms[id].slice(-1)[0];return`<li><button class="row" data-a="open" data-id="${id}"><span class="av">${av(p)}</span><span><strong>${esc(p.n)}</strong><br><span class="mut">${l?(l.img?"[Photo]":(l.voice?"[Note vocale]":(esc(l.t)+(l.isEdited?(" "+t.msgEditedTag):"")))):t.mt}</span></span></button></li>`}).join("")}</ul>`;
+}
 function chat(){const t=x(),p=byId(st.chat);if(!p)return msgs();
 return`<div class="ch"><div class="chh"><button class="ib" data-a="back" aria-label="${t.bk}">${ic("back")}</button><span class="av s">${av(p)}</span><h2 style="flex:1;min-width:0;display:flex;align-items:center;gap:6px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.n)}</span>${flagSvg}</h2><button class="ib" data-a="start-call" data-id="${p.id}" style="color:var(--brand)" title="${t.vidCall}" aria-label="${t.vidCall}">${ic("video")}</button><button class="ib" data-a="open-opt" data-id="${p.id}" title="${t.opt}" aria-label="${t.opt}">${ic("dots")}</button></div><p class="note">${ic("shield")}<span>${t.st}</span></p><div id="log" class="log" aria-live="polite"></div><div class="inp"><input id="chat-file" type="file" accept="image/*" hidden><button class="ib" data-a="chat-pic" title="Photo" aria-label="Photo">${ic("cam")}</button><button class="ib" data-a="chat-rec" id="btn-rec" title="Vocale" aria-label="Vocale">${ic("mic")}</button><input id="in" type="text" placeholder="${t.ph}" aria-label="${t.ph}" autocomplete="off"><button class="send" data-a="send" aria-label="${t.snd}">${ic("send")}</button></div></div>`}
 function prof(){const t=x(),u=st.u,n=st.ph5.length;
 const hbList=(u.hb||[]);
 const uBio=u.bio||t.bioDef;
 const blkCount=(st.blocked||[]).length;
-return`<div class="pf"><h1>${t.my}</h1><div class="card"><div class="bd"><div class="chh"><span class="av l">${me(0)}</span><div><h2>${esc(u.n||"")}, ${u.a}${ic("ok")}</h2><p class="mut">${u.jb?esc(u.jb)+" · ":""}${u.c} ${flagSvg}</p></div></div><p class="b" style="margin:10px 0 8px;font-style:italic;color:var(--ink);background:rgba(0,0,0,.03);padding:10px 14px;border-radius:12px;border-inline-start:3px solid var(--brand);cursor:pointer" data-a="edbio" title="${t.edBio}">“${esc(uBio)}”</p><ul class="chips"><li>${t.vd}</li><li style="cursor:pointer" data-a="edj" title="${t.job}">${esc(u.jb||"")}</li><li style="cursor:pointer" data-a="edc" title="${t.cty}">${esc(u.c)}</li><li style="cursor:pointer" data-a="edtc" title="${t.tcty}">${t.seekCity}: ${esc(st.tc==="all"?t.allC:st.tc)}</li><li style="cursor:pointer" data-a="edrel" title="${t.rel}">${(t.relMap&&t.relMap[u.rel])||t.relMus}</li><li style="cursor:pointer" data-a="edlng" title="${t.langSpk}">${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</li><li>${t.kid[u.kd]}</li><li>${t.k[u.i]}</li>${u.gVerif?`<li style="border-color:#34A853;color:#1e7e34">${t.gVerif}</li>`:""}${st.inc?`<li>${t.incb}</li>`:""}</ul></div></div><div class="sf"><div><h3>${t.rel} & ${t.langSpk}</h3><p>${(t.relMap&&t.relMap[u.rel])||t.relMus} · ${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edrel">${t.rel}</button></div><div class="sf"><div><h3>${t.bio}</h3><p style="white-space:pre-wrap;color:var(--ink)">${esc(uBio)}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edbio">${t.edBio}</button></div><div class="sf"><div><h3>${t.hob}</h3><p>${hbList.length?hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?h[st.lang]:""}).filter(Boolean).join(" · "):t.hobHint}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-edhb">${t.edHb}</button></div><div class="h-chips" style="margin-top:-6px;margin-bottom:12px">${hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?`<span class="h-chip on" style="cursor:pointer" data-a="open-edhb"><span>${h[st.lang]}</span></span>`:""}).join("")}</div><div class="sf"><div><h3>${t.tcty}</h3><p>${st.tc==="all"?t.allC:st.tc} ${flagSvg}</p></div><select class="fld" style="width:auto;min-height:38px;padding:4px 8px;margin-inline-start:auto" id="p-tc"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.tc===c?"selected":""}>${c}</option>`).join("")}</select></div><div class="sf"><div><h3>${t.phs} (${n}/5)</h3><p>${t.ph5i}</p></div></div><div class="grid5">${st.ph5.map((q,i)=>`<div class="pt ${q.isSelfie?'pt-selfie':''}"><img src="${q.p}" alt="">${q.isSelfie?`<span class="selfie-badge">${ic("ok")} ${t.selfieBadge}</span>`:`<button class="ib rmb" data-a="rmp" data-k="${i}" aria-label="${t.rm}">${ic("x")}</button>`}</div>`).join("")}${n<5?`<button class="pt add" data-a="addp">${ic("cam")}<span>${t.add}</span></button>`:""}</div><input id="pf" type="file" accept="image/*" hidden><div class="sf"><div><h3>${t.blkedList} (${blkCount})</h3><p>${blkCount?blkCount+" "+(st.lang==="ar"?"مستخدم محظور":"utilisateur(s) bloqué(s)"):t.noBlked}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-blocked">${t.blkedList}</button></div><div class="sf" style="border:1.5px solid rgba(0,111,253,0.3);background:var(--neutral-light-light);cursor:pointer" data-a="open-fb"><div><h3 style="color:var(--brand);display:flex;align-items:center;gap:6px">⭐ ${t.fbTitle}</h3><p style="color:var(--ink);font-size:13px">${t.fbSub}</p></div><button class="btn" style="width:auto;min-height:36px;padding:4px 14px;margin-inline-start:auto" data-a="open-fb">${t.fbBtn}</button></div><div class="sf"><div><h3>${t.plan}</h3><p>${st.prem?t.prem:t.free}</p></div></div>${st.prem?"":`<button class="btn" data-a="up">${t.up}</button><button class="btn sec" data-a="d19">${t.dm}</button>`}${st.prem?sw("inc",t.incog)+`<p class="mut">${t.incd}</p>`:`<button class="sw" data-a="up"><span>${t.incog}<br><small>${t.incl}</small></span>${ic("lock")}</button>`}${sw("blur",t.blur)}${sw("lite",t.lite)}<div class="sf">${ic("shield")}<div><h3>${t.sf}</h3><p>${t.st}</p></div></div><button class="btn sec" data-a="logout" style="border-color:var(--heart);color:var(--heart);margin:14px 0 6px;display:flex;align-items:center;justify-content:center;gap:8px">${ic("phone-off")}<span>${t.logout}</span></button><p class="mut">${t.age}</p><p class="mut">${t.demo}</p></div>`}
+return`<div class="pf"><h1>${t.my}</h1><div class="card"><div class="bd"><div class="chh"><span class="av l">${me(0)}</span><div><h2>${esc(u.n||"")}, ${u.a}${ic("ok")}</h2><p class="mut">${u.jb?esc(u.jb)+" · ":""}${u.c} ${flagSvg}</p></div></div><p class="b" style="margin:10px 0 8px;font-style:italic;color:var(--ink);background:rgba(0,0,0,.03);padding:10px 14px;border-radius:12px;border-inline-start:3px solid var(--brand);cursor:pointer" data-a="edbio" title="${t.edBio}">“${esc(uBio)}”</p><ul class="chips"><li>${t.vd}</li><li style="cursor:pointer" data-a="edj" title="${t.job}">${esc(u.jb||"")}</li><li style="cursor:pointer" data-a="edc" title="${t.cty}">${esc(u.c)}</li><li style="cursor:pointer" data-a="edtc" title="${t.tcty}">${t.seekCity}: ${esc(st.tc==="all"?t.allC:st.tc)}</li><li style="cursor:pointer" data-a="edrel" title="${t.rel}">${(t.relMap&&t.relMap[u.rel])||t.relMus}</li><li style="cursor:pointer" data-a="edlng" title="${t.langSpk}">${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</li><li>${t.kid[u.kd]}</li><li>${t.k[u.i]}</li>${u.gVerif?`<li style="border-color:#34A853;color:#1e7e34">${t.gVerif}</li>`:""}${st.inc?`<li>${t.incb}</li>`:""}</ul></div></div><div class="sf"><div><h3>${t.rel} & ${t.langSpk}</h3><p>${(t.relMap&&t.relMap[u.rel])||t.relMus} · ${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edrel">${t.rel}</button></div><div class="sf"><div><h3>${t.bio}</h3><p style="white-space:pre-wrap;color:var(--ink)">${esc(uBio)}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edbio">${t.edBio}</button></div><div class="sf"><div><h3>${t.hob}</h3><p>${hbList.length?hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?h[st.lang]:""}).filter(Boolean).join(" · "):t.hobHint}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-edhb">${t.edHb}</button></div><div class="h-chips" style="margin-top:-6px;margin-bottom:12px">${hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?`<span class="h-chip on" style="cursor:pointer" data-a="open-edhb"><span>${h[st.lang]}</span></span>`:""}).join("")}</div><div class="sf"><div><h3>${t.tcty}</h3><p>${st.tc==="all"?t.allC:st.tc} ${flagSvg}</p></div><select class="fld" style="width:auto;min-height:38px;padding:4px 8px;margin-inline-start:auto" id="p-tc"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.tc===c?"selected":""}>${c}</option>`).join("")}</select></div><div class="sf"><div><h3>${t.phs} (${n}/5)</h3><p>${t.ph5i}</p></div></div><div class="grid5">${st.ph5.map((q,i)=>`<div class="pt ${q.isSelfie?'pt-selfie':''}"><img src="${q.p}" alt="">${q.isSelfie?`<span class="selfie-badge">${ic("ok")} ${t.selfieBadge}</span>`:`<button class="ib rmb" data-a="rmp" data-k="${i}" aria-label="${t.rm}">${ic("x")}</button>`}</div>`).join("")}${n<5?`<button class="pt add" data-a="addp">${ic("cam")}<span>${t.add}</span></button>`:""}</div><input id="pf" type="file" accept="image/*" hidden><div class="sf"><div><h3>${t.blkedList} (${blkCount})</h3><p>${blkCount?blkCount+" "+(st.lang==="ar"?"مستخدم محظور":"utilisateur(s) bloqué(s)"):t.noBlked}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-blocked">${t.blkedList}</button></div><div class="sf" style="border:1.5px solid rgba(0,111,253,0.3);background:var(--neutral-light-light);cursor:pointer" data-a="open-fb"><div><h3 style="color:var(--brand);display:flex;align-items:center;gap:6px">⭐ ${t.fbTitle}</h3><p style="color:var(--ink);font-size:13px">${t.fbSub}</p></div><button class="btn" style="width:auto;min-height:36px;padding:4px 14px;margin-inline-start:auto" data-a="open-fb">${t.fbBtn}</button></div><div class="sf"><div><h3>${t.plan}</h3><p>${st.prem?t.prem:t.free}</p></div></div>${st.prem?"":`<button class="btn" data-a="up">${t.up}</button><button class="btn sec" data-a="d19">${t.dm}</button>`}${st.prem?(sw("inc",t.incog)+`<p class="mut">${t.incd}</p>`+(st.inc?`<div class="sf" style="background:rgba(30,41,59,0.06);border:1.5px solid #1E293B;border-radius:14px;padding:12px 14px;margin:8px 0"><div style="display:flex;align-items:center;gap:12px"><span style="font-size:26px">🕶️</span><div><h4 style="margin:0 0 2px;color:var(--ink);font-size:14px;font-weight:700">${t.incog} (${x().incb})</h4><p style="margin:0;font-size:12px;color:var(--mut);line-height:1.4">${t.incogBanner}</p></div></div></div>`:"")):`<button class="sw" data-a="up"><span>${t.incog}<br><small>${t.incl}</small></span>${ic("lock")}</button>`}${sw("blur",t.blur)}${sw("lite",t.lite)}<div class="sf">${ic("shield")}<div><h3>${t.sf}</h3><p>${t.st}</p></div></div><button class="btn sec" data-a="logout" style="border-color:var(--heart);color:var(--heart);margin:14px 0 6px;display:flex;align-items:center;justify-content:center;gap:8px">${ic("phone-off")}<span>${t.logout}</span></button><p class="mut">${t.age}</p><p class="mut">${t.demo}</p></div>`}
 function prot(src,e){const c=document.createElement("canvas");c.width=c.height=360;const g=c.getContext("2d");g.drawImage(src,0,0);
 const X=e.x*3.6,Y=e.y*3.6,R=e.r*3.6,m=document.createElement("canvas");m.width=m.height=8;m.getContext("2d").drawImage(src,X-R,Y-R,2*R,2*R,0,0,8,8);
 g.save();g.beginPath();g.ellipse(X,Y,R*.8,R,0,0,7);g.clip();g.imageSmoothingEnabled=false;g.drawImage(m,X-R,Y-R,2*R,2*R);g.restore();return c}
 function edv(){const t=x(),e=st.ed,r=(k,l,mn,mx)=>`<div><label for="r${k}">${l}</label><input class="rg" id="r${k}" type="range" min="${mn}" max="${mx}" value="${e[k]}" data-e="${k}"></div>`;
 return`<div class="pf"><h1>${t.edt}</h1><p>${t.edh}</p><canvas id="pe" class="pe" width="360" height="360" role="img" aria-label="${t.edt}"></canvas>${r("x",t.edx,10,90)}${r("y",t.edy,10,90)}${r("r",t.eds,10,45)}<button class="btn" data-a="eda">${t.eda}</button><button class="btn sec" data-a="edc">${t.edc}</button></div>`}
 function drawEd(){const e=st.ed,p=$("#pe");if(!e||!p)return;const g=p.getContext("2d");g.drawImage(prot(e.src,e),0,0);g.strokeStyle=G;g.lineWidth=3;g.setLineDash([8,6]);g.beginPath();g.ellipse(e.x*3.6,e.y*3.6,e.r*2.88,e.r*3.6,0,0,7);g.stroke()}
-function bub(l,m){
+function bub(l,m,idx,chatId){
 const d=document.createElement("div");d.className="bb "+m.w;
+const mTime=m.time||(m.created_at?new Date(m.created_at).getTime():Date.now());
+const ageMs=Date.now()-mTime;
+const isEditable=(m.w==="me" && typeof m.t==="string" && !m.voice && ageMs<=600000);
+
 if(m.img){
 const im=document.createElement("img");im.src=m.img;im.className="chat-img";im.alt="Photo";im.onclick=()=>{window.open(m.img,"_blank")};d.append(im);
 if(m.t){const p=document.createElement("p");p.style.margin="4px 0 0";p.textContent=m.t;d.append(p)}
@@ -1482,10 +1839,78 @@ const vb=document.createElement("div");vb.className="voice-bubble";
 const bars=[8,14,20,12,18,10,16,22,14,10,18,12].map(h=>`<span class="voice-bar" style="height:${h}px"></span>`).join("");
 vb.innerHTML=`<button class="voice-btn" data-a="play-voice" data-dur="${m.dur||"0:08"}" aria-label="Play">${ic("play")}</button><div class="voice-wave">${bars}</div><span class="voice-dur">${m.dur||"0:08"}</span>${m.audioSrc?`<audio src="${m.audioSrc}" preload="auto" playsinline></audio>`:""}`;
 d.append(vb);
-}else{d.textContent=m.t}
+}else{
+const p=document.createElement("p");p.style.margin="0";p.textContent=m.t;d.append(p);
+}
+
+if(m.w==="me" && (m.isEdited || isEditable)){
+const meta=document.createElement("div");meta.className="bb-meta";
+if(m.isEdited){
+const edTag=document.createElement("span");edTag.className="msg-edited-tag";edTag.textContent=x().msgEditedTag;meta.append(edTag);
+}
+if(isEditable){
+const edBtn=document.createElement("button");edBtn.type="button";edBtn.className="msg-edit-btn";
+edBtn.dataset.a="open-edit-msg";
+edBtn.dataset.cid=chatId||st.chat||"";
+edBtn.dataset.mid=m.id||("idx_"+idx);
+edBtn.dataset.idx=String(idx!==undefined?idx:"");
+edBtn.title=x().editMsg;edBtn.setAttribute("aria-label",x().editMsg);
+edBtn.innerHTML="✏️";
+meta.append(edBtn);
+}
+d.append(meta);
+}
 l.append(d);
 }
-function add(id,m){st.ms[id].push(m);const l=$("#log");if(l&&st.chat===id){bub(l,m);l.scrollTop=l.scrollHeight}}
+function add(id,m){
+if(!st.ms[id])st.ms[id]=[];
+const idx=st.ms[id].length;
+st.ms[id].push(m);
+const l=$("#log");
+if(l&&st.chat===id){bub(l,m,idx,id);l.scrollTop=l.scrollHeight;}
+}
+let editCountdownTimer=null;
+function openEditMessageModal(chatId,mid,idx){
+const mList=st.ms[chatId];if(!mList)return;
+const numIdx=+idx;let msg=null;
+if(!isNaN(numIdx)&&mList[numIdx]){msg=mList[numIdx];}else{msg=mList.find(m=>m.id===mid)||mList.slice(-1)[0];}
+if(!msg)return;
+const mTime=msg.time||(msg.created_at?new Date(msg.created_at).getTime():Date.now());
+const leftMs=600000-(Date.now()-mTime);
+if(leftMs<=0){alert(x().editExpired);render();return;}
+const t=x(),o=$("#ov");
+const updateTimer=()=>{
+const curLeft=600000-(Date.now()-mTime);
+if(curLeft<=0){clearInterval(editCountdownTimer);closeM();alert(t.editExpired);render();return;}
+const mins=Math.floor(curLeft/60000);const secs=Math.floor((curLeft%60000)/1000);
+const el=$("#edit-timer-num");if(el)el.textContent=`${mins}:${secs.toString().padStart(2,"0")}`;
+};
+const mInitial=Math.floor(leftMs/60000);
+const sInitial=Math.floor((leftMs%60000)/1000).toString().padStart(2,"0");
+o.innerHTML=`<div style="flex:1;display:flex;align-items:center;justify-content:center;padding:16px"><div class="g-modal" style="max-width:440px;text-align:start"><h2 style="font-size:20px;color:var(--ink);margin:0;display:flex;align-items:center;gap:8px">✏️ ${t.editMsg}</h2><div style="display:flex;align-items:center;gap:6px;background:rgba(0,111,253,0.08);border:1px solid rgba(0,111,253,0.2);border-radius:10px;padding:8px 12px;font-size:12px;color:var(--ink);margin:8px 0"><span>⏳</span><span>${t.editMsgTimeLeft} <strong id="edit-timer-num" style="color:var(--brand)">${mInitial}:${sInitial}</strong></span></div><textarea class="fld" id="txt-edit-msg" rows="4" style="resize:vertical;font-family:inherit;padding:10px;line-height:1.4" maxlength="400">${esc(msg.t||"")}</textarea><button class="btn" data-a="save-edit-msg" data-cid="${chatId}" data-mid="${mid}" data-idx="${idx}">${t.saveEdit}</button><button class="btn sec" data-a="cm" style="min-height:40px">${t.cancelEdit}</button></div></div>`;
+o.hidden=false;
+clearInterval(editCountdownTimer);
+editCountdownTimer=setInterval(updateTimer,1000);
+const ta=$("#txt-edit-msg");if(ta){ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);}
+}
+function saveEditedMessage(chatId,mid,idx){
+const mList=st.ms[chatId];if(!mList)return;
+const numIdx=+idx;let msg=null;
+if(!isNaN(numIdx)&&mList[numIdx]){msg=mList[numIdx];}else{msg=mList.find(m=>m.id===mid)||mList.slice(-1)[0];}
+if(!msg)return;
+const mTime=msg.time||(msg.created_at?new Date(msg.created_at).getTime():Date.now());
+const leftMs=600000-(Date.now()-mTime);
+if(leftMs<=0){clearInterval(editCountdownTimer);closeM();alert(x().editExpired);render();return;}
+const ta=$("#txt-edit-msg"),newT=ta?ta.value.trim():"";
+if(!newT)return;
+clearInterval(editCountdownTimer);
+msg.t=newT;msg.isEdited=true;msg.updatedAt=Date.now();
+save();closeM();
+if(st.tab==='m'&&st.chat===chatId){
+const l=$("#log");if(l){l.innerHTML="";st.ms[chatId].forEach((m,i)=>bub(l,m,i,chatId));l.scrollTop=l.scrollHeight;}
+}
+editMessageInSupabase(msg.id,chatId,newT);
+}
 function render(){
 if(st.step>=4&&((!st.em&&!st.ph)||!st.selfie)){st.step=(!st.em&&!st.ph)?0:3;}
 const t=x(),h=document.documentElement,on=st.step<4;
@@ -1495,7 +1920,7 @@ if(stEl)stEl.textContent=t.scBlockT;if(sdEl)sdEl.textContent=t.scBlockD;if(sbEl)
 $("#nav").innerHTML=on?"":[["d","compass",t.d],["m","chat",t.m],["p","user",t.p]].map(([k,i,l])=>`<button data-a="tab" data-k="${k}" ${st.tab===k?'aria-current="page"':""}>${ic(i)}<span>${l}</span></button>`).join("");
 $("#v").innerHTML=on?onb():st.tab==="d"?dis():st.tab==="m"?(st.chat?chat():msgs()):(st.ed?edv():prof());
 if(st.ed&&!on&&st.tab==="p")drawEd();
-if(!on&&st.tab==="m"&&st.chat){const l=$("#log");st.ms[st.chat].forEach(m=>bub(l,m));l.scrollTop=l.scrollHeight}}
+if(!on&&st.tab==="m"&&st.chat){const l=$("#log");if(l){l.innerHTML="";(st.ms[st.chat]||[]).forEach((m,idx)=>bub(l,m,idx,st.chat));l.scrollTop=l.scrollHeight;}}}
 let camStream=null;
 function startCam(){
 if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
@@ -1818,10 +2243,22 @@ o.innerHTML=`<div style="flex:1;display:flex;align-items:center;justify-content:
 o.hidden=false;
 const tb=$("#txt-bio");if(tb)tb.focus();
 }
-function swipe(a){const p=pool()[st.i];if(!p||st.busy)return;st.busy=1;
+function swipe(a){
+checkAndResetDailyLimits();
+const p=pool()[st.i];if(!p||st.busy)return;
 const isL=(a==="like");
+if(isL&&!st.prem&&st.dailyLimits.sent>=20){
+alert(x().dailyReqLimit);
+st.payFrom=st.tab;st.pay=1;st.tab="d";render();
+return;
+}
+st.busy=1;
 const isMatch=isL&&(p.y||Math.random()<0.5);
-if(isL){recordLikeInSupabase(p.id,isMatch);}
+if(isL){
+st.dailyLimits.sent++;
+save();
+recordLikeInSupabase(p.id,isMatch);
+}
 const c=$(".card"),d=(isL?1:-1)*(st.lang==="ar"?-1:1);
 const go2=()=>{st.busy=0;st.i++;st.seen++;render();
 if(!st.prem&&st.seen>=LIM)say(x().pw2);
@@ -2053,13 +2490,26 @@ sbClient.from('feedbacks').insert({user_name:fbItem.user,rating:fbItem.rating,ca
 }
 }
 function send(){const i=$("#in"),v=i.value.trim(),id=st.chat;if(!v||!id)return;
-add(id,{w:"me",t:v});i.value="";
-recordMessageInSupabase(id,v,null,null,null);
+const msgObj={
+id:"msg_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),
+w:"me",
+t:v,
+time:Date.now(),
+isEdited:false
+};
+add(id,msgObj);i.value="";
+recordMessageInSupabase(id,v,null,null,null,msgObj);
 setTimeout(()=>{
 if(st.ms[id]){
 const rList=x().r||["Bonjour ! Ravi(e) de faire ta connaissance.","Tu es de quelle ville ?"];
 const rep=rList[st.ms[id].filter(m=>m.w==="th").length%rList.length];
-add(id,{w:"th",t:rep});
+const thMsg={
+id:"msg_th_"+Date.now(),
+w:"th",
+t:rep,
+time:Date.now()
+};
+add(id,thMsg);
 if(sbClient&&st.u&&st.u.id){
 sbClient.from('messages').insert({sender_id:id,receiver_id:st.u.id,content:rep}).catch(()=>{});
 }
@@ -2170,11 +2620,55 @@ else if(a==="pass"||a==="like")swipe(a);
 else if(a==="again"){st.i=0;render()}
 else if(a==="open"){st.chat=b.dataset.id;render();loadMessagesFromSupabase(st.chat);$("#in").focus()}
 else if(a==="back"){st.chat=null;render()}
+else if(a==="m-subtab"){st.mSubTab=k;render();}
+else if(a==="accept-req"){
+checkAndResetDailyLimits();
+if(!st.prem&&st.dailyLimits.accepted>=10){
+alert(x().dailyAcceptLimit);
+st.payFrom=st.tab;st.pay=1;st.tab="d";render();
+return;
+}
+const rid=b.dataset.id;
+st.dailyLimits.accepted++;
+if(!st.mt.includes(rid))st.mt.push(rid);
+if(!st.ms[rid])st.ms[rid]=[];
+st.incomingRequests=(st.incomingRequests||[]).filter(r=>r.id!==rid);
+save();
+if(sbClient){
+ensureUserProfileId().then(uid=>{
+if(uid){
+sbClient.from('likes').upsert({sender_id:rid,receiver_id:uid,is_match:true},{onConflict:'sender_id,receiver_id'}).catch(()=>{});
+sbClient.from('likes').upsert({sender_id:uid,receiver_id:rid,is_match:true},{onConflict:'sender_id,receiver_id'}).catch(()=>{});
+}
+});
+}
+const reqUser=byId(rid)||SEED_PROFILES.find(s=>s.id===rid)||{id:rid,n:"Membre",selfie_url:"photos/achte.jpg",g:"f"};
+match(reqUser);
+}
+else if(a==="decline-req"){
+const rid=b.dataset.id;
+st.incomingRequests=(st.incomingRequests||[]).filter(r=>r.id!==rid);
+save();render();
+}
+else if(a==="open-edit-msg"){openEditMessageModal(b.dataset.cid,b.dataset.mid,b.dataset.idx)}
+else if(a==="save-edit-msg"){saveEditedMessage(b.dataset.cid,b.dataset.mid,b.dataset.idx)}
+else if(a==="close-edit-modal"){if(editCountdownTimer)clearInterval(editCountdownTimer);closeM();}
 else if(a==="send"){send();$("#in").focus()}
-else if(a==="sw"){if(k==="inc"&&!st.prem){st.pay=1;st.tab="d";render();return}st[k]=!st[k];save();b.setAttribute("aria-checked",st[k]);document.documentElement.classList.toggle("lite",st.lite)}
+else if(a==="sw"){
+if(k==="inc"&&!st.prem){st.payFrom=st.tab;st.pay=1;st.tab="d";render();return}
+st[k]=!st[k];
+if(k==="inc"){
+say(st.inc?x().incogActive:x().incogInactive);
+syncProfileToSupabase();
+}
+save();
+b.setAttribute("aria-checked",st[k]);
+document.documentElement.classList.toggle("lite",st.lite);
+render();
+}
 else if(a==="wr"){closeM();st.tab="m";st.chat=b.dataset.id;render();loadMessagesFromSupabase(st.chat);$("#in").focus()}
 else if(a==="dismiss-shield"){document.body.classList.remove("screen-protected")}
-else if(a==="cm"){closeM();render();const l=$("[data-a=like]");if(l)l.focus()}});
+else if(a==="cm"){if(editCountdownTimer)clearInterval(editCountdownTimer);closeM();render();const l=$("[data-a=like]");if(l)l.focus()}});
 document.addEventListener("change",e=>{if(e.target.id==="sel-tc"||e.target.id==="p-tc"){st.tc=e.target.value;if(st.u)st.u.tc=st.tc;st.i=0;save();render();return}
 if(e.target.id==="chat-file"&&e.target.files[0]){
 const f=e.target.files[0],fr=new FileReader();
