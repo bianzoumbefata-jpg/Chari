@@ -975,15 +975,33 @@ body.screen-protected .screen-shield{display:flex!important}
 <p id="sc-shield-d">Pour protéger l'intimité et la sécurité des membres sur Chari, les captures d'écran et enregistrements sont strictement interdits.</p>
 <button type="button" class="btn" style="width:auto;min-height:44px;padding:0 24px" data-a="dismiss-shield">Continuer sur Chari</button>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script>
+if(!window.supabase){
+const s=document.createElement('script');
+s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+document.head.appendChild(s);
+}
+</script>
 <script src="supabase-config.js"></script>
 <script>
+window.CHARI_SUPABASE = window.CHARI_SUPABASE || {
+url: "https://xitiqkemodqxbitgwihi.supabase.co",
+anonKey: "sb_publishable_9hQoNBq5YB-G0u9swyLm-w_lgc_RQfP",
+bucket: "photo"
+};
 let sbClient=null;
+function initSupabase(){
+if(sbClient)return sbClient;
+const cfg=window.CHARI_SUPABASE;
+if(window.supabase&&cfg&&cfg.url&&cfg.anonKey){
 try{
-if(window.supabase&&window.CHARI_SUPABASE&&window.CHARI_SUPABASE.url&&window.CHARI_SUPABASE.anonKey){
-sbClient=window.supabase.createClient(window.CHARI_SUPABASE.url,window.CHARI_SUPABASE.anonKey);
+sbClient=window.supabase.createClient(cfg.url,cfg.anonKey);
+}catch(e){console.warn("Supabase init error:",e)}
 }
-}catch(e){console.warn("Supabase init:",e)}
+return sbClient;
+}
+initSupabase();
 async function uploadImageToSupabase(dataUrl,fileName){
 if(!sbClient||!dataUrl||!dataUrl.startsWith("data:"))return dataUrl;
 try{
@@ -1229,6 +1247,7 @@ o.innerHTML=`<div class="strip" aria-hidden="true"></div><div class="mi"><h2>${t
 o.hidden=false;say(t.mt);o.querySelector(".btn").focus()}
 function closeM(){$("#ov").hidden=true}
 async function signUpWithEmail(){
+initSupabase();
 const emEl=$("#em"),pwEl=$("#pw"),e0=$("#e0");
 if(!emEl||!pwEl)return;
 const email=emEl.value.trim().toLowerCase();
@@ -1268,6 +1287,7 @@ if(btn){btn.disabled=false;btn.textContent=x().emReg;}
 }
 }
 async function loginWithEmail(){
+initSupabase();
 const emEl=$("#em"),pwEl=$("#pw"),e0=$("#e0");
 if(!emEl||!pwEl)return;
 const email=emEl.value.trim().toLowerCase();
@@ -1299,6 +1319,7 @@ if(btn){btn.disabled=false;btn.textContent=x().emLog;}
 }
 }
 async function sendPhoneOtp(){
+initSupabase();
 const phEl=$("#ph");if(!phEl)return;
 const raw=phEl.value.replace(/\D/g,"");
 if(raw.length!==8){const e0=$("#e0");if(e0)e0.textContent=x().ph8;phEl.focus();return;}
@@ -1345,8 +1366,9 @@ cdEl.focus();
 }
 }
 async function signInWithGoogle(){
+initSupabase();
 if(!sbClient){
-alert(st.lang==="ar"?"خدمة Supabase غير متصلة.":"Supabase n'est pas connecté.");
+openGoogleSetupModal();
 return;
 }
 try{
