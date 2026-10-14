@@ -958,6 +958,8 @@ body.screen-protected .screen-shield{display:flex!important}
 <symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></symbol>
 <symbol id="i-mic-off" viewBox="0 0 24 24"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"/><path d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></symbol>
 <symbol id="i-cam-off" viewBox="0 0 24 24"><line x1="1" y1="1" x2="23" y2="23"/><path d="m16 16-1.5-1.5M2 2l20 20"/><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
 </defs></svg>
 <div class="app">
 <header><div style="display:flex;align-items:center;gap:8px"><span class="logo">Chari</span><span class="flag-td" title="Tchad" aria-label="Tchad"><svg viewBox="0 0 30 20" width="22" height="15" style="border-radius:3px;box-shadow:0 1px 3px rgba(0,0,0,0.18);vertical-align:middle;display:block;overflow:hidden"><rect width="10" height="20" x="0" fill="#002664"/><rect width="10" height="20" x="10" fill="#FECB00"/><rect width="10" height="20" x="20" fill="#C60C30"/></svg></span></div><button class="lg" id="lang" data-a="lang" aria-label="Langue / اللغة"></button></header>
@@ -1041,7 +1043,7 @@ langSpk:"Langue parlée",lngFr:"Français",lngAr:"Arabe",lngBoth:"Français & Ar
 lngMap:{fr:"🗣️ Français",ar:"🗣️ Arabe",both:"🗣️ Français & Arabe"},
 rel:"Religion",relMus:"Musulman(e)",relChr:"Chrétien(ne)",relOth:"Autre religion",
 relMap:{mus:"🕌 Musulman(e)",chr:"✝️ Chrétien(ne)",oth:"🕊️ Autre religion"},
-mailb:"E-mail",telb:"Téléphone",eml:"Votre adresse e-mail",emE:"Entrez une adresse e-mail valide.",phs:"Mes photos",rm:"Retirer la photo",add:"Ajouter une photo",ph5i:"Ajoutez jusqu'à 5 photos. Les autres voient la version protégée (visage pixelisé) tant qu'il n'y a pas de match ; l'original n'est jamais affiché avant.",edt:"Masquer le visage",edh:"Placez le cercle sur votre visage : il sera pixelisé de façon irréversible, le reste de la photo reste net.",edx:"Position horizontale",edy:"Position verticale",eds:"Taille du masque",eda:"Ajouter la photo",edc:"Annuler",incog:"Mode incognito",incd:"Votre profil reste invisible : seules les personnes que vous aimez peuvent le voir.",incl:"Réservé à Premium",incb:"Incognito",
+mailb:"E-mail",telb:"Téléphone",eml:"Votre adresse e-mail",emE:"Entrez une adresse e-mail valide.",pwd:"Mot de passe",pwdPh:"Au moins 6 caractères",pwdE:"Entrez un mot de passe d'au moins 6 caractères.",emReg:"S'inscrire avec mon E-mail",emLog:"Se connecter",orDivider:"ou",haveAcc:"Déjà un compte ? Se connecter",swMail:"E-mail (Supabase)",swTel:"Téléphone (+235)",phs:"Mes photos",rm:"Retirer la photo",add:"Ajouter une photo",ph5i:"Ajoutez jusqu'à 5 photos. Les autres voient la version protégée (visage pixelisé) tant qu'il n'y a pas de match ; l'original n'est jamais affiché avant.",edt:"Masquer le visage",edh:"Placez le cercle sur votre visage : il sera pixelisé de façon irréversible, le reste de la photo reste net.",edx:"Position horizontale",edy:"Position verticale",eds:"Taille du masque",eda:"Ajouter la photo",edc:"Annuler",incog:"Mode incognito",incd:"Votre profil reste invisible : seules les personnes que vous aimez peuvent le voir.",incl:"Réservé à Premium",incb:"Incognito",
 kid:["Sans enfant","1 enfant","2 enfants","3 enfants ou plus"],
 selfieBadge:"Selfie vérifié",selfieLock:"Le selfie certifié est obligatoire et ne peut pas être supprimé.",
 fbTitle:"Donnez votre avis",fbSub:"Partagez vos suggestions ou signalez une amélioration.",fbBtn:"Écrire un avis",
@@ -1066,7 +1068,7 @@ langSpk:"اللغة المنطوقة",lngFr:"الفرنسية",lngAr:"العرب
 lngMap:{fr:"🗣️ الفرنسية",ar:"🗣️ العربية",both:"🗣️ الفرنسية والعربية"},
 rel:"الديانة",relMus:"مسلم(ة)",relChr:"مسيحي(ة)",relOth:"ديانة أخرى",
 relMap:{mus:"🕌 مسلم(ة)",chr:"✝️ مسيحي(ة)",oth:"🕊️ ديانة أخرى"},
-mailb:"البريد الإلكتروني",telb:"الهاتف",eml:"عنوان بريدك الإلكتروني",emE:"أدخل عنوان بريد إلكتروني صالحاً.",phs:"صوري",rm:"حذف الصورة",add:"إضافة صورة",ph5i:"أضف حتى 5 صور. يرى الآخرون النسخة المحمية (وجه مشوّش) حتى يحدث تطابق، ولا تُعرض النسخة الأصلية قبل ذلك أبداً.",edt:"إخفاء الوجه",edh:"ضع الدائرة على وجهك: سيتم تشويشه بشكل لا رجعة فيه، وتبقى بقية الصورة واضحة.",edx:"الموضع الأفقي",edy:"الموضع العمودي",eds:"حجم القناع",eda:"إضافة الصورة",edc:"إلغاء",incog:"وضع التخفّي",incd:"يبقى ملفك غير مرئي: لا يراه إلا من تعجب به.",incl:"حصري لبريميوم",incb:"تخفّي",
+mailb:"البريد الإلكتروني",telb:"الهاتف",eml:"عنوان بريدك الإلكتروني",emE:"أدخل عنوان بريد إلكتروني صالحاً.",pwd:"كلمة المرور",pwdPh:"6 أحرف على الأقل",pwdE:"أدخل كلمة مرور لا تقل عن 6 أحرف.",emReg:"إنشاء حساب بالبريد",emLog:"تسجيل الدخول",orDivider:"أو",haveAcc:"لديك حساب بالفعل؟ تسجيل الدخول",swMail:"البريد الإلكتروني",swTel:"الهاتف (+235)",phs:"صوري",rm:"حذف الصورة",add:"إضافة صورة",ph5i:"أضف حتى 5 صور. يرى الآخرون النسخة المحمية (وجه مشوّش) حتى يحدث تطابق، ولا تُعرض النسخة الأصلية قبل ذلك أبداً.",edt:"إخفاء الوجه",edh:"ضع الدائرة على وجهك: سيتم تشويشه بشكل لا رجعة فيه، وتبقى بقية الصورة واضحة.",edx:"الموضع الأفقي",edy:"الموضع العمودي",eds:"حجم القناع",eda:"إضافة الصورة",edc:"إلغاء",incog:"وضع التخفّي",incd:"يبقى ملفك غير مرئي: لا يراه إلا من تعجب به.",incl:"حصري لبريميوم",incb:"تخفّي",
 kid:["بلا أطفال","طفل واحد","طفلان","3 أطفال أو أكثر"],
 selfieBadge:"سيلفي موثّق",selfieLock:"صورة السيلفي الموثقة إلزامية ولا يمكن حذفها.",
 fbTitle:"شاركنا رأيك وملاحظاتك",fbSub:"شاركنا اقتراحاتك أو أفكارك لتحسين التطبيق.",fbBtn:"كتابة تقييم",
@@ -1109,7 +1111,10 @@ const mos=p=>{let s="";for(let i=0;i<5;i++)for(let j=0;j<5;j++){const cx=36+i*7,
 const av=(p,m)=>`<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${p.n}"><rect width="100" height="100" fill="${p.bg[0]}"/><path d="M50 4 96 50 50 96 4 50z" fill="${p.bg[1]}" opacity=".35"/><path d="M50 22 78 50 50 78 22 50z" fill="${p.bg[1]}" opacity=".35"/><path d="M12 100c0-22 16-34 38-34s38 12 38 34z" fill="${p.cl}"/><rect x="43" y="52" width="14" height="16" fill="${p.sk}"/>${m?mos(p):`<circle cx="50" cy="40" r="17" fill="${p.sk}"/>`}</svg>`;
 const sw=(k,l)=>`<button class="sw" role="switch" aria-checked="${st[k]}" data-a="sw" data-k="${k}"><span>${l}</span><i></i></button>`;
 function onb(){const t=x(),s=st.step;
-if(s===0)return`<div class="pf"><div class="hero-box"><img src="couple.jpg" alt="Chari" class="hero-img"><div class="hero-overlay"><span class="hero-tag">${t.heroTag} ${flagSvg}</span></div></div><h1>${t.wl}</h1><p>${t.wl2}</p><div style="margin:20px 0 6px"><button class="btn-google" data-a="gauth" type="button" style="width:100%;box-shadow:0 4px 14px rgba(66,133,244,0.28)"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg><span>${t.gBtn}</span></button></div><div style="display:flex;align-items:center;gap:12px;margin:18px 0 12px"><div style="flex:1;height:1px;background:var(--line)"></div><span style="font-size:12px;color:var(--mut);font-weight:700;text-align:center">${t.orPhone}</span><div style="flex:1;height:1px;background:var(--line)"></div></div><div><label for="ph">${t.phl} ${flagSvg}</label><div class="ph2"><span>+235</span><input class="fld" id="ph" type="tel" inputmode="numeric" placeholder="66 00 00 00" maxlength="11" value="${esc(st.ph||"")}"></div><p class="err" id="e0" role="alert"></p></div><button class="btn" data-a="s0" id="btn-send-otp">${t.sndOtp}</button><div class="sf" style="margin:16px 0 8px;background:rgba(217,119,6,0.08);border:1px solid rgba(217,119,6,0.25)"><div style="display:flex;align-items:flex-start;gap:10px">${ic("shield")}<p style="margin:0;font-size:13px;line-height:1.4;color:var(--ink)">${t.gNote}</p></div></div><p class="mut" style="font-size:12px;margin-top:10px">${t.age}</p></div>`;
+if(s===0){
+const isMail=st.mode==="mail";
+return`<div class="pf"><div class="hero-box"><img src="couple.jpg" alt="Chari" class="hero-img"><div class="hero-overlay"><span class="hero-tag">${t.heroTag} ${flagSvg}</span></div></div><h1>${t.wl}</h1><p>${t.wl2}</p><div style="margin:20px 0 6px"><button class="btn-google" data-a="gauth" type="button" style="width:100%;box-shadow:0 4px 14px rgba(66,133,244,0.28)"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg><span>${t.gBtn}</span></button></div><div style="display:flex;align-items:center;gap:12px;margin:16px 0 12px"><div style="flex:1;height:1px;background:var(--line)"></div><span style="font-size:12px;color:var(--mut);font-weight:700;text-transform:uppercase">${t.orDivider}</span><div style="flex:1;height:1px;background:var(--line)"></div></div><div class="seg" role="tablist" style="margin-bottom:12px"><button type="button" class="opb" data-a="md" data-k="mail" aria-pressed="${isMail}">${ic("mail")} <span>${t.swMail}</span></button><button type="button" class="opb" data-a="md" data-k="tel" aria-pressed="${!isMail}">${ic("phone")} <span>${t.swTel}</span></button></div>${isMail?`<div><div><label for="em">${t.eml}</label><input class="fld" id="em" type="email" placeholder="votre.email@gmail.com" autocomplete="email" value="${esc(st.em||"")}"></div><div><label for="pw">${t.pwd}</label><input class="fld" id="pw" type="password" placeholder="${t.pwdPh}" autocomplete="current-password"></div><p class="err" id="e0" role="alert"></p><button class="btn" data-a="s0-email-signup" id="btn-em-signup">${t.emReg}</button><button class="btn sec" data-a="s0-email-login" id="btn-em-login" style="margin-top:8px">${t.haveAcc}</button></div>`:`<div><label for="ph">${t.phl} ${flagSvg}</label><div class="ph2"><span>+235</span><input class="fld" id="ph" type="tel" inputmode="numeric" placeholder="66 00 00 00" maxlength="11" value="${esc(st.ph||"")}"></div><p class="err" id="e0" role="alert"></p><button class="btn" data-a="s0" id="btn-send-otp">${t.sndOtp}</button></div>`}<div class="sf" style="margin:16px 0 8px;background:rgba(217,119,6,0.08);border:1px solid rgba(217,119,6,0.25)"><div style="display:flex;align-items:flex-start;gap:10px">${ic("shield")}<p style="margin:0;font-size:13px;line-height:1.4;color:var(--ink)">${t.gNote}</p></div></div><p class="mut" style="font-size:12px;margin-top:10px">${t.age}</p></div>`;
+}
 if(s===1)return`<div class="pf"><button class="ib" data-a="go-back-auth" aria-label="${t.bk}" style="align-self:flex-start;margin-bottom:8px">${ic("back")}</button><h1>${t.otp}</h1><p>${t.otps}<strong>+235 ${esc(st.ph||"")}</strong></p><p class="mut" style="font-size:13px">${t.otpd}</p><div><label for="cd">${t.cod}</label><input class="fld" id="cd" type="tel" inputmode="numeric" maxlength="6" placeholder="123456" autofocus autocomplete="one-time-code"><p class="err" id="e1" role="alert"></p></div><button class="btn" data-a="s1" id="btn-val-otp">${t.ct}</button><button class="btn sec" data-a="go-back-auth" style="margin-top:8px">${t.bk}</button></div>`;
 if(s===2)return`<div class="pf"><h1>${t.pr}</h1>${st.u.gVerif?`<div style="display:flex;align-items:center;gap:8px;background:rgba(52,168,83,0.12);color:#1e7e34;padding:8px 12px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:12px"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="#34A853" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg><span>${t.gVerif}${st.em?" : "+esc(st.em):""}</span></div>`:""}<div><label for="nm">${t.nm}</label><input class="fld" id="nm" type="text" autocomplete="given-name" maxlength="20" value="${esc(st.u.n||"")}"></div><div><label for="jb">${t.job}</label><input class="fld" id="jb" type="text" placeholder="${t.jobPh}" maxlength="30" value="${esc(st.u.jb||"")}"></div><div><label for="bio">${t.bioLbl}</label><input class="fld" id="bio" type="text" placeholder="${t.bioPh}" maxlength="160" value="${esc(st.u.bio||"")}"></div><div><label id="gl">${t.iam}</label><div class="seg" role="group" aria-labelledby="gl"><button data-a="gd" data-k="f" aria-pressed="${st.g==="f"}">${t.fem}</button><button data-a="gd" data-k="m" aria-pressed="${st.g==="m"}">${t.mal}</button></div></div><div><label for="ag">${t.ag}</label><input class="fld" id="ag" type="number" inputmode="numeric" min="22" max="99" value="${st.u.a||""}"><p class="err" id="eA" role="alert"></p></div><div><label for="cy">${t.cty} ${flagSvg}</label><select class="fld" id="cy">${CI.map(c=>`<option ${st.u.c===c?"selected":""}>${c}</option>`).join("")}</select></div><div><label for="tc">${t.tcty} ${flagSvg}</label><select class="fld" id="tc"><option value="all" ${(!st.u.tc||st.u.tc==="all")?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.u.tc===c?"selected":""}>${c}</option>`).join("")}</select></div><div><label for="lng">${t.langSpk}</label><select class="fld" id="lng"><option value="fr" ${(st.u.lng||"fr")==="fr"?"selected":""}>${t.lngFr}</option><option value="ar" ${st.u.lng==="ar"?"selected":""}>${t.lngAr}</option><option value="both" ${st.u.lng==="both"?"selected":""}>${t.lngBoth}</option></select></div><div><label for="rel">${t.rel}</label><select class="fld" id="rel"><option value="mus" ${(st.u.rel||"mus")==="mus"?"selected":""}>${t.relMus}</option><option value="chr" ${st.u.rel==="chr"?"selected":""}>${t.relChr}</option><option value="oth" ${st.u.rel==="oth"?"selected":""}>${t.relOth}</option></select></div><div><label>${t.hobLbl}</label><p class="mut" style="margin:2px 0 6px">${t.hobHint}</p><div class="h-chips" role="group" aria-label="${t.hobLbl}">${HOBBIES.map(h=>{const on=(st.u.hb||[]).includes(h.id);return`<button type="button" class="h-chip ${on?"on":""}" data-a="toghb" data-h="${h.id}" aria-pressed="${on}"><span>${h[st.lang]}</span></button>`}).join("")}</div></div><div><label for="kd">${t.kd}</label><select class="fld" id="kd">${t.kid.map((k,i)=>`<option value="${i}" ${st.u.kd===i?"selected":""}>${k}</option>`).join("")}</select></div><div><label for="it">${t.it}</label><select class="fld" id="it"><option value="ser" ${st.u.i==="ser"?"selected":""}>${t.k.ser}</option><option value="mar" ${st.u.i==="mar"?"selected":""}>${t.k.mar}</option></select></div><p class="err" id="e2" role="alert"></p><button class="btn" data-a="s2">${t.ct}</button></div>`;
 return`<div class="pf"><h1>${t.sf1}</h1><p>${t.sf2}</p><div class="selfie">${st.selfie?`<img src="${st.selfie}" class="selfie-captured" alt="Selfie">`:`<video id="camera-stream" autoplay playsinline muted></video><div class="selfie-ring"></div>`}</div><p class="err" id="cam-err" role="alert"></p>${st.selfie?`<button class="btn" data-a="val-selfie">${t.vd}</button><button class="btn sec" data-a="retake-selfie" style="margin-top:8px">Reprendre avec la caméra</button>`:`<button class="btn" data-a="snap-cam" id="btn-snap">${t.shot}</button>`}<p class="mut">${t.sf3}</p></div>`}
@@ -1223,6 +1228,76 @@ const t=x(),o=$("#ov");
 o.innerHTML=`<div class="strip" aria-hidden="true"></div><div class="mi"><h2>${t.mt}</h2><p>${t.ms}</p><div class="pair"><span class="av l">${me(1)}</span>${ic("heart")}<span class="av l">${av(p)}</span></div><button class="btn gold" data-a="wr" data-id="${p.id}">${t.wr}${p.n}</button><button class="btn ghost" data-a="cm">${t.ct}</button></div><div class="strip" aria-hidden="true"></div>`;
 o.hidden=false;say(t.mt);o.querySelector(".btn").focus()}
 function closeM(){$("#ov").hidden=true}
+async function signUpWithEmail(){
+const emEl=$("#em"),pwEl=$("#pw"),e0=$("#e0");
+if(!emEl||!pwEl)return;
+const email=emEl.value.trim().toLowerCase();
+const password=pwEl.value;
+if(e0)e0.textContent="";
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){if(e0)e0.textContent=x().emE;emEl.focus();return;}
+if(password.length<6){if(e0)e0.textContent=x().pwdE;pwEl.focus();return;}
+const btn=$("#btn-em-signup");if(btn){btn.disabled=true;btn.textContent=st.lang==="ar"?"جارٍ التسجيل...":"Inscription en cours...";}
+if(!sbClient){
+st.em=email;st.mode="mail";if(!st.u)st.u={};st.u.gVerif=true;save();
+if(!st.selfie)go(3);else go(4);
+return;
+}
+try{
+const {data,error}=await sbClient.auth.signUp({
+email:email,
+password:password,
+options:{data:{name:email.split('@')[0]}}
+});
+if(error){
+if(error.message&&(error.message.toLowerCase().includes("already registered")||error.message.toLowerCase().includes("already exists"))){
+return loginWithEmail();
+}
+if(e0)e0.textContent="Erreur Supabase : "+error.message;
+if(btn){btn.disabled=false;btn.textContent=x().emReg;}
+return;
+}
+st.em=email;st.mode="mail";if(!st.u)st.u={};st.u.gVerif=true;
+if(!st.u.n)st.u.n=email.split('@')[0];
+save();syncProfileToSupabase();
+if(!st.selfie)go(3);
+else if(!st.u||!st.u.jb||!st.u.a||!st.u.c)go(2,"#jb");
+else go(4);
+}catch(e){
+if(e0)e0.textContent="Erreur : "+(e.message||e);
+if(btn){btn.disabled=false;btn.textContent=x().emReg;}
+}
+}
+async function loginWithEmail(){
+const emEl=$("#em"),pwEl=$("#pw"),e0=$("#e0");
+if(!emEl||!pwEl)return;
+const email=emEl.value.trim().toLowerCase();
+const password=pwEl.value;
+if(e0)e0.textContent="";
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){if(e0)e0.textContent=x().emE;emEl.focus();return;}
+if(!password){if(e0)e0.textContent=x().pwdE;pwEl.focus();return;}
+const btn=$("#btn-em-login");if(btn){btn.disabled=true;btn.textContent=st.lang==="ar"?"جارٍ الاتصال...":"Connexion en cours...";}
+if(!sbClient){
+st.em=email;st.mode="mail";if(!st.u)st.u={};st.u.gVerif=true;save();
+if(!st.selfie)go(3);else go(4);
+return;
+}
+try{
+const {data,error}=await sbClient.auth.signInWithPassword({email:email,password:password});
+if(error){
+if(e0)e0.textContent="Erreur : "+error.message;
+if(btn){btn.disabled=false;btn.textContent=x().emLog;}
+return;
+}
+st.em=email;st.mode="mail";if(!st.u)st.u={};st.u.gVerif=true;
+save();syncProfileToSupabase();
+if(!st.selfie)go(3);
+else if(!st.u||!st.u.jb||!st.u.a||!st.u.c)go(2,"#jb");
+else go(4);
+}catch(e){
+if(e0)e0.textContent="Erreur : "+(e.message||e);
+if(btn){btn.disabled=false;btn.textContent=x().emLog;}
+}
+}
 async function sendPhoneOtp(){
 const phEl=$("#ph");if(!phEl)return;
 const raw=phEl.value.replace(/\D/g,"");
@@ -1576,6 +1651,8 @@ else if(a==="do-block"){doBlock(+b.dataset.id)}
 else if(a==="open-blocked"){openBlockedListModal()}
 else if(a==="unblock"){unblock(+b.dataset.id)}
 else if(a==="md"){st.mode=k;render()}
+else if(a==="s0-email-signup"){signUpWithEmail()}
+else if(a==="s0-email-login"){loginWithEmail()}
 else if(a==="s0"){sendPhoneOtp()}
 else if(a==="s1"){verifyPhoneOtp()}
 else if(a==="go-back-auth"){go(0,"#ph")}
@@ -1662,6 +1739,7 @@ createImageBitmap(f).then(bm=>{const c=document.createElement("canvas"),s=Math.m
 document.addEventListener("input",e=>{
 const d=e.target.dataset.e;if(d&&st.ed){st.ed[d]=+e.target.value;drawEd()}
 if(e.target.id==="pp"||e.target.id==="ph")st.ph=e.target.value;
+if(e.target.id==="em")st.em=e.target.value;
 if(e.target.id==="c-num"){
 let v=e.target.value.replace(/\D/g,"").slice(0,16);
 v=v.replace(/(\d{4})(?=\d)/g,"$1 ").trim();
