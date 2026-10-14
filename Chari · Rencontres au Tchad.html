@@ -1372,7 +1372,12 @@ openGoogleSetupModal();
 return;
 }
 try{
-const redir=window.location.origin+window.location.pathname;
+const isFile=window.location.protocol==="file:";
+const redir=isFile?"http://localhost:3000":(window.location.origin+window.location.pathname);
+if(isFile){
+const isAr=st.lang==="ar";
+alert(isAr?"ملاحظة: لإتمام الدخول الحقيقي عبر Google، يرجى فتح التطبيق عبر http://localhost:3000 (ملف lancer-chari.bat) لتتمكن Google من إعادة توجيهك بأمان.":"Note : Pour vous identifier réellement avec Google, lancez le fichier 'lancer-chari.bat' (http://localhost:3000) pour permettre la redirection sécurisée de Google.");
+}
 const {data,error}=await sbClient.auth.signInWithOAuth({
 provider:'google',
 options:{
