@@ -2908,9 +2908,9 @@ b.classList.toggle("on",on);
 b.setAttribute("aria-pressed",on);
 }
 else if(a==="open-edhb"){openHobbyModal()}
-else if(a==="save-edhb"){closeM();save();render()}
+else if(a==="save-edhb"){closeM();save();syncProfileToSupabase();render()}
 else if(a==="edbio"){openBioModal()}
-else if(a==="save-bio"){const tb=$("#txt-bio"),bv=tb?tb.value.trim():"";st.u.bio=bv;closeM();save();render()}
+else if(a==="save-bio"){const tb=$("#txt-bio"),bv=tb?tb.value.trim():"";st.u.bio=bv;closeM();save();syncProfileToSupabase();render()}
 else if(a==="chat-pic"){$("#chat-file").click()}
 else if(a==="chat-rec"){toggleVoiceRec()}
 else if(a==="play-voice"){playVoice(b)}
@@ -3050,7 +3050,7 @@ render();
 else if(a==="wr"){closeM();st.tab="m";st.chat=b.dataset.id;render();loadMessagesFromSupabase(st.chat);$("#in").focus()}
 else if(a==="dismiss-shield"){document.body.classList.remove("screen-protected")}
 else if(a==="cm"){if(editCountdownTimer)clearInterval(editCountdownTimer);closeM();render();const l=$("[data-a=like]");if(l)l.focus()}});
-document.addEventListener("change",e=>{if(e.target.id==="sel-tc"||e.target.id==="p-tc"){st.tc=e.target.value;if(st.u)st.u.tc=st.tc;st.i=0;save();render();return}
+document.addEventListener("change",e=>{if(e.target.id==="sel-tc"||e.target.id==="p-tc"){st.tc=e.target.value;if(st.u)st.u.tc=st.tc;st.i=0;save();syncProfileToSupabase();render();return}
 if(e.target.id==="chat-file"&&e.target.files[0]){
 const f=e.target.files[0],fr=new FileReader();
 fr.onload=async ev=>{
@@ -3244,7 +3244,35 @@ save();render();
 }).catch(()=>{});
 }catch(e){console.warn("Auth init error:",e)}
 }
+let realtimeChannel=null;
+function initRealtimeDatabaseSync(){
+if(!sbClient||!sbClient.channel||realtimeChannel)return;
+try{
+realtimeChannel=sbClient.channel('chari-realtime-sync')
+.on('postgres_changes',{event:'*',schema:'public',table:'messages'},payload=>{
+const m=payload.new||payload.old;
+if(m){
+const myId=st.u&&st.u.id;
+const otherId=(m.sender_id===myId)?m.receiver_id:m.sender_id;
+if(otherId){
+loadMessagesFromSupabase(otherId);
+}
+if(st.tab==='m')render();
+}
+})
+.on('postgres_changes',{event:'*',schema:'public',table:'likes'},payload=>{
+loadLikesAndMatchesFromSupabase();
+})
+.on('postgres_changes',{event:'*',schema:'public',table:'profiles'},payload=>{
+loadProfilesFromSupabase();
+})
+.subscribe((status)=>{
+console.log("Supabase Realtime status:",status);
+});
+}catch(e){console.warn("Realtime error:",e)}
+}
 initSocialAuthListener();
+initRealtimeDatabaseSync();
 loadProfilesFromSupabase();
 loadLikesAndMatchesFromSupabase();
 
