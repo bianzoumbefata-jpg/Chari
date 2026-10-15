@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Chari · Administration Système</title>
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<style>
+:root{
+  --bg:#0f172a;
+  --surface:#1e293b;
+  --surface-2:#334155;
+  --border:#475569;
+  --primary:#006ffd;
+  --primary-hover:#0056c7;
+  --success:#10b981;
+  --warning:#f59e0b;
+  --danger:#ef4444;
+  --text:#f8fafc;
+  --text-muted:#94a3b8;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:var(--font);
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  -webkit-font-smoothing:antialiased;
+}
+header{
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  padding:14px 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  position:sticky;
+  top:0;
+  z-index:50;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:18px;
+  font-weight:800;
+  letter-spacing:-0.3px;
+}
+.brand-badge{
+  background:rgba(239,68,68,0.15);
+  color:#f87171;
+  border:1px solid rgba(239,68,68,0.3);
+  font-size:11px;
+  font-weight:700;
+  padding:2px 8px;
+  border-radius:20px;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+}
+.header-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.btn{
+  background:var(--primary);
+  color:#ffffff;
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  font-weight:600;
+  font-size:13px;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  transition:background 0.15s ease, transform 0.1s ease;
+}
+.btn:hover{background:var(--primary-hover)}
+.btn:active{transform:scale(0.98)}
+.btn-sec{background:var(--surface-2);color:var(--text)}
+.btn-sec:hover{background:#475569}
+.btn-danger{background:var(--danger);color:#ffffff}
+.btn-danger:hover{background:#dc2626}
+.btn-success{background:var(--success);color:#ffffff}
+.btn-success:hover{background:#059669}
+.btn-sm{padding:5px 10px;font-size:12px}
+
+.container{
+  max-width:1280px;
+  width:100%;
+  margin:0 auto;
+  padding:20px;
+  flex:1;
+}
+
+/* KPI CARDS */
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+  gap:14px;
+  margin-bottom:20px;
+}
+.kpi-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.kpi-title{font-size:12px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.kpi-val{font-size:28px;font-weight:800;letter-spacing:-0.5px}
+.kpi-sub{font-size:11px;color:var(--text-muted)}
+
+/* NAV TABS */
+.nav-tabs{
+  display:flex;
+  gap:8px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:20px;
+  overflow-x:auto;
+}
+.tab-btn{
+  background:none;
+  border:none;
+  color:var(--text-muted);
+  font-size:14px;
+  font-weight:700;
+  padding:10px 16px;
+  cursor:pointer;
+  border-bottom:3px solid transparent;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  white-space:nowrap;
+}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{
+  color:var(--primary);
+  border-bottom-color:var(--primary);
+}
+.tab-badge{
+  background:var(--surface-2);
+  color:var(--text);
+  font-size:11px;
+  padding:2px 6px;
+  border-radius:12px;
+}
+.tab-btn.active .tab-badge{background:rgba(0,111,253,0.25);color:var(--primary)}
+
+/* TOOLBAR */
+.toolbar{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:16px;
+}
+.search-box{
+  flex:1;
+  min-width:240px;
+  max-width:400px;
+  position:relative;
+}
+.search-box input{
+  width:100%;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:9px 12px 9px 36px;
+  color:var(--text);
+  font-size:13px;
+  outline:none;
+}
+.search-box input:focus{border-color:var(--primary)}
+.search-box svg{
+  position:absolute;
+  left:10px;
+  top:50%;
+  transform:translateY(-50%);
+  fill:var(--text-muted);
+}
+.filter-select{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:9px 12px;
+  color:var(--text);
+  font-size:13px;
+  outline:none;
+}
+
+/* USER CARDS GRID */
+.users-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(320px, 1fr));
+  gap:16px;
+}
+.user-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  transition:border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.user-card:hover{
+  border-color:var(--surface-2);
+  box-shadow:0 8px 24px rgba(0,0,0,0.25);
+}
+.user-header{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+}
+.photos-duo{
+  display:flex;
+  gap:6px;
+}
+.photo-thumb{
+  width:64px;
+  height:64px;
+  border-radius:10px;
+  object-fit:cover;
+  background:#000;
+  border:2px solid var(--border);
+  cursor:pointer;
+  transition:transform 0.15s ease;
+}
+.photo-thumb:hover{transform:scale(1.05);border-color:var(--primary)}
+.photo-thumb.is-selfie{border-color:var(--warning)}
+.user-meta{
+  flex:1;
+  min-width:0;
+}
+.user-name{
+  font-size:16px;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.user-sub{
+  font-size:12.5px;
+  color:var(--text-muted);
+  margin-top:2px;
+}
+.badge{
+  font-size:11px;
+  font-weight:700;
+  padding:3px 8px;
+  border-radius:6px;
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  width:fit-content;
+}
+.badge-verified{background:rgba(16,185,129,0.15);color:#34d399;border:1px solid rgba(16,185,129,0.3)}
+.badge-pending{background:rgba(245,158,11,0.15);color:#fbbf24;border:1px solid rgba(245,158,11,0.3)}
+.badge-rejected{background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.3)}
+
+.user-bio{
+  font-size:12.5px;
+  color:var(--text);
+  line-height:1.45;
+  background:rgba(0,0,0,0.2);
+  padding:8px 10px;
+  border-radius:8px;
+  max-height:80px;
+  overflow-y:auto;
+}
+.user-details{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  font-size:11.5px;
+}
+.detail-pill{
+  background:var(--surface-2);
+  padding:3px 8px;
+  border-radius:6px;
+  color:var(--text-muted);
+}
+.user-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:auto;
+  padding-top:8px;
+  border-top:1px solid var(--border);
+}
+
+/* FEEDBACKS */
+.feedbacks-list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.feedback-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.feedback-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.feedback-stars{
+  color:#facc15;
+  font-size:16px;
+  letter-spacing:2px;
+}
+
+/* CONVERSATIONS INSPECTOR */
+.chat-inspector{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:16px;
+  height:calc(100vh - 240px);
+  min-height:500px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+}
+@media (max-width:768px){
+  .chat-inspector{
+    grid-template-columns:1fr;
+    height:auto;
+  }
+}
+.threads-list{
+  border-right:1px solid var(--border);
+  overflow-y:auto;
+  display:flex;
+  flex-direction:column;
+}
+.thread-item{
+  padding:12px 14px;
+  border-bottom:1px solid var(--border);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  transition:background 0.15s ease;
+}
+.thread-item:hover{background:var(--surface-2)}
+.thread-item.active{background:rgba(0,111,253,0.15);border-left:3px solid var(--primary)}
+.thread-pair{
+  font-size:13.5px;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.thread-preview{
+  font-size:12px;
+  color:var(--text-muted);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  margin-top:2px;
+}
+.thread-meta{
+  font-size:11px;
+  color:var(--text-muted);
+  margin-left:auto;
+  text-align:right;
+}
+.messages-pane{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  background:var(--bg);
+}
+.pane-header{
+  padding:12px 16px;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.messages-stream{
+  flex:1;
+  overflow-y:auto;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.msg-bubble{
+  max-width:75%;
+  padding:10px 14px;
+  border-radius:14px;
+  font-size:13px;
+  line-height:1.45;
+  position:relative;
+}
+.msg-bubble.left{
+  align-self:flex-start;
+  background:var(--surface);
+  border:1px solid var(--border);
+}
+.msg-bubble.right{
+  align-self:flex-end;
+  background:#1e3a8a;
+  color:#ffffff;
+}
+.msg-author{
+  font-size:11px;
+  font-weight:700;
+  color:var(--primary);
+  margin-bottom:3px;
+}
+.msg-bubble.right .msg-author{color:#93c5fd}
+.msg-time{
+  font-size:10px;
+  color:var(--text-muted);
+  text-align:right;
+  margin-top:4px;
+}
+.msg-bubble.right .msg-time{color:#bfdbfe}
+.msg-img{
+  max-width:240px;
+  max-height:200px;
+  border-radius:8px;
+  margin-top:6px;
+  cursor:pointer;
+  display:block;
+}
+.msg-audio{
+  margin-top:6px;
+  width:240px;
+  height:36px;
+}
+
+/* MODAL */
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(6px);
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.modal-overlay[hidden]{display:none!important}
+.modal-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  max-width:540px;
+  width:100%;
+  max-height:90vh;
+  overflow-y:auto;
+  padding:20px;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+/* LOGIN / ACCESS DENIED */
+.auth-container{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:1;
+  padding:20px;
+}
+.auth-box{
+  background:var(--surface);
+  border:1.5px solid var(--border);
+  border-radius:18px;
+  max-width:440px;
+  width:100%;
+  padding:28px 24px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+.auth-icon{
+  font-size:44px;
+  margin-bottom:12px;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header id="main-header">
+  <div class="brand">
+    <span>Chari</span>
+    <span class="brand-badge">Administration</span>
+  </div>
+  <div class="header-actions" id="header-actions">
+    <!-- Populated via JS -->
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<div class="container" id="app-root">
+  <div style="text-align:center;padding:60px 20px;color:var(--text-muted)">
+    <div style="font-size:32px;margin-bottom:10px">⏳</div>
+    Chargement de l'interface administrateur…
+  </div>
+</div>
+
+<!-- MODAL PHOTO / SELFIE -->
+<div id="selfie-modal" class="modal-overlay" hidden>
+  <div class="modal-card">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <h3 id="modal-user-title" style="font-size:16px;font-weight:700">Contrôle de conformité du Selfie</h3>
+      <button class="btn btn-sec btn-sm" onclick="closeSelfieModal()">✕ Fermer</button>
+    </div>
+    
+    <div style="text-align:center;background:#000;border-radius:10px;padding:8px">
+      <img id="modal-selfie-img" src="" style="max-height:360px;max-width:100%;border-radius:8px;object-fit:contain" alt="Selfie">
+    </div>
+
+    <div style="background:var(--surface-2);padding:10px 12px;border-radius:8px;font-size:12px;line-height:1.5">
+      <strong>Critères officiels de conformité :</strong><br>
+      • Visage réel net et bien éclairé face caméra.<br>
+      • Ressemblance directe avec les photos du profil.<br>
+      • Pas d'avatar virtuel, filtre déformant, capture d'écran ou usurpation.
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:6px" id="modal-actions">
+      <!-- Injected dynamically -->
+    </div>
+  </div>
+</div>
+
+<script src="supabase.js"></script>
+<script src="supabase-config.js"></script>
+<script>
+// CONFIGURATION DE SECURITE STRICTE
+const AUTHORIZED_ADMIN_EMAIL = "bianzoumbe.fata@gmail.com";
+
+const cfg = window.CHARI_SUPABASE || {
+  url: "https://xitiqkemodqxbitgwihi.supabase.co",
+  anonKey: "sb_publishable_9hQoNBq5YB-G0u9swyLm-w_lgc_RQfP",
+  bucket: "photo"
+};
+
+let sb = null;
+if (window.supabase) {
+  try {
+    sb = window.supabase.createClient(cfg.url, cfg.anonKey);
+  } catch(e) { console.error("Supabase client init:", e); }
+}
+
+let adminSession = null;
+let currentTab = "users";
+let adminData = {
+  users: [],
+  feedbacks: [],
+  messages: []
+};
+let selectedThreadKey = null;
+let userSearchQuery = "";
+let userFilterStatus = "all";
+
+// INITIALISATION & AUTHENTIFICATION
+async function initAdminAuth() {
+  if (!sb) {
+    renderError("Le client Supabase n'a pas pu être chargé.");
+    return;
+  }
+
+  // Ecouteur d'authentification OAuth
+  sb.auth.onAuthStateChange(async (event, session) => {
+    if (session && session.user) {
+      checkUserAccess(session.user);
+    } else {
+      checkLocalAuth();
+    }
+  });
+
+  // Verification de session active
+  try {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session && session.user) {
+      checkUserAccess(session.user);
+      return;
+    }
+  } catch(e) {}
+
+  checkLocalAuth();
+}
+
+function checkLocalAuth() {
+  const localEmail = localStorage.getItem("chari_admin_email");
+  if (localEmail && localEmail.toLowerCase() === AUTHORIZED_ADMIN_EMAIL) {
+    adminSession = { email: localEmail, type: "direct" };
+    onAccessGranted();
+  } else {
+    renderLoginView();
+  }
+}
+
+function checkUserAccess(user) {
+  const email = (user.email || "").trim().toLowerCase();
+  if (email === AUTHORIZED_ADMIN_EMAIL) {
+    adminSession = { email: email, uid: user.id, type: "oauth" };
+    localStorage.setItem("chari_admin_email", email);
+    onAccessGranted();
+  } else {
+    renderAccessDeniedView(email);
+  }
+}
+
+function onAccessGranted() {
+  renderHeaderActions();
+  loadAllAdminData();
+}
+
+function adminLogout() {
+  if (confirm("Voulez-vous vous déconnecter du panneau administrateur ?")) {
+    localStorage.removeItem("chari_admin_email");
+    localStorage.removeItem("chari_admin_login");
+    if (sb && sb.auth) sb.auth.signOut().catch(() => {});
+    adminSession = null;
+    renderLoginView();
+  }
+}
+
+// VUES DE CONNEXION & SECURITE
+function renderLoginView() {
+  const root = document.getElementById("app-root");
+  document.getElementById("header-actions").innerHTML = "";
+  
+  root.innerHTML = `
+    <div class="auth-container">
+      <div class="auth-box">
+        <div class="auth-icon">🛡️</div>
+        <h2 style="font-size:22px;margin-bottom:6px">Espace Administrateur</h2>
+        <p style="color:var(--text-muted);font-size:13px;line-height:1.5;margin-bottom:20px">
+          Portail sécurisé de modération Chari.<br>
+          Accès strictement réservé à la direction :<br>
+          <strong style="color:var(--primary);word-break:break-all">${AUTHORIZED_ADMIN_EMAIL}</strong>
+        </p>
+
+        <button class="btn" style="width:100%;min-height:50px;font-size:15px;justify-content:center;background:#ffffff;color:#0f172a;margin-bottom:16px" onclick="loginWithGoogle()">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+          <span>Continuer avec Google</span>
+        </button>
+
+        <div style="display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--text-muted);font-size:12px">
+          <div style="flex:1;height:1px;background:var(--border)"></div>
+          <span>OU CONNEXION DIRECTE</span>
+          <div style="flex:1;height:1px;background:var(--border)"></div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:8px;text-align:left">
+          <label style="font-size:12px;font-weight:600;color:var(--text-muted)">Adresse e-mail administrateur :</label>
+          <input type="email" id="admin-email-input" value="${AUTHORIZED_ADMIN_EMAIL}" style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:#fff;font-size:14px;outline:none" placeholder="votre.email@gmail.com">
+          <button class="btn btn-sec" style="justify-content:center;min-height:44px;margin-top:4px" onclick="loginWithDirectEmail()">
+            <span>Valider l'accès Administrateur ➜</span>
+          </button>
+          <p id="auth-err" style="color:var(--danger);font-size:12px;margin-top:4px;text-align:center"></p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderAccessDeniedView(attemptedEmail) {
+  const root = document.getElementById("app-root");
+  document.getElementById("header-actions").innerHTML = "";
+
+  root.innerHTML = `
+    <div class="auth-container">
+      <div class="auth-box" style="border-color:var(--danger)">
+        <div class="auth-icon" style="color:var(--danger)">🚫</div>
+        <h2 style="font-size:22px;color:var(--danger);margin-bottom:8px">Accès Strictement Refusé</h2>
+        <p style="color:var(--text);font-size:13px;line-height:1.5;margin-bottom:12px">
+          Le compte actuellement connecté (<strong style="color:#fca5a5">${escapeHtml(attemptedEmail)}</strong>) ne dispose pas des droits d'administration.
+        </p>
+        <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);padding:10px;border-radius:8px;font-size:12px;color:#f87171;margin-bottom:20px">
+          🔒 Seule l'adresse <strong>${AUTHORIZED_ADMIN_EMAIL}</strong> est habilitée à administrer Chari.
+        </div>
+        <button class="btn btn-danger" style="width:100%;justify-content:center" onclick="adminLogout()">
+          <span>Se déconnecter & Changer de compte</span>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+async function loginWithGoogle() {
+  if (!sb) return;
+  try {
+    localStorage.setItem("chari_admin_login", "1");
+    const redir = window.location.origin + "/admin.html";
+    const { data, error } = await sb.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo: redir }
+    });
+    if (error) {
+      document.getElementById("auth-err").textContent = error.message;
+    }
+  } catch(e) {
+    document.getElementById("auth-err").textContent = e.message || "Erreur de connexion";
+  }
+}
+
+function loginWithDirectEmail() {
+  const input = document.getElementById("admin-email-input");
+  const err = document.getElementById("auth-err");
+  if (!input) return;
+  const email = input.value.trim().toLowerCase();
+  
+  if (email !== AUTHORIZED_ADMIN_EMAIL) {
+    err.textContent = `Accès refusé. Seule l'adresse ${AUTHORIZED_ADMIN_EMAIL} est autorisée.`;
+    return;
+  }
+  
+  adminSession = { email: email, type: "direct" };
+  localStorage.setItem("chari_admin_email", email);
+  onAccessGranted();
+}
+
+function renderHeaderActions() {
+  const bar = document.getElementById("header-actions");
+  bar.innerHTML = `
+    <span style="font-size:12px;color:var(--text-muted);display:none;align-items:center;gap:6px" class="desktop-only">
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--success);display:inline-block"></span>
+      ${AUTHORIZED_ADMIN_EMAIL}
+    </span>
+    <button class="btn btn-sec btn-sm" onclick="loadAllAdminData()" title="Actualiser les données">
+      <span>🔄</span> <span>Actualiser</span>
+    </button>
+    <button class="btn btn-danger btn-sm" onclick="adminLogout()">
+      <span>🚪</span> <span>Quitter</span>
+    </button>
+  `;
+}
+
+// CHARGEMENT DE TOUTES LES DONNEES
+async function loadAllAdminData() {
+  const root = document.getElementById("app-root");
+  
+  try {
+    // 1. Profils
+    const { data: pList, error: pErr } = await sb
+      .from('profiles')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    // 2. Avis (Feedbacks)
+    const { data: fList, error: fErr } = await sb
+      .from('feedbacks')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    // 3. Messages
+    const { data: mList, error: mErr } = await sb
+      .from('messages')
+      .select('*')
+      .order('created_at', { ascending: true });
+
+    adminData.users = (pList || []).filter(u => u.name && u.name !== '__DELETED__' && u.name !== 'Test Col');
+    adminData.feedbacks = fList || [];
+    adminData.messages = mList || [];
+
+    renderDashboard();
+  } catch(e) {
+    console.error("loadAdminData err:", e);
+    renderError("Erreur lors du chargement des données Supabase : " + e.message);
+  }
+}
+
+// RENDU DU TABLEAU DE BORD
+function renderDashboard() {
+  const root = document.getElementById("app-root");
+  const totalUsers = adminData.users.length;
+  const verifiedUsers = adminData.users.filter(u => u.is_verified).length;
+  const pendingSelfies = adminData.users.filter(u => !u.is_verified && u.selfie_url).length;
+  const totalFeedbacks = adminData.feedbacks.length;
+  const totalMessages = adminData.messages.length;
+
+  root.innerHTML = `
+    <!-- KPIS -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-title">Membres Inscrits</span>
+        <span class="kpi-val" style="color:#60a5fa">${totalUsers}</span>
+        <span class="kpi-sub">${verifiedUsers} certifié(s) avec selfie</span>
+      </div>
+      <div class="kpi-card" style="border-color:${pendingSelfies > 0 ? 'var(--warning)' : 'var(--border)'}">
+        <span class="kpi-title">Selfies à Valider</span>
+        <span class="kpi-val" style="color:#fbbf24">${pendingSelfies}</span>
+        <span class="kpi-sub">${pendingSelfies > 0 ? 'Action requise de modération' : 'Aucun selfie en attente'}</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-title">Avis Utilisateurs</span>
+        <span class="kpi-val" style="color:#34d399">${totalFeedbacks}</span>
+        <span class="kpi-sub">Retours & suggestions reçus</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-title">Messages Échangés</span>
+        <span class="kpi-val" style="color:#c084fc">${totalMessages}</span>
+        <span class="kpi-sub">Surveillance des discussions</span>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="nav-tabs">
+      <button class="tab-btn ${currentTab === 'users' ? 'active' : ''}" onclick="switchTab('users')">
+        <span>👥 Utilisateurs & Selfies</span>
+        <span class="tab-badge">${totalUsers}</span>
+      </button>
+      <button class="tab-btn ${currentTab === 'feedbacks' ? 'active' : ''}" onclick="switchTab('feedbacks')">
+        <span>⭐ Avis des Membres</span>
+        <span class="tab-badge">${totalFeedbacks}</span>
+      </button>
+      <button class="tab-btn ${currentTab === 'messages' ? 'active' : ''}" onclick="switchTab('messages')">
+        <span>💬 Discussions & Échanges</span>
+        <span class="tab-badge">${totalMessages}</span>
+      </button>
+    </div>
+
+    <!-- TAB CONTENT -->
+    <div id="tab-content">
+      ${renderCurrentTabContent()}
+    </div>
+  `;
+}
+
+function switchTab(tab) {
+  currentTab = tab;
+  renderDashboard();
+}
+
+function renderCurrentTabContent() {
+  if (currentTab === "users") return renderUsersTab();
+  if (currentTab === "feedbacks") return renderFeedbacksTab();
+  if (currentTab === "messages") return renderMessagesTab();
+  return "";
+}
+
+// ONGLET 1 : GESTION DES UTILISATEURS & SELFIES
+function renderUsersTab() {
+  let list = [...adminData.users];
+
+  if (userSearchQuery) {
+    const q = userSearchQuery.toLowerCase();
+    list = list.filter(u => 
+      (u.name && u.name.toLowerCase().includes(q)) ||
+      (u.email && u.email.toLowerCase().includes(q)) ||
+      (u.city && u.city.toLowerCase().includes(q)) ||
+      (u.job && u.job.toLowerCase().includes(q))
+    );
+  }
+
+  if (userFilterStatus === "verified") {
+    list = list.filter(u => u.is_verified);
+  } else if (userFilterStatus === "pending") {
+    list = list.filter(u => !u.is_verified);
+  }
+
+  return `
+    <div class="toolbar">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" width="16" height="16"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+        <input type="text" placeholder="Rechercher par nom, email, ville, métier..." value="${escapeHtml(userSearchQuery)}" oninput="onUserSearch(this.value)">
+      </div>
+      <div>
+        <select class="filter-select" onchange="onUserFilter(this.value)">
+          <option value="all" ${userFilterStatus==='all'?'selected':''}>Tous les membres (${adminData.users.length})</option>
+          <option value="pending" ${userFilterStatus==='pending'?'selected':''}>⏳ En attente de certification (${adminData.users.filter(u=>!u.is_verified).length})</option>
+          <option value="verified" ${userFilterStatus==='verified'?'selected':''}>✅ Selfies Certifiés (${adminData.users.filter(u=>u.is_verified).length})</option>
+        </select>
+      </div>
+    </div>
+
+    ${list.length === 0 ? `
+      <div style="text-align:center;padding:50px 20px;background:var(--surface);border-radius:12px;color:var(--text-muted)">
+        <div style="font-size:32px;margin-bottom:8px">🔍</div>
+        Aucun utilisateur ne correspond à votre recherche.
+      </div>
+    ` : `
+      <div class="users-grid">
+        ${list.map(u => renderUserCard(u)).join("")}
+      </div>
+    `}
+  `;
+}
+
+function renderUserCard(u) {
+  const avatar = u.selfie_url || u.avatar_url || "couple.jpg";
+  const hasSelfie = !!(u.selfie_url && u.selfie_url.length > 30);
+  const isVerif = !!u.is_verified;
+  const genderLbl = u.gender === 'f' ? 'Femme' : (u.gender === 'm' ? 'Homme' : '');
+
+  return `
+    <div class="user-card" id="user-card-${u.id}">
+      <div class="user-header">
+        <div class="photos-duo">
+          <img class="photo-thumb" src="${escapeHtml(avatar)}" alt="${escapeHtml(u.name)}" onerror="this.src='couple.jpg'" onclick="inspectUserSelfie('${u.id}')" title="Cliquer pour inspecter">
+          ${hasSelfie && u.selfie_url !== avatar ? `
+            <img class="photo-thumb is-selfie" src="${escapeHtml(u.selfie_url)}" alt="Selfie" onerror="this.src='couple.jpg'" onclick="inspectUserSelfie('${u.id}')" title="Selfie officiel">
+          ` : ''}
+        </div>
+        <div class="user-meta">
+          <div class="user-name">
+            <span>${escapeHtml(u.name)}</span>
+            <span style="font-size:13px;color:var(--text-muted)">(${u.age || '?'} ans)</span>
+          </div>
+          <div class="user-sub">
+            📍 ${escapeHtml(u.city || "N'Djamena")} · ${genderLbl}
+          </div>
+          <div style="margin-top:6px">
+            ${isVerif ? `
+              <span class="badge badge-verified">✓ Selfie Conforme & Certifié</span>
+            ` : `
+              <span class="badge badge-pending">⏳ Selfie En Attente de Validation</span>
+            `}
+          </div>
+        </div>
+      </div>
+
+      ${u.bio ? `
+        <div class="user-bio">« ${escapeHtml(u.bio)} »</div>
+      ` : ''}
+
+      <div class="user-details">
+        ${u.job ? `<span class="detail-pill">💼 ${escapeHtml(u.job)}</span>` : ''}
+        ${u.email ? `<span class="detail-pill">✉️ ${escapeHtml(u.email)}</span>` : ''}
+        ${u.phone ? `<span class="detail-pill">📞 ${escapeHtml(u.phone)}</span>` : ''}
+        ${u.language ? `<span class="detail-pill">🗣️ ${u.language==='both'?'Français & Arabe':(u.language==='ar'?'Arabe':'Français')}</span>` : ''}
+        ${u.religion ? `<span class="detail-pill">🕌 ${u.religion==='mus'?'Musulman(e)':(u.religion==='chr'?'Chrétien(ne)':'Autre')}</span>` : ''}
+        ${u.intention ? `<span class="detail-pill">🎯 ${u.intention==='mar'?'Mariage':'Relation sérieuse'}</span>` : ''}
+        ${u.created_at ? `<span class="detail-pill">📅 ${new Date(u.created_at).toLocaleDateString('fr-FR')}</span>` : ''}
+      </div>
+
+      <div class="user-actions">
+        <button class="btn btn-sec btn-sm" onclick="inspectUserSelfie('${u.id}')">
+          <span>🔍</span> <span>Inspecter Selfie</span>
+        </button>
+        ${!isVerif ? `
+          <button class="btn btn-success btn-sm" onclick="validateUserSelfie('${u.id}', true)">
+            <span>✓</span> <span>Valider Conforme</span>
+          </button>
+        ` : `
+          <button class="btn btn-sec btn-sm" onclick="validateUserSelfie('${u.id}', false)" style="color:#f87171">
+            <span>✕</span> <span>Invalider</span>
+          </button>
+        `}
+        <button class="btn btn-sec btn-sm" onclick="viewUserConversations('${u.id}')">
+          <span>💬</span> <span>Discussions</span>
+        </button>
+        <button class="btn btn-danger btn-sm" onclick="deleteUserAccount('${u.id}', '${escapeJs(u.name)}')">
+          <span>🗑️</span>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function onUserSearch(v) {
+  userSearchQuery = v;
+  document.getElementById("tab-content").innerHTML = renderUsersTab();
+}
+
+function onUserFilter(s) {
+  userFilterStatus = s;
+  document.getElementById("tab-content").innerHTML = renderUsersTab();
+}
+
+// ACTIONS UTILISATEURS
+function inspectUserSelfie(userId) {
+  const user = adminData.users.find(u => String(u.id) === String(userId));
+  if (!user) return;
+
+  const selfieSrc = user.selfie_url || user.avatar_url || "couple.jpg";
+  document.getElementById("modal-user-title").textContent = `Selfie de ${user.name} (${user.age || '?'} ans, ${user.city || "Tchad"})`;
+  document.getElementById("modal-selfie-img").src = selfieSrc;
+
+  const actions = document.getElementById("modal-actions");
+  actions.innerHTML = `
+    ${!user.is_verified ? `
+      <button class="btn btn-success" style="flex:1;justify-content:center" onclick="validateUserSelfie('${user.id}', true); closeSelfieModal()">
+        <span>✓ Valider la conformité (Certifier)</span>
+      </button>
+    ` : `
+      <button class="btn btn-danger" style="flex:1;justify-content:center" onclick="validateUserSelfie('${user.id}', false); closeSelfieModal()">
+        <span>✕ Révoquer la certification</span>
+      </button>
+    `}
+    <button class="btn btn-sec" onclick="closeSelfieModal()">Fermer</button>
+  `;
+
+  document.getElementById("selfie-modal").hidden = false;
+}
+
+function closeSelfieModal() {
+  document.getElementById("selfie-modal").hidden = true;
+}
+
+async function validateUserSelfie(userId, makeVerified) {
+  try {
+    const { error } = await sb
+      .from('profiles')
+      .update({ is_verified: !!makeVerified })
+      .eq('id', userId);
+
+    if (error) {
+      alert("Erreur lors de la mise à jour : " + error.message);
+      return;
+    }
+
+    const u = adminData.users.find(x => String(x.id) === String(userId));
+    if (u) u.is_verified = !!makeVerified;
+
+    // Mise a jour de l'affichage
+    document.getElementById("tab-content").innerHTML = renderUsersTab();
+  } catch(e) {
+    alert("Erreur : " + e.message);
+  }
+}
+
+async function deleteUserAccount(userId, userName) {
+  if (!confirm(`Confirmez-vous la suppression définitive du compte de "${userName}" ?\n\nToutes ses informations, messages, photos et likes seront supprimés de la base de données.`)) {
+    return;
+  }
+
+  try {
+    // 1. Suppression des messages, likes, photos associees
+    await sb.from('messages').delete().or(`sender_id.eq.${userId},receiver_id.eq.${userId}`).catch(() => {});
+    await sb.from('likes').delete().or(`sender_id.eq.${userId},receiver_id.eq.${userId}`).catch(() => {});
+    await sb.from('user_blocks').delete().or(`user_id.eq.${userId},blocked_id.eq.${userId}`).catch(() => {});
+    await sb.from('user_photos').delete().eq('user_id', userId).catch(() => {});
+
+    // 2. Suppression ou masquage definitif du profil
+    const delRes = await sb.from('profiles').delete().eq('id', userId);
+    if (delRes.error) {
+      // Fallback si la politique DELETE est verrouillee par RLS
+      await sb.from('profiles').update({
+        name: '__DELETED__',
+        email: null,
+        phone: null,
+        job: null,
+        bio: null,
+        selfie_url: null,
+        is_verified: false
+      }).eq('id', userId);
+    }
+
+    adminData.users = adminData.users.filter(u => String(u.id) !== String(userId));
+    alert(`Le profil de ${userName} a été supprimé avec succès.`);
+    renderDashboard();
+  } catch(e) {
+    alert("Erreur lors de la suppression : " + e.message);
+  }
+}
+
+// ONGLET 2 : AVIS DES UTILISATEURS
+function renderFeedbacksTab() {
+  const list = adminData.feedbacks;
+
+  if (list.length === 0) {
+    return `
+      <div style="text-align:center;padding:60px 20px;background:var(--surface);border-radius:12px;color:var(--text-muted)">
+        <div style="font-size:36px;margin-bottom:8px">⭐</div>
+        Aucun avis utilisateur pour l'instant. Les retours envoyés depuis l'application apparaîtront ici.
+      </div>
+    `;
+  }
+
+  return `
+    <div style="margin-bottom:14px;color:var(--text-muted);font-size:13px">
+      Total de <strong>${list.length}</strong> avis et retours d'expérience soumis par les membres :
+    </div>
+    <div class="feedbacks-list">
+      ${list.map(f => {
+        const stars = "★".repeat(f.rating || 5) + "☆".repeat(5 - (f.rating || 5));
+        const catMap = {
+          sugg: "💡 Suggestion",
+          bug: "🛠️ Problème / Bug",
+          love: "❤️ Témoignage",
+          sec: "🛡️ Sécurité"
+        };
+        const catLbl = catMap[f.category] || (f.category || "Avis");
+        const dateStr = f.created_at ? new Date(f.created_at).toLocaleString('fr-FR') : '';
+
+        return `
+          <div class="feedback-card" id="fb-${f.id}">
+            <div class="feedback-header">
+              <div style="display:flex;align-items:center;gap:10px">
+                <span class="feedback-stars">${stars}</span>
+                <span style="font-weight:700;font-size:14px">${escapeHtml(f.user_name || "Membre Chari")}</span>
+                <span class="badge badge-pending" style="font-size:11px">${catLbl}</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="font-size:11px;color:var(--text-muted)">${dateStr}</span>
+                <button class="btn btn-danger btn-sm" onclick="deleteFeedback('${f.id}')" title="Supprimer cet avis">
+                  <span>🗑️</span>
+                </button>
+              </div>
+            </div>
+            <p style="font-size:13.5px;color:var(--text);line-height:1.5;background:rgba(0,0,0,0.2);padding:10px 12px;border-radius:8px">
+              « ${escapeHtml(f.message || "")} »
+            </p>
+          </div>
+        `;
+      }).join("")}
+    </div>
+  `;
+}
+
+async function deleteFeedback(fbId) {
+  if (!confirm("Supprimer cet avis de la base de données ?")) return;
+  try {
+    const { error } = await sb.from('feedbacks').delete().eq('id', fbId);
+    if (error) {
+      alert("Erreur : " + error.message);
+      return;
+    }
+    adminData.feedbacks = adminData.feedbacks.filter(f => String(f.id) !== String(fbId));
+    renderDashboard();
+  } catch(e) {
+    alert("Erreur : " + e.message);
+  }
+}
+
+// ONGLET 3 : DISCUSSIONS & MESSAGES
+function renderMessagesTab() {
+  // Regroupement des messages par fil de discussion (Paire d'utilisateurs)
+  const threadsMap = new Map();
+
+  adminData.messages.forEach(m => {
+    if (!m.sender_id || !m.receiver_id) return;
+    const pairKey = [m.sender_id, m.receiver_id].sort().join("___");
+    if (!threadsMap.has(pairKey)) {
+      threadsMap.set(pairKey, {
+        key: pairKey,
+        u1Id: m.sender_id,
+        u2Id: m.receiver_id,
+        messages: []
+      });
+    }
+    threadsMap.get(pairKey).messages.push(m);
+  });
+
+  const threads = Array.from(threadsMap.values());
+  
+  if (threads.length === 0) {
+    return `
+      <div style="text-align:center;padding:60px 20px;background:var(--surface);border-radius:12px;color:var(--text-muted)">
+        <div style="font-size:36px;margin-bottom:8px">💬</div>
+        Aucun message n'a encore été échangé entre les utilisateurs.
+      </div>
+    `;
+  }
+
+  // Selection par defaut du 1er fil si aucun selectionne
+  if (!selectedThreadKey || !threadsMap.has(selectedThreadKey)) {
+    selectedThreadKey = threads[0].key;
+  }
+
+  const activeThread = threadsMap.get(selectedThreadKey);
+  const u1 = getUserById(activeThread.u1Id);
+  const u2 = getUserById(activeThread.u2Id);
+
+  return `
+    <div class="chat-inspector">
+      <!-- LISTE DES CONVERSATIONS -->
+      <div class="threads-list">
+        <div style="padding:10px 14px;background:var(--surface);font-size:12px;font-weight:700;color:var(--text-muted);text-transform:uppercase;border-bottom:1px solid var(--border)">
+          Conversations actives (${threads.length})
+        </div>
+        ${threads.map(t => {
+          const userA = getUserById(t.u1Id);
+          const userB = getUserById(t.u2Id);
+          const lastMsg = t.messages[t.messages.length - 1];
+          const lastText = lastMsg ? (lastMsg.content || (lastMsg.image_url ? '📷 Photo' : (lastMsg.voice_url ? '🎤 Note vocale' : ''))) : '';
+          const lastTime = lastMsg && lastMsg.created_at ? new Date(lastMsg.created_at).toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'}) : '';
+
+          return `
+            <div class="thread-item ${t.key === selectedThreadKey ? 'active' : ''}" onclick="selectThread('${t.key}')">
+              <div style="flex:1;min-width:0">
+                <div class="thread-pair">${escapeHtml(userA.name)} ↔ ${escapeHtml(userB.name)}</div>
+                <div class="thread-preview">${escapeHtml(lastText || "Échange")}</div>
+              </div>
+              <div class="thread-meta">
+                <div>${lastTime}</div>
+                <span class="badge badge-pending" style="font-size:10px;padding:1px 5px">${t.messages.length} msg</span>
+              </div>
+            </div>
+          `;
+        }).join("")}
+      </div>
+
+      <!-- STREAM DES MESSAGES DU FIL ACTIF -->
+      <div class="messages-pane">
+        <div class="pane-header">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-weight:800;font-size:15px">${escapeHtml(u1.name)}</span>
+            <span style="color:var(--text-muted)">↔</span>
+            <span style="font-weight:800;font-size:15px">${escapeHtml(u2.name)}</span>
+          </div>
+          <span style="font-size:12px;color:var(--text-muted)">${activeThread.messages.length} messages échangés</span>
+        </div>
+
+        <div class="messages-stream">
+          ${activeThread.messages.map(m => {
+            const sender = getUserById(m.sender_id);
+            const isU1 = (m.sender_id === activeThread.u1Id);
+            const timeStr = m.created_at ? new Date(m.created_at).toLocaleString('fr-FR', {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) : '';
+
+            return `
+              <div class="msg-bubble ${isU1 ? 'left' : 'right'}">
+                <div class="msg-author">${escapeHtml(sender.name)}</div>
+                ${m.content ? `<div>${escapeHtml(m.content)}</div>` : ''}
+                ${m.image_url ? `
+                  <img class="msg-img" src="${escapeHtml(m.image_url)}" alt="Photo partagée" onclick="window.open('${escapeHtml(m.image_url)}','_blank')">
+                ` : ''}
+                ${m.voice_url ? `
+                  <audio class="msg-audio" controls src="${escapeHtml(m.voice_url)}"></audio>
+                ` : ''}
+                <div class="msg-time">${timeStr}</div>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function selectThread(key) {
+  selectedThreadKey = key;
+  document.getElementById("tab-content").innerHTML = renderMessagesTab();
+}
+
+function viewUserConversations(userId) {
+  currentTab = "messages";
+  // Trouver un fil associe
+  const msg = adminData.messages.find(m => m.sender_id === userId || m.receiver_id === userId);
+  if (msg) {
+    selectedThreadKey = [msg.sender_id, msg.receiver_id].sort().join("___");
+  }
+  renderDashboard();
+}
+
+function getUserById(uid) {
+  const u = adminData.users.find(x => String(x.id) === String(uid));
+  if (u) return u;
+  return { id: uid, name: "Utilisateur", city: "Tchad" };
+}
+
+// OUTILS & RENDU UTILITAIRES
+function renderError(msg) {
+  document.getElementById("app-root").innerHTML = `
+    <div style="background:rgba(239,68,68,0.1);border:1px solid var(--danger);padding:20px;border-radius:12px;color:#f87171;text-align:center;max-width:500px;margin:40px auto">
+      <div style="font-size:32px;margin-bottom:8px">⚠️</div>
+      <h3 style="margin-bottom:6px">Erreur système</h3>
+      <p style="font-size:13px">${escapeHtml(msg)}</p>
+    </div>
+  `;
+}
+
+function escapeHtml(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function escapeJs(str) {
+  if (!str) return "";
+  return String(str).replace(/'/g, "\\'").replace(/"/g, '\\"');
+}
+
+// LANCEMENT
+window.addEventListener("DOMContentLoaded", initAdminAuth);
+</script>
+</body>
+</html>

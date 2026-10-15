@@ -1509,6 +1509,14 @@ body.screen-protected .screen-shield{display:flex!important}
 <p id="sc-shield-d">Pour protéger l'intimité et la sécurité des membres sur Chari, les captures d'écran et enregistrements sont strictement interdits.</p>
 <button type="button" class="btn" style="width:auto;min-height:44px;padding:0 24px" data-a="dismiss-shield">Continuer sur Chari</button>
 </div>
+<script>
+(function(){try{
+var hasAuth=/access_token=|[?&]code=|error_description=/.test(location.hash+location.search);
+if(hasAuth&&localStorage.getItem("chari_admin_login")==="1"){
+location.replace(location.origin+"/admin.html"+location.search+location.hash);
+}
+}catch(e){}})();
+</script>
 <script src="supabase.js"></script>
 <script>
 if(!window.supabase){
@@ -1608,7 +1616,7 @@ intention:st.u.i||'ser',
 hobbies:pHobbies,
 selfie_url:mainAvatarUrl||sUrl,
 avatar_url:mainAvatarUrl||sUrl,
-is_verified:!!st.selfie,
+verification_selfie_url:sUrl,
 is_premium:!!st.prem
 };
 if(uid)pData.id=uid;
@@ -1618,7 +1626,11 @@ if(st.ph)pData.phone=st.ph;
 try{
 const onC=pData.id?'id':(pData.email?'email':undefined);
 const opts=onC?{onConflict:onC}:{};
-const {data,error}=await sbClient.from('profiles').upsert(pData,opts).select('id');
+let {data,error}=await sbClient.from('profiles').upsert(pData,opts).select('id');
+if(error&&/column|schema cache/i.test(error.message||"")){
+delete pData.avatar_url;delete pData.verification_selfie_url;
+({data,error}=await sbClient.from('profiles').upsert(pData,opts).select('id'));
+}
 if(!error&&data&&data.length>0){
 st.u.id=data[0].id;
 save();
@@ -1884,9 +1896,16 @@ const {data,error}=await sbClient.from('profiles').select('*, user_photos(id, ph
 if(!error&&data){
 const mapped=data.filter(r=>{
 if(!r.name||r.name==='__DELETED__'||r.name==='Test Col')return false;
-if(st.u&&st.u.id&&r.id===st.u.id)return false;
+const isMe=(st.u&&st.u.id&&r.id===st.u.id)||(st.em&&r.email&&r.email===st.em);
+if(isMe){
+if(r.selfie_status&&(st.selfieStatus!==r.selfie_status||st.selfieRejectReason!==(r.selfie_reject_reason||""))){
+st.selfieStatus=r.selfie_status;st.selfieRejectReason=r.selfie_reject_reason||"";
+if(st.step>=5)setTimeout(render,0);
+}
+return false;
+}
 if(st.u&&r.name===st.u.n)return false;
-if(st.em&&r.email&&r.email===st.em)return false;
+if(r.selfie_status==='rejected')return false;
 const isIncog=r.is_incognito===true||(Array.isArray(r.hobbies)&&r.hobbies.includes('__incognito__'));
 if(isIncog)return false;
 return true;
@@ -3919,11 +3938,8 @@ else st[k]=saved[k];
 }catch(e){}
 save();
 
-if(isProfileComplete()&&hasVerifiedSelfie()){
-go(5);
-}else{
+// Toujours afficher le formulaire d'inscription (Etape 2) a chaque utilisateur apres l'identification par mail :
 go(2, "#nm");
-}
 
 if(sbClient){
 sbClient.from('profiles').select('*').eq('email',email).limit(1).then(({data:pList})=>{
@@ -3935,13 +3951,7 @@ st.u.kd=p.children||0;st.u.i=p.intention||'ser';st.u.hb=p.hobbies||[];
 if(p.selfie_url){st.selfie=p.selfie_url;ensureSelfieInPh5();}
 st.prem=p.is_premium?1:0;
 save();
-if(isProfileComplete()&&hasVerifiedSelfie()){
-go(5);
-}else if(isProfileComplete()){
-go(3);
-}else{
 if(st.step===2)render();
-}
 }
 }).catch(()=>{});
 }
