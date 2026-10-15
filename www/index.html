@@ -717,6 +717,13 @@ label,.lbl{
 .btn-make-avatar{position:absolute;bottom:5px;left:5px;background:rgba(15,23,42,0.8);color:#FCD34D;font-size:9.5px;font-weight:700;padding:2.5px 7px;border-radius:99px;border:1px solid rgba(255,255,255,0.35);box-shadow:0 2px 6px rgba(0,0,0,0.3);backdrop-filter:blur(4px);cursor:pointer;display:inline-flex;align-items:center;gap:3px;z-index:3;transition:all 0.15s ease}
 [dir="rtl"] .btn-make-avatar{left:auto;right:5px}
 .btn-make-avatar:hover{background:#F59E0B;color:#fff;border-color:#F59E0B;transform:scale(1.05)}
+.video-grid-badge{position:absolute;top:5px;right:5px;background:rgba(15,23,42,0.85);color:#fff;font-size:9.5px;font-weight:700;padding:2px 6px;border-radius:99px;border:1px solid rgba(255,255,255,0.3);backdrop-filter:blur(4px);display:inline-flex;align-items:center;gap:3px;z-index:3;pointer-events:none}
+[dir="rtl"] .video-grid-badge{right:auto;left:5px}
+.video-duration-badge{position:absolute;top:18px;left:12px;background:rgba(15,23,42,0.75);color:#fff;font-size:11px;font-weight:700;padding:2.5px 8px;border-radius:999px;backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.25);display:inline-flex;align-items:center;gap:4px;z-index:5;box-shadow:0 2px 6px rgba(0,0,0,0.3)}
+[dir="rtl"] .video-duration-badge{left:auto;right:12px}
+.btn-video-audio{position:absolute;bottom:12px;right:12px;background:rgba(15,23,42,0.75);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;z-index:7;backdrop-filter:blur(4px);transition:transform .15s, background .15s}
+.btn-video-audio:hover{transform:scale(1.08);background:rgba(0,111,253,0.85)}
+[dir="rtl"] .btn-video-audio{right:auto;left:12px}
 .pe{width:100%;max-width:360px;aspect-ratio:1;border-radius:18px;border:1px solid var(--line);box-shadow:var(--sh-md);justify-self:center}
 .rg{width:100%;min-height:44px;accent-color:var(--brand)}
 .sw small{color:var(--mut);font-size:12px}
@@ -1531,14 +1538,15 @@ return sbClient;
 }
 initSupabase();
 window.addEventListener('load',()=>{initSupabase();});
-async function uploadImageToSupabase(dataUrl,fileName){
+async function uploadMediaToSupabase(dataUrl,fileName,contentType){
 if(!sbClient||!dataUrl||!dataUrl.startsWith("data:"))return dataUrl;
 try{
 const b=(window.CHARI_SUPABASE&&window.CHARI_SUPABASE.bucket)||"photo";
 const res=await fetch(dataUrl);const blob=await res.blob();
-const clean=(fileName||`img_${Date.now()}.jpg`).replace(/[^a-zA-Z0-9_.-]/g,'_');
+const ct=contentType||blob.type||'image/jpeg';
+const clean=(fileName||`media_${Date.now()}`).replace(/[^a-zA-Z0-9_.-]/g,'_');
 const path=`uploads/${clean}`;
-const {data,error}=await sbClient.storage.from(b).upload(path,blob,{contentType:'image/jpeg',upsert:true});
+const {data,error}=await sbClient.storage.from(b).upload(path,blob,{contentType:ct,upsert:true});
 if(!error&&data){
 const {data:pub}=sbClient.storage.from(b).getPublicUrl(path);
 if(pub&&pub.publicUrl)return pub.publicUrl;
@@ -1546,6 +1554,7 @@ if(pub&&pub.publicUrl)return pub.publicUrl;
 }catch(e){console.warn("Storage upload:",e)}
 return dataUrl;
 }
+const uploadImageToSupabase=uploadMediaToSupabase;
 async function ensureUserProfileId(){
 if(st.u&&st.u.id&&st.u.id.length>20)return st.u.id;
 if(!sbClient)return null;
@@ -1581,7 +1590,9 @@ const pHobbies=[...(st.u.hb||[])];
 if(st.inc){if(!pHobbies.includes('__incognito__'))pHobbies.push('__incognito__');}
 else{const idx=pHobbies.indexOf('__incognito__');if(idx>=0)pHobbies.splice(idx,1);}
 
-const mainAvatarUrl = (st.ph5 && st.ph5.length > 0 && (st.ph5[0].p || st.ph5[0].o)) ? (st.ph5[0].p || st.ph5[0].o) : sUrl;
+const mainAvatarUrl = (st.ph5 && st.ph5.length > 0)
+? (st.ph5[0].poster || st.ph5[0].p || st.ph5[0].o || sUrl)
+: sUrl;
 const pData={
 name:st.u.n,
 gender:st.g,
@@ -1618,13 +1629,20 @@ if(st.ph5&&st.ph5.length){
 let chg=false;
 for(let idx=0;idx<st.ph5.length;idx++){
 const itm=st.ph5[idx];
+const isV=itm.isVideo || (itm.o&&itm.o.startsWith("data:video/"));
 if(itm.o&&itm.o.startsWith("data:")){
-const upO=await uploadImageToSupabase(itm.o,`photo_${uid||st.u.n}_${idx}_orig_${Date.now()}.jpg`);
-if(upO&&!upO.startsWith("data:")){itm.o=upO;chg=true;}
+const ext=isV?'mp4':'jpg';
+const mime=isV?'video/mp4':'image/jpeg';
+const upO=await uploadMediaToSupabase(itm.o,`${isV?'vid':'photo'}_${uid||st.u.n}_${idx}_orig_${Date.now()}.${ext}`,mime);
+if(upO&&!upO.startsWith("data:")){itm.o=upO;if(isV)itm.p=upO;chg=true;}
 }
-if(itm.p&&itm.p.startsWith("data:")){
-const upP=await uploadImageToSupabase(itm.p,`photo_${uid||st.u.n}_${idx}_blur_${Date.now()}.jpg`);
+if(!isV && itm.p&&itm.p.startsWith("data:")){
+const upP=await uploadMediaToSupabase(itm.p,`photo_${uid||st.u.n}_${idx}_blur_${Date.now()}.jpg`,'image/jpeg');
 if(upP&&!upP.startsWith("data:")){itm.p=upP;chg=true;}
+}
+if(isV && itm.poster && itm.poster.startsWith("data:")){
+const upPost=await uploadMediaToSupabase(itm.poster,`poster_${uid||st.u.n}_${idx}_${Date.now()}.jpg`,'image/jpeg');
+if(upPost&&!upPost.startsWith("data:")){itm.poster=upPost;chg=true;}
 }
 }
 if(chg)save();
@@ -1634,7 +1652,7 @@ await sbClient.from('user_photos').delete().eq('user_id',uid);
 const photoRows=st.ph5.map((itm,idx)=>({
 user_id:uid,
 photo_url:itm.o||itm.p||st.selfie,
-blurred_url:itm.p||itm.o||st.selfie,
+blurred_url:itm.poster||itm.p||itm.o||st.selfie,
 is_selfie:(idx===0||!!itm.isSelfie),
 position:idx
 }));
@@ -1920,7 +1938,7 @@ langSpk:"Langue parlée",lngFr:"Français",lngAr:"Arabe",lngBoth:"Français & Ar
 lngMap:{fr:"🗣️ Français",ar:"🗣️ Arabe",both:"🗣️ Français & Arabe"},
 rel:"Religion",relMus:"Musulman(e)",relChr:"Chrétien(ne)",relOth:"Autre religion",
 relMap:{mus:"🕌 Musulman(e)",chr:"✝️ Chrétien(ne)",oth:"🕊️ Autre religion"},
-mailb:"Google",telb:"Google",eml:"Adresse Gmail",emE:"Entrez une adresse valide.",pwd:"Mot de passe",pwdPh:"Au moins 6 caractères",pwdE:"Mot de passe requis.",emReg:"Connexion Google",emLog:"Connexion Google",orDivider:"ou",haveAcc:"Se connecter avec Google",swMail:"Google",swTel:"Google",phs:"Mes photos",rm:"Retirer la photo",add:"Ajouter une photo",ph5i:"Ajoutez jusqu'à 5 photos. Les autres voient la version protégée (visage pixelisé) tant qu'il n'y a pas de match.",edt:"Masquer le visage",edh:"Placez le cercle sur votre visage.",edx:"Position horizontale",edy:"Position verticale",eds:"Taille du masque",eda:"Ajouter la photo",edc:"Annuler",incog:"Mode incognito",incd:"Votre profil reste invisible : vous pouvez voir les autres, mais personne ne voit le vôtre.",incl:"Réservé à Premium",incb:"Incognito",
+mailb:"Google",telb:"Google",eml:"Adresse Gmail",emE:"Entrez une adresse valide.",pwd:"Mot de passe",pwdPh:"Au moins 6 caractères",pwdE:"Mot de passe requis.",emReg:"Connexion Google",emLog:"Connexion Google",orDivider:"ou",haveAcc:"Se connecter avec Google",swMail:"Google",swTel:"Google",phs:"Photos & Vidéos",rm:"Retirer le média",add:"Ajouter photo/vidéo",ph5i:"Ajoutez jusqu'à 5 photos ou vidéos courtes (10s max). Vous pouvez par exemple avoir 1 photo et 4 vidéos.",edt:"Masquer le visage",edh:"Placez le cercle sur votre visage.",edx:"Position horizontale",edy:"Position verticale",eds:"Taille du masque",eda:"Ajouter la photo",edc:"Annuler",incog:"Mode incognito",incd:"Votre profil reste invisible : vous pouvez voir les autres, mais personne ne voit le vôtre.",incl:"Réservé à Premium",incb:"Incognito",
 kid:["Sans enfant","1 enfant","2 enfants","3 enfants ou plus"],
 selfieBadge:"Selfie vérifié",selfieLock:"Le selfie certifié est obligatoire et ne peut pas être supprimé.",
 selfieNoFace:"❌ Aucun visage humain détecté. Veuillez cadrer clairement votre visage face à la caméra dans un endroit bien éclairé et réessayer.",selfieAnalyzing:"Analyse du visage…",selfieVerified:"Visage humain certifié avec succès !",
@@ -1939,7 +1957,7 @@ fbMsgPh:"Dites-nous ce que vous pensez de Chari, vos souhaits ou vos remarques..
 fbMsgErr:"Veuillez écrire quelques mots pour expliquer votre avis.",
 fbSuccess:"Merci infiniment pour votre retour ! Notre équipe au Tchad en prendra compte.",
 scBlockT:"Capture d'écran interdite",scBlockD:"Pour préserver l'intimité et la sécurité des membres sur Chari, les captures d'écran et enregistrements vidéo sont strictement interdits.",scToast:"⚠️ Capture d'écran bloquée : la vie privée des membres est protégée sur Chari.",scDismiss:"Continuer sur Chari",
-chatTab:"Discussions",reqTab:"Demandes de Matchs",noReq:"Aucune demande reçue pour l'instant",noReqDesc:"Vos nouveaux admirateurs et personnes souhaitant vous contacter apparaîtront ici.",acceptReq:"J'aime",declineReq:"Passer",reqDeclined:"Demande rejetée. Vous ne vous reverrez plus sur Chari.",dailyReqLimit:"Limite quotidienne atteinte (20/20 demandes envoyées aujourd'hui). Réinitialisation automatique à 00h00 (Heure du Tchad) ou passez à Chari Premium pour des likes illimités !",dailyAcceptLimit:"Limite quotidienne atteinte (10/10 demandes acceptées aujourd'hui). Réinitialisation automatique à 00h00 (Heure du Tchad) ou passez à Chari Premium !",dailyReqQuota:"Demandes envoyées",dailyAcceptQuota:"Demandes acceptées",resetMidnight:"Réinitialisation à 00h00 (Heure du Tchad)",editMsg:"Modifier le message",editMsgTimeLeft:"Délai restant pour modifier ce message : ",saveEdit:"Enregistrer",cancelEdit:"Annuler",msgEditedTag:"(modifié)",editExpired:"Le délai de 10 minutes pour modifier ce message est expiré.",incogActive:"Mode Incognito activé : vous pouvez explorer tous les profils en toute discrétion, mais personne ne peut voir le vôtre.",incogInactive:"Mode Incognito désactivé : votre profil est de nouveau visible.",incogBanner:"Mode Incognito actif : votre profil est masqué pour tous les autres membres.",viewProfile:"Consulter le profil",onbPhotosTitle:"Vos photos de profil",onbPhotosDesc:"Votre selfie est votre 1ère photo certifiée. Ajoutez jusqu'à 4 photos supplémentaires pour compléter votre profil (5 photos max) :",photosAdvice:"💡 Les profils avec plusieurs photos ont 4 fois plus de chances de matcher !",finishOnbPhotos:"Terminer et découvrir les profils ✨",onlyMatchedCanChat:"Vous devez être en match pour pouvoir vous écrire.",
+chatTab:"Discussions",reqTab:"Demandes de Matchs",noReq:"Aucune demande reçue pour l'instant",noReqDesc:"Vos nouveaux admirateurs et personnes souhaitant vous contacter apparaîtront ici.",acceptReq:"J'aime",declineReq:"Passer",reqDeclined:"Demande rejetée. Vous ne vous reverrez plus sur Chari.",dailyReqLimit:"Limite quotidienne atteinte (20/20 demandes envoyées aujourd'hui). Réinitialisation automatique à 00h00 (Heure du Tchad) ou passez à Chari Premium pour des likes illimités !",dailyAcceptLimit:"Limite quotidienne atteinte (10/10 demandes acceptées aujourd'hui). Réinitialisation automatique à 00h00 (Heure du Tchad) ou passez à Chari Premium !",dailyReqQuota:"Demandes envoyées",dailyAcceptQuota:"Demandes acceptées",resetMidnight:"Réinitialisation à 00h00 (Heure du Tchad)",editMsg:"Modifier le message",editMsgTimeLeft:"Délai restant pour modifier ce message : ",saveEdit:"Enregistrer",cancelEdit:"Annuler",msgEditedTag:"(modifié)",editExpired:"Le délai de 10 minutes pour modifier ce message est expiré.",incogActive:"Mode Incognito activé : vous pouvez explorer tous les profils en toute discrétion, mais personne ne peut voir le vôtre.",incogInactive:"Mode Incognito désactivé : votre profil est de nouveau visible.",incogBanner:"Mode Incognito actif : votre profil est masqué pour tous les autres membres.",viewProfile:"Consulter le profil",onbPhotosTitle:"Vos photos & vidéos de profil",onbPhotosDesc:"Votre selfie est votre 1ère photo certifiée. Ajoutez jusqu'à 4 photos ou vidéos courtes de 10s max (1 photo et 4 vidéos possible) :",photosAdvice:"💡 Les profils avec des photos et vidéos courtes (10s) ont 4 fois plus de chances de matcher !",finishOnbPhotos:"Terminer et découvrir les profils ✨",onlyMatchedCanChat:"Vous devez être en match pour pouvoir vous écrire.",
 k:{ser:"Relation amoureuse",mar:"Mariage",fam:"Famille",etu:"Études",ent:"Entrepreneuriat",foi:"Foi",mus:"Musique",foo:"Football",cui:"Cuisine",voy:"Voyage",fr:"Français",ar:"Arabe",sa:"Sara"}},
 ar:{d:"اكتشف",m:"الرسائل",p:"ملفي",pass:"تخطَّ",like:"إعجاب",mt:"تطابق!",ms:"أنتما معجبان ببعضكما.",wr:"راسل ",ct:"متابعة",done:"شاهدت كل شيء لهذا اليوم.",again:"إعادة العرض",none:"لا توجد محادثات بعد.",nh:"أعجب بملفات لبدء محادثة.",ph:"اكتب رسالة",snd:"إرسال",bk:"رجوع",my:"ملفي الشخصي",vg:"جارٍ التحقق…",vd:"ملف موثّق",blur:"الوجه مخفي حتى التطابق",lite:"توفير البيانات",sf:"نصائح للأمان",st:"لا ترسل المال أو الرموز أبداً. التقِ في مكان عام وأخبر شخصاً مقرباً.",age:"للبالغين 22 سنة فأكثر فقط.",demo:"شاري · ملفات حقيقية موثقة بالسيلفي في تشاد.",lgb:"Français",r:["مرحباً! سعيد بالتعرف عليك.","من أي مدينة أنت؟"],
 wl:"مرحباً بك في شاري",wl2:"علاقات عاطفية جادة بين رجل وامرأة في تشاد، مع ملفات موثّقة.",phl:"رقم الهاتف",ph8:"أدخل 8 أرقام لرقمك.",orPhone:"أو عبر حساب Google",sndOtp:"استلام الرمز",otp:"تأكيد الحساب",otps:"تم إرسال الرمز إلى ",otpd:"أدخل رمز التأكيد.",cod:"الرمز المكوّن من 6 أرقام",bad:"الرمز غير صحيح.",pr:"ملفك الشخصي",nm:"الاسم الأول",job:"المهنة / العمل",jobPh:"مثال: معلم، تاجر، ممرضة...",tcty:"المدينة المراد التعارف فيها",allC:"جميع المدن (تشاد)",noCity:"لا توجد ملفات في هذه المدينة",noCityD:"لا توجد ملفات متوفرة حالياً في هذه المدينة. جرب توسيع البحث ليشمل جميع المدن!",iam:"أنا",fem:"امرأة",mal:"رجل",ag:"العمر",agE:"التطبيق مخصص لمن بلغ 22 سنة فأكثر.",cty:"مدينتك",kd:"عدد الأطفال",it:"أبحث عن",req:"أكمل جميع الحقول.",sf1:"توثيق الهوية عبر السيلفي الإلزامي",sf2:"التقط صورة سيلفي مباشرة عبر الكاميرا: يقوم الذكاء الاصطناعي بالتحقق الصارم من ملامح الوجه البشري.",shot:"التقاط السيلفي الموثق",sf3:"تؤكد هذه الصورة هويتك الحقيقية وتحمي المجتمع في تشاد من الحسابات المزيفة وتبقى ثابتة في ملفك الشخصي.",pj:"ملفاً شاهدته اليوم",unl:"بريميوم مفعّل: ملفات وطلبات غير محدودة لمدة شهر",pw:"بلغت حد الزيارات اليومية",pw2:"لقد استنفدت 20 ملفاً مجانياً لهذا اليوم. سيتم تجديد 20 ملفاً جديداً لك تلقائياً عند الساعة 00:00 منتصف الليل (بتوقيت تشاد).",pss:"اشتراك بريميوم (شهر واحد)",pss2:"ملفات غير محدودة لمدة 30 يوماً وإعجابات غير محدودة ووضع التخفّي.",op:"الدفع بالبطاقة البنكية",pn:"رقم الدفع",pb:"ادفع 5 000 FCFA (شهر واحد)",pg:"جارٍ الدفع…",pd:"دفع آمن ومحمي بنسبة 100%.",paid:"تم استلام الدفع. تم تفعيل اشتراك بريميوم لمدة شهر.",plan:"باقتك",free:"مجانية: 20 ملفاً في اليوم",prem:"اشتراك بريميوم مفعّل (شهر واحد)",up:"الترقية إلى بريميوم (5 000 FCFA / شهر)",dm:"تجريبي: الانتقال إلى 19 ملفاً",opVisa:"بطاقة بنكية (Visa / Mastercard)",cardNum:"رقم البطاقة البنكية",cardExp:"تاريخ الانتهاء (MM/AA)",cardCvv:"رمز الأمان (3 أرقام)",cardNom:"اسم صاحب البطاقة",cardNomPh:"مثال: MAHAMAT ADAM",cardSec:"دفع آمن 100% عبر Visa و Mastercard و 3D Secure",cardNumE:"رقم البطاقة غير مكتمل (16 رقماً).",cardExpE:"تاريخ انتهاء غير صحيح (MM/AA).",cardCvvE:"رمز CVV غير صحيح (3 أرقام).",cardNomE:"يرجى كتابة اسم صاحب البطاقة.",visaPaid:"تم التحقق من البطاقة بنجاح! تم تفعيل اشتراك بريميوم لمدة شهر.",
@@ -1949,7 +1967,7 @@ langSpk:"اللغة المنطوقة",lngFr:"الفرنسية",lngAr:"العرب
 lngMap:{fr:"🗣️ الفرنسية",ar:"🗣️ العربية",both:"🗣️ الفرنسية والعربية"},
 rel:"الديانة",relMus:"مسلم(ة)",relChr:"مسيحي(ة)",relOth:"ديانة أخرى",
 relMap:{mus:"🕌 مسلم(ة)",chr:"✝️ مسيحي(ة)",oth:"🕊️ ديانة أخرى"},
-mailb:"Google",telb:"Google",eml:"بريد Gmail",emE:"أدخل بريداً إلكترونياً صالحاً.",pwd:"كلمة المرور",pwdPh:"6 أحرف على الأقل",pwdE:"كلمة المرور مطلوبة.",emReg:"دخول عبر Google",emLog:"دخول عبر Google",orDivider:"أو",haveAcc:"تسجيل الدخول عبر Google",swMail:"Google",swTel:"Google",phs:"صوري",rm:"حذف الصورة",add:"إضافة صورة",ph5i:"أضف حتى 5 صور. يرى الآخرون النسخة المحمية (وجه مشوّش) حتى يحدث تطابق.",edt:"إخفاء الوجه",edh:"ضع الدائرة على وجهك.",edx:"الموضع الأفقي",edy:"الموضع العمودي",eds:"حجم القناع",eda:"إضافة الصورة",edc:"إلغاء",incog:"وضع التخفّي",incd:"يبقى ملفك غير مرئي: يمكنك رؤية الآخرين ولكن لا أحد يرى ملفك.",incl:"حصري لبريميوم",incb:"تخفّي",
+mailb:"Google",telb:"Google",eml:"بريد Gmail",emE:"أدخل بريداً إلكترونياً صالحاً.",pwd:"كلمة المرور",pwdPh:"6 أحرف على الأقل",pwdE:"كلمة المرور مطلوبة.",emReg:"دخول عبر Google",emLog:"دخول عبر Google",orDivider:"أو",haveAcc:"تسجيل الدخول عبر Google",swMail:"Google",swTel:"Google",phs:"الصور والفيديوهات",rm:"حذف الوسيط",add:"إضافة صورة/فيديو",ph5i:"أضف حتى 5 صور أو فيديوهات (10 ثوانٍ كحد أقصى). يمكنك مثلاً وضع صورة واحدة و 4 فيديوهات.",edt:"إخفاء الوجه",edh:"ضع الدائرة على وجهك.",edx:"الموضع الأفقي",edy:"الموضع العمودي",eds:"حجم القناع",eda:"إضافة الصورة",edc:"إلغاء",incog:"وضع التخفّي",incd:"يبقى ملفك غير مرئي: يمكنك رؤية الآخرين ولكن لا أحد يرى ملفك.",incl:"حصري لبريميوم",incb:"تخفّي",
 kid:["بلا أطفال","طفل واحد","طفلان","3 أطفال أو أكثر"],
 selfieBadge:"سيلفي موثّق",selfieLock:"صورة السيلفي الموثقة إلزامية ولا يمكن حذفها.",
 selfieNoFace:"❌ لم يتم اكتشاف وجه بشري. يرجى توجيه وجهك بوضوح أمام الكاميرا في مكان جيد الإضاءة وإعادة المحاولة.",selfieAnalyzing:"جارٍ التحقق من ملامح الوجه…",selfieVerified:"تم توثيق الوجه البشري بنجاح!",
@@ -1968,7 +1986,7 @@ fbMsgPh:"اكتب ملاحظاتك، اقتراحاتك أو تجربتك مع �
 fbMsgErr:"يرجى كتابة بضع كلمات توضح رأيك.",
 fbSuccess:"شكراً جزيلاً على تقييمك وملاحظاتك! سيهتم فريقنا في تشاد باقتراحك.",
 scBlockT:"التقاط الشاشة ممنوع",scBlockD:"لحماية خصوصية وأمان المشتركين في شاري، يمنع منعاً باتاً تصوير أو تسجيل الشاشة.",scToast:"⚠️ تم حظر التقاط الشاشة: خصوصية الأعضاء محمية في شاري.",scDismiss:"المتابعة في شاري",
-chatTab:"المحادثات",reqTab:"طلبات التطابق",noReq:"لا توجد طلبات مستلمة حالياً",noReqDesc:"المعجبون والأشخاص الذين يرغبون في التعارف معك سيظهرون هنا.",acceptReq:"إعجاب",declineReq:"تخطَّ",reqDeclined:"تم رفض الطلب، لن تظهرا لبعضكما مجدداً على شاري.",dailyReqLimit:"تم بلوغ الحد اليومي (20/20 طلباً مرسلاً اليوم). تتم إعادة التعيين تلقائياً عند الساعة 00:00 منتصف الليل (بتوقيت تشاد). ترقَّ إلى بريميوم لإعجابات غير محدودة!",dailyAcceptLimit:"تم بلوغ الحد اليومي (10/10 طلبات مقبولة اليوم). تتم إعادة التعيين تلقائياً عند الساعة 00:00 منتصف الليل (بتوقيت تشاد). ترقَّ إلى بريميوم لقبول غير محدود!",dailyReqQuota:"الطلبات المرسلة",dailyAcceptQuota:"الطلبات المقبولة",resetMidnight:"إعادة التعيين عند 00:00 (بتوقيت تشاد)",editMsg:"تعديل الرسالة",editMsgTimeLeft:"الوقت المتبقي لتعديل الرسالة: ",saveEdit:"حفظ التعديل",cancelEdit:"إلغاء",msgEditedTag:"(معدلة)",editExpired:"انتهت مهلة الـ 10 دقائق لتعديل هذه الرسالة.",incogActive:"وضع التخفّي مفعّل: يمكنك مشاهدة جميع الملفات بسرية تامة، ولن يظهر ملفك لأحد.",incogInactive:"تم إيقاف وضع التخفّي: ملفك الشخصي مرئي الآن للجميع.",incogBanner:"وضع التخفّي مفعّل: ملفك الشخصي محجوب عن جميع الأعضاء الآخرين.",viewProfile:"عرض الملف الشخصي",onbPhotosTitle:"صور ملفك الشخصي",onbPhotosDesc:"صورتك السيلفي هي صورتك الأولى المعتمدة. يمكنك إضافة ما يصل إلى 4 صور إضافية لإكمال ملفك (5 صور كحد أقصى) :",photosAdvice:"💡 الملفات التي تحتوي على عدة صور تزيد فرص التطابق بأربع مرات!",finishOnbPhotos:"إنهاء واستكشاف الملفات ✨",onlyMatchedCanChat:"يجب أن يحدث تطابق حتى تتمكنا من المراسلة.",
+chatTab:"المحادثات",reqTab:"طلبات التطابق",noReq:"لا توجد طلبات مستلمة حالياً",noReqDesc:"المعجبون والأشخاص الذين يرغبون في التعارف معك سيظهرون هنا.",acceptReq:"إعجاب",declineReq:"تخطَّ",reqDeclined:"تم رفض الطلب، لن تظهرا لبعضكما مجدداً على شاري.",dailyReqLimit:"تم بلوغ الحد اليومي (20/20 طلباً مرسلاً اليوم). تتم إعادة التعيين تلقائياً عند الساعة 00:00 منتصف الليل (بتوقيت تشاد). ترقَّ إلى بريميوم لإعجابات غير محدودة!",dailyAcceptLimit:"تم بلوغ الحد اليومي (10/10 طلبات مقبولة اليوم). تتم إعادة التعيين تلقائياً عند الساعة 00:00 منتصف الليل (بتوقيت تشاد). ترقَّ إلى بريميوم لقبول غير محدود!",dailyReqQuota:"الطلبات المرسلة",dailyAcceptQuota:"الطلبات المقبولة",resetMidnight:"إعادة التعيين عند 00:00 (بتوقيت تشاد)",editMsg:"تعديل الرسالة",editMsgTimeLeft:"الوقت المتبقي لتعديل الرسالة: ",saveEdit:"حفظ التعديل",cancelEdit:"إلغاء",msgEditedTag:"(معدلة)",editExpired:"انتهت مهلة الـ 10 دقائق لتعديل هذه الرسالة.",incogActive:"وضع التخفّي مفعّل: يمكنك مشاهدة جميع الملفات بسرية تامة، ولن يظهر ملفك لأحد.",incogInactive:"تم إيقاف وضع التخفّي: ملفك الشخصي مرئي الآن للجميع.",incogBanner:"وضع التخفّي مفعّل: ملفك الشخصي محجوب عن جميع الأعضاء الآخرين.",viewProfile:"عرض الملف الشخصي",onbPhotosTitle:"صور وفيديوهات ملفك الشخصي",onbPhotosDesc:"صورتك السيلفي هي أول صورة معتمدة. يمكنك إضافة ما يصل إلى 4 صور أو مقاطع فيديو قصيرة حتى 10 ثوانٍ (مثلاً صورة و 4 فيديوهات) :",photosAdvice:"💡 الملفات التي تحتوي على فيديوهات قصيرة (10 ثوانٍ) وصور تزيد فرص التطابق بأربع مرات!",finishOnbPhotos:"إنهاء واستكشاف الملفات ✨",onlyMatchedCanChat:"يجب أن يحدث تطابق حتى تتمكنا من المراسلة.",
 k:{ser:"علاقة عاطفية",mar:"زواج",fam:"العائلة",etu:"الدراسة",ent:"ريادة الأعمال",foi:"الإيمان",mus:"الموسيقى",foo:"كرة القدم",cui:"الطبخ",voy:"السفر",fr:"الفرنسية",ar:"العربية",sa:"السارا"}}};
 const FN=["Achta","Fatimé","Hawa","Khadidja","Kaltouma","Mariam","Zara","Halimé","Amina","Aïcha","Rahma","Nadjma","Esther","Grace","Rachel","Prisca","Judith","Ruth","Sarah","Dorcas","Béatrice","Claudine","Odette","Léa"];
 const MN=["Mahamat","Abakar","Idriss","Hassan","Moussa","Ibrahim","Ousmane","Adam","Oumar","Youssouf","Daniel","Joseph","Samuel","Emmanuel","Moïse","Nathan","David","Paul","Pierre","Jean","Michel","Éric","Franck","Ali"];
@@ -2006,6 +2024,25 @@ const byId=id=>{
     if(s)return s;
   }
   return null;
+};
+const isMediaVideo = item => {
+  if(!item) return false;
+  if(typeof item === 'object'){
+    if(item.isVideo) return true;
+    return isMediaVideo(item.p || item.o || item.photo_url || item.url);
+  }
+  const s = String(item).toLowerCase();
+  return s.startsWith('data:video/') || /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(s);
+};
+const getMediaUrl = item => {
+  if(!item) return '';
+  if(typeof item === 'object') return item.p || item.o || item.photo_url || item.url || '';
+  return String(item);
+};
+const getMediaPoster = item => {
+  if(!item) return '';
+  if(typeof item === 'object' && item.poster) return item.poster;
+  return '';
 };
 const getProfilePhotos = p => {
   if(!p) return ["photos/achte.jpg"];
@@ -2175,8 +2212,12 @@ window.addEventListener('focus', checkAndResetDailyLimits);
 document.addEventListener('visibilitychange', ()=>{if(!document.hidden)checkAndResetDailyLimits()});
 }
 const x=()=>T[st.lang],ic=n=>`<svg class="i" aria-hidden="true"><use href="#i-${n}"/></svg>`,say=s=>{$("#live").textContent=s};
-const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const me=r=>st.ph5.length?`<img src="${st.ph5[0][r?"o":"p"]}" alt="">`:av(ME);
+const me=r=>{
+  if(!st.ph5.length)return av(ME);
+  const q=st.ph5[0];
+  const src=(q.isVideo&&q.poster)?q.poster:(q[r?"o":"p"]||q.poster||"photos/achte.jpg");
+  return `<img src="${src}" alt="" onerror="this.onerror=null;this.src='photos/achte.jpg'">`;
+};
 const mos=p=>{let s="",idN=typeof p.id==='number'?p.id:(p.id?p.id.charCodeAt(0):1);for(let i=0;i<5;i++)for(let j=0;j<5;j++){const cx=36+i*7,cy=26+j*7;if(Math.hypot(cx-50,cy-40)<=17.5){const o=((i*7+j*13+idN)%5)*.07;s+=`<rect x="${cx-3.5}" y="${cy-3.5}" width="7" height="7" fill="${p.sk||'#8A5A3C'}"/><rect x="${cx-3.5}" y="${cy-3.5}" width="7" height="7" fill="${o>.14?"#000":"#fff"}" opacity="${o}"/>`}}return s};
 const av=(p,m)=>{if(!p)return"";if(p.selfie_url){return`<span class="av-img-box ${m?'blurred':''}"><img src="${p.selfie_url}" alt="${esc(p.n||'')}" loading="lazy" onerror="this.onerror=null;this.src='photos/achte.jpg'"></span>`}const bg=p.bg||[B,G],cl=p.cl||G,sk=p.sk||"#8A5A3C";return`<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(p.n||'')}"><rect width="100" height="100" fill="${bg[0]}"/><path d="M50 4 96 50 50 96 4 50z" fill="${bg[1]}" opacity=".35"/><path d="M50 22 78 50 50 78 22 50z" fill="${bg[1]}" opacity=".35"/><path d="M12 100c0-22 16-34 38-34s38 12 38 34z" fill="${cl}"/><rect x="43" y="52" width="14" height="16" fill="${sk}"/>${m?mos(p):`<circle cx="50" cy="40" r="17" fill="${sk}"/>`}</svg>`};
 const sw=(k,l)=>`<button class="sw" role="switch" aria-checked="${st[k]}" data-a="sw" data-k="${k}"><span>${l}</span><i></i></button>`;
@@ -2241,27 +2282,30 @@ ensureSelfieInPh5();
 const n=st.ph5.length;
 return`<div class="pf">
 <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
-<span style="font-size:28px">📸</span>
+<span style="font-size:28px">📸 🎥</span>
 <div>
-<h1 style="margin:0;font-size:22px">${t.onbPhotosTitle||"Vos photos de profil"}</h1>
-<p style="margin:2px 0 0;font-size:13px;color:var(--mut)">(${n}/5 photos)</p>
+<h1 style="margin:0;font-size:22px">${t.onbPhotosTitle||"Vos photos & vidéos de profil"}</h1>
+<p style="margin:2px 0 0;font-size:13px;color:var(--mut)">(${n}/5 ${st.lang==='ar'?'صور أو فيديوهات':'photos ou vidéos'})</p>
 </div>
 </div>
 <p style="font-size:13px;line-height:1.45;color:var(--ink);margin:0 0 14px">
-${t.onbPhotosDesc||"Votre selfie certifié est votre 1ère photo. Ajoutez jusqu'à 4 photos supplémentaires de vous pour compléter votre profil (5 photos max) :"}
+${t.onbPhotosDesc||"Votre selfie certifié est votre 1ère photo. Ajoutez jusqu'à 4 photos ou vidéos courtes (10s max) pour compléter votre profil (ex: 1 photo et 4 vidéos) :"}
 </p>
 <div class="grid5" style="margin-bottom:8px">
-${st.ph5.map((q,i)=>`
-<div class="pt ${q.isSelfie?'pt-selfie':''}">
-<img src="${q.p||q.o}" alt="Photo ${i+1}">
+${st.ph5.map((q,i)=>{
+const isVid=q.isVideo;
+const imgSrc=(isVid&&q.poster)?q.poster:(q.p||q.o);
+return `<div class="pt ${q.isSelfie?'pt-selfie':''}">
+<img src="${imgSrc}" alt="${isVid?'Vidéo':'Photo'} ${i+1}" onerror="this.onerror=null;this.src='photos/achte.jpg'">
+${isVid?`<span class="video-grid-badge">🎥 ${q.duration?q.duration+'s':'10s'}</span>`:''}
 ${q.isSelfie?`<span class="selfie-badge">${ic("ok")} ${t.selfieBadge}</span>`:''}
 ${i===0
 ? `<span class="profile-main-badge">⭐ ${st.lang==='ar'?'الرئيسية':'Profil'}</span>`
 : `<button type="button" class="btn-make-avatar" data-a="set-avatar" data-k="${i}" title="${st.lang==='ar'?'تعيين كصورة للملف الشخصي':'Définir comme photo de profil'}">⭐ ${st.lang==='ar'?'تعيين كبروفايل':'Définir profil'}</button>`
 }
 ${q.isSelfie?'':`<button class="ib rmb" data-a="rmp" data-k="${i}" aria-label="${t.rm}">${ic("x")}</button>`}
-</div>
-`).join("")}
+</div>`;
+}).join("")}
 ${n<5?`
 <button class="pt add" data-a="addp-direct" type="button" aria-label="${t.add}">
 ${ic("cam")}
@@ -2270,14 +2314,14 @@ ${ic("cam")}
 `:""}
 </div>
 <p class="mut" style="font-size:12px;margin:0 0 14px;text-align:start">
-💡 ${st.lang==='ar'?'اضغط على ⭐ تعيين كبروفايل لاختيار صورتك الشخصية المفضلة.':'Cliquez sur ⭐ Définir profil pour choisir votre photo de profil principale.'}
+💡 ${st.lang==='ar'?'يمكنك إضافة صور أو فيديوهات حتى 10 ثوانٍ (مثلاً صورة واحدة و 4 فيديوهات). اضغط على ⭐ تعيين كبروفايل لاختيار صورتك الرئيسية.':'Vous pouvez ajouter des photos ou vidéos courtes de 10s max (ex: 1 photo et 4 vidéos). Cliquez sur ⭐ Définir profil pour choisir votre photo principale.'}
 </p>
-<input id="pf-direct" type="file" accept="image/*" hidden>
+<input id="pf-direct" type="file" accept="image/*,video/*" hidden>
 <div class="sf" style="background:rgba(0,111,253,0.06);border:1px solid rgba(0,111,253,0.2);margin-bottom:18px">
 <div style="display:flex;align-items:flex-start;gap:10px">
 <span style="font-size:20px">✨</span>
 <p style="margin:0;font-size:12.5px;line-height:1.4;color:var(--ink)">
-${t.photosAdvice||"💡 Les profils avec plusieurs photos ont 4 fois plus de chances de matcher ! Vos photos sont bien visibles pour permettre d'accepter les matchs."}
+${t.photosAdvice||"💡 Les profils avec des photos et vidéos courtes ont 4 fois plus de chances de matcher !"}
 </p>
 </div>
 </div>
@@ -2378,7 +2422,10 @@ const bioText=(p.b&&p.b[st.lang])||p.bio||(p.b&&p.b.fr)||"";
 const photos=getProfilePhotos(p);
 const totalPhotos=photos.length;
 const cardIdx=Math.min(st.cardPhotoIdx||0,Math.max(0,totalPhotos-1));
-const activePhoto=totalPhotos>0?photos[cardIdx]:(p.selfie_url||'photos/achte.jpg');
+const activeItem=totalPhotos>0?photos[cardIdx]:(p.selfie_url||'photos/achte.jpg');
+const isVid=isMediaVideo(activeItem);
+const activeUrl=getMediaUrl(activeItem);
+const posterUrl=getMediaPoster(activeItem);
 const photoHtml=(totalPhotos>0)
 ?`<div class="card-photo-container">
 ${totalPhotos>1?`
@@ -2389,7 +2436,13 @@ ${photos.map((_,idx)=>`<span class="photo-bar ${idx===cardIdx?'active':''}"></sp
 <div class="photo-nav-tap photo-nav-right" data-a="next-card-photo" data-max="${totalPhotos}"></div>
 <span class="photo-counter-badge">${cardIdx+1}/${totalPhotos}</span>
 `:''}
-<img src="${activePhoto}" class="card-real-photo" alt="${esc(p.n)}" onerror="this.onerror=null;this.src='photos/achte.jpg'">
+${isVid?`
+<video src="${activeUrl}" poster="${posterUrl}" playsinline autoplay muted loop class="card-real-photo" style="object-fit:cover;width:100%;height:100%"></video>
+<span class="video-duration-badge">🎥 10s</span>
+<button type="button" class="btn-video-audio" data-a="toggle-video-audio" title="Son">🔇</button>
+`:`
+<img src="${activeUrl}" class="card-real-photo" alt="${esc(p.n)}" onerror="this.onerror=null;this.src='photos/achte.jpg'">
+`}
 <button class="ib" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.5);color:#fff;border-radius:50%;width:36px;height:36px;backdrop-filter:blur(4px);z-index:7" data-a="open-opt" data-id="${p.id}" aria-label="${t.opt}" title="${t.opt}">${ic("dots")}</button>
 <button class="btn sec" style="position:absolute;bottom:10px;left:10px;width:auto;min-height:30px;padding:3px 12px;font-size:12px;background:rgba(0,0,0,0.65);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:999px;backdrop-filter:blur(4px);z-index:7" data-a="view-user-profile" data-id="${p.id}">👁️ ${t.viewProfile||"Voir le profil"}</button>
 </div>`
@@ -2433,7 +2486,10 @@ const pObj=byId(r.id)||r;
 const photos=getProfilePhotos(pObj);
 const totalPhotos=photos.length;
 const curPhotoIdx=Math.min((st.reqPhotoIdx&&st.reqPhotoIdx[r.id])||0,Math.max(0,totalPhotos-1));
-const activePhoto=photos[curPhotoIdx]||photos[0]||"photos/achte.jpg";
+const activeItem=photos[curPhotoIdx]||photos[0]||"photos/achte.jpg";
+const isVid=isMediaVideo(activeItem);
+const activeUrl=getMediaUrl(activeItem);
+const posterUrl=getMediaPoster(activeItem);
 const pRel=r.rel||(pObj&&(pObj.rel||pObj.religion))||"mus";
 const pLng=r.lng||(pObj&&(pObj.lng||pObj.language))||"fr";
 const pIt=r.i||(pObj&&(pObj.i||pObj.intention))||"ser";
@@ -2448,7 +2504,12 @@ ${photos.map((_,idx)=>`<span class="photo-bar ${idx===curPhotoIdx?'active':''}">
 <div class="photo-nav-tap photo-nav-right" data-a="next-req-card-photo" data-id="${r.id}" data-max="${totalPhotos}" title="${st.lang==='ar'?'الصورة التالية':'Photo suivante'}"></div>
 <span class="photo-counter-badge" style="top:18px;bottom:auto;right:12px;left:auto">📸 ${curPhotoIdx+1}/${totalPhotos}</span>
 `:''}
-<img src="${activePhoto}" class="req-photo-img" alt="${esc(r.n)}" data-a="view-req-profile" data-id="${r.id}" onerror="this.onerror=null;this.src='photos/achte.jpg'">
+${isVid?`
+<video src="${activeUrl}" poster="${posterUrl}" playsinline autoplay muted loop class="req-photo-img" style="object-fit:cover;width:100%;height:100%"></video>
+<span class="video-duration-badge" style="top:18px;left:12px">🎥 10s</span>
+`:`
+<img src="${activeUrl}" class="req-photo-img" alt="${esc(r.n)}" data-a="view-req-profile" data-id="${r.id}" onerror="this.onerror=null;this.src='photos/achte.jpg'">
+`}
 <span class="selfie-badge" style="position:absolute;bottom:10px;left:10px;background:#059669;box-shadow:0 2px 6px rgba(0,0,0,0.3);z-index:5">${ic("ok")} ${t.selfieBadge||"Vérifié"}</span>
 <button type="button" class="btn sec" style="position:absolute;bottom:10px;right:10px;width:auto;min-height:30px;padding:3px 10px;font-size:11.5px;background:rgba(0,0,0,0.65);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:999px;backdrop-filter:blur(4px);z-index:5;cursor:pointer" data-a="view-req-profile" data-id="${r.id}">👁️ ${t.viewProfile||"Voir tout"}</button>
 </div>
@@ -2519,7 +2580,7 @@ function prof(){const t=x(),u=st.u,n=st.ph5.length;
 const hbList=(u.hb||[]);
 const uBio=u.bio||t.bioDef;
 const blkCount=(st.blocked||[]).length;
-return`<div class="pf"><h1>${t.my}</h1><div class="card"><div class="bd"><div class="chh"><span class="av l">${me(0)}</span><div><h2>${esc(u.n||"")}, ${u.a}${ic("ok")}</h2><p class="mut">${u.jb?esc(u.jb)+" · ":""}${u.c} ${flagSvg}</p></div></div><p class="b" style="margin:10px 0 8px;font-style:italic;color:var(--ink);background:rgba(0,0,0,.03);padding:10px 14px;border-radius:12px;border-inline-start:3px solid var(--brand);cursor:pointer" data-a="edbio" title="${t.edBio}">“${esc(uBio)}”</p><ul class="chips"><li>${t.vd}</li><li style="cursor:pointer" data-a="edj" title="${t.job}">${esc(u.jb||"")}</li><li style="cursor:pointer" data-a="edc" title="${t.cty}">${esc(u.c)}</li><li style="cursor:pointer" data-a="edtc" title="${t.tcty}">${t.seekCity}: ${esc(st.tc==="all"?t.allC:st.tc)}</li><li style="cursor:pointer" data-a="edrel" title="${t.rel}">${(t.relMap&&t.relMap[u.rel])||t.relMus}</li><li style="cursor:pointer" data-a="edlng" title="${t.langSpk}">${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</li><li>${t.kid[u.kd]}</li><li>${t.k[u.i]}</li>${u.gVerif?`<li style="border-color:#34A853;color:#1e7e34">${t.gVerif}</li>`:""}${st.inc?`<li>${t.incb}</li>`:""}</ul></div></div><div class="sf"><div><h3>${t.rel} & ${t.langSpk}</h3><p>${(t.relMap&&t.relMap[u.rel])||t.relMus} · ${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edrel">${t.rel}</button></div><div class="sf"><div><h3>${t.bio}</h3><p style="white-space:pre-wrap;color:var(--ink)">${esc(uBio)}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edbio">${t.edBio}</button></div><div class="sf"><div><h3>${t.hob}</h3><p>${hbList.length?hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?h[st.lang]:""}).filter(Boolean).join(" · "):t.hobHint}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-edhb">${t.edHb}</button></div><div class="h-chips" style="margin-top:-6px;margin-bottom:12px">${hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?`<span class="h-chip on" style="cursor:pointer" data-a="open-edhb"><span>${h[st.lang]}</span></span>`:""}).join("")}</div><div class="sf"><div><h3>${t.tcty}</h3><p>${st.tc==="all"?t.allC:st.tc} ${flagSvg}</p></div><select class="fld" style="width:auto;min-height:38px;padding:4px 8px;margin-inline-start:auto" id="p-tc"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.tc===c?"selected":""}>${c}</option>`).join("")}</select></div><div class="sf"><div><h3>${t.phs} (${n}/5)</h3><p>${t.ph5i}</p></div></div><div class="grid5">${st.ph5.map((q,i)=>`<div class="pt ${q.isSelfie?'pt-selfie':''}"><img src="${q.p}" alt="">${i===0?`<span class="profile-main-badge">⭐ ${st.lang==='ar'?'الرئيسية':'Profil'}</span>`:`<button type="button" class="btn-make-avatar" data-a="set-avatar" data-k="${i}" title="${st.lang==='ar'?'تعيين كصورة شخصية رئيسية':'Définir comme photo de profil'}">⭐ ${st.lang==='ar'?'تعيين كبروفايل':'Définir profil'}</button>`}${q.isSelfie?`<span class="selfie-badge">${ic("ok")} ${t.selfieBadge}</span>`:`<button class="ib rmb" data-a="rmp" data-k="${i}" aria-label="${t.rm}">${ic("x")}</button>`}</div>`).join("")}${n<5?`<button class="pt add" data-a="addp">${ic("cam")}<span>${t.add}</span></button>`:""}</div><p class="mut" style="font-size:12px;margin:6px 0 10px">${st.lang==='ar'?'💡 يمكنك اختيار أي صورة لتكون صورتك الشخصية الرئيسية بالضغط على «تعيين كبروفايل».':'💡 Vous pouvez choisir n’importe quelle photo comme photo de profil principale en appuyant sur « Définir profil ».'}</p><input id="pf" type="file" accept="image/*" hidden><div class="sf"><div><h3>${t.blkedList} (${blkCount})</h3><p>${blkCount?blkCount+" "+(st.lang==="ar"?"مستخدم محظور":"utilisateur(s) bloqué(s)"):t.noBlked}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-blocked">${t.blkedList}</button></div><div class="sf" style="border:1.5px solid rgba(0,111,253,0.3);background:var(--neutral-light-light);cursor:pointer" data-a="open-fb"><div><h3 style="color:var(--brand);display:flex;align-items:center;gap:6px">⭐ ${t.fbTitle}</h3><p style="color:var(--ink);font-size:13px">${t.fbSub}</p></div><button class="btn" style="width:auto;min-height:36px;padding:4px 14px;margin-inline-start:auto" data-a="open-fb">${t.fbBtn}</button></div><div class="sf"><div><h3>${t.plan}</h3><p>${st.prem?t.prem:t.free}</p></div></div>${st.prem?"":`<button class="btn" data-a="up">${t.up}</button><button class="btn sec" data-a="d19">${t.dm}</button>`}${st.prem?(sw("inc",t.incog)+`<p class="mut">${t.incd}</p>`+(st.inc?`<div class="sf" style="background:rgba(30,41,59,0.06);border:1.5px solid #1E293B;border-radius:14px;padding:12px 14px;margin:8px 0"><div style="display:flex;align-items:center;gap:12px"><span style="font-size:26px">🕶️</span><div><h4 style="margin:0 0 2px;color:var(--ink);font-size:14px;font-weight:700">${t.incog} (${x().incb})</h4><p style="margin:0;font-size:12px;color:var(--mut);line-height:1.4">${t.incogBanner}</p></div></div></div>`:"")):`<button class="sw" data-a="up"><span>${t.incog}<br><small>${t.incl}</small></span>${ic("lock")}</button>`}${sw("blur",t.blur)}${sw("lite",t.lite)}<div class="sf">${ic("shield")}<div><h3>${t.sf}</h3><p>${t.st}</p></div></div><button class="btn sec" data-a="logout" style="border-color:var(--heart);color:var(--heart);margin:14px 0 6px;display:flex;align-items:center;justify-content:center;gap:8px">${ic("phone-off")}<span>${t.logout}</span></button><p class="mut">${t.age}</p><p class="mut">${t.demo}</p></div>`}
+return`<div class="pf"><h1>${t.my}</h1><div class="card"><div class="bd"><div class="chh"><span class="av l">${me(0)}</span><div><h2>${esc(u.n||"")}, ${u.a}${ic("ok")}</h2><p class="mut">${u.jb?esc(u.jb)+" · ":""}${u.c} ${flagSvg}</p></div></div><p class="b" style="margin:10px 0 8px;font-style:italic;color:var(--ink);background:rgba(0,0,0,.03);padding:10px 14px;border-radius:12px;border-inline-start:3px solid var(--brand);cursor:pointer" data-a="edbio" title="${t.edBio}">“${esc(uBio)}”</p><ul class="chips"><li>${t.vd}</li><li style="cursor:pointer" data-a="edj" title="${t.job}">${esc(u.jb||"")}</li><li style="cursor:pointer" data-a="edc" title="${t.cty}">${esc(u.c)}</li><li style="cursor:pointer" data-a="edtc" title="${t.tcty}">${t.seekCity}: ${esc(st.tc==="all"?t.allC:st.tc)}</li><li style="cursor:pointer" data-a="edrel" title="${t.rel}">${(t.relMap&&t.relMap[u.rel])||t.relMus}</li><li style="cursor:pointer" data-a="edlng" title="${t.langSpk}">${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</li><li>${t.kid[u.kd]}</li><li>${t.k[u.i]}</li>${u.gVerif?`<li style="border-color:#34A853;color:#1e7e34">${t.gVerif}</li>`:""}${st.inc?`<li>${t.incb}</li>`:""}</ul></div></div><div class="sf"><div><h3>${t.rel} & ${t.langSpk}</h3><p>${(t.relMap&&t.relMap[u.rel])||t.relMus} · ${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edrel">${t.rel}</button></div><div class="sf"><div><h3>${t.bio}</h3><p style="white-space:pre-wrap;color:var(--ink)">${esc(uBio)}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edbio">${t.edBio}</button></div><div class="sf"><div><h3>${t.hob}</h3><p>${hbList.length?hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?h[st.lang]:""}).filter(Boolean).join(" · "):t.hobHint}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-edhb">${t.edHb}</button></div><div class="h-chips" style="margin-top:-6px;margin-bottom:12px">${hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?`<span class="h-chip on" style="cursor:pointer" data-a="open-edhb"><span>${h[st.lang]}</span></span>`:""}).join("")}</div><div class="sf"><div><h3>${t.tcty}</h3><p>${st.tc==="all"?t.allC:st.tc} ${flagSvg}</p></div><select class="fld" style="width:auto;min-height:38px;padding:4px 8px;margin-inline-start:auto" id="p-tc"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.tc===c?"selected":""}>${c}</option>`).join("")}</select></div><div class="sf"><div><h3>${t.phs} (${n}/5)</h3><p>${t.ph5i}</p></div></div><div class="grid5">${st.ph5.map((q,i)=>{const isVid=q.isVideo;const imgSrc=(isVid&&q.poster)?q.poster:(q.p||q.o);return`<div class="pt ${q.isSelfie?'pt-selfie':''}"><img src="${imgSrc}" alt="${isVid?'Vidéo':'Photo'} ${i+1}" onerror="this.onerror=null;this.src='photos/achte.jpg'">${isVid?`<span class="video-grid-badge">🎥 ${q.duration?q.duration+'s':'10s'}</span>`:''}${i===0?`<span class="profile-main-badge">⭐ ${st.lang==='ar'?'الرئيسية':'Profil'}</span>`:`<button type="button" class="btn-make-avatar" data-a="set-avatar" data-k="${i}" title="${st.lang==='ar'?'تعيين كصورة شخصية رئيسية':'Définir comme photo de profil'}">⭐ ${st.lang==='ar'?'تعيين كبروفايل':'Définir profil'}</button>`}${q.isSelfie?`<span class="selfie-badge">${ic("ok")} ${t.selfieBadge}</span>`:`<button class="ib rmb" data-a="rmp" data-k="${i}" aria-label="${t.rm}">${ic("x")}</button>`}</div>`}).join("")}${n<5?`<button class="pt add" data-a="addp">${ic("cam")}<span>${t.add}</span></button>`:""}</div><p class="mut" style="font-size:12px;margin:6px 0 10px">${st.lang==='ar'?'💡 يمكنك إضافة صور أو فيديوهات حتى 10 ثوانٍ (مثلاً صورة واحدة و 4 فيديوهات). اضغط على «تعيين كبروفايل» لاختيار صورتك الرئيسية.':'💡 Vous pouvez ajouter des photos ou vidéos de 10s max (ex: 1 photo et 4 vidéos). Cliquez sur « Définir profil » pour choisir votre photo principale.'}</p><input id="pf" type="file" accept="image/*,video/*" hidden><div class="sf"><div><h3>${t.blkedList} (${blkCount})</h3><p>${blkCount?blkCount+" "+(st.lang==="ar"?"مستخدم محظور":"utilisateur(s) bloqué(s)"):t.noBlked}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-blocked">${t.blkedList}</button></div><div class="sf" style="border:1.5px solid rgba(0,111,253,0.3);background:var(--neutral-light-light);cursor:pointer" data-a="open-fb"><div><h3 style="color:var(--brand);display:flex;align-items:center;gap:6px">⭐ ${t.fbTitle}</h3><p style="color:var(--ink);font-size:13px">${t.fbSub}</p></div><button class="btn" style="width:auto;min-height:36px;padding:4px 14px;margin-inline-start:auto" data-a="open-fb">${t.fbBtn}</button></div><div class="sf"><div><h3>${t.plan}</h3><p>${st.prem?t.prem:t.free}</p></div></div>${st.prem?"":`<button class="btn" data-a="up">${t.up}</button><button class="btn sec" data-a="d19">${t.dm}</button>`}${st.prem?(sw("inc",t.incog)+`<p class="mut">${t.incd}</p>`+(st.inc?`<div class="sf" style="background:rgba(30,41,59,0.06);border:1.5px solid #1E293B;border-radius:14px;padding:12px 14px;margin:8px 0"><div style="display:flex;align-items:center;gap:12px"><span style="font-size:26px">🕶️</span><div><h4 style="margin:0 0 2px;color:var(--ink);font-size:14px;font-weight:700">${t.incog} (${x().incb})</h4><p style="margin:0;font-size:12px;color:var(--mut);line-height:1.4">${t.incogBanner}</p></div></div></div>`:"")):`<button class="sw" data-a="up"><span>${t.incog}<br><small>${t.incl}</small></span>${ic("lock")}</button>`}${sw("blur",t.blur)}${sw("lite",t.lite)}<div class="sf">${ic("shield")}<div><h3>${t.sf}</h3><p>${t.st}</p></div></div><button class="btn sec" data-a="logout" style="border-color:var(--heart);color:var(--heart);margin:14px 0 6px;display:flex;align-items:center;justify-content:center;gap:8px">${ic("phone-off")}<span>${t.logout}</span></button><p class="mut">${t.age}</p><p class="mut">${t.demo}</p></div>`}
 function prot(src,e){const c=document.createElement("canvas");c.width=c.height=360;const g=c.getContext("2d");g.drawImage(src,0,0);
 const X=e.x*3.6,Y=e.y*3.6,R=e.r*3.6,m=document.createElement("canvas");m.width=m.height=8;m.getContext("2d").drawImage(src,X-R,Y-R,2*R,2*R,0,0,8,8);
 g.save();g.beginPath();g.ellipse(X,Y,R*.8,R,0,0,7);g.clip();g.imageSmoothingEnabled=false;g.drawImage(m,X-R,Y-R,2*R,2*R);g.restore();return c}
@@ -3387,7 +3448,10 @@ modalPhotoIdx=initialPhotoIdx||0;
 const p=byId(id);if(!p)return;
 const t=x();
 const photos=getProfilePhotos(p);
-const curPhoto=photos[modalPhotoIdx]||photos[0];
+const curItem=photos[modalPhotoIdx]||photos[0];
+const isVid=isMediaVideo(curItem);
+const curUrl=getMediaUrl(curItem);
+const curPoster=getMediaPoster(curItem);
 const bioText=(p.b&&p.b[st.lang])||p.bio||(p.b&&p.b.fr)||"";
 const isIncoming=(st.incomingRequests||[]).some(r=>String(r.id)===String(p.id));
 const isMatched=(st.mt||[]).includes(p.id);
@@ -3405,18 +3469,27 @@ ${photos.map((_,i)=>`<span class="photo-bar ${i===modalPhotoIdx?'active':''}"></
 <div class="photo-nav-tap photo-nav-right" data-a="modal-photo-switch" data-id="${p.id}" data-dir="next"></div>
 <span class="photo-counter-badge">${modalPhotoIdx+1}/${photos.length}</span>
 `:''}
-<img src="${curPhoto}" class="profile-modal-img" alt="${esc(p.n)}" onerror="this.onerror=null;this.src='photos/achte.jpg'">
+${isVid?`
+<video src="${curUrl}" poster="${curPoster}" controls playsinline autoplay class="profile-modal-img" style="object-fit:cover;width:100%;height:100%"></video>
+<span class="video-duration-badge" style="top:18px;left:16px">🎥 Vidéo 10s</span>
+`:`
+<img src="${curUrl}" class="profile-modal-img" alt="${esc(p.n)}" onerror="this.onerror=null;this.src='photos/achte.jpg'">
+`}
 <div style="position:absolute;bottom:12px;left:16px;z-index:5">
 <span class="selfie-badge" style="background:#059669;box-shadow:0 2px 8px rgba(0,0,0,0.4)">${ic("ok")} ${t.selfieBadge||"Selfie certifié"}</span>
 </div>
 </div>
 ${photos.length>1?`
 <div class="profile-thumb-strip">
-${photos.map((ph,i)=>`
-<button type="button" class="profile-thumb-btn ${i===modalPhotoIdx?'active':''}" data-a="modal-photo-set" data-id="${p.id}" data-idx="${i}">
-<img src="${ph}" alt="${esc(p.n)}" onerror="this.onerror=null;this.src='photos/achte.jpg'">
-</button>
-`).join("")}
+${photos.map((ph,i)=>{
+const isV=isMediaVideo(ph);
+const u=getMediaUrl(ph);
+const post=getMediaPoster(ph);
+return `<button type="button" class="profile-thumb-btn ${i===modalPhotoIdx?'active':''}" data-a="modal-photo-set" data-id="${p.id}" data-idx="${i}" style="position:relative">
+<img src="${post||u}" alt="${esc(p.n)}" onerror="this.onerror=null;this.src='photos/achte.jpg'">
+${isV?`<span style="position:absolute;top:2px;right:2px;background:rgba(0,0,0,0.7);color:#fff;font-size:9px;padding:1px 4px;border-radius:4px;font-weight:700">🎥 10s</span>`:''}
+</button>`;
+}).join("")}
 </div>
 `:''}
 <div class="profile-modal-body">
@@ -3523,12 +3596,22 @@ sbClient.from('user_blocks').insert([
 }
 }
 
-function handleDirectPhotoUpload(file){
+function handleDirectMediaUpload(file){
 if(!file)return;
 if(st.ph5.length>=5){
-alert(st.lang==="ar"?"الحد الأقصى 5 صور":"Vous avez atteint la limite de 5 photos.");
+alert(st.lang==="ar"?"الحد الأقصى 5 صور أو مقاطع فيديو":"Vous avez atteint la limite de 5 photos ou vidéos.");
 return;
 }
+const isVid = file.type.startsWith("video/") || /\.(mp4|webm|mov|m4v)$/i.test(file.name);
+if(isVid){
+handleVideoUpload(file);
+}else{
+handlePhotoUpload(file);
+}
+}
+const handleDirectPhotoUpload = handleDirectMediaUpload;
+
+function handlePhotoUpload(file){
 const reader=new FileReader();
 reader.onload=function(ev){
 const img=new Image();
@@ -3552,6 +3635,92 @@ render();
 img.src=ev.target.result;
 };
 reader.readAsDataURL(file);
+}
+
+function handleVideoUpload(file){
+const objUrl = URL.createObjectURL(file);
+const video = document.createElement("video");
+video.preload = "metadata";
+video.src = objUrl;
+video.muted = true;
+video.playsInline = true;
+
+let processed = false;
+const finishUpload = (posterDataUrl, durSec) => {
+if(processed) return;
+processed = true;
+const reader = new FileReader();
+reader.onload = async function(ev){
+const videoDataUrl = ev.target.result;
+let finalVideoUrl = videoDataUrl;
+if(sbClient){
+try{
+const ext = file.name.split('.').pop() || 'mp4';
+const up = await uploadMediaToSupabase(videoDataUrl, `video_${st.u.id||'u'}_${Date.now()}.${ext}`, file.type || 'video/mp4');
+if(up && !up.startsWith("data:")) finalVideoUrl = up;
+}catch(err){console.warn("Video Supabase upload:", err);}
+}
+st.ph5.push({
+o: finalVideoUrl,
+p: finalVideoUrl,
+poster: posterDataUrl,
+isVideo: true,
+duration: durSec || 10,
+isSelfie: false
+});
+URL.revokeObjectURL(objUrl);
+save();
+syncProfileToSupabase();
+render();
+say(st.lang === "ar" ? "تمت إضافة الفيديو بنجاح (10 ثوانٍ) 🎥" : "Vidéo de 10s ajoutée avec succès 🎥");
+};
+reader.readAsDataURL(file);
+};
+
+video.onloadedmetadata = function(){
+const dur = video.duration || 0;
+if(dur > 10.5){
+URL.revokeObjectURL(objUrl);
+const msg = st.lang === "ar"
+? `عذراً، يجب ألا تتجاوز مدة الفيديو 10 ثوانٍ (مدة هذا الفيديو: ${Math.round(dur)} ثانية). يرجى اختيار فيديو أقصر.`
+: `La vidéo ne doit pas dépasser 10 secondes (durée : ${Math.round(dur)}s). Veuillez sélectionner une vidéo de 10 secondes maximum.`;
+alert(msg);
+return;
+}
+const seekTo = Math.min(1.0, dur > 1 ? dur / 2 : 0.2);
+video.currentTime = seekTo;
+};
+
+video.onseeked = function(){
+try{
+const maxDim = 640;
+let w = video.videoWidth || 480;
+let h = video.videoHeight || 640;
+if(w > maxDim || h > maxDim){
+if(w > h){ h = Math.round((h * maxDim) / w); w = maxDim; }
+else { w = Math.round((w * maxDim) / h); h = maxDim; }
+}
+const canvas = document.createElement("canvas");
+canvas.width = w; canvas.height = h;
+const ctx = canvas.getContext("2d");
+ctx.drawImage(video, 0, 0, w, h);
+const poster = canvas.toDataURL("image/jpeg", 0.85);
+finishUpload(poster, Math.round(video.duration || 10));
+}catch(err){
+finishUpload("photos/achte.jpg", Math.round(video.duration || 10));
+}
+};
+
+video.onerror = function(){
+URL.revokeObjectURL(objUrl);
+alert(st.lang === "ar" ? "تعذر قراءة ملف الفيديو." : "Impossible de lire le fichier vidéo.");
+};
+
+setTimeout(()=>{
+if(!processed && video.readyState >= 1){
+finishUpload("photos/achte.jpg", Math.round(video.duration || 10));
+}
+}, 3500);
 }
 function openReportModal(id){
 const p=byId(id);if(!p)return;
@@ -3775,6 +3944,11 @@ say(st.lang==="ar"?"تم تعيين الصورة كصورة شخصية رئيس�
 }
 else if(a==="prev-card-photo"){e.stopPropagation();st.cardPhotoIdx=Math.max(0,(st.cardPhotoIdx||0)-1);render();}
 else if(a==="next-card-photo"){e.stopPropagation();const max=+b.dataset.max||1;st.cardPhotoIdx=Math.min(max-1,(st.cardPhotoIdx||0)+1);render();}
+else if(a==="toggle-video-audio"){
+e.stopPropagation();
+const vid=b.parentElement?b.parentElement.querySelector("video"):null;
+if(vid){vid.muted=!vid.muted;b.textContent=vid.muted?"🔇":"🔊";}
+}
 else if(a==="prev-req-card-photo"){
 e.stopPropagation();
 const id=b.dataset.id;
@@ -3905,7 +4079,7 @@ fr.readAsDataURL(f);e.target.value="";return;
 }
 if(e.target.id==="pf"||e.target.id==="pf-direct"){
 const f=e.target.files&&e.target.files[0];
-if(f){handleDirectPhotoUpload(f);e.target.value="";}
+if(f){handleDirectMediaUpload(f);e.target.value="";}
 }
 });
 document.addEventListener("input",e=>{
