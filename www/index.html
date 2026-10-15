@@ -1493,7 +1493,11 @@ if(!sbClient)return;
 const uid=await ensureUserProfileId();
 if(!uid||!receiverProfileId)return;
 try{
-await sbClient.from('likes').upsert({sender_id:uid,receiver_id:receiverProfileId,is_match:!!isMatch},{onConflict:'sender_id,receiver_id'});
+if(st.u&&st.u.n&&st.u.n!=='__DELETED__'){
+await syncProfileToSupabase();
+}
+const res=await sbClient.from('likes').upsert({sender_id:uid,receiver_id:receiverProfileId,is_match:!!isMatch},{onConflict:'sender_id,receiver_id'}).select();
+if(res.error)console.warn("recordLike upsert err:",res.error);
 if(isMatch){
 await sbClient.from('likes').upsert({sender_id:receiverProfileId,receiver_id:uid,is_match:true},{onConflict:'sender_id,receiver_id'});
 }
@@ -1569,9 +1573,12 @@ if(!sbClient)return;
 const uid=await ensureUserProfileId();
 if(!uid)return;
 try{
-const {data}=await sbClient.from('likes').select('*').or(`sender_id.eq.${uid},receiver_id.eq.${uid}`);
+const {data,error}=await sbClient.from('likes').select('*').or(`sender_id.eq.${uid},receiver_id.eq.${uid}`);
+if(error){console.warn("loadLikes error:",error);return;}
 if(data&&data.length>0){
 const pendingSenderIds=[];
+const passedSet=new Set((st.passed||[]).map(String));
+const blockedSet=new Set((st.blocked||[]).map(String));
 data.forEach(l=>{
 if(l.is_match){
 const otherId=l.sender_id===uid?l.receiver_id:l.sender_id;
@@ -1581,54 +1588,82 @@ if(st.incomingRequests)st.incomingRequests=st.incomingRequests.filter(r=>String(
 if(st.sentRequests)st.sentRequests=st.sentRequests.filter(r=>String(r.id)!==String(otherId));
 }else if(l.receiver_id===uid&&l.sender_id!==uid){
 const sSender=String(l.sender_id);
-const passedSet=new Set((st.passed||[]).map(String));
-const blockedSet=new Set((st.blocked||[]).map(String));
 if(!st.mt.map(String).includes(sSender)&&!passedSet.has(sSender)&&!blockedSet.has(sSender)){
 pendingSenderIds.push(l.sender_id);
 }
 }
 });
+if(st.incomingRequests){
+st.incomingRequests=st.incomingRequests.filter(r=>
+pendingSenderIds.some(pid=>String(pid)===String(r.id))&&
+!passedSet.has(String(r.id))&&
+!blockedSet.has(String(r.id))&&
+!st.mt.map(String).includes(String(r.id))
+);
+}else{
+st.incomingRequests=[];
+}
+const activeSentReceiverIds=new Set(data.filter(l=>l.sender_id===uid&&!l.is_match).map(l=>String(l.receiver_id)));
+if(st.sentRequests){
+st.sentRequests=st.sentRequests.filter(s=>activeSentReceiverIds.has(String(s.id))&&!passedSet.has(String(s.id))&&!blockedSet.has(String(s.id)));
+}
 if(pendingSenderIds.length>0){
-if(!st.incomingRequests)st.incomingRequests=[];
-const missingIds=pendingSenderIds.filter(pid=>!st.incomingRequests.some(r=>String(r.id)===String(pid)));
+const missingIds=pendingSenderIds.filter(pid=>!st.incomingRequests.some(r=>String(r.id)===String(pid)&&r.n&&r.n!=='Nouveau membre'&&r.n!=='__DELETED__'));
 if(missingIds.length>0){
 const {data:profRows}=await sbClient.from('profiles').select('*, user_photos(id, photo_url, blurred_url, is_selfie, position)').in('id',missingIds);
-if(profRows&&profRows.length>0){
-profRows.forEach(row=>{
-if(row.name&&row.name!=='__DELETED__'&&!st.incomingRequests.some(r=>String(r.id)===String(row.id))){
-const rawPhotos=Array.isArray(row.user_photos)&&row.user_photos.length>0
-  ?row.user_photos.sort((a,b)=>(a.position||0)-(b.position||0)).map(up=>up.photo_url||up.blurred_url)
-  :[];
-const pPhotos=rawPhotos.length>0?rawPhotos:(row.selfie_url?[row.selfie_url]:["photos/achte.jpg"]);
-st.incomingRequests.push({
-id:row.id,
-n:row.name,
-g:row.gender||(st.g==="m"?"f":"m"),
-a:row.age||25,
-c:row.city||"N'Djamena",
-jb:row.job||"Membre vérifié",
-bio:row.bio||"",
-rel:row.religion||"mus",
-religion:row.religion||"mus",
-lng:row.language||"fr",
-language:row.language||"fr",
-kd:row.children!==undefined?row.children:0,
-children:row.children!==undefined?row.children:0,
-i:row.intention||"ser",
-intention:row.intention||"ser",
-hb:row.hobbies||[],
-hobbies:row.hobbies||[],
-selfie_url:row.selfie_url||pPhotos[0]||"photos/achte.jpg",
+missingIds.forEach(pid=>{
+const sPid=String(pid);
+if(passedSet.has(sPid)||blockedSet.has(sPid)||st.mt.map(String).includes(sPid))return;
+const row=profRows&&profRows.find(r=>String(r.id)===sPid);
+const rawPhotos=row&&Array.isArray(row.user_photos)&&row.user_photos.length>0
+?row.user_photos.sort((a,b)=>(a.position||0)-(b.position||0)).map(up=>up.photo_url||up.blurred_url)
+:[];
+const pPhotos=rawPhotos.length>0?rawPhotos:(row&&row.selfie_url?[row.selfie_url]:["photos/achte.jpg"]);
+const validName=(row&&row.name&&row.name!=='__DELETED__')?row.name:"Nouveau membre";
+const reqItem={
+id:sPid,
+n:validName,
+g:(row&&row.gender)||(st.g==="m"?"f":"m"),
+a:(row&&row.age)||25,
+c:(row&&row.city)||"N'Djamena",
+jb:(row&&row.job)||"Membre vérifié",
+bio:(row&&row.bio)||"",
+rel:(row&&row.religion)||"mus",
+religion:(row&&row.religion)||"mus",
+lng:(row&&row.language)||"fr",
+language:(row&&row.language)||"fr",
+kd:row&&row.children!==undefined?row.children:0,
+children:row&&row.children!==undefined?row.children:0,
+i:(row&&row.intention)||"ser",
+intention:(row&&row.intention)||"ser",
+hb:(row&&row.hobbies)||[],
+hobbies:(row&&row.hobbies)||[],
+selfie_url:(row&&row.selfie_url)||pPhotos[0]||"photos/achte.jpg",
 photos:pPhotos,
 time:Date.now()
-});
+};
+const existingIdx=st.incomingRequests.findIndex(r=>String(r.id)===sPid);
+if(existingIdx>=0){
+st.incomingRequests[existingIdx]=reqItem;
+}else{
+st.incomingRequests.push(reqItem);
 }
 });
-}
 }
 }
 save();
-if(st.tab==='m'||st.tab==='req')render();
+render();
+}else{
+if(st.incomingRequests&&st.incomingRequests.length>0){
+st.incomingRequests=[];
+save();
+render();
+}
+if(st.sentRequests&&st.sentRequests.length>0){
+st.sentRequests=[];
+save();
+render();
+}
 }
 }catch(e){console.warn("loadLikes err:",e)}
 }
@@ -3578,6 +3613,9 @@ go(2,"#nm");
 go(3);
 }else{
 go(st.savedStep>=5?st.savedStep:5);
+if(st.u&&st.u.n&&st.u.n!=='__DELETED__'){
+syncProfileToSupabase();
+}
 }
 say(x().gVerif||"Compte Google vérifié");
 save();
@@ -3662,7 +3700,7 @@ if(st.tab==='d'){
 loadProfilesFromSupabase();
 }
 }
-},8000);
+},3500);
 
 // Enregistrement du Service Worker pour installation PWA hors ligne
 if ('serviceWorker' in navigator) {
