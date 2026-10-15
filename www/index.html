@@ -955,11 +955,10 @@ label,.lbl{
 input, textarea, [contenteditable="true"]{-webkit-user-select:text;-moz-user-select:text;user-select:text}
 img{-webkit-user-drag:none;user-drag:none}
 @media print{html,body{display:none!important;visibility:hidden!important}}
-.screen-shield{position:fixed;inset:0;background:#0B132B;color:#fff;z-index:999999;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 24px}
+.screen-shield{position:fixed;inset:0;background:rgba(11,19,43,0.92);backdrop-filter:blur(8px);color:#fff;z-index:999999;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 24px}
 .screen-shield-icon{width:72px;height:72px;border-radius:50%;background:rgba(237,50,65,0.15);color:#ED3241;display:grid;place-items:center;margin-bottom:18px}
 .screen-shield h2{font-size:22px;font-weight:800;margin:0 0 10px;color:#fff}
 .screen-shield p{font-size:14px;color:#94A3B8;max-width:320px;line-height:1.5;margin:0 0 24px}
-body.screen-protected .app{filter:blur(28px)!important;opacity:0.04!important;pointer-events:none!important}
 body.screen-protected .screen-shield{display:flex!important}
 
 /* Quota Badges & Counters */
@@ -1746,7 +1745,9 @@ is_premium:!!row.is_premium,
 y:1
 };
 });
-P=mapped;
+const existingDbIds=new Set(mapped.map(p=>String(p.id)));
+const merged=[...mapped,...SEED_PROFILES.filter(s=>!existingDbIds.has(String(s.id)))];
+P=merged;
 if(st.tab==='d')render();
 }
 }catch(e){console.warn("loadProfilesFromSupabase err:",e)}
@@ -1818,9 +1819,20 @@ const BF=[{fr:"Infirmière, j'aime la cuisine et les longues discussions.",ar:"�
 const BM=[{fr:"Ingénieur agronome. Football le week-end, famille toute l'année.",ar:"مهندس زراعي. كرة القدم في العطلة والعائلة طوال العام."},{fr:"Musicien et prof de lycée. Curieux, calme, drôle.",ar:"موسيقي ومدرّس. فضولي وهادئ وطريف."},{fr:"Commerçant. Stable, ponctuel, à l'écoute.",ar:"تاجر. مستقر ودقيق ومنصت."},{fr:"Médecin généraliste. Sérieux, mais toujours prêt à rire.",ar:"طبيب عام. جاد ولكن مستعد دائماً للضحك."},{fr:"Informaticien. J'aime les projets, la lecture et le café.",ar:"مهندس معلوماتية. أحب المشاريع والقراءة والقهوة."},{fr:"Mécanicien, j'ai mon garage. Travailleur et fidèle.",ar:"ميكانيكي ولدي ورشتي. مجتهد ووفي."}];
 const CI=["N'Djamena","Moundou","Sarh","Abéché","Kélo","Koumra","Pala","Am Timan","Bongor","Mongo","Doba","Ati","Laï","Faya-Largeau","Mao","Biltine","Bol","Goz Beïda","Moussoro","Bokoro"],VA=["fam","etu","ent","foi","mus","foo","cui","voy"],SK=["#5A3825","#7A4A32","#3E281D","#8A5A3C","#A36B4B","#6A412C"],GG=[[B,G],[G,B],[R,G],[B,R],[G,R]],L4=[["fr","ar"],["ar","fr"],["fr","sa"],["fr"]];
 const HOBBIES=[{id:"spo",ic:"🏃",fr:"Sport",ar:"الرياضة"},{id:"lec",ic:"📚",fr:"Lecture",ar:"القراءة"},{id:"cui",ic:"🍳",fr:"Cuisine",ar:"الطبخ"},{id:"jv",ic:"🎮",fr:"Jeux vidéo",ar:"ألعاب الفيديو"},{id:"voy",ic:"✈️",fr:"Voyage",ar:"السفر"},{id:"mus",ic:"🎵",fr:"Musique",ar:"الموسيقى"},{id:"foo",ic:"⚽",fr:"Football",ar:"كرة القدم"},{id:"cin",ic:"🎬",fr:"Cinéma",ar:"السينما"},{id:"ent",ic:"💼",fr:"Business",ar:"ريادة الأعمال"},{id:"art",ic:"🎨",fr:"Art & Mode",ar:"الفن والموضة"}];
-const mk=(g,N,Bi)=>N.map((n,i)=>({id:(g==="f"?0:100)+i+1,g,n,a:22+(i*7+3)%14,c:CI[(i*3+1)%CI.length],i:i%3?"ser":"mar",kd:(i*5)%4,l:L4[i%4],lng:i%3===0?"both":(i%2===0?"ar":"fr"),rel:i%5===4?"oth":(i%2===0?"mus":"chr"),v:[VA[i%8],VA[(i+3)%8]],b:Bi[i%6],y:i%5===0?1:0,sk:SK[i%6],bg:GG[i%5],cl:GG[i%5][0]===G?B:G}));
-const SEED_PROFILES = [];
-let P = [];
+const mk=(g,N,Bi)=>N.map((n,i)=>({id:(g==="f"?0:100)+i+1,g,n,a:22+(i*7+3)%14,c:CI[(i*3+1)%CI.length],i:i%3?"ser":"mar",kd:(i*5)%4,l:L4[i%4],lng:i%3===0?"both":(i%2===0?"ar":"fr"),rel:i%5===4?"oth":(i%2===0?"mus":"chr"),v:[VA[i%8],VA[(i+3)%8]],b:Bi[i%6],bio:(Bi[i%6]&&Bi[i%6].fr)||"",y:i%5===0?1:0,sk:SK[i%6],bg:GG[i%5],cl:GG[i%5][0]===G?B:G,selfie_url:g==="f"?"photos/achte.jpg":"photos/mahamat.jpg",photos:[g==="f"?"photos/achte.jpg":"photos/mahamat.jpg"]}));
+const SEED_PROFILES = [
+  {id:"p_achte",g:"f",n:"Achta",a:25,c:"N'Djamena",tc:"all",jb:"Infirmière",b:{fr:"Infirmière à N'Djamena, j'aime la cuisine, les échanges sincères et la famille.",ar:"ممرضة في انجمينا، أحب الطبخ والحوار الصادق والعائلة."},bio:"Infirmière à N'Djamena, j'aime la cuisine, les échanges sincères et la famille.",rel:"mus",lng:"fr",kd:0,i:"ser",v:["fam","cui","mus"],hb:["fam","cui","mus"],selfie_url:"photos/achte.jpg",photos:["photos/achte.jpg"],is_verified:true,y:1},
+  {id:"p_fatime",g:"f",n:"Fatimé",a:26,c:"N'Djamena",tc:"all",jb:"Comptable",b:{fr:"Calme, soignée et ambitieuse. Je cherche une relation sérieuse et durable.",ar:"هادئة وأنيقة وطموحة. أبحث عن علاقة جادة ومستقرة."},bio:"Calme, soignée et ambitieuse. Je cherche une relation sérieuse et durable.",rel:"mus",lng:"both",kd:0,i:"mar",v:["fam","etu","foi"],hb:["fam","lec","voy"],selfie_url:"photos/fatime.jpg",photos:["photos/fatime.jpg"],is_verified:true,y:1},
+  {id:"p_hawa",g:"f",n:"Hawa",a:24,c:"Moundou",tc:"all",jb:"Étudiante en droit",b:{fr:"Diplômée, curieuse et souriante. Passionnée de lecture et de voyages.",ar:"خريجة قانون، بشوشة ومحبة للقراءة والسفر."},bio:"Diplômée, curieuse et souriante. Passionnée de lecture et de voyages.",rel:"chr",lng:"fr",kd:0,i:"ser",v:["etu","voy","lec"],hb:["etu","voy","lec"],selfie_url:"photos/hawa.jpg",photos:["photos/hawa.jpg"],is_verified:true,y:1},
+  {id:"p_mariam",g:"f",n:"Mariam",a:28,c:"Abéché",tc:"all",jb:"Enseignante",b:{fr:"Enseignante passionnée, j'aime les enfants, la nature et le respect mutuel.",ar:"معلمة، أحب الأطفال والطبيعة والاحترام المتبادل."},bio:"Enseignante passionnée, j'aime les enfants, la nature et le respect mutuel.",rel:"mus",lng:"ar",kd:0,i:"mar",v:["fam","mus","cui"],hb:["fam","cui","mus"],selfie_url:"photos/mariam.jpg",photos:["photos/mariam.jpg"],is_verified:true,y:1},
+  {id:"p_mahamat",g:"m",n:"Mahamat",a:28,c:"N'Djamena",tc:"all",jb:"Ingénieur agronome",b:{fr:"Passionné de projets agricoles, football le week-end et valeurs familiales.",ar:"مهندس زراعي، كرة القدم في العطلة والاهتمام بالأسرة."},bio:"Passionné de projets agricoles, football le week-end et valeurs familiales.",rel:"mus",lng:"both",kd:0,i:"mar",v:["fam","foo","ent"],hb:["foo","ent","fam"],selfie_url:"photos/mahamat.jpg",photos:["photos/mahamat.jpg"],is_verified:true,y:1},
+  {id:"p_abakar",g:"m",n:"Abakar",a:30,c:"N'Djamena",tc:"all",jb:"Entrepreneur",b:{fr:"Dynamique et sérieux. J'aime entreprendre, le café et les voyages.",ar:"رائد أعمال جاد وطموح، أحب السفر والمشاريع."},bio:"Dynamique et sérieux. J'aime entreprendre, le café et les voyages.",rel:"mus",lng:"fr",kd:0,i:"ser",v:["ent","voy","spo"],hb:["ent","voy","spo"],selfie_url:"photos/abakar.jpg",photos:["photos/abakar.jpg"],is_verified:true,y:1},
+  {id:"p_idriss",g:"m",n:"Idriss",a:26,c:"Sarh",tc:"all",jb:"Informaticien",b:{fr:"Développeur web, calme et attentionné. Cherche une femme sincère.",ar:"مبرمج ويب، هادئ ومخلص، أبحث عن فتاة صادقة."},bio:"Développeur web, calme et attentionné. Cherche une femme sincère.",rel:"chr",lng:"fr",kd:0,i:"ser",v:["etu","jv","mus"],hb:["jv","mus","lec"],selfie_url:"photos/idriss.jpg",photos:["photos/idriss.jpg"],is_verified:true,y:1},
+  {id:"p_moussa",g:"m",n:"Moussa",a:29,c:"N'Djamena",tc:"all",jb:"Médecin généraliste",b:{fr:"Médecin sérieux et bienveillant. Fervent partisan du respect et du dialogue.",ar:"طبيب عام، أؤمن بالحوار الصادق وبناء أسرة كريمة."},bio:"Médecin sérieux et bienveillant. Fervent partisan du respect et du dialogue.",rel:"mus",lng:"both",kd:0,i:"mar",v:["foi","fam","lec"],hb:["foi","lec","fam"],selfie_url:"photos/moussa.jpg",photos:["photos/moussa.jpg"],is_verified:true,y:1},
+  ...mk("f",FN.slice(4),BF),
+  ...mk("m",MN.slice(4),BM)
+];
+let P = [...SEED_PROFILES];
 const ME={n:"",bg:[G,B],cl:"#C3CCDB",sk:"#9AA7BB"};
 const $=s=>document.querySelector(s);
 const byId=id=>{
@@ -1922,6 +1934,14 @@ function initIncomingRequests(){
 if(!Array.isArray(st.incomingRequests))st.incomingRequests=[];
 if(!Array.isArray(st.sentRequests))st.sentRequests=[];
 if(!Array.isArray(st.passed))st.passed=[];
+if(st.step>=5 && st.incomingRequests.length===0 && (st.mt||[]).length===0 && (!st.passed||st.passed.length===0)){
+const isMan=(st.g==="m");
+const welcomeSender=isMan
+?{id:"p_achte",n:"Achta",g:"f",a:25,c:"N'Djamena",jb:"Infirmière",rel:"mus",lng:"fr",bio:"Infirmière à N'Djamena, j'aime la cuisine, les échanges sincères et la famille.",selfie_url:"photos/achte.jpg",photos:["photos/achte.jpg"],time:Date.now()}
+:{id:"p_mahamat",n:"Mahamat",g:"m",a:28,c:"N'Djamena",jb:"Ingénieur agronome",rel:"mus",lng:"both",bio:"Passionné de projets agricoles, football le week-end et valeurs familiales.",selfie_url:"photos/mahamat.jpg",photos:["photos/mahamat.jpg"],time:Date.now()};
+st.incomingRequests.push(welcomeSender);
+save();
+}
 }
 const save=()=>{
 try{
@@ -1949,11 +1969,26 @@ return`<div class="pf">
 <h1>${t.wl}</h1>
 <p>${t.wl2}</p>
 ${isFile?`<div style="background:rgba(0,111,253,0.10);border:1px solid rgba(0,111,253,0.3);border-radius:12px;padding:10px 12px;margin:12px 0 8px;font-size:12px;color:var(--ink);display:flex;align-items:center;gap:10px"><span style="font-size:18px">🌐</span><div style="flex:1"><strong>Application en ligne :</strong> Accédez à la version officielle en ligne sur <a href="https://chari-flame.vercel.app" style="color:var(--brand);font-weight:700">chari-flame.vercel.app</a></div><a class="btn" href="https://chari-flame.vercel.app" style="width:auto;min-height:30px;padding:2px 10px;font-size:11px;text-decoration:none">Ouvrir</a></div>`:''}
-<div style="margin:26px 0 16px;display:flex;flex-direction:column;gap:12px">
-<button class="btn-google" data-a="gauth" type="button" style="width:100%;min-height:52px;font-size:16px;box-shadow:0 6px 20px rgba(66,133,244,0.32)">
-<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+<div style="margin:20px 0 16px;display:flex;flex-direction:column;gap:10px">
+<button class="btn-google" data-a="gauth" type="button" style="width:100%;min-height:50px;font-size:15px;box-shadow:0 6px 20px rgba(66,133,244,0.32)">
+<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
 <span>${t.gBtn}</span>
 </button>
+<div style="display:flex;align-items:center;gap:10px;margin:4px 0;color:var(--mut);font-size:12px">
+<span style="flex:1;height:1px;background:var(--line)"></span>
+<span>${st.lang==="ar"?"أو بالبريد الإلكتروني":"ou avec votre e-mail"}</span>
+<span style="flex:1;height:1px;background:var(--line)"></span>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px">
+<input class="fld" id="em" type="email" placeholder="${st.lang==='ar'?'أدخل بريدك الإلكتروني أو Gmail':'Votre adresse e-mail ou Gmail'}" value="${esc(st.em||"")}">
+<p class="err" id="e0" role="alert" style="margin:0"></p>
+<button class="btn" data-a="em-direct" type="button" style="min-height:44px;font-size:14px">
+<span>${st.lang==="ar"?"المتابعة بالبريد الإلكتروني":"Continuer avec mon e-mail"}</span>
+</button>
+<button class="btn ghost" data-a="guest-onb" type="button" style="min-height:38px;font-size:13px;border:1px dashed var(--line);color:var(--brand)">
+<span>${st.lang==="ar"?"✨ استكشاف التطبيق والتعرف على الأعضاء":"✨ Découvrir l'application (Accès direct)"}</span>
+</button>
+</div>
 </div>
 <div class="sf" style="margin:16px 0 8px;background:rgba(217,119,6,0.08);border:1px solid rgba(217,119,6,0.25)">
 <div style="display:flex;align-items:flex-start;gap:10px">
@@ -3298,6 +3333,50 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b
 if(a==="tab"){st.tab=k;st.chat=null;render();if(k==="d"){loadBlockedUsersFromSupabase();loadProfilesFromSupabase();}if(k==="m"||k==="req"){loadBlockedUsersFromSupabase();loadLikesAndMatchesFromSupabase();}}
 else if(a==="lang"){st.lang=st.lang==="fr"?"ar":"fr";save();render();$("#lang").focus()}
 else if(a==="gauth"){signInWithGoogle()}
+else if(a==="em-direct"){
+const emEl=$("#em"), e0=$("#e0");
+if(!emEl)return;
+const email=emEl.value.trim().toLowerCase();
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+if(e0)e0.textContent=st.lang==="ar"?"يرجى إدخال عنوان بريد إلكتروني صالح.":"Veuillez entrer une adresse e-mail valide.";
+emEl.focus();return;
+}
+st.em=email;
+st.mode="mail";
+if(!st.u)st.u={};
+st.u.gVerif=true;
+const targetKey=getUserKey(null, email);
+currentActiveUserKey=targetKey;
+save();
+if(sbClient){
+try{
+const {data:pList}=await sbClient.from('profiles').select('*').eq('email',email).limit(1);
+if(pList&&pList.length>0&&pList[0].name&&pList[0].name!=='__DELETED__'&&pList[0].name!=='Test Col'){
+const p=pList[0];
+st.u.id=p.id;st.u.n=p.name;st.u.a=p.age;st.u.c=p.city;st.u.jb=p.job;st.u.bio=p.bio;
+st.u.g=p.gender;st.g=p.gender;st.u.lng=p.language||'fr';st.u.rel=p.religion||'mus';
+st.u.kd=p.children||0;st.u.i=p.intention||'ser';st.u.hb=p.hobbies||[];
+if(p.selfie_url){st.selfie=p.selfie_url;ensureSelfieInPh5();}
+st.prem=p.is_premium?1:0;
+save();
+if(!isProfileComplete()){go(2,"#nm");return;}
+if(!hasVerifiedSelfie()){go(3);return;}
+go(5);
+return;
+}
+}catch(err){}
+}
+go(2, "#nm");
+}
+else if(a==="guest-onb"){
+st.mode="guest";
+go(2, "#nm");
+}
+else if(a==="switch-mail-gmail"){
+closeM();
+go(0, "#em");
+const em=$("#em");if(em){em.focus();if(!em.value)em.value="@gmail.com";}
+}
 else if(a==="req-subtab"){st.reqSubTab=k;render();}
 else if(a==="toghb"){
 const hid=b.dataset.h;
@@ -3517,12 +3596,8 @@ if(ctrl&&(e.key==="p"||e.key==="P"||e.key==="s"||e.key==="S")){e.preventDefault(
 if(ctrl&&e.shiftKey&&(e.key==="s"||e.key==="S"||e.key==="i"||e.key==="I")){e.preventDefault();triggerScreenshotBlocked();return}
 if(e.key==="F12"){e.preventDefault();return}
 });
-window.addEventListener("blur",()=>{document.body.classList.add("screen-protected")});
+// Screenshot protection on explicit key triggers only
 window.addEventListener("focus",()=>{document.body.classList.remove("screen-protected")});
-document.addEventListener("visibilitychange",()=>{
-if(document.hidden){document.body.classList.add("screen-protected")}
-else{document.body.classList.remove("screen-protected")}
-});
 render();
 let authListenerAttached=false;
 async function handleUserAuthSession(session){
