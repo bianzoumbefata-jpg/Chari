@@ -1132,6 +1132,132 @@ body.screen-protected .screen-shield{display:flex!important}
 .btn-accept-req:hover{
   background: linear-gradient(135deg, #0056C7 0%, #004399 100%);
 }
+/* Multi-photo Story Bars on Discovery Card */
+.card-photo-container{position:relative;width:100%;height:100%;overflow:hidden;border-radius:18px 18px 0 0}
+.card-photo-bars{position:absolute;top:10px;left:0;right:0;display:flex;gap:4px;padding:0 12px;z-index:6}
+.photo-bar{flex:1;height:3.5px;border-radius:2px;background:rgba(255,255,255,0.45);transition:background .2s}
+.photo-bar.active{background:#fff}
+.photo-nav-tap{position:absolute;top:0;bottom:0;width:40%;z-index:4;cursor:pointer}
+.photo-nav-left{left:0}
+.photo-nav-right{right:0}
+.photo-counter-badge{position:absolute;bottom:10px;right:10px;background:rgba(0,0,0,0.65);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;backdrop-filter:blur(4px);z-index:5}
+[dir="rtl"] .photo-counter-badge{right:auto;left:10px}
+/* Profile Detail Modal */
+.profile-detail-modal{
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--surf);
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.profile-modal-gallery{
+  position: relative;
+  width: 100%;
+  height: 380px;
+  max-height: 48vh;
+  background: #111;
+  overflow: hidden;
+  border-radius: 24px 24px 0 0;
+}
+.profile-modal-img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.profile-thumb-strip{
+  display: flex;
+  gap: 8px;
+  padding: 8px 16px;
+  overflow-x: auto;
+  background: rgba(0,0,0,0.03);
+  border-bottom: 1px solid var(--line);
+}
+.profile-thumb-btn{
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  background: #222;
+}
+.profile-thumb-btn.active{
+  border-color: var(--brand);
+  box-shadow: 0 0 0 2px var(--brand);
+}
+.profile-thumb-btn img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.profile-modal-body{
+  padding: 16px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.profile-modal-section{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.profile-modal-section h4{
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--mut);
+  margin: 0;
+  font-weight: 700;
+}
+.profile-modal-actions{
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+.req-avatar-box{
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+  border: 2px solid var(--brand);
+  box-shadow: var(--sh-sm);
+}
+.req-avatar-img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.req-verified-badge{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #059669;
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--surf);
+}
+.chip-item{display:inline-flex;align-items:center;gap:4px;background:var(--surf);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12px;font-weight:600;color:var(--ink);box-shadow:var(--sh-sm)}
+.profile-detail-modal::-webkit-scrollbar{width:6px}
+.profile-detail-modal::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.2);border-radius:99px}
+
 .nav-badge{
   position: absolute;
   top: 4px;
@@ -1324,15 +1450,28 @@ let chg=false;
 for(let idx=0;idx<st.ph5.length;idx++){
 const itm=st.ph5[idx];
 if(itm.o&&itm.o.startsWith("data:")){
-const upO=await uploadImageToSupabase(itm.o,`photo_${st.u.n}_${idx}_orig_${Date.now()}.jpg`);
+const upO=await uploadImageToSupabase(itm.o,`photo_${uid||st.u.n}_${idx}_orig_${Date.now()}.jpg`);
 if(upO&&!upO.startsWith("data:")){itm.o=upO;chg=true;}
 }
 if(itm.p&&itm.p.startsWith("data:")){
-const upP=await uploadImageToSupabase(itm.p,`photo_${st.u.n}_${idx}_blur_${Date.now()}.jpg`);
+const upP=await uploadImageToSupabase(itm.p,`photo_${uid||st.u.n}_${idx}_blur_${Date.now()}.jpg`);
 if(upP&&!upP.startsWith("data:")){itm.p=upP;chg=true;}
 }
 }
 if(chg)save();
+if(uid){
+try{
+await sbClient.from('user_photos').delete().eq('user_id',uid);
+const photoRows=st.ph5.map((itm,idx)=>({
+user_id:uid,
+photo_url:itm.o||itm.p||st.selfie,
+blurred_url:itm.p||itm.o||st.selfie,
+is_selfie:(idx===0||!!itm.isSelfie),
+position:idx
+}));
+await sbClient.from('user_photos').insert(photoRows);
+}catch(err){console.warn("user_photos sync err:",err)}
+}
 }
 }catch(e){console.warn("Supabase profile err:",e)}
 }
@@ -1437,10 +1576,14 @@ if(pendingSenderIds.length>0){
 if(!st.incomingRequests)st.incomingRequests=[];
 const missingIds=pendingSenderIds.filter(pid=>!st.incomingRequests.some(r=>String(r.id)===String(pid)));
 if(missingIds.length>0){
-const {data:profRows}=await sbClient.from('profiles').select('*').in('id',missingIds);
+const {data:profRows}=await sbClient.from('profiles').select('*, user_photos(id, photo_url, blurred_url, is_selfie, position)').in('id',missingIds);
 if(profRows&&profRows.length>0){
 profRows.forEach(row=>{
 if(row.name&&row.name!=='__DELETED__'&&!st.incomingRequests.some(r=>String(r.id)===String(row.id))){
+const rawPhotos=Array.isArray(row.user_photos)&&row.user_photos.length>0
+  ?row.user_photos.sort((a,b)=>(a.position||0)-(b.position||0)).map(up=>up.photo_url||up.blurred_url)
+  :[];
+const pPhotos=rawPhotos.length>0?rawPhotos:(row.selfie_url?[row.selfie_url]:["photos/achte.jpg"]);
 st.incomingRequests.push({
 id:row.id,
 n:row.name,
@@ -1449,7 +1592,18 @@ a:row.age||25,
 c:row.city||"N'Djamena",
 jb:row.job||"Membre vérifié",
 bio:row.bio||"",
-selfie_url:row.selfie_url||"photos/achte.jpg",
+rel:row.religion||"mus",
+religion:row.religion||"mus",
+lng:row.language||"fr",
+language:row.language||"fr",
+kd:row.children!==undefined?row.children:0,
+children:row.children!==undefined?row.children:0,
+i:row.intention||"ser",
+intention:row.intention||"ser",
+hb:row.hobbies||[],
+hobbies:row.hobbies||[],
+selfie_url:row.selfie_url||pPhotos[0]||"photos/achte.jpg",
+photos:pPhotos,
 time:Date.now()
 });
 }
@@ -1465,7 +1619,7 @@ if(st.tab==='m'||st.tab==='req')render();
 async function loadProfilesFromSupabase(){
 if(!sbClient)return;
 try{
-const {data,error}=await sbClient.from('profiles').select('*').order('created_at',{ascending:false});
+const {data,error}=await sbClient.from('profiles').select('*, user_photos(id, photo_url, blurred_url, is_selfie, position)').order('created_at',{ascending:false});
 if(!error&&data){
 const mapped=data.filter(r=>{
 if(!r.name||r.name==='__DELETED__'||r.name==='Test Col')return false;
@@ -1476,6 +1630,10 @@ const isIncog=r.is_incognito===true||(Array.isArray(r.hobbies)&&r.hobbies.includ
 if(isIncog)return false;
 return true;
 }).map(row=>{
+const rawPhotos=Array.isArray(row.user_photos)&&row.user_photos.length>0
+  ?row.user_photos.sort((a,b)=>(a.position||0)-(b.position||0)).map(up=>up.photo_url||up.blurred_url)
+  :[];
+const pPhotos=rawPhotos.length>0?rawPhotos:(row.selfie_url?[row.selfie_url]:["photos/achte.jpg"]);
 const bioObj=typeof row.bio==='string'?{fr:row.bio,ar:row.bio}:(row.bio||{fr:'',ar:''});
 return{
 id:row.id,
@@ -1489,12 +1647,13 @@ bio:row.bio||"",
 b:bioObj,
 lng:row.language||"fr",
 rel:row.religion||"mus",
-kd:row.children||0,
+kd:row.children!==undefined?row.children:0,
 i:row.intention||"ser",
 hb:row.hobbies||["spo"],
 l:row.language==="both"?["fr","ar"]:[row.language||"fr"],
 v:(row.hobbies&&row.hobbies.length)?row.hobbies:["fam"],
-selfie_url:row.selfie_url||"photos/achte.jpg",
+selfie_url:row.selfie_url||pPhotos[0]||"photos/achte.jpg",
+photos:pPhotos,
 is_verified:!!row.is_verified,
 is_premium:!!row.is_premium,
 y:1
@@ -1535,7 +1694,7 @@ fbMsgPh:"Dites-nous ce que vous pensez de Chari, vos souhaits ou vos remarques..
 fbMsgErr:"Veuillez écrire quelques mots pour expliquer votre avis.",
 fbSuccess:"Merci infiniment pour votre retour ! Notre équipe au Tchad en prendra compte.",
 scBlockT:"Capture d'écran interdite",scBlockD:"Pour préserver l'intimité et la sécurité des membres sur Chari, les captures d'écran et enregistrements vidéo sont strictement interdits.",scToast:"⚠️ Capture d'écran bloquée : la vie privée des membres est protégée sur Chari.",scDismiss:"Continuer sur Chari",
-chatTab:"Discussions",reqTab:"Demandes de Matchs",noReq:"Aucune demande reçue pour l'instant",noReqDesc:"Vos nouveaux admirateurs et personnes souhaitant vous contacter apparaîtront ici.",acceptReq:"Accepter & Matcher",declineReq:"Passer",dailyReqLimit:"Limite quotidienne atteinte (20/20 demandes envoyées aujourd'hui). Réinitialisation quotidienne à 00h00 ou passez à Chari Premium pour des likes illimités !",dailyAcceptLimit:"Limite quotidienne atteinte (10/10 demandes acceptées aujourd'hui). Réinitialisation quotidienne à 00h00 ou passez à Chari Premium !",dailyReqQuota:"Demandes envoyées",dailyAcceptQuota:"Demandes acceptées",resetMidnight:"Réinitialisation à 00h00",editMsg:"Modifier le message",editMsgTimeLeft:"Délai restant pour modifier ce message : ",saveEdit:"Enregistrer",cancelEdit:"Annuler",msgEditedTag:"(modifié)",editExpired:"Le délai de 10 minutes pour modifier ce message est expiré.",incogActive:"Mode Incognito activé : vous pouvez explorer tous les profils en toute discrétion, mais personne ne peut voir le vôtre.",incogInactive:"Mode Incognito désactivé : votre profil est de nouveau visible.",incogBanner:"Mode Incognito actif : votre profil est masqué pour tous les autres membres.",
+chatTab:"Discussions",reqTab:"Demandes de Matchs",noReq:"Aucune demande reçue pour l'instant",noReqDesc:"Vos nouveaux admirateurs et personnes souhaitant vous contacter apparaîtront ici.",acceptReq:"Accepter & Matcher",declineReq:"Passer",dailyReqLimit:"Limite quotidienne atteinte (20/20 demandes envoyées aujourd'hui). Réinitialisation quotidienne à 00h00 ou passez à Chari Premium pour des likes illimités !",dailyAcceptLimit:"Limite quotidienne atteinte (10/10 demandes acceptées aujourd'hui). Réinitialisation quotidienne à 00h00 ou passez à Chari Premium !",dailyReqQuota:"Demandes envoyées",dailyAcceptQuota:"Demandes acceptées",resetMidnight:"Réinitialisation à 00h00",editMsg:"Modifier le message",editMsgTimeLeft:"Délai restant pour modifier ce message : ",saveEdit:"Enregistrer",cancelEdit:"Annuler",msgEditedTag:"(modifié)",editExpired:"Le délai de 10 minutes pour modifier ce message est expiré.",incogActive:"Mode Incognito activé : vous pouvez explorer tous les profils en toute discrétion, mais personne ne peut voir le vôtre.",incogInactive:"Mode Incognito désactivé : votre profil est de nouveau visible.",incogBanner:"Mode Incognito actif : votre profil est masqué pour tous les autres membres.",viewProfile:"Consulter le profil",onbPhotosTitle:"Vos photos de profil",onbPhotosDesc:"Votre selfie est votre 1ère photo certifiée. Ajoutez jusqu'à 4 photos supplémentaires pour compléter votre profil (5 photos max) :",photosAdvice:"💡 Les profils avec plusieurs photos ont 4 fois plus de chances de matcher !",finishOnbPhotos:"Terminer et découvrir les profils ✨",onlyMatchedCanChat:"Vous devez être en match pour pouvoir vous écrire.",
 k:{ser:"Relation amoureuse",mar:"Mariage",fam:"Famille",etu:"Études",ent:"Entrepreneuriat",foi:"Foi",mus:"Musique",foo:"Football",cui:"Cuisine",voy:"Voyage",fr:"Français",ar:"Arabe",sa:"Sara"}},
 ar:{d:"اكتشف",m:"الرسائل",p:"ملفي",pass:"تخطَّ",like:"إعجاب",mt:"تطابق!",ms:"أنتما معجبان ببعضكما.",wr:"راسل ",ct:"متابعة",done:"شاهدت كل شيء لهذا اليوم.",again:"إعادة العرض",none:"لا توجد محادثات بعد.",nh:"أعجب بملفات لبدء محادثة.",ph:"اكتب رسالة",snd:"إرسال",bk:"رجوع",my:"ملفي الشخصي",vg:"جارٍ التحقق…",vd:"ملف موثّق",blur:"الوجه مخفي حتى التطابق",lite:"توفير البيانات",sf:"نصائح للأمان",st:"لا ترسل المال أو الرموز أبداً. التقِ في مكان عام وأخبر شخصاً مقرباً.",age:"للبالغين 22 سنة فأكثر فقط.",demo:"شاري · ملفات حقيقية موثقة بالسيلفي في تشاد.",lgb:"Français",r:["مرحباً! سعيد بالتعرف عليك.","من أي مدينة أنت؟"],
 wl:"مرحباً بك في شاري",wl2:"علاقات عاطفية جادة بين رجل وامرأة في تشاد، مع ملفات موثّقة.",phl:"رقم الهاتف",ph8:"أدخل 8 أرقام لرقمك.",orPhone:"أو عبر حساب Google",sndOtp:"استلام الرمز",otp:"تأكيد الحساب",otps:"تم إرسال الرمز إلى ",otpd:"أدخل رمز التأكيد.",cod:"الرمز المكوّن من 6 أرقام",bad:"الرمز غير صحيح.",pr:"ملفك الشخصي",nm:"الاسم الأول",job:"المهنة / العمل",jobPh:"مثال: معلم، تاجر، ممرضة...",tcty:"المدينة المراد التعارف فيها",allC:"جميع المدن (تشاد)",noCity:"لا توجد ملفات في هذه المدينة",noCityD:"لا توجد ملفات متوفرة حالياً في هذه المدينة. جرب توسيع البحث ليشمل جميع المدن!",iam:"أنا",fem:"امرأة",mal:"رجل",ag:"العمر",agE:"التطبيق مخصص لمن بلغ 22 سنة فأكثر.",cty:"مدينتك",kd:"عدد الأطفال",it:"أبحث عن",req:"أكمل جميع الحقول.",sf1:"توثيق الهوية عبر السيلفي الإلزامي",sf2:"التقط صورة سيلفي مباشرة عبر الكاميرا: يقوم الذكاء الاصطناعي بالتحقق الصارم من ملامح الوجه البشري.",shot:"التقاط السيلفي الموثق",sf3:"تؤكد هذه الصورة هويتك الحقيقية وتحمي المجتمع في تشاد من الحسابات المزيفة وتبقى ثابتة في ملفك الشخصي.",pj:"ملفاً شاهدته اليوم",unl:"بريميوم مفعّل: ملفات غير محدودة اليوم",pw:"بلغت حد اليوم",pw2:"شاهدت ملفاتك المجانية العشرين اليوم.",pss:"باقة بريميوم لليوم",pss2:"ملفات غير محدودة حتى منتصف الليل ووضع التخفّي.",op:"الدفع عبر",pn:"رقم الدفع",pb:"ادفع 5 000 FCFA",pg:"جارٍ الدفع…",pd:"تجريبي: لا يتم أي دفع حقيقي.",paid:"تم استلام الدفع. تم تفعيل بريميوم.",plan:"باقتك",free:"مجانية: 20 ملفاً في اليوم",prem:"باقة بريميوم لليوم مفعّلة",up:"الترقية إلى بريميوم (5 000 FCFA)",dm:"تجريبي: الانتقال إلى 19 ملفاً",opVisa:"بطاقة Visa",cardNum:"رقم بطاقة Visa",cardExp:"تاريخ الانتهاء (MM/AA)",cardCvv:"رمز الأمان (3 أرقام)",cardNom:"اسم صاحب البطاقة",cardNomPh:"مثال: MAHAMAT ADAM",cardSec:"دفع آمن 100% عبر Visa و 3D Secure",cardNumE:"رقم بطاقة Visa غير مكتمل (16 رقماً).",cardExpE:"تاريخ انتهاء غير صحيح (MM/AA).",cardCvvE:"رمز CVV غير صحيح (3 أرقام).",cardNomE:"يرجى كتابة اسم صاحب البطاقة.",visaPaid:"تم التحقق من بطاقة Visa بنجاح! تم تفعيل بريميوم.",
@@ -1564,7 +1723,7 @@ fbMsgPh:"اكتب ملاحظاتك، اقتراحاتك أو تجربتك مع �
 fbMsgErr:"يرجى كتابة بضع كلمات توضح رأيك.",
 fbSuccess:"شكراً جزيلاً على تقييمك وملاحظاتك! سيهتم فريقنا في تشاد باقتراحك.",
 scBlockT:"التقاط الشاشة ممنوع",scBlockD:"لحماية خصوصية وأمان المشتركين في شاري، يمنع منعاً باتاً تصوير أو تسجيل الشاشة.",scToast:"⚠️ تم حظر التقاط الشاشة: خصوصية الأعضاء محمية في شاري.",scDismiss:"المتابعة في شاري",
-chatTab:"المحادثات",reqTab:"طلبات التطابق",noReq:"لا توجد طلبات مستلمة حالياً",noReqDesc:"المعجبون والأشخاص الذين يرغبون في التعارف معك سيظهرون هنا.",acceptReq:"قبول وتطابق",declineReq:"تخطَّ",dailyReqLimit:"تم بلوغ الحد اليومي (20/20 طلباً مرسلاً اليوم). تتم إعادة التعيين يومياً عند الساعة 00:00 منتصف الليل. ترقَّ إلى بريميوم لإعجابات غير محدودة!",dailyAcceptLimit:"تم بلوغ الحد اليومي (10/10 طلبات مقبولة اليوم). تتم إعادة التعيين يومياً عند الساعة 00:00 منتصف الليل. ترقَّ إلى بريميوم لقبول غير محدود!",dailyReqQuota:"الطلبات المرسلة",dailyAcceptQuota:"الطلبات المقبولة",resetMidnight:"إعادة التعيين عند 00:00",editMsg:"تعديل الرسالة",editMsgTimeLeft:"الوقت المتبقي لتعديل الرسالة: ",saveEdit:"حفظ التعديل",cancelEdit:"إلغاء",msgEditedTag:"(معدلة)",editExpired:"انتهت مهلة الـ 10 دقائق لتعديل هذه الرسالة.",incogActive:"وضع التخفّي مفعّل: يمكنك مشاهدة جميع الملفات بسرية تامة، ولن يظهر ملفك لأحد.",incogInactive:"تم إيقاف وضع التخفّي: ملفك الشخصي مرئي الآن للجميع.",incogBanner:"وضع التخفّي مفعّل: ملفك الشخصي محجوب عن جميع الأعضاء الآخرين.",
+chatTab:"المحادثات",reqTab:"طلبات التطابق",noReq:"لا توجد طلبات مستلمة حالياً",noReqDesc:"المعجبون والأشخاص الذين يرغبون في التعارف معك سيظهرون هنا.",acceptReq:"قبول وتطابق",declineReq:"تخطَّ",dailyReqLimit:"تم بلوغ الحد اليومي (20/20 طلباً مرسلاً اليوم). تتم إعادة التعيين يومياً عند الساعة 00:00 منتصف الليل. ترقَّ إلى بريميوم لإعجابات غير محدودة!",dailyAcceptLimit:"تم بلوغ الحد اليومي (10/10 طلبات مقبولة اليوم). تتم إعادة التعيين يومياً عند الساعة 00:00 منتصف الليل. ترقَّ إلى بريميوم لقبول غير محدود!",dailyReqQuota:"الطلبات المرسلة",dailyAcceptQuota:"الطلبات المقبولة",resetMidnight:"إعادة التعيين عند 00:00",editMsg:"تعديل الرسالة",editMsgTimeLeft:"الوقت المتبقي لتعديل الرسالة: ",saveEdit:"حفظ التعديل",cancelEdit:"إلغاء",msgEditedTag:"(معدلة)",editExpired:"انتهت مهلة الـ 10 دقائق لتعديل هذه الرسالة.",incogActive:"وضع التخفّي مفعّل: يمكنك مشاهدة جميع الملفات بسرية تامة، ولن يظهر ملفك لأحد.",incogInactive:"تم إيقاف وضع التخفّي: ملفك الشخصي مرئي الآن للجميع.",incogBanner:"وضع التخفّي مفعّل: ملفك الشخصي محجوب عن جميع الأعضاء الآخرين.",viewProfile:"عرض الملف الشخصي",onbPhotosTitle:"صور ملفك الشخصي",onbPhotosDesc:"صورتك السيلفي هي صورتك الأولى المعتمدة. يمكنك إضافة ما يصل إلى 4 صور إضافية لإكمال ملفك (5 صور كحد أقصى) :",photosAdvice:"💡 الملفات التي تحتوي على عدة صور تزيد فرص التطابق بأربع مرات!",finishOnbPhotos:"إنهاء واستكشاف الملفات ✨",onlyMatchedCanChat:"يجب أن يحدث تطابق حتى تتمكنا من المراسلة.",
 k:{ser:"علاقة عاطفية",mar:"زواج",fam:"العائلة",etu:"الدراسة",ent:"ريادة الأعمال",foi:"الإيمان",mus:"الموسيقى",foo:"كرة القدم",cui:"الطبخ",voy:"السفر",fr:"الفرنسية",ar:"العربية",sa:"السارا"}}};
 const FN=["Achta","Fatimé","Hawa","Khadidja","Kaltouma","Mariam","Zara","Halimé","Amina","Aïcha","Rahma","Nadjma","Esther","Grace","Rachel","Prisca","Judith","Ruth","Sarah","Dorcas","Béatrice","Claudine","Odette","Léa"];
 const MN=["Mahamat","Abakar","Idriss","Hassan","Moussa","Ibrahim","Ousmane","Adam","Oumar","Youssouf","Daniel","Joseph","Samuel","Emmanuel","Moïse","Nathan","David","Paul","Pierre","Jean","Michel","Éric","Franck","Ali"];
@@ -1720,7 +1879,51 @@ ${ic("shield")}
 }
 if(s===1){go(3);return"";}
 if(s===2)return`<div class="pf"><h1>${t.pr}</h1>${st.u.gVerif?`<div style="display:flex;align-items:center;gap:8px;background:rgba(52,168,83,0.12);color:#1e7e34;padding:8px 12px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:12px"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="#34A853" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg><span>${t.gVerif}${st.em?" : "+esc(st.em):""}</span></div>`:""}<p style="font-size:13px;color:var(--mut);margin:0 0 14px;line-height:1.4">${st.lang==="ar"?"جميع الحقول التالية إلزامية. يرجى ملؤها بنفسك للمتابعة:":"Tous les champs ci-dessous sont obligatoires. Veuillez les remplir vous-même pour continuer :"}</p><div><label for="nm">${t.nm} *</label><input class="fld" id="nm" type="text" autocomplete="given-name" maxlength="30" value="${esc(st.u.n||"")}" placeholder="Ex: Mahamat, Achte..."></div><div><label for="jb">${t.job} *</label><input class="fld" id="jb" type="text" placeholder="${t.jobPh}" maxlength="35" value="${esc(st.u.jb||"")}"></div><div><label for="bio">${t.bioLbl} *</label><textarea class="fld" id="bio" rows="3" style="resize:vertical;font-family:inherit;padding:10px;line-height:1.4" placeholder="${t.bioPh}" maxlength="240">${esc(st.u.bio||"")}</textarea></div><div><label id="gl">${t.iam} *</label><div class="seg" role="group" aria-labelledby="gl"><button data-a="gd" data-k="f" aria-pressed="${st.g==="f"}">${t.fem}</button><button data-a="gd" data-k="m" aria-pressed="${st.g==="m"}">${t.mal}</button></div></div><div><label for="ag">${t.ag} (≥ 22 ans) *</label><input class="fld" id="ag" type="number" inputmode="numeric" min="22" max="99" value="${st.u.a||""}" placeholder="Ex: 25"><p class="err" id="eA" role="alert"></p></div><div><label for="cy">${t.cty} * ${flagSvg}</label><select class="fld" id="cy">${CI.map(c=>`<option ${st.u.c===c?"selected":""}>${c}</option>`).join("")}</select></div><div><label for="tc">${t.tcty} * ${flagSvg}</label><select class="fld" id="tc"><option value="all" ${(!st.u.tc||st.u.tc==="all")?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.u.tc===c?"selected":""}>${c}</option>`).join("")}</select></div><div><label for="lng">${t.langSpk} *</label><select class="fld" id="lng"><option value="fr" ${(st.u.lng||"fr")==="fr"?"selected":""}>${t.lngFr}</option><option value="ar" ${st.u.lng==="ar"?"selected":""}>${t.lngAr}</option><option value="both" ${st.u.lng==="both"?"selected":""}>${t.lngBoth}</option></select></div><div><label for="rel">${t.rel} *</label><select class="fld" id="rel"><option value="mus" ${(st.u.rel||"mus")==="mus"?"selected":""}>${t.relMus}</option><option value="chr" ${st.u.rel==="chr"?"selected":""}>${t.relChr}</option><option value="oth" ${st.u.rel==="oth"?"selected":""}>${t.relOth}</option></select></div><div><label>${t.hobLbl} (choisissez au moins 1) *</label><p class="mut" style="margin:2px 0 6px">${t.hobHint}</p><div class="h-chips" role="group" aria-label="${t.hobLbl}">${HOBBIES.map(h=>{const on=(st.u.hb||[]).includes(h.id);return`<button type="button" class="h-chip ${on?"on":""}" data-a="toghb" data-h="${h.id}" aria-pressed="${on}"><span>${h[st.lang]}</span></button>`}).join("")}</div></div><div><label for="kd">${t.kd} *</label><select class="fld" id="kd">${t.kid.map((k,i)=>`<option value="${i}" ${st.u.kd===i?"selected":""}>${k}</option>`).join("")}</select></div><div><label for="it">${t.it} *</label><select class="fld" id="it"><option value="ser" ${st.u.i==="ser"?"selected":""}>${t.k.ser}</option><option value="mar" ${st.u.i==="mar"?"selected":""}>${t.k.mar}</option></select></div><p class="err" id="e2" role="alert"></p><button class="btn" data-a="s2">${t.ct}</button></div>`;
-return`<div class="pf"><h1>${t.sf1}</h1><p>${t.sf2}</p><div class="selfie">${st.selfie?`<img src="${st.selfie}" class="selfie-captured" alt="Selfie">`:`<video id="camera-stream" autoplay playsinline muted></video><div class="selfie-ring"></div>`}</div><p class="err" id="cam-err" role="alert"></p>${st.selfie?`<button class="btn" data-a="val-selfie">${t.vd}</button><button class="btn sec" data-a="retake-selfie" style="margin-top:8px">Reprendre avec la caméra</button>`:`<button class="btn" data-a="snap-cam" id="btn-snap">${t.shot}</button>`}<p class="mut">${t.sf3}</p></div>`}
+if(s===3)return`<div class="pf"><h1>${t.sf1}</h1><p>${t.sf2}</p><div class="selfie">${st.selfie?`<img src="${st.selfie}" class="selfie-captured" alt="Selfie">`:`<video id="camera-stream" autoplay playsinline muted></video><div class="selfie-ring"></div>`}</div><p class="err" id="cam-err" role="alert"></p>${st.selfie?`<button class="btn" data-a="val-selfie">${t.vd}</button><button class="btn sec" data-a="retake-selfie" style="margin-top:8px">Reprendre avec la caméra</button>`:`<button class="btn" data-a="snap-cam" id="btn-snap">${t.shot}</button>`}<p class="mut">${t.sf3}</p></div>`;
+if(s===4){
+ensureSelfieInPh5();
+const n=st.ph5.length;
+return`<div class="pf">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+<span style="font-size:28px">📸</span>
+<div>
+<h1 style="margin:0;font-size:22px">${t.onbPhotosTitle||"Vos photos de profil"}</h1>
+<p style="margin:2px 0 0;font-size:13px;color:var(--mut)">(${n}/5 photos)</p>
+</div>
+</div>
+<p style="font-size:13px;line-height:1.45;color:var(--ink);margin:0 0 14px">
+${t.onbPhotosDesc||"Votre selfie certifié est votre 1ère photo. Ajoutez jusqu'à 4 photos supplémentaires de vous pour compléter votre profil (5 photos max) :"}
+</p>
+<div class="grid5" style="margin-bottom:14px">
+${st.ph5.map((q,i)=>`
+<div class="pt ${q.isSelfie?'pt-selfie':''}">
+<img src="${q.p||q.o}" alt="Photo ${i+1}">
+${q.isSelfie?`<span class="selfie-badge">${ic("ok")} ${t.selfieBadge}</span>`:`<button class="ib rmb" data-a="rmp" data-k="${i}" aria-label="${t.rm}">${ic("x")}</button>`}
+</div>
+`).join("")}
+${n<5?`
+<button class="pt add" data-a="addp-direct" type="button" aria-label="${t.add}">
+${ic("cam")}
+<span style="font-size:11px;font-weight:700;margin-top:4px">+ ${t.add||"Ajouter"}</span>
+</button>
+`:""}
+</div>
+<input id="pf-direct" type="file" accept="image/*" hidden>
+<div class="sf" style="background:rgba(0,111,253,0.06);border:1px solid rgba(0,111,253,0.2);margin-bottom:18px">
+<div style="display:flex;align-items:flex-start;gap:10px">
+<span style="font-size:20px">✨</span>
+<p style="margin:0;font-size:12.5px;line-height:1.4;color:var(--ink)">
+${t.photosAdvice||"💡 Les profils avec plusieurs photos ont 4 fois plus de chances de matcher ! Vos photos sont bien visibles pour permettre d'accepter les matchs."}
+</p>
+</div>
+</div>
+<button class="btn gold" data-a="finish-onb-photos" type="button" style="min-height:50px;font-size:16px;box-shadow:0 4px 16px rgba(217,119,6,0.3)">
+${t.finishOnbPhotos||"Terminer et découvrir les profils ✨"}
+</button>
+</div>`;
+}
+return "";
+}
 function payv(){
 const t=x(),lim=!st.prem&&st.seen>=LIM,isV=st.op==="visa";
 const cn=(st.card&&st.card.num)||"",ce=(st.card&&st.card.exp)||"",cv=(st.card&&st.card.cvv)||"",cm=(st.card&&st.card.nom)||(st.u&&st.u.n?(st.u.n.toUpperCase()+" ADAM"):"");
@@ -1739,8 +1942,26 @@ const qBadge=st.prem
 const incBanner=st.inc?`<div style="display:flex;align-items:center;gap:8px;background:rgba(30,41,59,0.08);border:1px solid #1E293B;border-radius:10px;padding:6px 12px;margin-bottom:8px;font-size:12px;color:var(--ink)"><span>🕶️</span><span style="font-weight:600">${t.incogBanner}</span></div>`:"";
 if(!p)return cbar+incBanner+qBadge+cnt+`<div class="empty"><div style="font-size:42px;margin-bottom:8px">🌟</div><h2>${st.tc!=="all"?t.noCity:(t.noProfilesYet||t.done)}</h2><p>${st.tc!=="all"?t.noCityD:(t.noProfilesDesc||"")}</p><button class="btn" data-a="${st.tc!=="all"?"reset-tc":"tab"}" data-k="${st.tc!=="all"?"":"p"}" style="max-width:260px;margin:12px auto 0">${st.tc!=="all"?t.allC:t.my}</button></div>`;
 const bioText=(p.b&&p.b[st.lang])||p.bio||(p.b&&p.b.fr)||"";
-const photoHtml=p.selfie_url?`<img src="${p.selfie_url}" class="card-real-photo" alt="${esc(p.n)}" onerror="this.onerror=null;this.src='photos/achte.jpg'">`:av(p,st.blur);
-return cbar+incBanner+qBadge+cnt+`<article class="card ${st.blur?'blur':''}"><div class="ph">${photoHtml}${st.blur?`<span class="pill">${t.blur}</span>`:""}<button class="ib" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.5);color:#fff;border-radius:50%;width:36px;height:36px;backdrop-filter:blur(4px)" data-a="open-opt" data-id="${p.id}" aria-label="${t.opt}" title="${t.opt}">${ic("dots")}</button></div><div class="bd"><h2>${esc(p.n)}, ${p.a}${ic("ok")}</h2><p class="mut">${esc(p.c)} ${flagSvg}<span class="badge">${(t.k&&t.k[p.i])||t.k.ser}</span></p><p class="b">${esc(bioText)}</p><ul class="chips"><li>${(t.relMap&&t.relMap[p.rel])||t.relMus}</li><li>${(t.lngMap&&t.lngMap[p.lng])||t.lngFr}</li><li>${(t.kid&&t.kid[p.kd])||t.kid[0]}</li>${[...(p.l||[]),...(p.v||[])].map(k=>`<li>${(t.k&&t.k[k])||k}</li>`).join("")}</ul></div></article><div class="acts"><button class="act" data-a="pass">${ic("x")}<span>${t.pass}</span></button><button class="act like" data-a="like">${ic("heart")}<span>${t.like}</span></button></div>`;
+const photos=(p.photos&&p.photos.length>0)?p.photos:(p.selfie_url?[p.selfie_url]:[]);
+const totalPhotos=photos.length;
+const cardIdx=Math.min(st.cardPhotoIdx||0,Math.max(0,totalPhotos-1));
+const activePhoto=totalPhotos>0?photos[cardIdx]:(p.selfie_url||'photos/achte.jpg');
+const photoHtml=(totalPhotos>0)
+?`<div class="card-photo-container">
+${totalPhotos>1?`
+<div class="card-photo-bars">
+${photos.map((_,idx)=>`<span class="photo-bar ${idx===cardIdx?'active':''}"></span>`).join('')}
+</div>
+<div class="photo-nav-tap photo-nav-left" data-a="prev-card-photo" data-max="${totalPhotos}"></div>
+<div class="photo-nav-tap photo-nav-right" data-a="next-card-photo" data-max="${totalPhotos}"></div>
+<span class="photo-counter-badge">${cardIdx+1}/${totalPhotos}</span>
+`:''}
+<img src="${activePhoto}" class="card-real-photo" alt="${esc(p.n)}" onerror="this.onerror=null;this.src='photos/achte.jpg'">
+<button class="ib" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.5);color:#fff;border-radius:50%;width:36px;height:36px;backdrop-filter:blur(4px);z-index:7" data-a="open-opt" data-id="${p.id}" aria-label="${t.opt}" title="${t.opt}">${ic("dots")}</button>
+<button class="btn sec" style="position:absolute;bottom:10px;left:10px;width:auto;min-height:30px;padding:3px 12px;font-size:12px;background:rgba(0,0,0,0.65);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:999px;backdrop-filter:blur(4px);z-index:7" data-a="view-user-profile" data-id="${p.id}">👁️ ${t.viewProfile||"Voir le profil"}</button>
+</div>`
+:`<div class="card-photo-container">${av(p,st.blur)}<button class="ib" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.5);color:#fff;border-radius:50%;width:36px;height:36px;backdrop-filter:blur(4px);z-index:7" data-a="open-opt" data-id="${p.id}">${ic("dots")}</button></div>`;
+return cbar+incBanner+qBadge+cnt+`<article class="card ${st.blur?'blur':''}"><div class="ph">${photoHtml}${st.blur?`<span class="pill">${t.blur}</span>`:""}</div><div class="bd" style="cursor:pointer" data-a="view-user-profile" data-id="${p.id}"><h2>${esc(p.n)}, ${p.a}${ic("ok")}</h2><p class="mut">${esc(p.c)} ${flagSvg}<span class="badge">${(t.k&&t.k[p.i])||t.k.ser}</span></p><p class="b">${esc(bioText)}</p><ul class="chips"><li>${(t.relMap&&t.relMap[p.rel])||t.relMus}</li><li>${(t.lngMap&&t.lngMap[p.lng])||t.lngFr}</li><li>${(t.kid&&t.kid[p.kd])||t.kid[0]}</li>${[...(p.l||[]),...(p.v||[])].map(k=>`<li>${(t.k&&t.k[k])||k}</li>`).join("")}</ul></div></article><div class="acts"><button class="act" data-a="pass">${ic("x")}<span>${t.pass}</span></button><button class="act like" data-a="like">${ic("heart")}<span>${t.like}</span></button></div>`;
 }
 function reqView(){
 checkAndResetDailyLimits();
@@ -1773,15 +1994,33 @@ return subtabsHtml+quotaHtml+`<div class="empty"><div style="font-size:42px;marg
 
 const reqCards=reqList.map(r=>{
 const pObj=byId(r.id)||r;
-return `<div class="req-card">
-<div class="req-header">
-<span class="av s" style="width:50px;height:50px">${av(pObj)}</span>
-<div class="req-info">
-<h3>${esc(r.n)}, ${r.a}${ic("ok")}</h3>
-<p>${r.jb?esc(r.jb)+" · ":""}${esc(r.c)} ${flagSvg}</p>
+const pImg=r.selfie_url||(pObj&&pObj.selfie_url)||(pObj&&pObj.photos&&pObj.photos[0])||"photos/achte.jpg";
+const pRel=r.rel||(pObj&&(pObj.rel||pObj.religion))||"mus";
+const pLng=r.lng||(pObj&&(pObj.lng||pObj.language))||"fr";
+const pIt=r.i||(pObj&&(pObj.i||pObj.intention))||"ser";
+const pBio=r.bio||(pObj&&pObj.bio)||"";
+return `<div class="req-card" style="position:relative">
+<div class="req-header" style="cursor:pointer" data-a="view-req-profile" data-id="${r.id}">
+<div class="req-avatar-box">
+<img src="${pImg}" class="req-avatar-img" alt="${esc(r.n)}" onerror="this.onerror=null;this.src='photos/achte.jpg'">
+<span class="req-verified-badge" title="Vérifié">✓</span>
+</div>
+<div class="req-info" style="flex:1">
+<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+<h3 style="margin:0">${esc(r.n)}, ${r.a}${ic("ok")}</h3>
+<span class="badge" style="font-size:11px;padding:2px 7px">${(t.relMap&&t.relMap[pRel])||t.relMus}</span>
+</div>
+<p style="margin:3px 0 0">${r.jb?esc(r.jb)+" · ":""}${esc(r.c)} ${flagSvg}</p>
+<div style="display:flex;gap:8px;margin-top:4px">
+<span style="font-size:11px;color:var(--mut)">🗣️ ${(t.lngMap&&t.lngMap[pLng])||t.lngFr}</span>
+<span style="font-size:11px;color:var(--mut)">• 💍 ${(t.k&&t.k[pIt])||t.k.ser}</span>
 </div>
 </div>
-${r.bio?`<p class="req-bio">“${esc(r.bio)}”</p>`:""}
+</div>
+${pBio?`<p class="req-bio" style="cursor:pointer" data-a="view-req-profile" data-id="${r.id}">“${esc(pBio)}”</p>`:""}
+<button class="btn sec" data-a="view-req-profile" data-id="${r.id}" style="min-height:36px;padding:4px 12px;font-size:12.5px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;margin:8px 0 10px;width:100%;border-color:var(--brand);color:var(--brand)">
+<span>👁️ ${t.viewProfile||"Consulter le profil complet"}</span>
+</button>
 <div class="req-actions">
 <button class="btn btn-accept-req" data-a="accept-req" data-id="${r.id}">${ic("heart")}<span>${t.acceptReq}</span></button>
 <button class="btn sec btn-decline-req" data-a="decline-req" data-id="${r.id}">${ic("x")}<span>${t.declineReq}</span></button>
@@ -1803,9 +2042,13 @@ return subtabsHtml+quotaHtml+`<div class="empty"><div style="font-size:42px;marg
 
 const sentCards=sentList.map(s=>{
 const pObj=byId(s.id)||s;
-return `<div class="req-card" style="border-inline-start:4px solid var(--highlight-dark)">
+const pImg=s.selfie_url||(pObj&&pObj.selfie_url)||(pObj&&pObj.photos&&pObj.photos[0])||"photos/achte.jpg";
+return `<div class="req-card" style="border-inline-start:4px solid var(--highlight-dark);cursor:pointer" data-a="view-user-profile" data-id="${s.id}">
 <div class="req-header">
-<span class="av s" style="width:50px;height:50px">${av(pObj)}</span>
+<div class="req-avatar-box">
+<img src="${pImg}" class="req-avatar-img" alt="${esc(s.n)}" onerror="this.onerror=null;this.src='photos/achte.jpg'">
+<span class="req-verified-badge" title="Vérifié">✓</span>
+</div>
 <div class="req-info">
 <h3>${esc(s.n)}, ${s.a}${ic("ok")}</h3>
 <p>${s.jb?esc(s.jb)+" · ":""}${esc(s.c)} ${flagSvg}</p>
@@ -1925,11 +2168,11 @@ const l=$("#log");if(l){l.innerHTML="";st.ms[chatId].forEach((m,i)=>bub(l,m,i,ch
 editMessageInSupabase(msg.id,chatId,newT);
 }
 function render(){
-if(st.step>=4){
+if(st.step>=5){
 if(!isProfileComplete()){st.step=2;}
 else if(!hasVerifiedSelfie()){st.step=3;}
 }
-const t=x(),h=document.documentElement,on=st.step<4;
+const t=x(),h=document.documentElement,on=st.step<5;
 h.lang=st.lang;h.dir=st.lang==="ar"?"rtl":"ltr";h.classList.toggle("lite",st.lite);$("#lang").textContent=t.lgb;
 const stEl=$("#sc-shield-t"),sdEl=$("#sc-shield-d"),sbEl=$("[data-a=dismiss-shield]");
 if(stEl)stEl.textContent=t.scBlockT;if(sdEl)sdEl.textContent=t.scBlockD;if(sbEl)sbEl.textContent=t.scDismiss;
@@ -2079,7 +2322,7 @@ say(x().selfieVerified||x().vd);
 },1400);
 }
 function go(n,sel){
-if(n>=4){
+if(n>=5){
 if(!isProfileComplete()){
 n=2;sel="#nm";
 }else if(!hasVerifiedSelfie()){
@@ -2088,7 +2331,7 @@ n=3;
 }
 if(st.step===3&&n!==3)stopCam();
 st.step=n;
-if(n>=4)st.savedStep=n;
+if(n>=5)st.savedStep=n;
 render();$("#v").scrollTop=0;
 if(n===3&&!st.selfie)setTimeout(startCam,120);
 const e=sel&&$(sel);if(e)e.focus();
@@ -2398,6 +2641,7 @@ const c=$(".card"),d=(isL?1:-1)*(st.lang==="ar"?-1:1);
 const go2=()=>{
 st.busy=0;
 st.i=0;
+st.cardPhotoIdx=0;
 st.seen++;
 render();
 if(!st.prem&&st.seen>=LIM)say(x().pw2);
@@ -2407,6 +2651,10 @@ const rm=st.lite||matchMedia("(prefers-reduced-motion: reduce)").matches;
 if(c&&!rm&&c.animate)c.animate([{transform:"none",opacity:1},{transform:`translateX(${d*90}px) rotate(${d*7}deg)`,opacity:0}],{duration:220}).onfinish=go2;else go2()}
 let recState={active:false,sec:0,timer:null,mr:null,chunks:[],stream:null};
 function toggleVoiceRec(){
+if(!st.chat||!(st.mt||[]).includes(st.chat)){
+alert(x().onlyMatchedCanChat||"Vous devez être en match pour enregistrer une note vocale.");
+return;
+}
 const btn=$("#btn-rec"),inp=$("#in");
 if(!recState.active){
 if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
@@ -2601,6 +2849,10 @@ ${isRinging?`📞 ${(t.ringingContact||"Sonnerie chez ")+esc(p.n)+"…"}`:`🟢 
 
 function startVideoCall(id){
 const p=byId(id);if(!p)return;
+if(!(st.mt||[]).includes(id)){
+alert(x().onlyMatchedCanChat||"Vous devez être en match pour pouvoir vous appeler.");
+return;
+}
 callState.active=true;
 callState.status="ringing";
 callState.targetId=id;
@@ -2667,6 +2919,169 @@ const p=byId(id);if(!p)return;
 const t=x(),o=$("#ov");
 o.innerHTML=`<div style="flex:1;display:flex;align-items:flex-end;justify-content:center;padding:16px"><div class="sheet-box"><div style="display:flex;align-items:center;gap:12px;padding-bottom:6px"><span class="av s">${av(p)}</span><div><h3 style="margin:0;font-size:16px;color:var(--ink)">${esc(p.n)}, ${esc(p.a)}</h3><p style="margin:0;color:var(--mut);font-size:13px">${esc(p.c)} ${flagSvg}</p></div></div><button class="sheet-btn" data-a="open-report" data-id="${p.id}">${ic("flag")}<span>${t.repUser}</span></button><button class="sheet-btn danger" data-a="open-block" data-id="${p.id}">${ic("ban")}<span>${t.blkUser}</span></button><button class="btn sec" data-a="cm" style="min-height:44px">${t.bk}</button></div></div>`;
 o.hidden=false;
+}
+
+let modalPhotoIdx=0;
+function openProfileDetailsModal(id, initialPhotoIdx=0){
+modalPhotoIdx=initialPhotoIdx||0;
+const p=byId(id);if(!p)return;
+const t=x();
+const photos=(p.photos&&p.photos.length>0)?p.photos:(p.selfie_url?[p.selfie_url]:["photos/achte.jpg"]);
+const curPhoto=photos[modalPhotoIdx]||photos[0];
+const bioText=(p.b&&p.b[st.lang])||p.bio||(p.b&&p.b.fr)||"";
+const isIncoming=(st.incomingRequests||[]).some(r=>String(r.id)===String(p.id));
+const isMatched=(st.mt||[]).includes(p.id);
+
+const o=$("#ov");
+o.innerHTML=`<div style="flex:1;display:flex;align-items:center;justify-content:center;padding:12px">
+<div class="profile-detail-modal">
+<button class="ib" data-a="cm" style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.55);color:#fff;border-radius:50%;width:36px;height:36px;backdrop-filter:blur(4px);z-index:10;border:none;cursor:pointer" aria-label="${t.bk}" title="${t.bk}">${ic("x")}</button>
+<div class="profile-modal-gallery">
+${photos.length>1?`
+<div class="card-photo-bars" style="top:12px">
+${photos.map((_,i)=>`<span class="photo-bar ${i===modalPhotoIdx?'active':''}"></span>`).join("")}
+</div>
+<div class="photo-nav-tap photo-nav-left" data-a="modal-photo-switch" data-id="${p.id}" data-dir="prev"></div>
+<div class="photo-nav-tap photo-nav-right" data-a="modal-photo-switch" data-id="${p.id}" data-dir="next"></div>
+<span class="photo-counter-badge">${modalPhotoIdx+1}/${photos.length}</span>
+`:''}
+<img src="${curPhoto}" class="profile-modal-img" alt="${esc(p.n)}" onerror="this.onerror=null;this.src='photos/achte.jpg'">
+<div style="position:absolute;bottom:12px;left:16px;z-index:5">
+<span class="selfie-badge" style="background:#059669;box-shadow:0 2px 8px rgba(0,0,0,0.4)">${ic("ok")} ${t.selfieBadge||"Selfie certifié"}</span>
+</div>
+</div>
+${photos.length>1?`
+<div class="profile-thumb-strip">
+${photos.map((ph,i)=>`
+<button type="button" class="profile-thumb-btn ${i===modalPhotoIdx?'active':''}" data-a="modal-photo-set" data-id="${p.id}" data-idx="${i}">
+<img src="${ph}" alt="${esc(p.n)}" onerror="this.onerror=null;this.src='photos/achte.jpg'">
+</button>
+`).join("")}
+</div>
+`:''}
+<div class="profile-modal-body">
+<div>
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+<h2 style="margin:0;font-size:22px;color:var(--ink)">${esc(p.n)}, ${p.a}</h2>
+<span class="badge" style="background:var(--brand);color:#fff">🇹🇩 ${esc(p.c)}</span>
+</div>
+<p style="margin:4px 0 0;color:var(--mut);font-size:14px;font-weight:600">
+${p.jb?esc(p.jb):""}${(p.jb?" · ":"")+((t.k&&t.k[p.i])||t.k.ser)}
+</p>
+</div>
+${bioText?`
+<div class="profile-modal-section">
+<h4>${t.bio||"À propos"}</h4>
+<p style="margin:0;font-size:14px;line-height:1.5;color:var(--ink);background:rgba(0,0,0,0.03);padding:10px 14px;border-radius:12px;border-inline-start:3px solid var(--brand);white-space:pre-wrap">“${esc(bioText)}”</p>
+</div>
+`:''}
+<div class="profile-modal-section">
+<h4>${t.pr||"Détails du profil"}</h4>
+<div style="display:flex;flex-wrap:wrap;gap:8px">
+<span class="chip-item">${(t.relMap&&t.relMap[p.rel||p.religion])||t.relMus}</span>
+<span class="chip-item">${(t.lngMap&&t.lngMap[p.lng||p.language])||t.lngFr}</span>
+<span class="chip-item">👶 ${(t.kid&&t.kid[p.kd!==undefined?p.kd:p.children])||t.kid[0]}</span>
+<span class="chip-item">💍 ${(t.k&&t.k[p.i||p.intention])||t.k.ser}</span>
+${(p.hb||p.hobbies||[]).map(hid=>{
+const h=HOBBIES.find(x=>x.id===hid);
+return h?`<span class="chip-item">${h.ic} ${h[st.lang]}</span>`:'';
+}).join('')}
+</div>
+</div>
+<div class="profile-modal-actions">
+${isIncoming?`
+<button class="btn btn-accept-req" data-a="modal-accept-req" data-id="${p.id}" style="flex:1;min-height:46px;font-size:15px;font-weight:700">
+${ic("heart")}<span>${t.acceptReq||"Accepter & Matcher"}</span>
+</button>
+<button class="btn sec" data-a="modal-decline-req" data-id="${p.id}" style="min-height:46px;padding:0 16px">
+${ic("x")}<span>${t.declineReq||"Passer"}</span>
+</button>
+`:(isMatched?`
+<button class="btn gold" data-a="wr" data-id="${p.id}" style="flex:1;min-height:46px">
+${ic("chat")}<span>${t.wr||"Écrire à "}${esc(p.n)}</span>
+</button>
+<button class="btn sec" data-a="cm" style="min-height:46px;padding:0 16px">${t.bk}</button>
+`:`
+<button class="btn gold" data-a="modal-like" data-id="${p.id}" style="flex:1;min-height:46px">
+${ic("heart")}<span>${t.like||"J'aime"}</span>
+</button>
+<button class="btn sec" data-a="cm" style="min-height:46px;padding:0 16px">${t.bk}</button>
+`)}
+</div>
+</div>
+</div>
+</div>`;
+o.hidden=false;
+}
+
+function processAcceptRequest(rid){
+checkAndResetDailyLimits();
+if(!st.prem&&st.dailyLimits.accepted>=10){
+alert(x().dailyAcceptLimit);
+st.payFrom=st.tab;st.pay=1;st.tab="d";render();
+return;
+}
+const reqObj=st.incomingRequests&&st.incomingRequests.find(r=>String(r.id)===String(rid));
+const reqUser=byId(rid)||reqObj||{id:rid,n:"Membre",selfie_url:"photos/achte.jpg",g:st.g==="m"?"f":"m"};
+st.dailyLimits.accepted++;
+if(!st.mt.includes(rid))st.mt.push(rid);
+if(!st.ms[rid])st.ms[rid]=[];
+st.incomingRequests=(st.incomingRequests||[]).filter(r=>String(r.id)!==String(rid));
+save();
+if(sbClient){
+ensureUserProfileId().then(uid=>{
+if(uid){
+sbClient.from('likes').update({is_match:true}).eq('sender_id',rid).eq('receiver_id',uid).catch(()=>{});
+sbClient.from('likes').upsert({sender_id:uid,receiver_id:rid,is_match:true},{onConflict:'sender_id,receiver_id'}).catch(()=>{});
+}
+});
+}
+match(reqUser);
+}
+
+function processDeclineRequest(rid){
+st.incomingRequests=(st.incomingRequests||[]).filter(r=>String(r.id)!==String(rid));
+if(!st.passed)st.passed=[];
+if(!st.passed.includes(rid))st.passed.push(rid);
+save();render();
+if(sbClient){
+ensureUserProfileId().then(uid=>{
+if(uid){
+sbClient.from('likes').delete().eq('sender_id',rid).eq('receiver_id',uid).catch(()=>{});
+}
+});
+}
+}
+
+function handleDirectPhotoUpload(file){
+if(!file)return;
+if(st.ph5.length>=5){
+alert(st.lang==="ar"?"الحد الأقصى 5 صور":"Vous avez atteint la limite de 5 photos.");
+return;
+}
+const reader=new FileReader();
+reader.onload=function(ev){
+const img=new Image();
+img.onload=function(){
+const maxDim=800;
+let w=img.width,h=img.height;
+if(w>maxDim||h>maxDim){
+if(w>h){h=Math.round((h*maxDim)/w);w=maxDim;}
+else{w=Math.round((w*maxDim)/h);h=maxDim;}
+}
+const canvas=document.createElement("canvas");
+canvas.width=w;canvas.height=h;
+const ctx=canvas.getContext("2d");
+ctx.drawImage(img,0,0,w,h);
+const dataUrl=canvas.toDataURL("image/jpeg",0.85);
+st.ph5.push({o:dataUrl,p:dataUrl,isSelfie:false});
+save();
+syncProfileToSupabase();
+render();
+};
+img.src=ev.target.result;
+};
+reader.readAsDataURL(file);
 }
 function openReportModal(id){
 const p=byId(id);if(!p)return;
@@ -2740,6 +3155,10 @@ sbClient.from('feedbacks').insert({user_name:fbItem.user,rating:fbItem.rating,ca
 }
 }
 function send(){const i=$("#in"),v=i.value.trim(),id=st.chat;if(!v||!id)return;
+if(!(st.mt||[]).includes(id)){
+alert(x().onlyMatchedCanChat||"Vous devez être en match pour pouvoir vous écrire.");
+return;
+}
 const msgObj={
 id:"msg_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),
 w:"me",
@@ -2815,6 +3234,22 @@ else if(a==="open-fb"){openFeedbackModal()}
 else if(a==="fb-rate"){setFeedbackRating(+b.dataset.r)}
 else if(a==="submit-fb"){submitFeedback()}
 else if(a==="addp")$("#pf").click();
+else if(a==="addp-direct"){const inp=$("#pf-direct")||$("#pf");if(inp)inp.click();}
+else if(a==="finish-onb-photos"){ensureSelfieInPh5();save();syncProfileToSupabase();go(5);}
+else if(a==="prev-card-photo"){e.stopPropagation();st.cardPhotoIdx=Math.max(0,(st.cardPhotoIdx||0)-1);render();}
+else if(a==="next-card-photo"){e.stopPropagation();const max=+b.dataset.max||1;st.cardPhotoIdx=Math.min(max-1,(st.cardPhotoIdx||0)+1);render();}
+else if(a==="view-user-profile"||a==="view-req-profile"){openProfileDetailsModal(b.dataset.id);}
+else if(a==="modal-photo-switch"){
+const p=byId(b.dataset.id);
+const photos=(p&&p.photos&&p.photos.length>0)?p.photos:(p&&p.selfie_url?[p.selfie_url]:[]);
+if(b.dataset.dir==="prev"){modalPhotoIdx=Math.max(0,modalPhotoIdx-1);}
+else{modalPhotoIdx=Math.min(photos.length-1,modalPhotoIdx+1);}
+openProfileDetailsModal(b.dataset.id,modalPhotoIdx);
+}
+else if(a==="modal-photo-set"){openProfileDetailsModal(b.dataset.id,+b.dataset.idx);}
+else if(a==="modal-accept-req"){closeM();processAcceptRequest(b.dataset.id);}
+else if(a==="modal-decline-req"){closeM();processDeclineRequest(b.dataset.id);}
+else if(a==="modal-like"){closeM();swipe("like");}
 else if(a==="rmp"){if(st.ph5[+k]&&st.ph5[+k].isSelfie){alert(t.selfieLock);return}st.ph5.splice(+k,1);save();syncProfileToSupabase();render()}
 else if(a==="eda"){st.ph5.push({o:st.ed.src.toDataURL("image/jpeg",.85),p:prot(st.ed.src,st.ed).toDataURL("image/jpeg",.85)});st.ed=null;save();syncProfileToSupabase();render()}
 else if(a==="edc"){st.ed=null;render()}
@@ -2850,48 +3285,19 @@ render();
 }
 else if(a==="d19"){st.seen=19;st.tab="d";render()}
 else if(a==="pass"||a==="like")swipe(a);
-else if(a==="again"){st.i=0;render()}
-else if(a==="open"){st.chat=b.dataset.id;render();loadMessagesFromSupabase(st.chat);$("#in").focus()}
-else if(a==="back"){st.chat=null;render()}
-else if(a==="m-subtab"){st.mSubTab=k;render();}
-else if(a==="accept-req"){
-checkAndResetDailyLimits();
-if(!st.prem&&st.dailyLimits.accepted>=10){
-alert(x().dailyAcceptLimit);
-st.payFrom=st.tab;st.pay=1;st.tab="d";render();
+else if(a==="again"){st.i=0;st.cardPhotoIdx=0;render()}
+else if(a==="open"){
+const targetId=b.dataset.id;
+if(!(st.mt||[]).includes(targetId)){
+alert(t.onlyMatchedCanChat||"Vous devez d'abord matcher pour discuter !");
 return;
 }
-const rid=b.dataset.id;
-st.dailyLimits.accepted++;
-if(!st.mt.includes(rid))st.mt.push(rid);
-if(!st.ms[rid])st.ms[rid]=[];
-st.incomingRequests=(st.incomingRequests||[]).filter(r=>String(r.id)!==String(rid));
-save();
-if(sbClient){
-ensureUserProfileId().then(uid=>{
-if(uid){
-sbClient.from('likes').update({is_match:true}).eq('sender_id',rid).eq('receiver_id',uid).catch(()=>{});
-sbClient.from('likes').upsert({sender_id:uid,receiver_id:rid,is_match:true},{onConflict:'sender_id,receiver_id'}).catch(()=>{});
+st.chat=targetId;render();loadMessagesFromSupabase(st.chat);$("#in").focus();
 }
-});
-}
-const reqUser=byId(rid)||{id:rid,n:"Membre",selfie_url:"photos/achte.jpg",g:st.g==="m"?"f":"m"};
-match(reqUser);
-}
-else if(a==="decline-req"){
-const rid=b.dataset.id;
-st.incomingRequests=(st.incomingRequests||[]).filter(r=>String(r.id)!==String(rid));
-if(!st.passed)st.passed=[];
-if(!st.passed.includes(rid))st.passed.push(rid);
-save();render();
-if(sbClient){
-ensureUserProfileId().then(uid=>{
-if(uid){
-sbClient.from('likes').delete().eq('sender_id',rid).eq('receiver_id',uid).catch(()=>{});
-}
-});
-}
-}
+else if(a==="back"){st.chat=null;render()}
+else if(a==="m-subtab"){st.mSubTab=k;render();}
+else if(a==="accept-req"){processAcceptRequest(b.dataset.id);}
+else if(a==="decline-req"){processDeclineRequest(b.dataset.id);}
 else if(a==="open-edit-msg"){openEditMessageModal(b.dataset.cid,b.dataset.mid,b.dataset.idx)}
 else if(a==="save-edit-msg"){saveEditedMessage(b.dataset.cid,b.dataset.mid,b.dataset.idx)}
 else if(a==="close-edit-modal"){if(editCountdownTimer)clearInterval(editCountdownTimer);closeM();}
@@ -2911,8 +3317,13 @@ render();
 else if(a==="wr"){closeM();st.tab="m";st.chat=b.dataset.id;render();loadMessagesFromSupabase(st.chat);$("#in").focus()}
 else if(a==="dismiss-shield"){document.body.classList.remove("screen-protected")}
 else if(a==="cm"){if(editCountdownTimer)clearInterval(editCountdownTimer);closeM();render();const l=$("[data-a=like]");if(l)l.focus()}});
-document.addEventListener("change",e=>{if(e.target.id==="sel-tc"||e.target.id==="p-tc"){st.tc=e.target.value;if(st.u)st.u.tc=st.tc;st.i=0;save();syncProfileToSupabase();render();return}
+document.addEventListener("change",e=>{
+if(e.target.id==="sel-tc"||e.target.id==="p-tc"){st.tc=e.target.value;if(st.u)st.u.tc=st.tc;st.i=0;st.cardPhotoIdx=0;save();syncProfileToSupabase();render();return}
 if(e.target.id==="chat-file"&&e.target.files[0]){
+if(!st.chat||!(st.mt||[]).includes(st.chat)){
+alert(x().onlyMatchedCanChat||"Vous devez être en match pour envoyer une photo.");
+e.target.value="";return;
+}
 const f=e.target.files[0],fr=new FileReader();
 fr.onload=async ev=>{
 if(st.chat){
@@ -2931,10 +3342,11 @@ recordMessageInSupabase(cId,null,storedUrl,null,null);
 };
 fr.readAsDataURL(f);e.target.value="";return;
 }
+if(e.target.id==="pf"||e.target.id==="pf-direct"){
+const f=e.target.files&&e.target.files[0];
+if(f){handleDirectPhotoUpload(f);e.target.value="";}
+}
 });
-document.addEventListener("keydown",e=>{if(e.key==="Enter"&&e.target.id==="in")send();if(e.key==="Escape"&&!$("#ov").hidden){closeM();render()}});
-document.addEventListener("change",e=>{const f=e.target.id==="pf"&&e.target.files[0];if(!f)return;
-createImageBitmap(f).then(bm=>{const c=document.createElement("canvas"),s=Math.min(bm.width,bm.height);c.width=c.height=360;c.getContext("2d").drawImage(bm,(bm.width-s)/2,(bm.height-s)/2,s,s,0,0,360,360);st.ed={src:c,x:50,y:38,r:24};render()}).catch(()=>{})});
 document.addEventListener("input",e=>{
 const d=e.target.dataset.e;if(d&&st.ed){st.ed[d]=+e.target.value;drawEd()}
 if(e.target.id==="pp"||e.target.id==="ph")st.ph=e.target.value;
@@ -2991,7 +3403,7 @@ let authListenerAttached=false;
 async function handleUserAuthSession(session){
 if(!session||!session.user){
 currentActiveUserKey=null;
-if(st.step>=4||!st.em){
+if(st.step>=5||!st.em){
 const blank=createBlankState();
 for(let k in blank)st[k]=blank[k];
 st.step=0;
@@ -3078,7 +3490,7 @@ go(2,"#nm");
 }else if(!hasSelf){
 go(3);
 }else{
-go(st.savedStep>=4?st.savedStep:4);
+go(st.savedStep>=5?st.savedStep:5);
 }
 say(x().gVerif||"Compte Google vérifié");
 save();
@@ -3151,7 +3563,7 @@ loadMessagesFromSupabase(st.chat);
 },2500);
 
 setInterval(()=>{
-if(st.step>=4){
+if(st.step>=5){
 loadLikesAndMatchesFromSupabase();
 if(st.tab==='d'){
 loadProfilesFromSupabase();
