@@ -2278,36 +2278,46 @@ return`<div class="pf">
 ${isFile?`<div style="background:rgba(0,111,253,0.10);border:1px solid rgba(0,111,253,0.3);border-radius:12px;padding:10px 12px;margin:12px 0 14px;font-size:12px;color:var(--ink);display:flex;align-items:center;gap:10px"><span style="font-size:18px">🌐</span><div style="flex:1"><strong>Application en ligne :</strong> Accédez à la version officielle en ligne sur <a href="https://chari-flame.vercel.app" style="color:var(--brand);font-weight:700">chari-flame.vercel.app</a></div><a class="btn" href="https://chari-flame.vercel.app" style="width:auto;min-height:30px;padding:2px 10px;font-size:11px;text-decoration:none">Ouvrir</a></div>`:''}
 
 <div style="background:#ffffff;border:1.5px solid var(--line);border-radius:18px;padding:20px 16px;box-shadow:0 8px 30px rgba(0,0,0,0.06);margin:18px 0 16px;text-align:center">
-<div style="display:inline-flex;align-items:center;gap:6px;background:rgba(66,133,244,0.08);color:#1a73e8;padding:5px 14px;border-radius:20px;font-size:12.5px;font-weight:700;margin-bottom:14px">
-<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-<span>${st.lang==="ar"?"التعريف الموثّق والسريع":"Identification officielle sécurisée"}</span>
+
+<button class="btn gold" data-a="direct-access" id="btn-direct-access" type="button" style="width:100%;min-height:52px;font-size:15.5px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;box-shadow:0 4px 18px rgba(217,119,6,0.35);border:none;border-radius:14px;cursor:pointer;">
+<span>🚀 ${st.lang==="ar"?"الدخول المباشر إلى التطبيق (ملء الملف) ➜":"Accéder directement à l'application ➜"}</span>
+</button>
+
+<button class="btn sec" data-a="direct-discovery" id="btn-direct-discovery" type="button" style="min-height:42px;font-size:13.5px;font-weight:700;margin-bottom:16px;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:12px">
+<span>${st.lang==="ar"?"👀 تصفح الملفات والأعضاء مباشرة (وضع الاستكشاف)":"👀 Découvrir directement les profils (Mode Découverte)"}</span>
+</button>
+
+<div style="display:flex;align-items:center;gap:10px;margin:12px 0 14px">
+<div style="flex:1;height:1px;background:var(--line)"></div>
+<span style="font-size:11px;font-weight:700;color:var(--mut);letter-spacing:0.5px;text-transform:uppercase">${st.lang==='ar'?'أو التسجيل بحساب Google أو البريد':'OU AVEC GOOGLE / E-MAIL'}</span>
+<div style="flex:1;height:1px;background:var(--line)"></div>
 </div>
 
-<button class="btn-google" data-a="gauth" type="button" id="btn-google-login" style="width:100%;min-height:52px;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:12px;background:#ffffff;color:#1F1F1F;border:2px solid #E2E8F0;border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,0.08);cursor:pointer;transition:transform 0.15s ease, box-shadow 0.15s ease;">
+<button class="btn-google" data-a="gauth" type="button" id="btn-google-login" style="width:100%;min-height:50px;font-size:14.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:12px;background:#ffffff;color:#1F1F1F;border:2px solid #E2E8F0;border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,0.08);cursor:pointer;transition:transform 0.15s ease, box-shadow 0.15s ease;">
 <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
 <span>${t.gBtn}</span>
 </button>
 
-<div style="margin-top:8px;text-align:center">
-<button type="button" data-a="google-direct-email" id="btn-google-direct" style="background:none;border:none;color:#1a73e8;font-size:12.5px;font-weight:600;cursor:pointer;padding:4px 8px;display:inline-flex;align-items:center;gap:6px">
+<div style="margin-top:6px;text-align:center">
+<button type="button" data-a="google-direct-email" id="btn-google-direct" style="background:none;border:none;color:#1a73e8;font-size:12px;font-weight:600;cursor:pointer;padding:4px 8px;display:inline-flex;align-items:center;gap:6px">
 <span>⚡ ${st.lang==='ar'?'أو المتابعة مباشرة بعنوان بريدك Gmail':'Ou inscription directe avec votre compte Gmail'} ➜</span>
 </button>
 </div>
 
-<div style="display:flex;align-items:center;gap:10px;margin:16px 0 12px">
+<div style="display:flex;align-items:center;gap:10px;margin:14px 0 10px">
 <div style="flex:1;height:1px;background:var(--line)"></div>
-<span style="font-size:11.5px;font-weight:700;color:var(--mut);letter-spacing:0.5px;text-transform:uppercase">${st.lang==='ar'?'أو عبر البريد الإلكتروني':'OU AVEC VOTRE E-MAIL'}</span>
+<span style="font-size:11px;font-weight:700;color:var(--mut);letter-spacing:0.5px;text-transform:uppercase">${st.lang==='ar'?'أو بالبريد الإلكتروني':'OU AVEC VOTRE E-MAIL'}</span>
 <div style="flex:1;height:1px;background:var(--line)"></div>
 </div>
 
 <div style="display:flex;flex-direction:column;gap:8px;text-align:start">
-<label for="em" style="font-size:12.5px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:6px">
+<label for="em" style="font-size:12px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:6px">
 <span>✉️</span> <span>${st.lang==='ar'?'عنوان البريد الإلكتروني أو Gmail :':'Votre adresse e-mail ou Gmail :'}</span>
 </label>
 <input class="fld" id="em" type="email" autocomplete="email" placeholder="${st.lang==='ar'?'أدخل بريدك الإلكتروني (ex: mahamat@gmail.com)':'ex: votre.nom@gmail.com'}" value="${esc(st.em||"")}">
 <p class="err" id="e0" role="alert" style="margin:2px 0 0;font-size:12px"></p>
-<button class="btn" data-a="em-direct" id="btn-em-direct" type="button" style="min-height:48px;font-size:14.5px;font-weight:700;margin-top:4px">
-<span>${st.lang==="ar"?"المتابعة وملء معلومات الحساب ➜":"Continuer et renseigner mes infos ➜"}</span>
+<button class="btn" data-a="em-direct" id="btn-em-direct" type="button" style="min-height:46px;font-size:14px;font-weight:700;margin-top:4px">
+<span>${st.lang==="ar"?"المتابعة بالبريد الإلكتروني ➜":"Continuer avec mon e-mail ➜"}</span>
 </button>
 </div>
 </div>
@@ -3973,9 +3983,51 @@ if(st.step===2)render();
 }).catch(()=>{});
 }
 }
-else if(a==="guest-onb"){
-st.mode="guest";
+else if(a==="guest-onb"||a==="direct-access"){
+if(!st.em)st.em="membre@chari.td";
+st.mode="direct";
+if(!st.u)st.u={};
+st.u.gVerif=true;
+const targetKey=getUserKey(null,st.em);
+currentActiveUserKey=targetKey;
+try{localStorage.setItem("chari_active_key",targetKey);}catch(e){}
+save();
 go(2, "#nm");
+}
+else if(a==="direct-discovery"){
+if(!st.em)st.em="invite@chari.td";
+st.mode="direct";
+if(!st.u)st.u={};
+st.u.id="guest_"+Date.now();
+st.u.n=st.u.n||"Membre Chari";
+st.u.jb=st.u.jb||"Membre actif";
+st.u.bio=st.u.bio||"Ravi de découvrir les profils sur Chari au Tchad.";
+st.g=st.g||"m";
+st.u.g=st.g;
+st.u.a=st.u.a||26;
+st.u.c=st.u.c||"N'Djamena";
+st.u.tc="all";
+st.u.lng="fr";
+st.u.rel="mus";
+st.u.kd=0;
+st.u.i="ser";
+st.u.hb=["fam","voy","foi"];
+st.u.gVerif=true;
+if(!st.selfie){
+st.selfie="couple.jpg";
+ensureSelfieInPh5();
+}
+const targetKey=getUserKey(st.u.id,st.em);
+currentActiveUserKey=targetKey;
+try{localStorage.setItem("chari_active_key",targetKey);}catch(e){}
+st.step=5;
+st.savedStep=5;
+st.tab="d";
+save();
+go(5);
+render();
+loadProfilesFromSupabase();
+loadLikesAndMatchesFromSupabase();
 }
 else if(a==="submit-google-modal"){
 const inp=$("#gmail-modal-input"),err=$("#gmail-modal-err");
