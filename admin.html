@@ -712,7 +712,7 @@ function renderAccessDeniedView(attemptedEmail) {
 async function loginWithGoogle() {
   if (!sb) return;
   try {
-    localStorage.setItem("chari_admin_login", "1");
+    localStorage.removeItem("chari_admin_login");
     const redir = window.location.origin + "/admin.html";
     const { data, error } = await sb.auth.signInWithOAuth({
       provider: "google",
