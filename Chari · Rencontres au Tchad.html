@@ -124,11 +124,14 @@
 html{
   width: 100%;
   max-width: 100vw;
+  height: 100%;
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
   scroll-padding-top: env(safe-area-inset-top, 0px);
 }
 html,body{
+  min-height: 100vh;
+  min-height: 100dvh;
   height: 100%;
   margin: 0;
   padding: 0;
@@ -137,13 +140,16 @@ html,body{
   overflow-x: hidden;
 }
 body{
-  background: var(--bg);
+  background: #090d16;
   color: var(--body);
   font: 400 15px/1.5 "Inter", "IBM Plex Sans Arabic", system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   letter-spacing: -0.01em;
   position: relative;
   touch-action: pan-y;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
 }
 h1,h2,h3{
   color: var(--ink);
@@ -160,11 +166,12 @@ button{cursor:pointer}
 header :focus-visible,.ov :focus-visible{outline-color:var(--brand-light)}
 .app{
   height: 100%;
-  min-height: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
   width: 100%;
-  max-width: 480px;
+  max-width: 580px;
   margin: 0 auto;
-  box-shadow: 0 0 50px rgba(31, 32, 36, 0.08);
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.45);
   background: var(--bg);
   overflow-x: hidden;
   box-sizing: border-box;
@@ -580,18 +587,22 @@ nav [aria-current]::after{
 .ov{
   position: fixed;
   inset: 0;
-  background: rgba(31, 32, 36, 0.7);
-  backdrop-filter: blur(8px);
+  background: rgba(11, 15, 25, 0.82);
+  backdrop-filter: blur(10px);
   color: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-  animation: pop .25s ease-out;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  padding-top: max(16px, env(safe-area-inset-top, 0px));
+  padding-bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  animation: pop .22s ease-out;
   z-index: 999;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
-.ov[hidden]{display:none}
+.ov[hidden]{display:none !important}
 .mi{display:grid;justify-items:center;gap:18px;text-align:center;padding:24px 18px}
 .mi h2{font-size:38px;font-weight:800}.mi p{margin:0;font-size:15px;color:#E8E9F1}
 .pair{display:flex;align-items:center;gap:12px;margin:8px 0}
@@ -1380,13 +1391,10 @@ body.screen-protected .screen-shield{display:flex!important}
   70%{ box-shadow: 0 0 0 28px rgba(0, 111, 253, 0); }
   100%{ box-shadow: 0 0 0 0 rgba(0, 111, 253, 0); }
 }
-/* Mobile Phone Responsive Optimization - Epouse parfaitement l'ecran mobile */
-@media screen and (max-width: 480px) {
-  html, body {
-    width: 100vw;
-    max-width: 100vw;
-    overflow-x: hidden;
-    position: relative;
+/* Responsive Dimensions Optimization - Mobile Phone, Tablet, Desktop */
+@media screen and (max-width: 600px) {
+  body {
+    background: var(--bg);
   }
   .app {
     width: 100vw;
@@ -1395,7 +1403,8 @@ body.screen-protected .screen-shield{display:flex!important}
     box-shadow: none;
     border: none;
     border-radius: 0;
-    overflow-x: hidden;
+    min-height: 100dvh;
+    height: 100dvh;
   }
   header {
     padding: 10px 14px;
@@ -1403,7 +1412,7 @@ body.screen-protected .screen-shield{display:flex!important}
     max-width: 100%;
   }
   main {
-    padding: 12px 12px 18px;
+    padding: 12px 14px 22px;
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
@@ -1414,13 +1423,13 @@ body.screen-protected .screen-shield{display:flex!important}
     max-width: 100%;
   }
   .card {
-    border-radius: 16px;
+    border-radius: 18px;
     width: 100%;
     max-width: 100%;
   }
   .ph {
-    height: min(44vh, 310px);
-    min-height: 200px;
+    height: min(46vh, 330px);
+    min-height: 220px;
   }
   .bd {
     padding: 14px;
@@ -1438,20 +1447,20 @@ body.screen-protected .screen-shield{display:flex!important}
     padding: 14px;
   }
   .btn {
-    min-height: 46px;
+    min-height: 48px;
     padding: 0 16px;
     font-size: 14.5px;
   }
   .btn-google {
-    min-height: 50px;
+    min-height: 52px;
     font-size: 15px;
-    padding: 0 10px;
+    padding: 0 12px;
     gap: 10px;
   }
   .fld {
-    min-height: 46px;
+    min-height: 48px;
     padding: 0 14px;
-    font-size: 14px;
+    font-size: 14.5px;
   }
   .visa-card-box {
     padding: 14px 14px;
@@ -1461,10 +1470,31 @@ body.screen-protected .screen-shield{display:flex!important}
     font-size: 14px;
     letter-spacing: 1.2px;
   }
-  .g-modal, .sheet-box {
+  .g-modal, .sheet-box, .profile-detail-modal {
     width: 95%;
     max-width: 95%;
-    padding: 18px 14px;
+    padding: 20px 16px;
+    max-height: 92dvh;
+    overflow-y: auto;
+  }
+}
+
+@media screen and (min-width: 601px) {
+  body {
+    padding: 12px 0;
+    background: radial-gradient(circle at 50% 15%, #1e293b 0%, #090d16 100%);
+  }
+  .app {
+    max-width: 580px;
+    min-height: min(920px, calc(100dvh - 24px));
+    height: min(920px, calc(100dvh - 24px));
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    box-shadow: 0 16px 60px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+  .ph {
+    height: 350px;
   }
 }
 </style>
@@ -2293,14 +2323,14 @@ ${isFile?`<div style="background:rgba(0,111,253,0.10);border:1px solid rgba(0,11
 <div style="flex:1;height:1px;background:var(--line)"></div>
 </div>
 
-<button class="btn-google" data-a="gauth" type="button" id="btn-google-login" style="width:100%;min-height:50px;font-size:14.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:12px;background:#ffffff;color:#1F1F1F;border:2px solid #E2E8F0;border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,0.08);cursor:pointer;transition:transform 0.15s ease, box-shadow 0.15s ease;">
+<button class="btn-google" data-a="gauth" type="button" id="btn-google-login" style="width:100%;min-height:52px;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:12px;background:#ffffff;color:#1F1F1F;border:2px solid #E2E8F0;border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,0.08);cursor:pointer;transition:transform 0.15s ease, box-shadow 0.15s ease;">
 <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-<span>${t.gBtn}</span>
+<span>${st.lang==='ar'?'التسجيل بحساب Google (الصفحة المخصصة) ➜':'S\'inscrire avec Google (Page dédiée) ➜'}</span>
 </button>
 
 <div style="margin-top:6px;text-align:center">
-<button type="button" data-a="google-direct-email" id="btn-google-direct" style="background:none;border:none;color:#1a73e8;font-size:12px;font-weight:600;cursor:pointer;padding:4px 8px;display:inline-flex;align-items:center;gap:6px">
-<span>⚡ ${st.lang==='ar'?'أو المتابعة مباشرة بعنوان بريدك Gmail':'Ou inscription directe avec votre compte Gmail'} ➜</span>
+<button type="button" data-a="google-direct-email" id="btn-google-direct" style="background:none;border:none;color:#1a73e8;font-size:12.5px;font-weight:600;cursor:pointer;padding:4px 8px;display:inline-flex;align-items:center;gap:6px">
+<span>⚡ ${st.lang==='ar'?'فتح صفحة التسجيل عبر Gmail مباشرة':'Accéder à la page d\'inscription Google / Gmail'} ➜</span>
 </button>
 </div>
 
@@ -2331,12 +2361,94 @@ ${ic("shield")}
 <p class="mut" style="font-size:12px;margin-top:14px;text-align:center">${t.age}</p>
 </div>`;
 }
-if(s===1){go(3);return"";}
+if(s===1){
+// Page dediee a l'inscription avec Google
+const isAr=st.lang==="ar";
+return`<div class="pf google-auth-page" style="display:flex;flex-direction:column;gap:18px;padding:8px 4px 28px">
+<div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--line)">
+<button type="button" data-a="back-to-step0" class="btn-back" style="display:inline-flex;align-items:center;gap:6px;background:none;border:none;color:var(--brand);font-size:14px;font-weight:700;cursor:pointer;padding:6px 10px;border-radius:8px">
+<span>←</span> <span>${isAr?"العودة للرئيسية":"Retour à l'accueil"}</span>
+</button>
+<span class="flag-td" title="Tchad" aria-label="Tchad">${flagSvg}</span>
+</div>
+
+<div style="text-align:center;padding:12px 0 6px">
+<div style="display:inline-flex;align-items:center;justify-content:center;width:76px;height:76px;background:#ffffff;border:2px solid #E2E8F0;border-radius:24px;box-shadow:0 8px 24px rgba(0,0,0,0.06);margin-bottom:14px">
+<svg viewBox="0 0 24 24" width="44" height="44" aria-hidden="true">
+<path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+<path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+<path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+<path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+</svg>
+</div>
+<h1 style="font-size:23px;font-weight:800;color:var(--ink);margin:0 0 8px">
+${isAr?"التسجيل بحساب Google":"Inscription avec votre compte Google"}
+</h1>
+<p style="font-size:14px;color:var(--mut);margin:0 auto;line-height:1.5;max-width:44ch">
+${isAr?"سجّل حسابك في تشاد باستخدام حساب Google أو بريد Gmail للوصول الفوري والآمن لاستكمال بروفايلك."
+:"Connectez-vous avec votre compte Google ou Gmail pour accéder immédiatement à la création de votre profil vérifié au Tchad."}
+</p>
+</div>
+
+<div style="background:var(--surf);border:1.5px solid var(--line);border-radius:20px;padding:22px 18px;box-shadow:var(--sh-md)">
+<button type="button" class="btn-google-auth-page" data-a="launch-google-oauth" style="width:100%;min-height:54px;font-size:15px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:12px;background:#ffffff;color:#1F1F1F;border:2px solid #D1D5DB;border-radius:14px;box-shadow:0 4px 14px rgba(0,0,0,0.06);cursor:pointer;transition:all 0.15s ease">
+<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+<path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+<path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+<path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+<path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+</svg>
+<span>${isAr?"المتابعة عبر Google (1-نقرة تلقائية)":"Continuer avec Google (1-clic)"}</span>
+</button>
+
+<div style="display:flex;align-items:center;gap:12px;margin:18px 0">
+<div style="flex:1;height:1px;background:var(--line)"></div>
+<span style="font-size:11.5px;font-weight:700;color:var(--mut);letter-spacing:0.6px;text-transform:uppercase">
+${isAr?"أو كتابة بريدك Gmail مباشرة":"OU SAISIE DIRECTE GMAIL"}
+</span>
+<div style="flex:1;height:1px;background:var(--line)"></div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:10px">
+<label for="google-page-email" style="font-size:13px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:6px">
+<span>📧</span> <span>${isAr?"عنوان بريدك الإلكتروني Gmail :":"Votre adresse Gmail :"}</span>
+</label>
+<input class="fld" id="google-page-email" type="email" autocomplete="email" placeholder="votre.nom@gmail.com" value="${esc(st.em||"")}" style="font-size:15px">
+<p class="err" id="google-page-err" role="alert" style="margin:2px 0 0;font-size:12.5px"></p>
+
+<button class="btn gold" type="button" data-a="submit-google-page" id="btn-submit-google-page" style="min-height:50px;font-size:15px;font-weight:800;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:8px">
+<span>✓</span> <span>${isAr?"تأكيد حساب Google والمتابعة ➜":"Valider mon compte Google & Continuer ➜"}</span>
+</button>
+</div>
+</div>
+
+<div style="background:rgba(0,111,253,0.06);border:1px solid rgba(0,111,253,0.2);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--ink)">
+<span style="color:#34A853;font-size:16px">✓</span>
+<span>${isAr?"شعار التحقق الأخضر يُضاف تلقائياً إلى بروفايلك":"Badge Compte Vérifié Google attribué à votre profil"}</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--ink)">
+<span style="color:#4285F4;font-size:16px">⚡</span>
+<span>${isAr?"وصول فوري لاستكمال معلوماتك (الاسم، المهنة، الصور)":"Accès immédiat au formulaire complet (nom, profession, photos)"}</span>
+</div>
+<div style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--ink)">
+<span style="color:#EA4335;font-size:16px">🔒</span>
+<span>${isAr?"بياناتك مشفرة ومحمية بالكامل في تشاد":"Vos données personnelles restent sécurisées et confidentielles"}</span>
+</div>
+</div>
+
+<div style="text-align:center;margin-top:4px">
+<button type="button" data-a="direct-access" style="background:none;border:none;color:var(--mut);font-size:13px;font-weight:600;cursor:pointer;text-decoration:underline">
+${isAr?"تخطي والمتابعة المباشرة دون بريد":"Passer et accéder directement au formulaire sans e-mail"}
+</button>
+</div>
+</div>`;
+}
 if(s===2)return`<div class="pf">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
 <h1 style="margin:0">${t.pr}</h1>
-<button type="button" data-a="back-to-step0" style="background:none;border:none;color:var(--brand);font-size:12.5px;font-weight:600;cursor:pointer;padding:4px 8px;display:inline-flex;align-items:center;gap:4px">
-<span>←</span> <span>${st.lang==='ar'?'تغيير البريد':'Changer d\'e-mail'}</span>
+<button type="button" data-a="back-to-step1" style="background:none;border:none;color:var(--brand);font-size:12.5px;font-weight:600;cursor:pointer;padding:4px 8px;display:inline-flex;align-items:center;gap:4px">
+<span>←</span> <span>${st.lang==='ar'?'تغيير الحساب / البريد':'Changer de compte / e-mail'}</span>
 </button>
 </div>
 ${st.u.gVerif?`<div style="display:flex;align-items:center;gap:8px;background:rgba(52,168,83,0.12);color:#1e7e34;padding:8px 12px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:12px"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="#34A853" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg><span>${t.gVerif}${st.em?" : "+esc(st.em):""}</span></div>`:""}
@@ -3163,7 +3275,7 @@ window.location.href=`${cfg.url}/auth/v1/authorize?provider=google&redirect_to=$
 }
 async function signInWithGoogle(){
 try{localStorage.removeItem("chari_admin_login");}catch(e){}
-openGoogleSetupModal();
+go(1, "#google-page-email");
 }
 async function signInWithFacebook(){
 const cfg=window.CHARI_SUPABASE;
@@ -3191,11 +3303,7 @@ return;
 window.location.href=`${cfg.url}/auth/v1/authorize?provider=facebook&redirect_to=${encodeURIComponent(redir)}`;
 }
 function openGoogleSetupModal(){
-const t=x(),o=$("#ov");
-const isAr=st.lang==="ar";
-o.innerHTML=`<div style="flex:1;display:flex;align-items:center;justify-content:center;padding:16px"><div class="g-modal" style="max-width:440px;text-align:start"><div style="text-align:center;margin-bottom:12px"><svg viewBox="0 0 24 24" width="46" height="46" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg><h2 style="font-size:19px;color:var(--ink);margin:8px 0 4px">${isAr?"التسجيل بحساب Google / Gmail":"Inscription avec votre compte Google"}</h2><p style="margin:0;color:var(--mut);font-size:13px">${isAr?"أدخل عنوان بريدك Gmail للوصول الفوري لنموذج التسجيل :":"Renseignez votre adresse Gmail pour accéder immédiatement à l'interface d'inscription :"}</p></div><div style="display:flex;flex-direction:column;gap:12px"><div><label for="gmail-modal-input" style="font-size:12.5px;font-weight:600;color:var(--ink)">${isAr?"عنوان بريدك الإلكتروني Gmail :":"Votre adresse Gmail :"}</label><input class="fld" id="gmail-modal-input" type="email" placeholder="votre.nom@gmail.com" value="${esc(st.em||"")}" style="margin-top:4px"><p class="err" id="gmail-modal-err" style="margin:4px 0 0;font-size:12px"></p></div><button class="btn gold" type="button" data-a="submit-google-modal" style="min-height:48px;font-size:15px;font-weight:700"><span>${isAr?"المتابعة وملء معلومات الحساب ➜":"Accéder au formulaire d'inscription ➜"}</span></button><div style="display:flex;align-items:center;gap:10px;margin:2px 0"><div style="flex:1;height:1px;background:var(--line)"></div><span style="font-size:11px;color:var(--mut)">${isAr?"أو المصادقة التلقائية":"OU AUTOMATIQUE"}</span><div style="flex:1;height:1px;background:var(--line)"></div></div><button class="btn sec" type="button" data-a="launch-google-oauth" style="min-height:40px;font-size:13px;display:flex;align-items:center;justify-content:center;gap:8px"><svg viewBox="0 0 24 24" width="16" height="16"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg><span>${isAr?"المصادقة الآلية عبر Google 1-clic":"Connexion automatique Google 1-clic"}</span></button><button class="btn ghost" type="button" data-a="cm" style="min-height:36px;font-size:12.5px">${t.bk}</button></div></div></div>`;
-o.hidden=false;
-const inp=$("#gmail-modal-input");if(inp)inp.focus();
+go(1, "#google-page-email");
 }
 function openHobbyModal(){
 const t=x(),o=$("#ov");
@@ -3922,6 +4030,7 @@ else if(a==="lang"){syncStep2InputsToState();st.lang=st.lang==="fr"?"ar":"fr";sa
 else if(a==="gauth"){signInWithGoogle()}
 else if(a==="toggle-email-auth"){st.showEmailAuth=!st.showEmailAuth;render()}
 else if(a==="back-to-step0"){go(0,"#em")}
+else if(a==="back-to-step1"){go(1,"#google-page-email")}
 else if(a==="back-to-step2"){go(2,"#nm")}
 else if(a==="em-direct"){
 const emEl=$("#em"), e0=$("#e0");
@@ -4038,11 +4147,15 @@ try{localStorage.setItem("chari_active_key",targetKey);}catch(e){}
 save();
 go(2,"#nm");
 }
-else if(a==="google-direct-email"){
-const emInput=$("#em");
-if(emInput&&emInput.value.trim()){
-const val=emInput.value.trim().toLowerCase();
-if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)){
+else if(a==="submit-google-page"){
+const inp=$("#google-page-email"),err=$("#google-page-err");
+if(!inp)return;
+const val=inp.value.trim().toLowerCase();
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)){
+if(err)err.textContent=st.lang==="ar"?"يرجى إدخال عنوان بريد Gmail صالح.":"Veuillez entrer une adresse e-mail ou Gmail valide.";
+inp.focus();return;
+}
+if(err)err.textContent="";
 st.em=val;
 st.mode="google";
 if(!st.u)st.u={};
@@ -4051,12 +4164,37 @@ if(!st.u.n)st.u.n=val.split('@')[0];
 const targetKey=getUserKey(null,val);
 currentActiveUserKey=targetKey;
 try{localStorage.setItem("chari_active_key",targetKey);}catch(e){}
+try{
+const raw=localStorage.getItem(targetKey);
+if(raw){
+const saved=JSON.parse(raw);
+if(saved&&saved.u){
+for(let k in saved){
+if(k==="u")st.u=Object.assign({},st.u,saved.u);
+else st[k]=saved[k];
+}
+}
+}
+}catch(e){}
 save();
 go(2,"#nm");
-return;
+if(sbClient){
+sbClient.from('profiles').select('*').eq('email',val).limit(1).then(({data:pList})=>{
+if(pList&&pList.length>0&&pList[0].name&&pList[0].name!=='__DELETED__'&&pList[0].name!=='Test Col'){
+const p=pList[0];
+st.u.id=p.id;st.u.n=p.name;st.u.a=p.age;st.u.c=p.city;st.u.jb=p.job;st.u.bio=p.bio;
+st.u.g=p.gender;st.g=p.gender;st.u.lng=p.language||'fr';st.u.rel=p.religion||'mus';
+st.u.kd=p.children||0;st.u.i=p.intention||'ser';st.u.hb=p.hobbies||[];
+if(p.selfie_url){st.selfie=p.selfie_url;ensureSelfieInPh5();}
+st.prem=p.is_premium?1:0;
+save();
+if(st.step===2)render();
+}
+}).catch(()=>{});
 }
 }
-openGoogleSetupModal();
+else if(a==="google-direct-email"){
+go(1, "#google-page-email");
 }
 else if(a==="launch-google-oauth"){
 closeM();
@@ -4327,6 +4465,12 @@ const btn=$("#btn-em-direct")||document.querySelector("[data-a=em-direct]");
 if(btn)btn.click();
 return;
 }
+if(e.key==="Enter"&&e.target&&e.target.id==="google-page-email"){
+e.preventDefault();
+const btn=$("#btn-submit-google-page")||document.querySelector("[data-a=submit-google-page]");
+if(btn)btn.click();
+return;
+}
 if(e.key==="PrintScreen"){e.preventDefault();triggerScreenshotBlocked();return}
 const ctrl=e.ctrlKey||e.metaKey;
 if(ctrl&&(e.key==="p"||e.key==="P"||e.key==="s"||e.key==="S")){e.preventDefault();triggerScreenshotBlocked();return}
@@ -4478,7 +4622,12 @@ const errDesc=searchParams.get('error_description')||hashParams.get('error_descr
 if(errDesc){
 console.warn("OAuth redirect error:",errDesc);
 alert((st.lang==="ar"?"تعذر إتمام الدخول بـ Google: ":"Erreur Google OAuth : ")+decodeURIComponent(errDesc.replace(/\+/g,' ')));
-openGoogleSetupModal();
+go(1, "#google-page-email");
+return;
+}
+
+if(searchParams.get('auth')==='google'||searchParams.get('step')==='google'||searchParams.get('step')==='1'||hashStr==='google'){
+go(1, "#google-page-email");
 return;
 }
 
