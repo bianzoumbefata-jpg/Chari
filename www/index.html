@@ -1573,184 +1573,7 @@ const BM=[{fr:"Ingénieur agronome. Football le week-end, famille toute l'année
 const CI=["N'Djamena","Moundou","Sarh","Abéché","Kélo","Koumra","Pala","Am Timan","Bongor","Mongo","Doba","Ati","Laï","Faya-Largeau","Mao","Biltine","Bol","Goz Beïda","Moussoro","Bokoro"],VA=["fam","etu","ent","foi","mus","foo","cui","voy"],SK=["#5A3825","#7A4A32","#3E281D","#8A5A3C","#A36B4B","#6A412C"],GG=[[B,G],[G,B],[R,G],[B,R],[G,R]],L4=[["fr","ar"],["ar","fr"],["fr","sa"],["fr"]];
 const HOBBIES=[{id:"spo",ic:"🏃",fr:"Sport",ar:"الرياضة"},{id:"lec",ic:"📚",fr:"Lecture",ar:"القراءة"},{id:"cui",ic:"🍳",fr:"Cuisine",ar:"الطبخ"},{id:"jv",ic:"🎮",fr:"Jeux vidéo",ar:"ألعاب الفيديو"},{id:"voy",ic:"✈️",fr:"Voyage",ar:"السفر"},{id:"mus",ic:"🎵",fr:"Musique",ar:"الموسيقى"},{id:"foo",ic:"⚽",fr:"Football",ar:"كرة القدم"},{id:"cin",ic:"🎬",fr:"Cinéma",ar:"السينما"},{id:"ent",ic:"💼",fr:"Business",ar:"ريادة الأعمال"},{id:"art",ic:"🎨",fr:"Art & Mode",ar:"الفن والموضة"}];
 const mk=(g,N,Bi)=>N.map((n,i)=>({id:(g==="f"?0:100)+i+1,g,n,a:22+(i*7+3)%14,c:CI[(i*3+1)%CI.length],i:i%3?"ser":"mar",kd:(i*5)%4,l:L4[i%4],lng:i%3===0?"both":(i%2===0?"ar":"fr"),rel:i%5===4?"oth":(i%2===0?"mus":"chr"),v:[VA[i%8],VA[(i+3)%8]],b:Bi[i%6],y:i%5===0?1:0,sk:SK[i%6],bg:GG[i%5],cl:GG[i%5][0]===G?B:G}));
-const SEED_PROFILES = [
-  {
-    id: "14f7fb00-8bc1-4b8d-a477-9d82285112c5",
-    n: "Achta",
-    g: "f",
-    a: 24,
-    c: "N'Djamena",
-    tc: "all",
-    jb: "Infirmière en pédiatrie",
-    bio: "Passionnée par la santé des enfants et la cuisine tchadienne. J'aime les discussions sincères, le respect mutuel et je recherche une relation durable.",
-    b: { fr: "Passionnée par la santé des enfants et la cuisine tchadienne. J'aime les discussions sincères, le respect mutuel et je recherche une relation durable.", ar: "شغوفة بصحة الأطفال والطبخ التشادي. أحب الحديث الصادق والاحترام المتبادل وأبحث عن علاقة مستقرة." },
-    lng: "fr",
-    rel: "mus",
-    kd: 0,
-    i: "mar",
-    hb: ["cui", "lec", "voy"],
-    l: ["fr"],
-    v: ["cui", "fam"],
-    selfie_url: "photos/achte.jpg",
-    is_verified: true,
-    is_premium: false,
-    y: 1
-  },
-  {
-    id: "a3f15556-dc5b-40d1-ac33-5fc301e6745a",
-    n: "Fatimé",
-    g: "f",
-    a: 26,
-    c: "Abéché",
-    tc: "all",
-    jb: "Comptable d'entreprise",
-    bio: "Calme, organisée et curieuse. J'aime la lecture, le thé à la menthe et les moments en famille. Prête pour un bel engagement.",
-    b: { fr: "Calme, organisée et curieuse. J'aime la lecture, le thé à la menthe et les moments en famille. Prête pour un bel engagement.", ar: "هادئة ومنظمة وشغوفة بالمعرفة. أحب القراءة والشاي بالنعناع وأوقات العائلة. مستعدة للارتباط الصادق." },
-    lng: "both",
-    rel: "mus",
-    kd: 0,
-    i: "mar",
-    hb: ["lec", "cui", "ent"],
-    l: ["fr", "ar"],
-    v: ["fam", "foi"],
-    selfie_url: "photos/fatime.jpg",
-    is_verified: true,
-    is_premium: true,
-    y: 1
-  },
-  {
-    id: "42c14962-1255-4f5c-bf25-d38b0e6df655",
-    n: "Hawa",
-    g: "f",
-    a: 23,
-    c: "Moundou",
-    tc: "all",
-    jb: "Diplômée en Droit & entrepreneure",
-    bio: "Souriante, ambitieuse et spontanée. J'aime le sport, les voyages et le football. À la recherche de quelqu'un de sérieux et respectueux.",
-    b: { fr: "Souriante, ambitieuse et spontanée. J'aime le sport, les voyages et le football. À la recherche de quelqu'un de sérieux et respectueux.", ar: "بشوشة وطموحة وتلقائية. أحب الرياضة والسفر وكرة القدم. أبحث عن شخص جاد ومحترم." },
-    lng: "fr",
-    rel: "chr",
-    kd: 0,
-    i: "ser",
-    hb: ["spo", "foo", "voy"],
-    l: ["fr"],
-    v: ["etu", "ent"],
-    selfie_url: "photos/hawa.jpg",
-    is_verified: true,
-    is_premium: false,
-    y: 0
-  },
-  {
-    id: "611fc08e-37d2-4470-82e3-9a2f83ef53ac",
-    n: "Mariam",
-    g: "f",
-    a: 27,
-    c: "Sarh",
-    tc: "all",
-    jb: "Institutrice de lycée",
-    bio: "Passionnée d'éducation, de musique et de poésie. J'apprécie la simplicité, la loyauté et les fous rires partagés.",
-    b: { fr: "Passionnée d'éducation, de musique et de poésie. J'apprécie la simplicité, la loyauté et les fous rires partagés.", ar: "شغوفة بالتعليم والموسيقى والشعر. أقدّر البساطة والوفاء والضحك العفوي." },
-    lng: "both",
-    rel: "mus",
-    kd: 0,
-    i: "mar",
-    hb: ["mus", "lec", "cui"],
-    l: ["fr", "ar"],
-    v: ["mus", "cui"],
-    selfie_url: "photos/mariam.jpg",
-    is_verified: true,
-    is_premium: false,
-    y: 1
-  },
-  {
-    id: "080aeda1-47fd-463b-b806-6dfc9cd248fd",
-    n: "Mahamat",
-    g: "m",
-    a: 28,
-    c: "N'Djamena",
-    tc: "all",
-    jb: "Ingénieur en télécommunications",
-    bio: "Posé, dynamique et travailleur. Passionné de nouvelles technologies et de sport. Je cherche une complice bienveillante pour construire un foyer.",
-    b: { fr: "Posé, dynamique et travailleur. Passionné de nouvelles technologies et de sport. Je cherche une complice bienveillante pour construire un foyer.", ar: "هادئ، نشيط ومجتهد. شغوف بالتكنولوجيا الحديثة والرياضة. أبحث عن شريكة حياة لبناء أسرة سعيدة." },
-    lng: "both",
-    rel: "mus",
-    kd: 0,
-    i: "mar",
-    hb: ["spo", "foo", "ent"],
-    l: ["fr", "ar"],
-    v: ["ent", "foo"],
-    selfie_url: "photos/mahamat.jpg",
-    is_verified: true,
-    is_premium: true,
-    y: 1
-  },
-  {
-    id: "b4a03102-2395-4eae-b474-0208bbd6a44d",
-    n: "Abakar",
-    g: "m",
-    a: 30,
-    c: "Abéché",
-    tc: "all",
-    jb: "Ingénieur agronome & entrepreneur",
-    bio: "Le football le week-end, la famille toute l'année. Homme de parole, calme et à l'écoute. En quête d'une relation solide et sincère.",
-    b: { fr: "Le football le week-end, la famille toute l'année. Homme de parole, calme et à l'écoute. En quête d'une relation solide et sincère.", ar: "كرة القدم في العطلة والعائلة دائماً. رجل وفي لكلمته وهادئ. أبحث عن علاقة مبنية على الصدق." },
-    lng: "both",
-    rel: "mus",
-    kd: 0,
-    i: "mar",
-    hb: ["foo", "ent", "voy"],
-    l: ["fr", "ar"],
-    v: ["fam", "foo"],
-    selfie_url: "photos/abakar.jpg",
-    is_verified: true,
-    is_premium: false,
-    y: 1
-  },
-  {
-    id: "60d8636f-9858-4db0-8093-9d45a8493567",
-    n: "Idriss",
-    g: "m",
-    a: 26,
-    c: "Moundou",
-    tc: "all",
-    jb: "Développeur web & graphiste",
-    bio: "Créatif, curieux et toujours de bonne humeur. J'aime les cafés, les projets numériques et les sorties entre amis.",
-    b: { fr: "Créatif, curieux et toujours de bonne humeur. J'aime les cafés, les projets numériques et les sorties entre amis.", ar: "مبدع وفضولي وبشوش دائماً. أحب القهوة والمشاريع الرقمية واللقاءات مع الأصدقاء." },
-    lng: "fr",
-    rel: "chr",
-    kd: 0,
-    i: "ser",
-    hb: ["jv", "cin", "mus"],
-    l: ["fr"],
-    v: ["etu", "mus"],
-    selfie_url: "photos/idriss.jpg",
-    is_verified: true,
-    is_premium: false,
-    y: 0
-  },
-  {
-    id: "fc14ac69-0d49-4ffe-a556-fd82c121ff1d",
-    n: "Moussa",
-    g: "m",
-    a: 29,
-    c: "Sarh",
-    tc: "all",
-    jb: "Médecin généraliste",
-    bio: "Sérieux dans mon travail mais avec beaucoup d'humour dans la vie. J'aime les longues discussions, la lecture et la nature.",
-    b: { fr: "Sérieux dans mon travail mais avec beaucoup d'humour dans la vie. J'aime les longues discussions, la lecture et la nature.", ar: "جاد في مهنتي ولكن أحب المرح في الحياة. أعشق النقاشات العميقة والقراءة والطبيعة." },
-    lng: "both",
-    rel: "mus",
-    kd: 0,
-    i: "mar",
-    hb: ["lec", "voy", "spo"],
-    l: ["fr", "ar"],
-    v: ["foi", "fam"],
-    selfie_url: "photos/moussa.jpg",
-    is_verified: true,
-    is_premium: false,
-    y: 1
-  }
-];
+const SEED_PROFILES = [];
 let P = [];
 const ME={n:"",bg:[G,B],cl:"#C3CCDB",sk:"#9AA7BB"};
 const $=s=>document.querySelector(s);
@@ -1799,7 +1622,43 @@ function getDailyDateKey(){
 const d=new Date();
 return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
-const st={lang:"fr",blur:true,lite:false,tc:"all",mode:"google",em:"",ph5:[],inc:false,ed:null,step:0,savedStep:4,u:{hb:[],bio:"",lng:"fr",rel:"mus"},card:{num:"",exp:"",cvv:"",nom:""},g:"",ph:"",i:0,seen:0,prem:0,pay:0,op:"",pp:0,vs:0,selfie:"",tab:"d",chat:null,mt:[],ms:{},busy:0,blocked:[],feedbacks:[],mSubTab:"chat",reqSubTab:"rec",incomingRequests:[],sentRequests:[],passed:[],dailyLimits:{date:getDailyDateKey(),sent:0,accepted:0}};
+function getUserKey(id, email){
+const raw=id||email;
+if(!raw)return "chari_guest";
+return "chari_u_"+String(raw).trim().toLowerCase().replace(/[^a-z0-9_-]/g,"_");
+}
+function createBlankState(email="", uid="", name=""){
+return {
+lang:"fr",blur:true,lite:false,tc:"all",mode:"google",em:email||"",ph5:[],inc:false,ed:null,step:0,savedStep:0,
+u:{id:uid||"",n:name||"",jb:"",a:"",c:"N'Djamena",tc:"all",bio:"",lng:"fr",rel:"mus",kd:0,i:"ser",hb:[],gVerif:true},
+card:{num:"",exp:"",cvv:"",nom:""},g:"",ph:"",i:0,seen:0,prem:0,pay:0,op:"",pp:0,vs:0,selfie:"",
+tab:"d",chat:null,mt:[],ms:{},busy:0,blocked:[],feedbacks:[],mSubTab:"chat",reqSubTab:"rec",
+incomingRequests:[],sentRequests:[],passed:[],dailyLimits:{date:getDailyDateKey(),sent:0,accepted:0}
+};
+}
+function isProfileComplete(state){
+const s=state||st;
+if(!s||!s.u)return false;
+const u=s.u;
+const n=typeof u.n==='string'?u.n.trim():'';
+const jb=typeof u.jb==='string'?u.jb.trim():'';
+const bio=typeof u.bio==='string'?u.bio.trim():'';
+const c=typeof u.c==='string'?u.c.trim():'';
+const a=+u.a;
+const g=s.g||u.g;
+const hasGender=(g==="f"||g==="m");
+const hasHobbies=Array.isArray(u.hb)&&u.hb.length>=1;
+const hasLng=!!u.lng;
+const hasRel=!!u.rel;
+return (n.length>=2 && jb.length>=2 && bio.length>=5 && c.length>=2 && a>=22 && hasGender && hasHobbies && hasLng && hasRel);
+}
+function hasVerifiedSelfie(state){
+const s=state||st;
+return !!(s && s.selfie && typeof s.selfie==='string' && s.selfie.length>50);
+}
+let currentActiveUserKey = null;
+const st = createBlankState();
+try{ localStorage.removeItem("chari"); }catch(e){}
 function ensureSelfieInPh5(){
 if(!st.selfie)return;
 const idx=st.ph5.findIndex(p=>p.isSelfie||p.p===st.selfie||p.o===st.selfie);
@@ -1818,31 +1677,17 @@ if(!Array.isArray(st.incomingRequests))st.incomingRequests=[];
 if(!Array.isArray(st.sentRequests))st.sentRequests=[];
 if(!Array.isArray(st.passed))st.passed=[];
 }
+const save=()=>{
 try{
-const s=JSON.parse(localStorage.getItem("chari")||"{}");
-["lang","blur","lite","tc","selfie","step","savedStep","g","ph","em","prem","inc","mSubTab","reqSubTab"].forEach(k=>{if(k in s)st[k]=s[k]});
-if(Array.isArray(s.ph5))st.ph5=s.ph5;
-if(Array.isArray(s.feedbacks))st.feedbacks=s.feedbacks;
-if(Array.isArray(s.blocked))st.blocked=s.blocked;
-if(Array.isArray(s.mt))st.mt=s.mt;
-if(Array.isArray(s.passed))st.passed=s.passed;
-if(Array.isArray(s.sentRequests))st.sentRequests=s.sentRequests;
-if(s.ms&&typeof s.ms==="object")st.ms=s.ms;
-if(Array.isArray(s.incomingRequests))st.incomingRequests=s.incomingRequests;
-if(s.dailyLimits&&s.dailyLimits.date)st.dailyLimits=s.dailyLimits;
-if(s.u)st.u=Object.assign({hb:["spo","cui"],bio:"",lng:"fr",rel:"mus"},s.u);
-if(!st.u.hb)st.u.hb=["spo","cui"];
-ensureSelfieInPh5();
-checkAndResetDailyLimits();
-initIncomingRequests();
-if(st.step>=4&&(!st.em||!st.selfie)){st.step=!st.em?0:3;}
-}catch(e){}
-const save=()=>{try{localStorage.setItem("chari",JSON.stringify({
+const k=getUserKey(st.u&&st.u.id, st.em);
+localStorage.setItem(k, JSON.stringify({
 lang:st.lang,blur:st.blur,lite:st.lite,tc:st.tc,u:st.u,blocked:st.blocked||[],
 selfie:st.selfie,ph5:st.ph5,feedbacks:st.feedbacks||[],step:st.step,savedStep:st.savedStep||st.step,g:st.g,ph:st.ph,
 em:st.em,prem:st.prem,inc:st.inc,mt:st.mt||[],ms:st.ms||{},passed:st.passed||[],sentRequests:st.sentRequests||[],
 incomingRequests:st.incomingRequests||[],dailyLimits:st.dailyLimits,mSubTab:st.mSubTab||"chat",reqSubTab:st.reqSubTab||"rec"
-}))}catch(e){}};
+}));
+}catch(e){}
+};
 setInterval(checkAndResetDailyLimits,60000);
 const x=()=>T[st.lang],ic=n=>`<svg class="i" aria-hidden="true"><use href="#i-${n}"/></svg>`,say=s=>{$("#live").textContent=s};
 const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -2080,7 +1925,10 @@ const l=$("#log");if(l){l.innerHTML="";st.ms[chatId].forEach((m,i)=>bub(l,m,i,ch
 editMessageInSupabase(msg.id,chatId,newT);
 }
 function render(){
-if(st.step>=4&&(!st.em||!st.selfie)){st.step=!st.em?0:3;}
+if(st.step>=4){
+if(!isProfileComplete()){st.step=2;}
+else if(!hasVerifiedSelfie()){st.step=3;}
+}
 const t=x(),h=document.documentElement,on=st.step<4;
 h.lang=st.lang;h.dir=st.lang==="ar"?"rtl":"ltr";h.classList.toggle("lite",st.lite);$("#lang").textContent=t.lgb;
 const stEl=$("#sc-shield-t"),sdEl=$("#sc-shield-d"),sbEl=$("[data-a=dismiss-shield]");
@@ -2222,8 +2070,8 @@ stopCam();
 st.vs=1;render();
 setTimeout(()=>{
 st.vs=2;
-if(!st.u||!st.u.jb||!st.u.a||!st.u.c){
-go(2,"#jb");
+if(!isProfileComplete()){
+go(2,"#nm");
 }else{
 go(4);
 }
@@ -2231,8 +2079,17 @@ say(x().selfieVerified||x().vd);
 },1400);
 }
 function go(n,sel){
+if(n>=4){
+if(!isProfileComplete()){
+n=2;sel="#nm";
+}else if(!hasVerifiedSelfie()){
+n=3;
+}
+}
 if(st.step===3&&n!==3)stopCam();
-st.step=n;render();$("#v").scrollTop=0;
+st.step=n;
+if(n>=4)st.savedStep=n;
+render();$("#v").scrollTop=0;
 if(n===3&&!st.selfie)setTimeout(startCam,120);
 const e=sel&&$(sel);if(e)e.focus();
 }
@@ -2927,10 +2784,14 @@ else if(a==="open-blocked"){openBlockedListModal()}
 else if(a==="unblock"){unblock(b.dataset.id)}
 else if(a==="logout"){
 if(confirm(t.logoutConfirm)){
+save();
 if(sbClient&&sbClient.auth){sbClient.auth.signOut().catch(()=>{});}
-st.savedStep=st.step>=4?st.step:4;
+currentActiveUserKey=null;
+const blank=createBlankState();
+for(let k in blank)st[k]=blank[k];
 st.step=0;
-save();render();
+render();
+say(x().logout);
 }
 }
 else if(a==="gd"){st.g=k;document.querySelectorAll("[data-a=gd]").forEach(n=>n.setAttribute("aria-pressed",n.dataset.k===k))}
@@ -2942,7 +2803,7 @@ if(!st.g){$("#e2").textContent=st.lang==="ar"?"يرجى تحديد جنسك (ر�
 if(!ag||+ag<22){$("#eA").textContent=t.agE;$("#ag").focus();return}
 if(!st.u||!st.u.hb||st.u.hb.length<1){$("#e2").textContent=st.lang==="ar"?"يرجى اختيار مركز اهتمام واحد على الأقل.":"Veuillez sélectionner au moins un centre d'intérêt (champ obligatoire).";return}
 st.tc=tc;st.u=Object.assign({},st.u,{n:nm,jb:jb,bio:bio,g:st.g,a:+ag,c:cy,tc:tc,lng:lng,rel:rel,kd:kd,i:it,hb:st.u.hb||[]});save();syncProfileToSupabase();
-if(!st.selfie)go(3);else go(4);
+if(!hasVerifiedSelfie())go(3);else go(4);
 }
 else if(a==="edrel"){const n=prompt(`${t.rel}\n1: ${t.relMus}\n2: ${t.relChr}\n3: ${t.relOth}`,st.u.rel==="chr"?"2":(st.u.rel==="oth"?"3":"1"));if(n==="1")st.u.rel="mus";else if(n==="2")st.u.rel="chr";else if(n==="3")st.u.rel="oth";save();syncProfileToSupabase();render()}
 else if(a==="edlng"){const n=prompt(`${t.langSpk}\n1: ${t.lngFr}\n2: ${t.lngAr}\n3: ${t.lngBoth}`,st.u.lng==="ar"?"2":(st.u.lng==="both"?"3":"1"));if(n==="1")st.u.lng="fr";else if(n==="2")st.u.lng="ar";else if(n==="3")st.u.lng="both";save();syncProfileToSupabase();render()}
@@ -2959,7 +2820,7 @@ else if(a==="eda"){st.ph5.push({o:st.ed.src.toDataURL("image/jpeg",.85),p:prot(s
 else if(a==="edc"){st.ed=null;render()}
 else if(a==="snap-cam")snapCam();
 else if(a==="retake-selfie"){st.selfie="";st.ph5=st.ph5.filter(p=>!p.isSelfie);st.vs=0;save();render();setTimeout(startCam,120);}
-else if(a==="val-selfie"){ensureSelfieInPh5();save();syncProfileToSupabase();stopCam();if(!st.u||!st.u.jb||!st.u.a||!st.u.c){go(2,"#jb");}else{go(4);}say(x().vd);}
+else if(a==="val-selfie"){ensureSelfieInPh5();save();syncProfileToSupabase();stopCam();if(!isProfileComplete()){go(2,"#nm");}else{go(4);}say(x().vd);}
 else if(a==="op"){st.op=k;render();$(`[data-a=op][data-k=${k}]`).focus()}
 else if(a==="pay"){
 if(st.op==="visa"){
@@ -3127,30 +2988,60 @@ else{document.body.classList.remove("screen-protected")}
 });
 render();
 let authListenerAttached=false;
-function initSocialAuthListener(){
-if(!sbClient||authListenerAttached)return;
-authListenerAttached=true;
-try{
-sbClient.auth.onAuthStateChange(async(evt,session)=>{
-if((evt==="SIGNED_IN"||evt==="INITIAL_SESSION"||evt==="USER_UPDATED")&&session&&session.user){
+async function handleUserAuthSession(session){
+if(!session||!session.user){
+currentActiveUserKey=null;
+if(st.step>=4||!st.em){
+const blank=createBlankState();
+for(let k in blank)st[k]=blank[k];
+st.step=0;
+render();
+}
+return;
+}
 const u=session.user;
 const meta=u.user_metadata||{};
-const gName=meta.full_name||meta.name||(u.email?u.email.split('@')[0]:"Membre");
-const gEmail=u.email||"";
-const gAvatar=meta.avatar_url||meta.picture||"";
+const gEmail=(u.email||"").trim().toLowerCase();
+const gName=meta.full_name||meta.name||(gEmail?gEmail.split('@')[0]:"");
+const uid=u.id;
+const targetKey=getUserKey(uid,gEmail);
 
-if(!st.u)st.u={};
-st.u.gVerif=true;
-if(u.id)st.u.id=u.id;
-if(gEmail)st.em=gEmail;
-st.mode="google";
-if(gName&&(!st.u.n||st.u.n==="Mahamat"))st.u.n=gName;
+if(currentActiveUserKey!==targetKey){
+currentActiveUserKey=targetKey;
+const blank=createBlankState(gEmail,uid,gName);
+for(let k in blank)st[k]=blank[k];
+}
 
 try{
-const {data:profData}=await sbClient.from('profiles').select('*').or(`id.eq.${u.id},email.eq.${gEmail}`).limit(1);
+const savedRaw=localStorage.getItem(targetKey);
+if(savedRaw){
+const s=JSON.parse(savedRaw);
+["lang","blur","lite","tc","selfie","step","savedStep","g","ph","prem","inc","mSubTab","reqSubTab"].forEach(k=>{if(k in s)st[k]=s[k]});
+if(Array.isArray(s.ph5))st.ph5=s.ph5;
+if(Array.isArray(s.feedbacks))st.feedbacks=s.feedbacks;
+if(Array.isArray(s.blocked))st.blocked=s.blocked;
+if(Array.isArray(s.mt))st.mt=s.mt;
+if(Array.isArray(s.passed))st.passed=s.passed;
+if(Array.isArray(s.sentRequests))st.sentRequests=s.sentRequests;
+if(s.ms&&typeof s.ms==="object")st.ms=s.ms;
+if(Array.isArray(s.incomingRequests))st.incomingRequests=s.incomingRequests;
+if(s.dailyLimits&&s.dailyLimits.date)st.dailyLimits=s.dailyLimits;
+if(s.u)st.u=Object.assign(st.u,s.u);
+}
+}catch(e){}
+
+st.u.id=uid;
+st.em=gEmail;
+st.u.gVerif=true;
+st.mode="google";
+if(!st.u.n&&gName)st.u.n=gName;
+
+try{
+if(sbClient){
+const {data:profData}=await sbClient.from('profiles').select('*').or(`id.eq.${uid},email.eq.${gEmail}`).limit(1);
 if(profData&&profData.length>0){
 const r=profData[0];
-if(r.name&&r.name!=='__DELETED__'){
+if(r.name&&r.name!=='__DELETED__'&&r.name!=='Test Col'){
 st.u.id=r.id;
 st.u.n=r.name;
 st.u.a=r.age;
@@ -3161,30 +3052,50 @@ st.u.bio=r.bio||'';
 st.g=r.gender||st.g||'';
 st.u.lng=r.language||'fr';
 st.u.rel=r.religion||'mus';
-st.u.kd=r.children||0;
+st.u.kd=r.children!==undefined?r.children:0;
 st.u.i=r.intention||'ser';
-st.u.hb=r.hobbies||[];
-if(r.selfie_url&&!st.selfie){
+st.u.hb=Array.isArray(r.hobbies)?r.hobbies.filter(h=>h!=='__incognito__'):[];
+if(r.selfie_url){
 st.selfie=r.selfie_url;
 ensureSelfieInPh5();
+}
+st.prem=r.is_premium?1:0;
+st.inc=!!r.is_incognito||(Array.isArray(r.hobbies)&&r.hobbies.includes('__incognito__'));
 }
 }
 }
 }catch(err){console.warn("Restoring profile error:",err)}
 
-const isComplete=st.u&&st.u.n&&st.u.n.length>=2&&st.u.jb&&st.u.jb.length>=2&&st.u.a>=22&&st.u.c&&st.u.bio&&st.u.bio.length>=5&&st.g&&st.u.hb&&st.u.hb.length>=1;
+ensureSelfieInPh5();
+checkAndResetDailyLimits();
+initIncomingRequests();
 
-if(!isComplete){
+const isDone=isProfileComplete();
+const hasSelf=hasVerifiedSelfie();
+
+if(!isDone){
 go(2,"#nm");
-}else if(!st.selfie){
+}else if(!hasSelf){
 go(3);
 }else{
-go(st.savedStep||4);
+go(st.savedStep>=4?st.savedStep:4);
 }
 say(x().gVerif||"Compte Google vérifié");
 save();
 render();
-syncProfileToSupabase();
+loadProfilesFromSupabase();
+loadLikesAndMatchesFromSupabase();
+}
+
+function initSocialAuthListener(){
+if(!sbClient||authListenerAttached)return;
+authListenerAttached=true;
+try{
+sbClient.auth.onAuthStateChange(async(evt,session)=>{
+if(evt==="SIGNED_IN"||evt==="INITIAL_SESSION"||evt==="USER_UPDATED"){
+await handleUserAuthSession(session);
+}else if(evt==="SIGNED_OUT"){
+await handleUserAuthSession(null);
 }
 });
 
@@ -3195,51 +3106,8 @@ history.replaceState(null,null,window.location.pathname+window.location.search);
 },800);
 
 sbClient.auth.getSession().then(async({data:{session}})=>{
-if(session&&session.user&&st.step===0){
-const u=session.user;
-const meta=u.user_metadata||{};
-st.u.gVerif=true;
-if(u.id)st.u.id=u.id;
-if(!st.u.n)st.u.n=meta.full_name||meta.name||"";
-if(!st.em)st.em=u.email||"";
-st.mode="google";
-
-try{
-const {data:profData}=await sbClient.from('profiles').select('*').or(`id.eq.${u.id},email.eq.${u.email}`).limit(1);
-if(profData&&profData.length>0){
-const r=profData[0];
-if(r.name&&r.name!=='__DELETED__'){
-st.u.id=r.id;
-st.u.n=r.name;
-st.u.a=r.age;
-st.u.c=r.city;
-st.u.tc=r.target_city||'all';
-st.u.jb=r.job||'';
-st.u.bio=r.bio||'';
-st.g=r.gender||st.g||'';
-st.u.lng=r.language||'fr';
-st.u.rel=r.religion||'mus';
-st.u.kd=r.children||0;
-st.u.i=r.intention||'ser';
-st.u.hb=r.hobbies||[];
-if(r.selfie_url&&!st.selfie){
-st.selfie=r.selfie_url;
-ensureSelfieInPh5();
-}
-}
-}
-}catch(err){console.warn("Restoring session profile error:",err)}
-
-const isComplete=st.u&&st.u.n&&st.u.n.length>=2&&st.u.jb&&st.u.jb.length>=2&&st.u.a>=22&&st.u.c&&st.u.bio&&st.u.bio.length>=5&&st.g&&st.u.hb&&st.u.hb.length>=1;
-
-if(!isComplete){
-go(2,"#nm");
-}else if(!st.selfie){
-go(3);
-}else{
-go(st.savedStep||4);
-}
-save();render();
+if(session&&session.user){
+await handleUserAuthSession(session);
 }
 }).catch(()=>{});
 }catch(e){console.warn("Auth init error:",e)}
