@@ -1416,7 +1416,7 @@ if(data&&data.length>0){st.u.id=data[0].id;save();return st.u.id;}
 return st.u?st.u.id:null;
 }
 async function syncProfileToSupabase(){
-if(!sbClient||!st.u||!st.u.n)return;
+if(!sbClient||!st.u||!st.u.n||st.u.n==='__DELETED__'||st.u.n==='Test Col')return;
 const uid=await ensureUserProfileId();
 let sUrl=st.selfie||null;
 if(sUrl&&sUrl.startsWith("data:")){
@@ -2504,7 +2504,7 @@ if(errMsg.includes("email not confirmed")){
 let profFound=false;
 try{
 const {data:pList}=await sbClient.from('profiles').select('*').eq('email',email).limit(1);
-if(pList&&pList.length>0){
+if(pList&&pList.length>0&&pList[0].name&&pList[0].name!=='__DELETED__'&&pList[0].name!=='Test Col'){
 const p=pList[0];
 profFound=true;
 st.em=email;st.mode="mail";if(!st.u)st.u={};
@@ -2541,19 +2541,22 @@ return;
 st.em=email;st.mode="mail";if(!st.u)st.u={};st.u.gVerif=true;
 try{
 const {data:pList}=await sbClient.from('profiles').select('*').eq('email',email).limit(1);
-if(pList&&pList.length>0){
+if(pList&&pList.length>0&&pList[0].name&&pList[0].name!=='__DELETED__'&&pList[0].name!=='Test Col'){
 const p=pList[0];
 st.u.id=p.id;st.u.n=p.name;st.u.a=p.age;st.u.c=p.city;st.u.jb=p.job;st.u.bio=p.bio;
 st.u.g=p.gender;st.g=p.gender;st.u.lng=p.language||'fr';st.u.rel=p.religion||'mus';
 st.u.kd=p.children||0;st.u.i=p.intention||'ser';st.u.hb=p.hobbies||[];
 if(p.selfie_url){st.selfie=p.selfie_url;ensureSelfieInPh5();}
 st.prem=p.is_premium?1:0;
-}
-}catch(errP){console.warn("Load profile:",errP)}
 save();syncProfileToSupabase();
-if(!st.selfie)go(3);
-else if(!st.u||!st.u.jb||!st.u.a||!st.u.c)go(2,"#jb");
+if(!isProfileComplete())go(2,"#nm");
+else if(!hasVerifiedSelfie())go(3);
 else go(4);
+}else{
+st.u.n="";st.selfie="";st.ph5=[];
+save();
+go(2,"#nm");
+}
 }catch(e){
 if(e0)e0.textContent="Erreur : "+(e.message||e);
 if(btn){btn.disabled=false;btn.textContent=x().emLog;}
@@ -3540,65 +3543,81 @@ const gName=meta.full_name||meta.name||(gEmail?gEmail.split('@')[0]:"");
 const uid=u.id;
 const targetKey=getUserKey(uid,gEmail);
 
-if(currentActiveUserKey!==targetKey){
-currentActiveUserKey=targetKey;
-const blank=createBlankState(gEmail,uid,gName);
-for(let k in blank)st[k]=blank[k];
-}
+let hasValidDbProfile=false;
+let dbProf=null;
 
-try{
-const savedRaw=localStorage.getItem(targetKey);
-if(savedRaw){
-const s=JSON.parse(savedRaw);
-["lang","blur","lite","tc","selfie","step","savedStep","g","ph","prem","inc","mSubTab","reqSubTab"].forEach(k=>{if(k in s)st[k]=s[k]});
-if(Array.isArray(s.ph5))st.ph5=s.ph5;
-if(Array.isArray(s.feedbacks))st.feedbacks=s.feedbacks;
-if(Array.isArray(s.blocked))st.blocked=s.blocked;
-if(Array.isArray(s.mt))st.mt=s.mt;
-if(Array.isArray(s.passed))st.passed=s.passed;
-if(Array.isArray(s.sentRequests))st.sentRequests=s.sentRequests;
-if(s.ms&&typeof s.ms==="object")st.ms=s.ms;
-if(Array.isArray(s.incomingRequests))st.incomingRequests=s.incomingRequests;
-if(s.dailyLimits&&s.dailyLimits.date)st.dailyLimits=s.dailyLimits;
-if(s.u)st.u=Object.assign(st.u,s.u);
-}
-}catch(e){}
-
-st.u.id=uid;
-st.em=gEmail;
-st.u.gVerif=true;
-st.mode="google";
-if(!st.u.n&&gName)st.u.n=gName;
-
-try{
 if(sbClient){
+try{
 const {data:profData}=await sbClient.from('profiles').select('*').or(`id.eq.${uid},email.eq.${gEmail}`).limit(1);
 if(profData&&profData.length>0){
 const r=profData[0];
 if(r.name&&r.name!=='__DELETED__'&&r.name!=='Test Col'){
-st.u.id=r.id;
-st.u.n=r.name;
-st.u.a=r.age;
-st.u.c=r.city;
-st.u.tc=r.target_city||'all';
-st.u.jb=r.job||'';
-st.u.bio=r.bio||'';
-st.g=r.gender||st.g||'';
-st.u.lng=r.language||'fr';
-st.u.rel=r.religion||'mus';
-st.u.kd=r.children!==undefined?r.children:0;
-st.u.i=r.intention||'ser';
-st.u.hb=Array.isArray(r.hobbies)?r.hobbies.filter(h=>h!=='__incognito__'):[];
-if(r.selfie_url){
-st.selfie=r.selfie_url;
+hasValidDbProfile=true;
+dbProf=r;
+}
+}
+}catch(err){console.warn("Profile check error:",err)}
+}
+
+if(!hasValidDbProfile){
+try{localStorage.removeItem(targetKey);}catch(e){}
+currentActiveUserKey=targetKey;
+const blank=createBlankState(gEmail,uid,gName);
+for(let k in blank)st[k]=blank[k];
+st.u.id=uid;
+st.em=gEmail;
+st.u.gVerif=true;
+st.mode="google";
+st.u.n=gName||"";
+st.selfie="";
+st.ph5=[];
+st.incomingRequests=[];
+st.sentRequests=[];
+st.mt=[];
+st.passed=[];
+st.blocked=[];
+st.step=2;
+st.savedStep=2;
+save();
+go(2,"#nm");
+say(st.lang==="ar"?"مرحباً! يرجى إكمال ملفك الشخصي وسيلفي للبدء.":"Bienvenue ! Veuillez compléter votre profil pour commencer.");
+render();
+return;
+}
+
+currentActiveUserKey=targetKey;
+try{
+const savedRaw=localStorage.getItem(targetKey);
+if(savedRaw){
+const s=JSON.parse(savedRaw);
+["lang","blur","lite","tc","mSubTab","reqSubTab"].forEach(k=>{if(k in s)st[k]=s[k]});
+if(Array.isArray(s.feedbacks))st.feedbacks=s.feedbacks;
+if(s.dailyLimits&&s.dailyLimits.date)st.dailyLimits=s.dailyLimits;
+}
+}catch(e){}
+
+st.u.id=dbProf.id||uid;
+st.em=gEmail;
+st.u.gVerif=true;
+st.mode="google";
+st.u.n=dbProf.name;
+st.u.a=dbProf.age;
+st.u.c=dbProf.city;
+st.u.tc=dbProf.target_city||'all';
+st.u.jb=dbProf.job||'';
+st.u.bio=dbProf.bio||'';
+st.g=dbProf.gender||st.g||'';
+st.u.lng=dbProf.language||'fr';
+st.u.rel=dbProf.religion||'mus';
+st.u.kd=dbProf.children!==undefined?dbProf.children:0;
+st.u.i=dbProf.intention||'ser';
+st.u.hb=Array.isArray(dbProf.hobbies)?dbProf.hobbies.filter(h=>h!=='__incognito__'):[];
+if(dbProf.selfie_url){
+st.selfie=dbProf.selfie_url;
 ensureSelfieInPh5();
 }
-st.prem=r.is_premium?1:0;
-st.inc=!!r.is_incognito||(Array.isArray(r.hobbies)&&r.hobbies.includes('__incognito__'));
-}
-}
-}
-}catch(err){console.warn("Restoring profile error:",err)}
+st.prem=dbProf.is_premium?1:0;
+st.inc=!!dbProf.is_incognito||(Array.isArray(dbProf.hobbies)&&dbProf.hobbies.includes('__incognito__'));
 
 ensureSelfieInPh5();
 checkAndResetDailyLimits();
