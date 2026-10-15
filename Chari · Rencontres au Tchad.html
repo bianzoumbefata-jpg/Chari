@@ -718,25 +718,29 @@ label,.lbl{
 }
 .btn-google{
   width: 100%;
-  min-height: 48px;
-  border-radius: 12px;
-  border: 1.5px solid var(--neutral-light-darkest);
-  background: #fff;
-  color: var(--neutral-dark-darkest);
-  font-weight: 600;
-  font-size: 14px;
+  min-height: 54px;
+  border-radius: 14px;
+  border: 1.5px solid #E2E8F0;
+  background: #ffffff;
+  color: #1F1F1F;
+  font-weight: 700;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
-  box-shadow: var(--sh-sm);
-  transition: all .18s;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: all .2s ease;
   cursor: pointer;
 }
 .btn-google:hover{
-  background: var(--neutral-light-light);
-  border-color: var(--neutral-dark-light);
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  box-shadow: 0 6px 22px rgba(66, 133, 244, 0.25);
   transform: translateY(-1px);
+}
+.btn-google:active{
+  transform: translateY(0);
 }
 .btn-google svg{flex:none}
 .btn-fb{
@@ -1757,7 +1761,7 @@ const flagSvg=`<span class="flag-mini" title="Tchad" aria-label="Tchad"><svg vie
 const T={
 fr:{d:"Découvrir",m:"Messages",p:"Profil",pass:"Passer",like:"J'aime",mt:"C'est un match !",ms:"Vous vous plaisez mutuellement.",wr:"Écrire à ",ct:"Continuer",done:"Vous avez tout vu pour aujourd'hui.",again:"Revoir les profils",none:"Pas encore de conversation.",nh:"Aimez des profils pour en démarrer une.",ph:"Écrire un message",snd:"Envoyer",bk:"Retour",my:"Mon profil",vg:"Vérification…",vd:"Profil vérifié",blur:"Visage masqué jusqu'au match",lite:"Économie de données",sf:"Conseils de sécurité",st:"Ne partagez jamais d'argent ni de codes. Retrouvez-vous dans un lieu public et prévenez un proche.",age:"Réservé aux 22 ans et plus.",demo:"Chari · Profils réels certifiés par selfie au Tchad.",lgb:"العربية",r:["Bonjour ! Ravi(e) de faire ta connaissance.","Tu es de quelle ville ?"],
 wl:"Bienvenue sur Chari",wl2:"Des rencontres amoureuses sérieuses entre un homme et une femme au Tchad, avec des profils vérifiés.",phl:"Numéro de téléphone",ph8:"Entrez un numéro à 8 chiffres.",orPhone:"ou avec votre numéro de téléphone",sndOtp:"Recevoir mon code par SMS",otp:"Confirmation du numéro",otps:"Code envoyé par SMS au ",otpd:"Entrez le code de confirmation.",cod:"Code à 6 chiffres",bad:"Code incorrect.",pr:"Votre profil",nm:"Prénom",job:"Profession / Métier",jobPh:"Ex: Enseignant, Commerçante, Infirmière...",tcty:"Ville de rencontre",allC:"Toutes les villes (Tchad)",noCity:"Aucun profil dans cette ville",noCityD:"Aucun profil disponible actuellement dans cette ville. Essayez d'élargir à tout le Tchad !",iam:"Je suis",fem:"Une femme",mal:"Un homme",ag:"Âge",agE:"Chari est réservé aux 22 ans et plus.",cty:"Votre ville",kd:"Nombre d'enfants",it:"Je cherche",req:"Complétez tous les champs.",sf1:"Identification par selfie obligatoire",sf2:"Prenez un selfie en direct avec votre caméra : notre intelligence artificielle analyse et certifie l'authenticité de votre visage.",shot:"Prendre mon selfie certifié",sf3:"Ce selfie confirme votre identité réelle. Il reste indélébile parmi vos photos et protège la communauté.",pj:"profils vus aujourd'hui",unl:"Premium actif : profils illimités aujourd'hui",pw:"Limite du jour atteinte",pw2:"Vous avez vu vos 20 profils gratuits aujourd'hui.",pss:"Pass Premium du jour",pss2:"Profils illimités jusqu'à minuit et mode incognito.",op:"Payer avec",pn:"Numéro de paiement",pb:"Payer 5 000 FCFA",pg:"Paiement en cours…",pd:"Démo : aucun paiement réel n'est effectué.",paid:"Paiement reçu. Premium activé.",plan:"Votre formule",free:"Gratuite : 20 profils par jour",prem:"Pass Premium du jour actif",up:"Passer Premium (5 000 FCFA)",dm:"Démo : passer à 19 profils vus",opVisa:"Carte Visa",cardNum:"Numéro de carte Visa",cardExp:"Date d'expiration (MM/AA)",cardCvv:"Code CVV (3 chiffres)",cardNom:"Nom du porteur",cardNomPh:"Ex: MAHAMAT ADAM",cardSec:"Paiement 100% sécurisé Visa 3D Secure",cardNumE:"Numéro de carte incomplet (16 chiffres requis).",cardExpE:"Date d'expiration invalide (format MM/AA).",cardCvvE:"Code CVV invalide (3 chiffres).",cardNomE:"Entrez le nom présent sur la carte.",visaPaid:"Paiement Visa validé ! Pass Premium du jour activé.",
-gBtn:"Continuer avec Google",fbAuthBtn:"Continuer avec Google",gNote:"🛡️ Inscription et connexion 100% sécurisées avec votre compte Google. La certification de votre visage par selfie direct est obligatoire pour garantir des rencontres authentiques.",gVerif:"Compte Google vérifié",fbAuthVerif:"Compte Google vérifié",logout:"Se déconnecter",logoutConfirm:"Voulez-vous vous déconnecter de Chari ? Vos coordonnées et messages seront conservés et vous reprendrez exactement au même endroit.",gModalT:"Connexion Google",gModalD:"Sélectionnez votre compte Google pour une vérification instantanée :",gConfirm:"Valider mon compte",cityFilt:"Ville",seekCity:"Recherche",heroTag:"Rencontres au Tchad",hob:"Passe-temps & Centres d'intérêt",hobLbl:"Vos passe-temps favoris",hobHint:"Choisissez vos passe-temps et passions :",edHb:"Modifier mes passe-temps",saveHb:"Enregistrer",bio:"À propos de moi",bioLbl:"Petite description",bioPh:"Ex: Souriant(e), j'aime les discussions sincères, les voyages et je cherche du sérieux...",bioHint:"Présentez-vous en quelques mots :",edBio:"Modifier ma description",saveBio:"Enregistrer ma description",bioDef:"Je recherche une relation sincère, durable et basée sur le respect mutuel.",
+gBtn:"S'identifier avec Google",fbAuthBtn:"S'identifier avec Google",gNote:"🛡️ Inscription et identification 100% sécurisées avec votre compte Google. La certification de votre visage par selfie direct est obligatoire pour garantir des rencontres authentiques.",gVerif:"Compte Google vérifié",fbAuthVerif:"Compte Google vérifié",logout:"Se déconnecter",logoutConfirm:"Voulez-vous vous déconnecter de Chari ? Vos coordonnées et messages seront conservés et vous reprendrez exactement au même endroit.",gModalT:"Connexion Google",gModalD:"Sélectionnez votre compte Google pour une vérification instantanée :",gConfirm:"Valider mon compte",cityFilt:"Ville",seekCity:"Recherche",heroTag:"Rencontres au Tchad",hob:"Passe-temps & Centres d'intérêt",hobLbl:"Vos passe-temps favoris",hobHint:"Choisissez vos passe-temps et passions :",edHb:"Modifier mes passe-temps",saveHb:"Enregistrer",bio:"À propos de moi",bioLbl:"Petite description",bioPh:"Ex: Souriant(e), j'aime les discussions sincères, les voyages et je cherche du sérieux...",bioHint:"Présentez-vous en quelques mots :",edBio:"Modifier ma description",saveBio:"Enregistrer ma description",bioDef:"Je recherche une relation sincère, durable et basée sur le respect mutuel.",
 vidCall:"Appel vidéo",callHd:"Appel vidéo HD",calling:"Appel en cours…",callingContact:"Appel en cours…",ringingContact:"Sonnerie chez ",callAnswered:"En communication HD",callEnd:"Appel vidéo terminé",callHangup:"Raccrocher",opt:"Options",repUser:"Signaler ce profil",blkUser:"Bloquer cet utilisateur",blkConfirmT:"Bloquer cet utilisateur ?",blkConfirmD:"Vous ne verrez plus ce profil et vos messages seront masqués.",blkBtn:"Bloquer",blkDone:"Utilisateur bloqué avec succès.",repTitle:"Signaler ce profil",repDesc:"Pour quelle raison souhaitez-vous signaler ce profil ?",repDone:"Signalement envoyé. Notre équipe au Tchad examinera ce profil sous 24h.",repFake:"Faux profil ou usurpation",repHarass:"Comportement inapproprié ou harcèlement",repScam:"Arnaque financière ou demande d'argent",repOther:"Autre motif",unblk:"Débloquer",blkedList:"Utilisateurs bloqués",noBlked:"Aucun utilisateur bloqué.",unblkDone:"Utilisateur débloqué.",
 langSpk:"Langue parlée",lngFr:"Français",lngAr:"Arabe",lngBoth:"Français & Arabe",
 lngMap:{fr:"🗣️ Français",ar:"🗣️ Arabe",both:"🗣️ Français & Arabe"},
@@ -1786,7 +1790,7 @@ chatTab:"Discussions",reqTab:"Demandes de Matchs",noReq:"Aucune demande reçue p
 k:{ser:"Relation amoureuse",mar:"Mariage",fam:"Famille",etu:"Études",ent:"Entrepreneuriat",foi:"Foi",mus:"Musique",foo:"Football",cui:"Cuisine",voy:"Voyage",fr:"Français",ar:"Arabe",sa:"Sara"}},
 ar:{d:"اكتشف",m:"الرسائل",p:"ملفي",pass:"تخطَّ",like:"إعجاب",mt:"تطابق!",ms:"أنتما معجبان ببعضكما.",wr:"راسل ",ct:"متابعة",done:"شاهدت كل شيء لهذا اليوم.",again:"إعادة العرض",none:"لا توجد محادثات بعد.",nh:"أعجب بملفات لبدء محادثة.",ph:"اكتب رسالة",snd:"إرسال",bk:"رجوع",my:"ملفي الشخصي",vg:"جارٍ التحقق…",vd:"ملف موثّق",blur:"الوجه مخفي حتى التطابق",lite:"توفير البيانات",sf:"نصائح للأمان",st:"لا ترسل المال أو الرموز أبداً. التقِ في مكان عام وأخبر شخصاً مقرباً.",age:"للبالغين 22 سنة فأكثر فقط.",demo:"شاري · ملفات حقيقية موثقة بالسيلفي في تشاد.",lgb:"Français",r:["مرحباً! سعيد بالتعرف عليك.","من أي مدينة أنت؟"],
 wl:"مرحباً بك في شاري",wl2:"علاقات عاطفية جادة بين رجل وامرأة في تشاد، مع ملفات موثّقة.",phl:"رقم الهاتف",ph8:"أدخل 8 أرقام لرقمك.",orPhone:"أو عبر حساب Google",sndOtp:"استلام الرمز",otp:"تأكيد الحساب",otps:"تم إرسال الرمز إلى ",otpd:"أدخل رمز التأكيد.",cod:"الرمز المكوّن من 6 أرقام",bad:"الرمز غير صحيح.",pr:"ملفك الشخصي",nm:"الاسم الأول",job:"المهنة / العمل",jobPh:"مثال: معلم، تاجر، ممرضة...",tcty:"المدينة المراد التعارف فيها",allC:"جميع المدن (تشاد)",noCity:"لا توجد ملفات في هذه المدينة",noCityD:"لا توجد ملفات متوفرة حالياً في هذه المدينة. جرب توسيع البحث ليشمل جميع المدن!",iam:"أنا",fem:"امرأة",mal:"رجل",ag:"العمر",agE:"التطبيق مخصص لمن بلغ 22 سنة فأكثر.",cty:"مدينتك",kd:"عدد الأطفال",it:"أبحث عن",req:"أكمل جميع الحقول.",sf1:"توثيق الهوية عبر السيلفي الإلزامي",sf2:"التقط صورة سيلفي مباشرة عبر الكاميرا: يقوم الذكاء الاصطناعي بالتحقق الصارم من ملامح الوجه البشري.",shot:"التقاط السيلفي الموثق",sf3:"تؤكد هذه الصورة هويتك الحقيقية وتحمي المجتمع في تشاد من الحسابات المزيفة وتبقى ثابتة في ملفك الشخصي.",pj:"ملفاً شاهدته اليوم",unl:"بريميوم مفعّل: ملفات غير محدودة اليوم",pw:"بلغت حد اليوم",pw2:"شاهدت ملفاتك المجانية العشرين اليوم.",pss:"باقة بريميوم لليوم",pss2:"ملفات غير محدودة حتى منتصف الليل ووضع التخفّي.",op:"الدفع عبر",pn:"رقم الدفع",pb:"ادفع 5 000 FCFA",pg:"جارٍ الدفع…",pd:"تجريبي: لا يتم أي دفع حقيقي.",paid:"تم استلام الدفع. تم تفعيل بريميوم.",plan:"باقتك",free:"مجانية: 20 ملفاً في اليوم",prem:"باقة بريميوم لليوم مفعّلة",up:"الترقية إلى بريميوم (5 000 FCFA)",dm:"تجريبي: الانتقال إلى 19 ملفاً",opVisa:"بطاقة Visa",cardNum:"رقم بطاقة Visa",cardExp:"تاريخ الانتهاء (MM/AA)",cardCvv:"رمز الأمان (3 أرقام)",cardNom:"اسم صاحب البطاقة",cardNomPh:"مثال: MAHAMAT ADAM",cardSec:"دفع آمن 100% عبر Visa و 3D Secure",cardNumE:"رقم بطاقة Visa غير مكتمل (16 رقماً).",cardExpE:"تاريخ انتهاء غير صحيح (MM/AA).",cardCvvE:"رمز CVV غير صحيح (3 أرقام).",cardNomE:"يرجى كتابة اسم صاحب البطاقة.",visaPaid:"تم التحقق من بطاقة Visa بنجاح! تم تفعيل بريميوم.",
-gBtn:"المتابعة باستخدام Google",fbAuthBtn:"المتابعة باستخدام Google",gNote:"🛡️ تسجيل حصري وآمن 100% باستخدام حساب Google. التوثيق بسيلفي مباشر إلزامي للتحقق من الوجه البشري وحماية مجتمعنا في تشاد.",gVerif:"حساب Google موثّق",fbAuthVerif:"حساب Google موثّق",logout:"تسجيل الخروج",logoutConfirm:"هل تريد بالتأكيد تسجيل الخروج؟ سيتم الاحتفاظ بجميع بياناتك وملفك وتعود فوراً لنفس المكان عند الدخول مجدداً.",gModalT:"تسجيل الدخول عبر Google",gModalD:"اختر حسابك للحصول على توثيق فوري:",gConfirm:"تأكيد الحساب",cityFilt:"المدينة",seekCity:"البحث في",heroTag:"علاقات عاطفية موثّقة",hob:"الهوايات والاهتمامات",hobLbl:"هواياتك المفضلة",hobHint:"اختر هواياتك واهتماماتك المفضلة:",edHb:"تعديل هواياتي",saveHb:"حفظ",bio:"نبذة عني",bioLbl:"وصف قصير",bioPh:"مثال: شخص بشوش، أحب الحوار الصادق، السفر وأبحث عن الاستقرار...",bioHint:"عرّف بنفسك في بضع كلمات:",edBio:"تعديل الوصف",saveBio:"حفظ الوصف",bioDef:"أبحث عن علاقة صادقة ومبنية على الاحترام المتبادل.",
+gBtn:"تسجيل الدخول عبر Google",fbAuthBtn:"تسجيل الدخول عبر Google",gNote:"🛡️ تسجيل وهوية موثّقة 100% باستخدام حساب Google. التوثيق بسيلفي مباشر إلزامي للتحقق من الوجه البشري وحماية مجتمعنا في تشاد.",gVerif:"حساب Google موثّق",fbAuthVerif:"حساب Google موثّق",logout:"تسجيل الخروج",logoutConfirm:"هل تريد بالتأكيد تسجيل الخروج؟ سيتم الاحتفاظ بجميع بياناتك وملفك وتعود فوراً لنفس المكان عند الدخول مجدداً.",gModalT:"تسجيل الدخول عبر Google",gModalD:"اختر حسابك للحصول على توثيق فوري:",gConfirm:"تأكيد الحساب",cityFilt:"المدينة",seekCity:"البحث في",heroTag:"علاقات عاطفية موثّقة",hob:"الهوايات والاهتمامات",hobLbl:"هواياتك المفضلة",hobHint:"اختر هواياتك واهتماماتك المفضلة:",edHb:"تعديل هواياتي",saveHb:"حفظ",bio:"نبذة عني",bioLbl:"وصف قصير",bioPh:"مثال: شخص بشوش، أحب الحوار الصادق، السفر وأبحث عن الاستقرار...",bioHint:"عرّف بنفسك في بضع كلمات:",edBio:"تعديل الوصف",saveBio:"حفظ الوصف",bioDef:"أبحث عن علاقة صادقة ومبنية على الاحترام المتبادل.",
 vidCall:"مكالمة فيديو",callHd:"مكالمة فيديو HD",calling:"جارٍ الاتصال…",callingContact:"جارٍ الاتصال…",ringingContact:"يرن لدى ",callAnswered:"مكالمة نشطة بجودة HD",callEnd:"انتهت المكالمة",callHangup:"إنهاء المكالمة",opt:"خيارات",repUser:"الإبلاغ عن هذا الملف",blkUser:"حظر هذا المستخدم",blkConfirmT:"هل تريد حظر هذا المستخدم؟",blkConfirmD:"لن يظهر هذا الملف مجدداً وستختفي الرسائل.",blkBtn:"حظر",blkDone:"تم حظر المستخدم بنجاح.",repTitle:"الإبلاغ عن الملف",repDesc:"ما هو سبب إبلاغك عن هذا الملف الشخصي؟",repDone:"تم إرسال البلاغ. سيقوم فريقنا في تشاد بمراجعة الملف خلال 24 ساعة.",repFake:"ملف مزيف أو انتحال شخصية",repHarass:"مضايقة أو سلوك غير لائق",repScam:"احتيال مالي أو طلب أموال",repOther:"سبب آخر",unblk:"إلغاء الحظر",blkedList:"المستخدمون المحظورون",noBlked:"لا يوجد أي مستخدم محظور.",unblkDone:"تم إلغاء حظر المستخدم.",
 langSpk:"اللغة المنطوقة",lngFr:"الفرنسية",lngAr:"العربية",lngBoth:"الفرنسية والعربية",
 lngMap:{fr:"🗣️ الفرنسية",ar:"🗣️ العربية",both:"🗣️ الفرنسية والعربية"},
@@ -1887,7 +1891,7 @@ return "chari_u_"+String(raw).trim().toLowerCase().replace(/[^a-z0-9_-]/g,"_");
 }
 function createBlankState(email="", uid="", name=""){
 return {
-lang:"fr",blur:true,lite:false,tc:"all",mode:"google",em:email||"",ph5:[],inc:false,ed:null,step:0,savedStep:0,
+lang:"fr",blur:true,lite:false,tc:"all",mode:"google",em:email||"",ph5:[],inc:false,ed:null,step:0,savedStep:0,showEmailAuth:false,
 u:{id:uid||"",n:name||"",jb:"",a:"",c:"N'Djamena",tc:"all",bio:"",lng:"fr",rel:"mus",kd:0,i:"ser",hb:[],gVerif:true},
 card:{num:"",exp:"",cvv:"",nom:""},g:"",ph:"",i:0,seen:0,prem:0,pay:0,op:"",pp:0,vs:0,selfie:"",
 tab:"d",chat:null,mt:[],ms:{},busy:0,blocked:[],feedbacks:[],mSubTab:"chat",reqSubTab:"rec",
@@ -1968,32 +1972,47 @@ return`<div class="pf">
 <div class="hero-box"><img src="couple.jpg" alt="Chari" class="hero-img"><div class="hero-overlay"><span class="hero-tag">${t.heroTag} ${flagSvg}</span></div></div>
 <h1>${t.wl}</h1>
 <p>${t.wl2}</p>
-${isFile?`<div style="background:rgba(0,111,253,0.10);border:1px solid rgba(0,111,253,0.3);border-radius:12px;padding:10px 12px;margin:12px 0 8px;font-size:12px;color:var(--ink);display:flex;align-items:center;gap:10px"><span style="font-size:18px">🌐</span><div style="flex:1"><strong>Application en ligne :</strong> Accédez à la version officielle en ligne sur <a href="https://chari-flame.vercel.app" style="color:var(--brand);font-weight:700">chari-flame.vercel.app</a></div><a class="btn" href="https://chari-flame.vercel.app" style="width:auto;min-height:30px;padding:2px 10px;font-size:11px;text-decoration:none">Ouvrir</a></div>`:''}
-<div style="margin:20px 0 16px;display:flex;flex-direction:column;gap:10px">
-<button class="btn-google" data-a="gauth" type="button" style="width:100%;min-height:50px;font-size:15px;box-shadow:0 6px 20px rgba(66,133,244,0.32)">
-<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+${isFile?`<div style="background:rgba(0,111,253,0.10);border:1px solid rgba(0,111,253,0.3);border-radius:12px;padding:10px 12px;margin:12px 0 14px;font-size:12px;color:var(--ink);display:flex;align-items:center;gap:10px"><span style="font-size:18px">🌐</span><div style="flex:1"><strong>Application en ligne :</strong> Accédez à la version officielle en ligne sur <a href="https://chari-flame.vercel.app" style="color:var(--brand);font-weight:700">chari-flame.vercel.app</a></div><a class="btn" href="https://chari-flame.vercel.app" style="width:auto;min-height:30px;padding:2px 10px;font-size:11px;text-decoration:none">Ouvrir</a></div>`:''}
+
+<div style="background:#ffffff;border:1.5px solid var(--line);border-radius:18px;padding:20px 16px;box-shadow:0 8px 30px rgba(0,0,0,0.06);margin:18px 0 16px;text-align:center">
+<div style="display:inline-flex;align-items:center;gap:6px;background:rgba(66,133,244,0.08);color:#1a73e8;padding:5px 14px;border-radius:20px;font-size:12.5px;font-weight:700;margin-bottom:14px">
+<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+<span>${st.lang==="ar"?"التعريف الموثّق والسريع":"Identification officielle sécurisée"}</span>
+</div>
+
+<button class="btn-google" data-a="gauth" type="button" id="btn-google-login" style="width:100%;min-height:54px;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:12px;background:#ffffff;color:#1F1F1F;border:2px solid #E2E8F0;border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,0.08);cursor:pointer;transition:transform 0.15s ease, box-shadow 0.15s ease;">
+<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
 <span>${t.gBtn}</span>
 </button>
-<div style="display:flex;align-items:center;gap:10px;margin:4px 0;color:var(--mut);font-size:12px">
-<span style="flex:1;height:1px;background:var(--line)"></span>
-<span>${st.lang==="ar"?"أو بالبريد الإلكتروني":"ou avec votre e-mail"}</span>
-<span style="flex:1;height:1px;background:var(--line)"></span>
-</div>
-<div style="display:flex;flex-direction:column;gap:8px">
-<input class="fld" id="em" type="email" placeholder="${st.lang==='ar'?'أدخل بريدك الإلكتروني أو Gmail':'Votre adresse e-mail ou Gmail'}" value="${esc(st.em||"")}">
+
+<p style="font-size:12.5px;color:var(--mut);margin:10px 0 0;line-height:1.4">
+${st.lang==="ar"?"تسجيل دخول سريع ومباشر بحساب Google الخاص بك":"Connexion immédiate en 1 clic avec votre compte Google"}</p>
+
+<div style="margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)">
+${st.showEmailAuth?`
+<div style="display:flex;flex-direction:column;gap:8px;text-align:start;margin-top:6px">
+<label for="em" style="font-size:12px;font-weight:600;color:var(--ink)">${st.lang==='ar'?'البريد الإلكتروني أو Gmail :':'Votre adresse e-mail ou Gmail :'}</label>
+<input class="fld" id="em" type="email" placeholder="${st.lang==='ar'?'أدخل بريدك الإلكتروني':'votre.nom@gmail.com'}" value="${esc(st.em||"")}">
 <p class="err" id="e0" role="alert" style="margin:0"></p>
-<button class="btn" data-a="em-direct" type="button" style="min-height:44px;font-size:14px">
-<span>${st.lang==="ar"?"المتابعة بالبريد الإلكتروني":"Continuer avec mon e-mail"}</span>
+<button class="btn" data-a="em-direct" type="button" style="min-height:46px;font-size:14px;font-weight:600">
+<span>${st.lang==="ar"?"S'identifier par e-mail":"S'identifier par e-mail"}</span>
 </button>
-<button class="btn ghost" data-a="guest-onb" type="button" style="min-height:38px;font-size:13px;border:1px dashed var(--line);color:var(--brand)">
-<span>${st.lang==="ar"?"✨ استكشاف التطبيق والتعرف على الأعضاء":"✨ Découvrir l'application (Accès direct)"}</span>
+<button data-a="toggle-email-auth" type="button" class="btn ghost" style="min-height:32px;font-size:12px;color:var(--mut)">
+${st.lang==='ar'?'إخفاء خيار البريد':'Masquer l\'option e-mail'}
 </button>
 </div>
+`:`
+<button data-a="toggle-email-auth" type="button" style="background:none;border:none;color:var(--brand);font-size:13px;font-weight:600;cursor:pointer;padding:6px;display:inline-flex;align-items:center;gap:6px">
+<span>✉️</span> <span>${st.lang==='ar'?'أو تسجيل الدخول عبر البريد الإلكتروني':'Ou s\'identifier par e-mail'}</span>
+</button>
+`}
 </div>
+</div>
+
 <div class="sf" style="margin:16px 0 8px;background:rgba(217,119,6,0.08);border:1px solid rgba(217,119,6,0.25)">
 <div style="display:flex;align-items:flex-start;gap:10px">
 ${ic("shield")}
-<p style="margin:0;font-size:13px;line-height:1.45;color:var(--ink)">${t.gNote}</p>
+<p style="margin:0;font-size:12.5px;line-height:1.45;color:var(--ink)">${t.gNote}</p>
 </div>
 </div>
 <p class="mut" style="font-size:12px;margin-top:14px;text-align:center">${t.age}</p>
@@ -2574,7 +2593,6 @@ if(btn){btn.disabled=false;btn.textContent=x().emLog;}
 return;
 }
 st.em=email;st.mode="mail";if(!st.u)st.u={};st.u.gVerif=true;
-try{
 const {data:pList}=await sbClient.from('profiles').select('*').eq('email',email).limit(1);
 if(pList&&pList.length>0&&pList[0].name&&pList[0].name!=='__DELETED__'&&pList[0].name!=='Test Col'){
 const p=pList[0];
@@ -3329,10 +3347,11 @@ isEdited:false
 add(id,msgObj);i.value="";
 recordMessageInSupabase(id,v,null,null,null,msgObj);
 }
-document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,k=b.dataset.k,t=x();
+document.addEventListener("click",async e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,k=b.dataset.k,t=x();
 if(a==="tab"){st.tab=k;st.chat=null;render();if(k==="d"){loadBlockedUsersFromSupabase();loadProfilesFromSupabase();}if(k==="m"||k==="req"){loadBlockedUsersFromSupabase();loadLikesAndMatchesFromSupabase();}}
 else if(a==="lang"){st.lang=st.lang==="fr"?"ar":"fr";save();render();$("#lang").focus()}
 else if(a==="gauth"){signInWithGoogle()}
+else if(a==="toggle-email-auth"){st.showEmailAuth=!st.showEmailAuth;render()}
 else if(a==="em-direct"){
 const emEl=$("#em"), e0=$("#e0");
 if(!emEl)return;
