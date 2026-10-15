@@ -712,6 +712,11 @@ label,.lbl{
   background: var(--highlight-lightest);
 }
 .rmb{position:absolute;top:4px;right:4px;background:rgba(255,255,255,0.9);border:1px solid var(--line);border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.12)}
+.profile-main-badge{position:absolute;bottom:5px;left:5px;background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff;font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:99px;box-shadow:0 2px 6px rgba(0,0,0,0.35);display:inline-flex;align-items:center;gap:3px;z-index:3;pointer-events:none}
+[dir="rtl"] .profile-main-badge{left:auto;right:5px}
+.btn-make-avatar{position:absolute;bottom:5px;left:5px;background:rgba(15,23,42,0.8);color:#FCD34D;font-size:9.5px;font-weight:700;padding:2.5px 7px;border-radius:99px;border:1px solid rgba(255,255,255,0.35);box-shadow:0 2px 6px rgba(0,0,0,0.3);backdrop-filter:blur(4px);cursor:pointer;display:inline-flex;align-items:center;gap:3px;z-index:3;transition:all 0.15s ease}
+[dir="rtl"] .btn-make-avatar{left:auto;right:5px}
+.btn-make-avatar:hover{background:#F59E0B;color:#fff;border-color:#F59E0B;transform:scale(1.05)}
 .pe{width:100%;max-width:360px;aspect-ratio:1;border-radius:18px;border:1px solid var(--line);box-shadow:var(--sh-md);justify-self:center}
 .rg{width:100%;min-height:44px;accent-color:var(--brand)}
 .sw small{color:var(--mut);font-size:12px}
@@ -1121,6 +1126,22 @@ body.screen-protected .screen-shield{display:flex!important}
 }
 .req-card:hover{
   box-shadow: var(--sh-md);
+}
+.req-photo-box{
+  position: relative;
+  width: calc(100% + 32px);
+  margin: -16px -16px 10px -16px;
+  height: 290px;
+  overflow: hidden;
+  border-radius: 15px 15px 0 0;
+  background: #0f172a;
+}
+.req-photo-img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  cursor: pointer;
 }
 .req-header{
   display: flex;
@@ -1560,6 +1581,7 @@ const pHobbies=[...(st.u.hb||[])];
 if(st.inc){if(!pHobbies.includes('__incognito__'))pHobbies.push('__incognito__');}
 else{const idx=pHobbies.indexOf('__incognito__');if(idx>=0)pHobbies.splice(idx,1);}
 
+const mainAvatarUrl = (st.ph5 && st.ph5.length > 0 && (st.ph5[0].p || st.ph5[0].o)) ? (st.ph5[0].p || st.ph5[0].o) : sUrl;
 const pData={
 name:st.u.n,
 gender:st.g,
@@ -1573,7 +1595,8 @@ religion:st.u.rel||'mus',
 children:st.u.kd||0,
 intention:st.u.i||'ser',
 hobbies:pHobbies,
-selfie_url:sUrl,
+selfie_url:mainAvatarUrl||sUrl,
+avatar_url:mainAvatarUrl||sUrl,
 is_verified:!!st.selfie,
 is_premium:!!st.prem
 };
@@ -1953,16 +1976,16 @@ const BF=[{fr:"Infirmière, j'aime la cuisine et les longues discussions.",ar:"�
 const BM=[{fr:"Ingénieur agronome. Football le week-end, famille toute l'année.",ar:"مهندس زراعي. كرة القدم في العطلة والعائلة طوال العام."},{fr:"Musicien et prof de lycée. Curieux, calme, drôle.",ar:"موسيقي ومدرّس. فضولي وهادئ وطريف."},{fr:"Commerçant. Stable, ponctuel, à l'écoute.",ar:"تاجر. مستقر ودقيق ومنصت."},{fr:"Médecin généraliste. Sérieux, mais toujours prêt à rire.",ar:"طبيب عام. جاد ولكن مستعد دائماً للضحك."},{fr:"Informaticien. J'aime les projets, la lecture et le café.",ar:"مهندس معلوماتية. أحب المشاريع والقراءة والقهوة."},{fr:"Mécanicien, j'ai mon garage. Travailleur et fidèle.",ar:"ميكانيكي ولدي ورشتي. مجتهد ووفي."}];
 const CI=["N'Djamena","Moundou","Sarh","Abéché","Kélo","Koumra","Pala","Am Timan","Bongor","Mongo","Doba","Ati","Laï","Faya-Largeau","Mao","Biltine","Bol","Goz Beïda","Moussoro","Bokoro"],VA=["fam","etu","ent","foi","mus","foo","cui","voy"],SK=["#5A3825","#7A4A32","#3E281D","#8A5A3C","#A36B4B","#6A412C"],GG=[[B,G],[G,B],[R,G],[B,R],[G,R]],L4=[["fr","ar"],["ar","fr"],["fr","sa"],["fr"]];
 const HOBBIES=[{id:"spo",ic:"🏃",fr:"Sport",ar:"الرياضة"},{id:"lec",ic:"📚",fr:"Lecture",ar:"القراءة"},{id:"cui",ic:"🍳",fr:"Cuisine",ar:"الطبخ"},{id:"jv",ic:"🎮",fr:"Jeux vidéo",ar:"ألعاب الفيديو"},{id:"voy",ic:"✈️",fr:"Voyage",ar:"السفر"},{id:"mus",ic:"🎵",fr:"Musique",ar:"الموسيقى"},{id:"foo",ic:"⚽",fr:"Football",ar:"كرة القدم"},{id:"cin",ic:"🎬",fr:"Cinéma",ar:"السينما"},{id:"ent",ic:"💼",fr:"Business",ar:"ريادة الأعمال"},{id:"art",ic:"🎨",fr:"Art & Mode",ar:"الفن والموضة"}];
-const mk=(g,N,Bi)=>N.map((n,i)=>({id:(g==="f"?0:100)+i+1,g,n,a:22+(i*7+3)%14,c:CI[(i*3+1)%CI.length],i:i%3?"ser":"mar",kd:(i*5)%4,l:L4[i%4],lng:i%3===0?"both":(i%2===0?"ar":"fr"),rel:i%5===4?"oth":(i%2===0?"mus":"chr"),v:[VA[i%8],VA[(i+3)%8]],b:Bi[i%6],bio:(Bi[i%6]&&Bi[i%6].fr)||"",y:i%5===0?1:0,sk:SK[i%6],bg:GG[i%5],cl:GG[i%5][0]===G?B:G,selfie_url:g==="f"?"photos/achte.jpg":"photos/mahamat.jpg",photos:[g==="f"?"photos/achte.jpg":"photos/mahamat.jpg"]}));
+const mk=(g,N,Bi)=>N.map((n,i)=>({id:(g==="f"?0:100)+i+1,g,n,a:22+(i*7+3)%14,c:CI[(i*3+1)%CI.length],i:i%3?"ser":"mar",kd:(i*5)%4,l:L4[i%4],lng:i%3===0?"both":(i%2===0?"ar":"fr"),rel:i%5===4?"oth":(i%2===0?"mus":"chr"),v:[VA[i%8],VA[(i+3)%8]],b:Bi[i%6],bio:(Bi[i%6]&&Bi[i%6].fr)||"",y:i%5===0?1:0,sk:SK[i%6],bg:GG[i%5],cl:GG[i%5][0]===G?B:G,selfie_url:g==="f"?"photos/achte.jpg":"photos/mahamat.jpg",photos:g==="f"?["photos/achte.jpg","photos/fatime.jpg","photos/hawa.jpg","photos/mariam.jpg"]:["photos/mahamat.jpg","photos/abakar.jpg","photos/idriss.jpg","photos/moussa.jpg"]}));
 const SEED_PROFILES = [
-  {id:"p_achte",g:"f",n:"Achta",a:25,c:"N'Djamena",tc:"all",jb:"Infirmière",b:{fr:"Infirmière à N'Djamena, j'aime la cuisine, les échanges sincères et la famille.",ar:"ممرضة في انجمينا، أحب الطبخ والحوار الصادق والعائلة."},bio:"Infirmière à N'Djamena, j'aime la cuisine, les échanges sincères et la famille.",rel:"mus",lng:"fr",kd:0,i:"ser",v:["fam","cui","mus"],hb:["fam","cui","mus"],selfie_url:"photos/achte.jpg",photos:["photos/achte.jpg"],is_verified:true,y:1},
-  {id:"p_fatime",g:"f",n:"Fatimé",a:26,c:"N'Djamena",tc:"all",jb:"Comptable",b:{fr:"Calme, soignée et ambitieuse. Je cherche une relation sérieuse et durable.",ar:"هادئة وأنيقة وطموحة. أبحث عن علاقة جادة ومستقرة."},bio:"Calme, soignée et ambitieuse. Je cherche une relation sérieuse et durable.",rel:"mus",lng:"both",kd:0,i:"mar",v:["fam","etu","foi"],hb:["fam","lec","voy"],selfie_url:"photos/fatime.jpg",photos:["photos/fatime.jpg"],is_verified:true,y:1},
-  {id:"p_hawa",g:"f",n:"Hawa",a:24,c:"Moundou",tc:"all",jb:"Étudiante en droit",b:{fr:"Diplômée, curieuse et souriante. Passionnée de lecture et de voyages.",ar:"خريجة قانون، بشوشة ومحبة للقراءة والسفر."},bio:"Diplômée, curieuse et souriante. Passionnée de lecture et de voyages.",rel:"chr",lng:"fr",kd:0,i:"ser",v:["etu","voy","lec"],hb:["etu","voy","lec"],selfie_url:"photos/hawa.jpg",photos:["photos/hawa.jpg"],is_verified:true,y:1},
-  {id:"p_mariam",g:"f",n:"Mariam",a:28,c:"Abéché",tc:"all",jb:"Enseignante",b:{fr:"Enseignante passionnée, j'aime les enfants, la nature et le respect mutuel.",ar:"معلمة، أحب الأطفال والطبيعة والاحترام المتبادل."},bio:"Enseignante passionnée, j'aime les enfants, la nature et le respect mutuel.",rel:"mus",lng:"ar",kd:0,i:"mar",v:["fam","mus","cui"],hb:["fam","cui","mus"],selfie_url:"photos/mariam.jpg",photos:["photos/mariam.jpg"],is_verified:true,y:1},
-  {id:"p_mahamat",g:"m",n:"Mahamat",a:28,c:"N'Djamena",tc:"all",jb:"Ingénieur agronome",b:{fr:"Passionné de projets agricoles, football le week-end et valeurs familiales.",ar:"مهندس زراعي، كرة القدم في العطلة والاهتمام بالأسرة."},bio:"Passionné de projets agricoles, football le week-end et valeurs familiales.",rel:"mus",lng:"both",kd:0,i:"mar",v:["fam","foo","ent"],hb:["foo","ent","fam"],selfie_url:"photos/mahamat.jpg",photos:["photos/mahamat.jpg"],is_verified:true,y:1},
-  {id:"p_abakar",g:"m",n:"Abakar",a:30,c:"N'Djamena",tc:"all",jb:"Entrepreneur",b:{fr:"Dynamique et sérieux. J'aime entreprendre, le café et les voyages.",ar:"رائد أعمال جاد وطموح، أحب السفر والمشاريع."},bio:"Dynamique et sérieux. J'aime entreprendre, le café et les voyages.",rel:"mus",lng:"fr",kd:0,i:"ser",v:["ent","voy","spo"],hb:["ent","voy","spo"],selfie_url:"photos/abakar.jpg",photos:["photos/abakar.jpg"],is_verified:true,y:1},
-  {id:"p_idriss",g:"m",n:"Idriss",a:26,c:"Sarh",tc:"all",jb:"Informaticien",b:{fr:"Développeur web, calme et attentionné. Cherche une femme sincère.",ar:"مبرمج ويب، هادئ ومخلص، أبحث عن فتاة صادقة."},bio:"Développeur web, calme et attentionné. Cherche une femme sincère.",rel:"chr",lng:"fr",kd:0,i:"ser",v:["etu","jv","mus"],hb:["jv","mus","lec"],selfie_url:"photos/idriss.jpg",photos:["photos/idriss.jpg"],is_verified:true,y:1},
-  {id:"p_moussa",g:"m",n:"Moussa",a:29,c:"N'Djamena",tc:"all",jb:"Médecin généraliste",b:{fr:"Médecin sérieux et bienveillant. Fervent partisan du respect et du dialogue.",ar:"طبيب عام، أؤمن بالحوار الصادق وبناء أسرة كريمة."},bio:"Médecin sérieux et bienveillant. Fervent partisan du respect et du dialogue.",rel:"mus",lng:"both",kd:0,i:"mar",v:["foi","fam","lec"],hb:["foi","lec","fam"],selfie_url:"photos/moussa.jpg",photos:["photos/moussa.jpg"],is_verified:true,y:1},
+  {id:"p_achte",g:"f",n:"Achta",a:25,c:"N'Djamena",tc:"all",jb:"Infirmière",b:{fr:"Infirmière à N'Djamena, j'aime la cuisine, les échanges sincères et la famille.",ar:"ممرضة في انجمينا، أحب الطبخ والحوار الصادق والعائلة."},bio:"Infirmière à N'Djamena, j'aime la cuisine, les échanges sincères et la famille.",rel:"mus",lng:"fr",kd:0,i:"ser",v:["fam","cui","mus"],hb:["fam","cui","mus"],selfie_url:"photos/achte.jpg",photos:["photos/achte.jpg","photos/fatime.jpg","photos/hawa.jpg","photos/mariam.jpg"],is_verified:true,y:1},
+  {id:"p_fatime",g:"f",n:"Fatimé",a:26,c:"N'Djamena",tc:"all",jb:"Comptable",b:{fr:"Calme, soignée et ambitieuse. Je cherche une relation sérieuse et durable.",ar:"هادئة وأنيقة وطموحة. أبحث عن علاقة جادة ومستقرة."},bio:"Calme, soignée et ambitieuse. Je cherche une relation sérieuse et durable.",rel:"mus",lng:"both",kd:0,i:"mar",v:["fam","etu","foi"],hb:["fam","lec","voy"],selfie_url:"photos/fatime.jpg",photos:["photos/fatime.jpg","photos/mariam.jpg","photos/achte.jpg","photos/hawa.jpg"],is_verified:true,y:1},
+  {id:"p_hawa",g:"f",n:"Hawa",a:24,c:"Moundou",tc:"all",jb:"Étudiante en droit",b:{fr:"Diplômée, curieuse et souriante. Passionnée de lecture et de voyages.",ar:"خريجة قانون، بشوشة ومحبة للقراءة والسفر."},bio:"Diplômée, curieuse et souriante. Passionnée de lecture et de voyages.",rel:"chr",lng:"fr",kd:0,i:"ser",v:["etu","voy","lec"],hb:["etu","voy","lec"],selfie_url:"photos/hawa.jpg",photos:["photos/hawa.jpg","photos/achte.jpg","photos/fatime.jpg","photos/mariam.jpg"],is_verified:true,y:1},
+  {id:"p_mariam",g:"f",n:"Mariam",a:28,c:"Abéché",tc:"all",jb:"Enseignante",b:{fr:"Enseignante passionnée, j'aime les enfants, la nature et le respect mutuel.",ar:"معلمة، أحب الأطفال والطبيعة والاحترام المتبادل."},bio:"Enseignante passionnée, j'aime les enfants, la nature et le respect mutuel.",rel:"mus",lng:"ar",kd:0,i:"mar",v:["fam","mus","cui"],hb:["fam","cui","mus"],selfie_url:"photos/mariam.jpg",photos:["photos/mariam.jpg","photos/hawa.jpg","photos/fatime.jpg","photos/achte.jpg"],is_verified:true,y:1},
+  {id:"p_mahamat",g:"m",n:"Mahamat",a:28,c:"N'Djamena",tc:"all",jb:"Ingénieur agronome",b:{fr:"Passionné de projets agricoles, football le week-end et valeurs familiales.",ar:"مهندس زراعي، كرة القدم في العطلة والاهتمام بالأسرة."},bio:"Passionné de projets agricoles, football le week-end et valeurs familiales.",rel:"mus",lng:"both",kd:0,i:"mar",v:["fam","foo","ent"],hb:["foo","ent","fam"],selfie_url:"photos/mahamat.jpg",photos:["photos/mahamat.jpg","photos/abakar.jpg","photos/idriss.jpg","photos/moussa.jpg"],is_verified:true,y:1},
+  {id:"p_abakar",g:"m",n:"Abakar",a:30,c:"N'Djamena",tc:"all",jb:"Entrepreneur",b:{fr:"Dynamique et sérieux. J'aime entreprendre, le café et les voyages.",ar:"رائد أعمال جاد وطموح، أحب السفر والمشاريع."},bio:"Dynamique et sérieux. J'aime entreprendre, le café et les voyages.",rel:"mus",lng:"fr",kd:0,i:"ser",v:["ent","voy","spo"],hb:["ent","voy","spo"],selfie_url:"photos/abakar.jpg",photos:["photos/abakar.jpg","photos/moussa.jpg","photos/mahamat.jpg","photos/idriss.jpg"],is_verified:true,y:1},
+  {id:"p_idriss",g:"m",n:"Idriss",a:26,c:"Sarh",tc:"all",jb:"Informaticien",b:{fr:"Développeur web, calme et attentionné. Cherche une femme sincère.",ar:"مبرمج ويب، هادئ ومخلص، أبحث عن فتاة صادقة."},bio:"Développeur web, calme et attentionné. Cherche une femme sincère.",rel:"chr",lng:"fr",kd:0,i:"ser",v:["etu","jv","mus"],hb:["jv","mus","lec"],selfie_url:"photos/idriss.jpg",photos:["photos/idriss.jpg","photos/mahamat.jpg","photos/moussa.jpg","photos/abakar.jpg"],is_verified:true,y:1},
+  {id:"p_moussa",g:"m",n:"Moussa",a:29,c:"N'Djamena",tc:"all",jb:"Médecin généraliste",b:{fr:"Médecin sérieux et bienveillant. Fervent partisan du respect et du dialogue.",ar:"طبيب عام، أؤمن بالحوار الصادق وبناء أسرة كريمة."},bio:"Médecin sérieux et bienveillant. Fervent partisan du respect et du dialogue.",rel:"mus",lng:"both",kd:0,i:"mar",v:["foi","fam","lec"],hb:["foi","lec","fam"],selfie_url:"photos/moussa.jpg",photos:["photos/moussa.jpg","photos/idriss.jpg","photos/abakar.jpg","photos/mahamat.jpg"],is_verified:true,y:1},
   ...mk("f",FN.slice(4),BF),
   ...mk("m",MN.slice(4),BM)
 ];
@@ -1983,6 +2006,16 @@ const byId=id=>{
     if(s)return s;
   }
   return null;
+};
+const getProfilePhotos = p => {
+  if(!p) return ["photos/achte.jpg"];
+  if(p.photos && Array.isArray(p.photos) && p.photos.length > 0) return p.photos;
+  if(p.selfie_url) return [p.selfie_url];
+  if(p.photo) return [p.photo];
+  const isFem = (p.g === "f" || p.gender === "female");
+  return isFem
+    ? ["photos/achte.jpg", "photos/fatime.jpg", "photos/hawa.jpg", "photos/mariam.jpg"]
+    : ["photos/mahamat.jpg", "photos/abakar.jpg", "photos/idriss.jpg", "photos/moussa.jpg"];
 };
 const pool=()=>{
   const currentUserId = (st.u && st.u.id) || (sbClient && sbClient.auth && sbClient.auth.currentUser ? sbClient.auth.currentUser.id : null);
@@ -2052,7 +2085,7 @@ lang:"fr",blur:true,lite:false,tc:"all",mode:"google",em:email||"",ph5:[],inc:fa
 u:{id:uid||"",n:name||"",jb:"",a:"",c:"N'Djamena",tc:"all",bio:"",lng:"fr",rel:"mus",kd:0,i:"ser",hb:[],gVerif:true},
 card:{num:"",exp:"",cvv:"",nom:""},g:"",ph:"",i:0,seen:0,prem:0,pay:0,op:"visa",pp:0,vs:0,selfie:"",
 tab:"d",chat:null,mt:[],ms:{},busy:0,blocked:[],feedbacks:[],mSubTab:"chat",reqSubTab:"rec",
-incomingRequests:[],sentRequests:[],passed:[],dailyLimits:{date:getChadDateKey(),sent:0,accepted:0,seen:0}
+incomingRequests:[],sentRequests:[],passed:[],reqPhotoIdx:{},dailyLimits:{date:getChadDateKey(),sent:0,accepted:0,seen:0}
 };
 }
 function isProfileComplete(state){
@@ -2082,7 +2115,7 @@ function ensureSelfieInPh5(){
 if(!st.selfie)return;
 const idx=st.ph5.findIndex(p=>p.isSelfie||p.p===st.selfie||p.o===st.selfie);
 const itm={o:st.selfie,p:st.selfie,isSelfie:true};
-if(idx>=0){st.ph5[idx]=itm}else{st.ph5.unshift(itm);if(st.ph5.length>5)st.ph5=st.ph5.slice(0,5)}
+if(idx>=0){st.ph5[idx]=itm}else{st.ph5.push(itm);if(st.ph5.length>5)st.ph5=st.ph5.slice(0,5)}
 }
 function checkAndResetDailyLimits(){
 const today=getChadDateKey();
@@ -2110,10 +2143,18 @@ if(!Array.isArray(st.passed))st.passed=[];
 if(st.step>=5 && st.incomingRequests.length===0 && (st.mt||[]).length===0 && (!st.passed||st.passed.length===0)){
 const isMan=(st.g==="m");
 const welcomeSender=isMan
-?{id:"p_achte",n:"Achta",g:"f",a:25,c:"N'Djamena",jb:"Infirmière",rel:"mus",lng:"fr",bio:"Infirmière à N'Djamena, j'aime la cuisine, les échanges sincères et la famille.",selfie_url:"photos/achte.jpg",photos:["photos/achte.jpg"],time:Date.now()}
-:{id:"p_mahamat",n:"Mahamat",g:"m",a:28,c:"N'Djamena",jb:"Ingénieur agronome",rel:"mus",lng:"both",bio:"Passionné de projets agricoles, football le week-end et valeurs familiales.",selfie_url:"photos/mahamat.jpg",photos:["photos/mahamat.jpg"],time:Date.now()};
+?{id:"p_achte",n:"Achta",g:"f",a:25,c:"N'Djamena",jb:"Infirmière",rel:"mus",lng:"fr",bio:"Infirmière à N'Djamena, j'aime la cuisine, les échanges sincères et la famille.",selfie_url:"photos/achte.jpg",photos:["photos/achte.jpg","photos/fatime.jpg","photos/hawa.jpg","photos/mariam.jpg"],time:Date.now()}
+:{id:"p_mahamat",n:"Mahamat",g:"m",a:28,c:"N'Djamena",jb:"Ingénieur agronome",rel:"mus",lng:"both",bio:"Passionné de projets agricoles, football le week-end et valeurs familiales.",selfie_url:"photos/mahamat.jpg",photos:["photos/mahamat.jpg","photos/abakar.jpg","photos/idriss.jpg","photos/moussa.jpg"],time:Date.now()};
 st.incomingRequests.push(welcomeSender);
 save();
+}
+if(Array.isArray(st.incomingRequests)){
+st.incomingRequests.forEach(r=>{
+const pObj=byId(r.id);
+if(pObj&&Array.isArray(pObj.photos)&&pObj.photos.length>1&&(!r.photos||r.photos.length<=1)){
+r.photos=[...pObj.photos];
+}
+});
 }
 }
 const save=()=>{
@@ -2124,7 +2165,7 @@ localStorage.setItem(k, JSON.stringify({
 lang:st.lang,blur:st.blur,lite:st.lite,tc:st.tc,u:st.u,blocked:st.blocked||[],
 selfie:st.selfie,ph5:st.ph5,feedbacks:st.feedbacks||[],step:st.step,savedStep:st.savedStep||st.step,g:st.g,ph:st.ph,
 em:st.em,prem:st.prem,inc:st.inc,seen:st.seen,mt:st.mt||[],ms:st.ms||{},passed:st.passed||[],sentRequests:st.sentRequests||[],
-incomingRequests:st.incomingRequests||[],dailyLimits:st.dailyLimits,mSubTab:st.mSubTab||"chat",reqSubTab:st.reqSubTab||"rec"
+incomingRequests:st.incomingRequests||[],reqPhotoIdx:st.reqPhotoIdx||{},dailyLimits:st.dailyLimits,mSubTab:st.mSubTab||"chat",reqSubTab:st.reqSubTab||"rec"
 }));
 }catch(e){}
 };
@@ -2209,11 +2250,16 @@ return`<div class="pf">
 <p style="font-size:13px;line-height:1.45;color:var(--ink);margin:0 0 14px">
 ${t.onbPhotosDesc||"Votre selfie certifié est votre 1ère photo. Ajoutez jusqu'à 4 photos supplémentaires de vous pour compléter votre profil (5 photos max) :"}
 </p>
-<div class="grid5" style="margin-bottom:14px">
+<div class="grid5" style="margin-bottom:8px">
 ${st.ph5.map((q,i)=>`
 <div class="pt ${q.isSelfie?'pt-selfie':''}">
 <img src="${q.p||q.o}" alt="Photo ${i+1}">
-${q.isSelfie?`<span class="selfie-badge">${ic("ok")} ${t.selfieBadge}</span>`:`<button class="ib rmb" data-a="rmp" data-k="${i}" aria-label="${t.rm}">${ic("x")}</button>`}
+${q.isSelfie?`<span class="selfie-badge">${ic("ok")} ${t.selfieBadge}</span>`:''}
+${i===0
+? `<span class="profile-main-badge">⭐ ${st.lang==='ar'?'الرئيسية':'Profil'}</span>`
+: `<button type="button" class="btn-make-avatar" data-a="set-avatar" data-k="${i}" title="${st.lang==='ar'?'تعيين كصورة للملف الشخصي':'Définir comme photo de profil'}">⭐ ${st.lang==='ar'?'تعيين كبروفايل':'Définir profil'}</button>`
+}
+${q.isSelfie?'':`<button class="ib rmb" data-a="rmp" data-k="${i}" aria-label="${t.rm}">${ic("x")}</button>`}
 </div>
 `).join("")}
 ${n<5?`
@@ -2223,6 +2269,9 @@ ${ic("cam")}
 </button>
 `:""}
 </div>
+<p class="mut" style="font-size:12px;margin:0 0 14px;text-align:start">
+💡 ${st.lang==='ar'?'اضغط على ⭐ تعيين كبروفايل لاختيار صورتك الشخصية المفضلة.':'Cliquez sur ⭐ Définir profil pour choisir votre photo de profil principale.'}
+</p>
 <input id="pf-direct" type="file" accept="image/*" hidden>
 <div class="sf" style="background:rgba(0,111,253,0.06);border:1px solid rgba(0,111,253,0.2);margin-bottom:18px">
 <div style="display:flex;align-items:flex-start;gap:10px">
@@ -2326,7 +2375,7 @@ const qBadge=st.prem
 const incBanner=st.inc?`<div style="display:flex;align-items:center;gap:8px;background:rgba(30,41,59,0.08);border:1px solid #1E293B;border-radius:10px;padding:6px 12px;margin-bottom:8px;font-size:12px;color:var(--ink)"><span>🕶️</span><span style="font-weight:600">${t.incogBanner}</span></div>`:"";
 if(!p)return cbar+incBanner+qBadge+cnt+`<div class="empty"><div style="font-size:42px;margin-bottom:8px">🌟</div><h2>${st.tc!=="all"?t.noCity:(t.noProfilesYet||t.done)}</h2><p>${st.tc!=="all"?t.noCityD:(t.noProfilesDesc||"")}</p><button class="btn" data-a="${st.tc!=="all"?"reset-tc":"tab"}" data-k="${st.tc!=="all"?"":"p"}" style="max-width:260px;margin:12px auto 0">${st.tc!=="all"?t.allC:t.my}</button></div>`;
 const bioText=(p.b&&p.b[st.lang])||p.bio||(p.b&&p.b.fr)||"";
-const photos=(p.photos&&p.photos.length>0)?p.photos:(p.selfie_url?[p.selfie_url]:[]);
+const photos=getProfilePhotos(p);
 const totalPhotos=photos.length;
 const cardIdx=Math.min(st.cardPhotoIdx||0,Math.max(0,totalPhotos-1));
 const activePhoto=totalPhotos>0?photos[cardIdx]:(p.selfie_url||'photos/achte.jpg');
@@ -2381,17 +2430,29 @@ return subtabsHtml+quotaHtml+`<div class="empty"><div style="font-size:42px;marg
 
 const reqCards=reqList.map(r=>{
 const pObj=byId(r.id)||r;
-const pImg=r.selfie_url||(pObj&&pObj.selfie_url)||(pObj&&pObj.photos&&pObj.photos[0])||"photos/achte.jpg";
+const photos=getProfilePhotos(pObj);
+const totalPhotos=photos.length;
+const curPhotoIdx=Math.min((st.reqPhotoIdx&&st.reqPhotoIdx[r.id])||0,Math.max(0,totalPhotos-1));
+const activePhoto=photos[curPhotoIdx]||photos[0]||"photos/achte.jpg";
 const pRel=r.rel||(pObj&&(pObj.rel||pObj.religion))||"mus";
 const pLng=r.lng||(pObj&&(pObj.lng||pObj.language))||"fr";
 const pIt=r.i||(pObj&&(pObj.i||pObj.intention))||"ser";
 const pBio=r.bio||(pObj&&pObj.bio)||"";
 return `<div class="req-card" style="position:relative">
-<div class="req-header" style="cursor:pointer" data-a="view-req-profile" data-id="${r.id}">
-<div class="req-avatar-box">
-<img src="${pImg}" class="req-avatar-img" alt="${esc(r.n)}" onerror="this.onerror=null;this.src='photos/achte.jpg'">
-<span class="req-verified-badge" title="Vérifié">✓</span>
+<div class="req-photo-box">
+${totalPhotos>1?`
+<div class="card-photo-bars" style="top:10px">
+${photos.map((_,idx)=>`<span class="photo-bar ${idx===curPhotoIdx?'active':''}"></span>`).join('')}
 </div>
+<div class="photo-nav-tap photo-nav-left" data-a="prev-req-card-photo" data-id="${r.id}" data-max="${totalPhotos}" title="${st.lang==='ar'?'الصورة السابقة':'Photo précédente'}"></div>
+<div class="photo-nav-tap photo-nav-right" data-a="next-req-card-photo" data-id="${r.id}" data-max="${totalPhotos}" title="${st.lang==='ar'?'الصورة التالية':'Photo suivante'}"></div>
+<span class="photo-counter-badge" style="top:18px;bottom:auto;right:12px;left:auto">📸 ${curPhotoIdx+1}/${totalPhotos}</span>
+`:''}
+<img src="${activePhoto}" class="req-photo-img" alt="${esc(r.n)}" data-a="view-req-profile" data-id="${r.id}" onerror="this.onerror=null;this.src='photos/achte.jpg'">
+<span class="selfie-badge" style="position:absolute;bottom:10px;left:10px;background:#059669;box-shadow:0 2px 6px rgba(0,0,0,0.3);z-index:5">${ic("ok")} ${t.selfieBadge||"Vérifié"}</span>
+<button type="button" class="btn sec" style="position:absolute;bottom:10px;right:10px;width:auto;min-height:30px;padding:3px 10px;font-size:11.5px;background:rgba(0,0,0,0.65);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:999px;backdrop-filter:blur(4px);z-index:5;cursor:pointer" data-a="view-req-profile" data-id="${r.id}">👁️ ${t.viewProfile||"Voir tout"}</button>
+</div>
+<div class="req-header" style="cursor:pointer;margin-top:4px" data-a="view-req-profile" data-id="${r.id}">
 <div class="req-info" style="flex:1">
 <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
 <h3 style="margin:0">${esc(r.n)}, ${r.a}${ic("ok")}</h3>
@@ -2405,10 +2466,7 @@ return `<div class="req-card" style="position:relative">
 </div>
 </div>
 ${pBio?`<p class="req-bio" style="cursor:pointer" data-a="view-req-profile" data-id="${r.id}">“${esc(pBio)}”</p>`:""}
-<button class="btn sec" data-a="view-req-profile" data-id="${r.id}" style="min-height:36px;padding:4px 12px;font-size:12.5px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;margin:8px 0 10px;width:100%;border-color:var(--brand);color:var(--brand)">
-<span>👁️ ${t.viewProfile||"Consulter le profil complet"}</span>
-</button>
-<div class="req-actions">
+<div class="req-actions" style="margin-top:10px">
 <button class="btn btn-accept-req" data-a="accept-req" data-id="${r.id}">${ic("heart")}<span>${t.acceptReq}</span></button>
 <button class="btn sec btn-decline-req" data-a="decline-req" data-id="${r.id}">${ic("x")}<span>${t.declineReq}</span></button>
 </div>
@@ -2461,7 +2519,7 @@ function prof(){const t=x(),u=st.u,n=st.ph5.length;
 const hbList=(u.hb||[]);
 const uBio=u.bio||t.bioDef;
 const blkCount=(st.blocked||[]).length;
-return`<div class="pf"><h1>${t.my}</h1><div class="card"><div class="bd"><div class="chh"><span class="av l">${me(0)}</span><div><h2>${esc(u.n||"")}, ${u.a}${ic("ok")}</h2><p class="mut">${u.jb?esc(u.jb)+" · ":""}${u.c} ${flagSvg}</p></div></div><p class="b" style="margin:10px 0 8px;font-style:italic;color:var(--ink);background:rgba(0,0,0,.03);padding:10px 14px;border-radius:12px;border-inline-start:3px solid var(--brand);cursor:pointer" data-a="edbio" title="${t.edBio}">“${esc(uBio)}”</p><ul class="chips"><li>${t.vd}</li><li style="cursor:pointer" data-a="edj" title="${t.job}">${esc(u.jb||"")}</li><li style="cursor:pointer" data-a="edc" title="${t.cty}">${esc(u.c)}</li><li style="cursor:pointer" data-a="edtc" title="${t.tcty}">${t.seekCity}: ${esc(st.tc==="all"?t.allC:st.tc)}</li><li style="cursor:pointer" data-a="edrel" title="${t.rel}">${(t.relMap&&t.relMap[u.rel])||t.relMus}</li><li style="cursor:pointer" data-a="edlng" title="${t.langSpk}">${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</li><li>${t.kid[u.kd]}</li><li>${t.k[u.i]}</li>${u.gVerif?`<li style="border-color:#34A853;color:#1e7e34">${t.gVerif}</li>`:""}${st.inc?`<li>${t.incb}</li>`:""}</ul></div></div><div class="sf"><div><h3>${t.rel} & ${t.langSpk}</h3><p>${(t.relMap&&t.relMap[u.rel])||t.relMus} · ${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edrel">${t.rel}</button></div><div class="sf"><div><h3>${t.bio}</h3><p style="white-space:pre-wrap;color:var(--ink)">${esc(uBio)}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edbio">${t.edBio}</button></div><div class="sf"><div><h3>${t.hob}</h3><p>${hbList.length?hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?h[st.lang]:""}).filter(Boolean).join(" · "):t.hobHint}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-edhb">${t.edHb}</button></div><div class="h-chips" style="margin-top:-6px;margin-bottom:12px">${hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?`<span class="h-chip on" style="cursor:pointer" data-a="open-edhb"><span>${h[st.lang]}</span></span>`:""}).join("")}</div><div class="sf"><div><h3>${t.tcty}</h3><p>${st.tc==="all"?t.allC:st.tc} ${flagSvg}</p></div><select class="fld" style="width:auto;min-height:38px;padding:4px 8px;margin-inline-start:auto" id="p-tc"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.tc===c?"selected":""}>${c}</option>`).join("")}</select></div><div class="sf"><div><h3>${t.phs} (${n}/5)</h3><p>${t.ph5i}</p></div></div><div class="grid5">${st.ph5.map((q,i)=>`<div class="pt ${q.isSelfie?'pt-selfie':''}"><img src="${q.p}" alt="">${q.isSelfie?`<span class="selfie-badge">${ic("ok")} ${t.selfieBadge}</span>`:`<button class="ib rmb" data-a="rmp" data-k="${i}" aria-label="${t.rm}">${ic("x")}</button>`}</div>`).join("")}${n<5?`<button class="pt add" data-a="addp">${ic("cam")}<span>${t.add}</span></button>`:""}</div><input id="pf" type="file" accept="image/*" hidden><div class="sf"><div><h3>${t.blkedList} (${blkCount})</h3><p>${blkCount?blkCount+" "+(st.lang==="ar"?"مستخدم محظور":"utilisateur(s) bloqué(s)"):t.noBlked}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-blocked">${t.blkedList}</button></div><div class="sf" style="border:1.5px solid rgba(0,111,253,0.3);background:var(--neutral-light-light);cursor:pointer" data-a="open-fb"><div><h3 style="color:var(--brand);display:flex;align-items:center;gap:6px">⭐ ${t.fbTitle}</h3><p style="color:var(--ink);font-size:13px">${t.fbSub}</p></div><button class="btn" style="width:auto;min-height:36px;padding:4px 14px;margin-inline-start:auto" data-a="open-fb">${t.fbBtn}</button></div><div class="sf"><div><h3>${t.plan}</h3><p>${st.prem?t.prem:t.free}</p></div></div>${st.prem?"":`<button class="btn" data-a="up">${t.up}</button><button class="btn sec" data-a="d19">${t.dm}</button>`}${st.prem?(sw("inc",t.incog)+`<p class="mut">${t.incd}</p>`+(st.inc?`<div class="sf" style="background:rgba(30,41,59,0.06);border:1.5px solid #1E293B;border-radius:14px;padding:12px 14px;margin:8px 0"><div style="display:flex;align-items:center;gap:12px"><span style="font-size:26px">🕶️</span><div><h4 style="margin:0 0 2px;color:var(--ink);font-size:14px;font-weight:700">${t.incog} (${x().incb})</h4><p style="margin:0;font-size:12px;color:var(--mut);line-height:1.4">${t.incogBanner}</p></div></div></div>`:"")):`<button class="sw" data-a="up"><span>${t.incog}<br><small>${t.incl}</small></span>${ic("lock")}</button>`}${sw("blur",t.blur)}${sw("lite",t.lite)}<div class="sf">${ic("shield")}<div><h3>${t.sf}</h3><p>${t.st}</p></div></div><button class="btn sec" data-a="logout" style="border-color:var(--heart);color:var(--heart);margin:14px 0 6px;display:flex;align-items:center;justify-content:center;gap:8px">${ic("phone-off")}<span>${t.logout}</span></button><p class="mut">${t.age}</p><p class="mut">${t.demo}</p></div>`}
+return`<div class="pf"><h1>${t.my}</h1><div class="card"><div class="bd"><div class="chh"><span class="av l">${me(0)}</span><div><h2>${esc(u.n||"")}, ${u.a}${ic("ok")}</h2><p class="mut">${u.jb?esc(u.jb)+" · ":""}${u.c} ${flagSvg}</p></div></div><p class="b" style="margin:10px 0 8px;font-style:italic;color:var(--ink);background:rgba(0,0,0,.03);padding:10px 14px;border-radius:12px;border-inline-start:3px solid var(--brand);cursor:pointer" data-a="edbio" title="${t.edBio}">“${esc(uBio)}”</p><ul class="chips"><li>${t.vd}</li><li style="cursor:pointer" data-a="edj" title="${t.job}">${esc(u.jb||"")}</li><li style="cursor:pointer" data-a="edc" title="${t.cty}">${esc(u.c)}</li><li style="cursor:pointer" data-a="edtc" title="${t.tcty}">${t.seekCity}: ${esc(st.tc==="all"?t.allC:st.tc)}</li><li style="cursor:pointer" data-a="edrel" title="${t.rel}">${(t.relMap&&t.relMap[u.rel])||t.relMus}</li><li style="cursor:pointer" data-a="edlng" title="${t.langSpk}">${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</li><li>${t.kid[u.kd]}</li><li>${t.k[u.i]}</li>${u.gVerif?`<li style="border-color:#34A853;color:#1e7e34">${t.gVerif}</li>`:""}${st.inc?`<li>${t.incb}</li>`:""}</ul></div></div><div class="sf"><div><h3>${t.rel} & ${t.langSpk}</h3><p>${(t.relMap&&t.relMap[u.rel])||t.relMus} · ${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edrel">${t.rel}</button></div><div class="sf"><div><h3>${t.bio}</h3><p style="white-space:pre-wrap;color:var(--ink)">${esc(uBio)}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edbio">${t.edBio}</button></div><div class="sf"><div><h3>${t.hob}</h3><p>${hbList.length?hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?h[st.lang]:""}).filter(Boolean).join(" · "):t.hobHint}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-edhb">${t.edHb}</button></div><div class="h-chips" style="margin-top:-6px;margin-bottom:12px">${hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?`<span class="h-chip on" style="cursor:pointer" data-a="open-edhb"><span>${h[st.lang]}</span></span>`:""}).join("")}</div><div class="sf"><div><h3>${t.tcty}</h3><p>${st.tc==="all"?t.allC:st.tc} ${flagSvg}</p></div><select class="fld" style="width:auto;min-height:38px;padding:4px 8px;margin-inline-start:auto" id="p-tc"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.tc===c?"selected":""}>${c}</option>`).join("")}</select></div><div class="sf"><div><h3>${t.phs} (${n}/5)</h3><p>${t.ph5i}</p></div></div><div class="grid5">${st.ph5.map((q,i)=>`<div class="pt ${q.isSelfie?'pt-selfie':''}"><img src="${q.p}" alt="">${i===0?`<span class="profile-main-badge">⭐ ${st.lang==='ar'?'الرئيسية':'Profil'}</span>`:`<button type="button" class="btn-make-avatar" data-a="set-avatar" data-k="${i}" title="${st.lang==='ar'?'تعيين كصورة شخصية رئيسية':'Définir comme photo de profil'}">⭐ ${st.lang==='ar'?'تعيين كبروفايل':'Définir profil'}</button>`}${q.isSelfie?`<span class="selfie-badge">${ic("ok")} ${t.selfieBadge}</span>`:`<button class="ib rmb" data-a="rmp" data-k="${i}" aria-label="${t.rm}">${ic("x")}</button>`}</div>`).join("")}${n<5?`<button class="pt add" data-a="addp">${ic("cam")}<span>${t.add}</span></button>`:""}</div><p class="mut" style="font-size:12px;margin:6px 0 10px">${st.lang==='ar'?'💡 يمكنك اختيار أي صورة لتكون صورتك الشخصية الرئيسية بالضغط على «تعيين كبروفايل».':'💡 Vous pouvez choisir n’importe quelle photo comme photo de profil principale en appuyant sur « Définir profil ».'}</p><input id="pf" type="file" accept="image/*" hidden><div class="sf"><div><h3>${t.blkedList} (${blkCount})</h3><p>${blkCount?blkCount+" "+(st.lang==="ar"?"مستخدم محظور":"utilisateur(s) bloqué(s)"):t.noBlked}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-blocked">${t.blkedList}</button></div><div class="sf" style="border:1.5px solid rgba(0,111,253,0.3);background:var(--neutral-light-light);cursor:pointer" data-a="open-fb"><div><h3 style="color:var(--brand);display:flex;align-items:center;gap:6px">⭐ ${t.fbTitle}</h3><p style="color:var(--ink);font-size:13px">${t.fbSub}</p></div><button class="btn" style="width:auto;min-height:36px;padding:4px 14px;margin-inline-start:auto" data-a="open-fb">${t.fbBtn}</button></div><div class="sf"><div><h3>${t.plan}</h3><p>${st.prem?t.prem:t.free}</p></div></div>${st.prem?"":`<button class="btn" data-a="up">${t.up}</button><button class="btn sec" data-a="d19">${t.dm}</button>`}${st.prem?(sw("inc",t.incog)+`<p class="mut">${t.incd}</p>`+(st.inc?`<div class="sf" style="background:rgba(30,41,59,0.06);border:1.5px solid #1E293B;border-radius:14px;padding:12px 14px;margin:8px 0"><div style="display:flex;align-items:center;gap:12px"><span style="font-size:26px">🕶️</span><div><h4 style="margin:0 0 2px;color:var(--ink);font-size:14px;font-weight:700">${t.incog} (${x().incb})</h4><p style="margin:0;font-size:12px;color:var(--mut);line-height:1.4">${t.incogBanner}</p></div></div></div>`:"")):`<button class="sw" data-a="up"><span>${t.incog}<br><small>${t.incl}</small></span>${ic("lock")}</button>`}${sw("blur",t.blur)}${sw("lite",t.lite)}<div class="sf">${ic("shield")}<div><h3>${t.sf}</h3><p>${t.st}</p></div></div><button class="btn sec" data-a="logout" style="border-color:var(--heart);color:var(--heart);margin:14px 0 6px;display:flex;align-items:center;justify-content:center;gap:8px">${ic("phone-off")}<span>${t.logout}</span></button><p class="mut">${t.age}</p><p class="mut">${t.demo}</p></div>`}
 function prot(src,e){const c=document.createElement("canvas");c.width=c.height=360;const g=c.getContext("2d");g.drawImage(src,0,0);
 const X=e.x*3.6,Y=e.y*3.6,R=e.r*3.6,m=document.createElement("canvas");m.width=m.height=8;m.getContext("2d").drawImage(src,X-R,Y-R,2*R,2*R,0,0,8,8);
 g.save();g.beginPath();g.ellipse(X,Y,R*.8,R,0,0,7);g.clip();g.imageSmoothingEnabled=false;g.drawImage(m,X-R,Y-R,2*R,2*R);g.restore();return c}
@@ -3328,7 +3386,7 @@ function openProfileDetailsModal(id, initialPhotoIdx=0){
 modalPhotoIdx=initialPhotoIdx||0;
 const p=byId(id);if(!p)return;
 const t=x();
-const photos=(p.photos&&p.photos.length>0)?p.photos:(p.selfie_url?[p.selfie_url]:["photos/achte.jpg"]);
+const photos=getProfilePhotos(p);
 const curPhoto=photos[modalPhotoIdx]||photos[0];
 const bioText=(p.b&&p.b[st.lang])||p.bio||(p.b&&p.b.fr)||"";
 const isIncoming=(st.incomingRequests||[]).some(r=>String(r.id)===String(p.id));
@@ -3704,17 +3762,53 @@ else if(a==="submit-fb"){submitFeedback()}
 else if(a==="addp")$("#pf").click();
 else if(a==="addp-direct"){const inp=$("#pf-direct")||$("#pf");if(inp)inp.click();}
 else if(a==="finish-onb-photos"){ensureSelfieInPh5();save();syncProfileToSupabase();go(5);}
+else if(a==="set-avatar"){
+const idx=+b.dataset.k;
+if(idx>0 && idx<st.ph5.length){
+const picked=st.ph5.splice(idx,1)[0];
+st.ph5.unshift(picked);
+save();
+syncProfileToSupabase();
+render();
+say(st.lang==="ar"?"تم تعيين الصورة كصورة شخصية رئيسية بنجاح ⭐":"Photo définie comme photo de profil principale ⭐");
+}
+}
 else if(a==="prev-card-photo"){e.stopPropagation();st.cardPhotoIdx=Math.max(0,(st.cardPhotoIdx||0)-1);render();}
 else if(a==="next-card-photo"){e.stopPropagation();const max=+b.dataset.max||1;st.cardPhotoIdx=Math.min(max-1,(st.cardPhotoIdx||0)+1);render();}
-else if(a==="view-user-profile"||a==="view-req-profile"){openProfileDetailsModal(b.dataset.id);}
+else if(a==="prev-req-card-photo"){
+e.stopPropagation();
+const id=b.dataset.id;
+if(!st.reqPhotoIdx) st.reqPhotoIdx={};
+st.reqPhotoIdx[id]=Math.max(0,(st.reqPhotoIdx[id]||0)-1);
+render();
+}
+else if(a==="next-req-card-photo"){
+e.stopPropagation();
+const id=b.dataset.id;
+const max=+b.dataset.max||1;
+if(!st.reqPhotoIdx) st.reqPhotoIdx={};
+st.reqPhotoIdx[id]=Math.min(max-1,(st.reqPhotoIdx[id]||0)+1);
+render();
+}
+else if(a==="view-user-profile"||a==="view-req-profile"){
+const initialIdx=(st.reqPhotoIdx&&st.reqPhotoIdx[b.dataset.id])||0;
+openProfileDetailsModal(b.dataset.id,initialIdx);
+}
 else if(a==="modal-photo-switch"){
 const p=byId(b.dataset.id);
-const photos=(p&&p.photos&&p.photos.length>0)?p.photos:(p&&p.selfie_url?[p.selfie_url]:[]);
+const photos=getProfilePhotos(p);
 if(b.dataset.dir==="prev"){modalPhotoIdx=Math.max(0,modalPhotoIdx-1);}
 else{modalPhotoIdx=Math.min(photos.length-1,modalPhotoIdx+1);}
+if(!st.reqPhotoIdx) st.reqPhotoIdx={};
+st.reqPhotoIdx[b.dataset.id]=modalPhotoIdx;
 openProfileDetailsModal(b.dataset.id,modalPhotoIdx);
 }
-else if(a==="modal-photo-set"){openProfileDetailsModal(b.dataset.id,+b.dataset.idx);}
+else if(a==="modal-photo-set"){
+modalPhotoIdx=+b.dataset.idx||0;
+if(!st.reqPhotoIdx) st.reqPhotoIdx={};
+st.reqPhotoIdx[b.dataset.id]=modalPhotoIdx;
+openProfileDetailsModal(b.dataset.id,modalPhotoIdx);
+}
 else if(a==="modal-accept-req"){closeM();processAcceptRequest(b.dataset.id);}
 else if(a==="modal-decline-req"){closeM();processDeclineRequest(b.dataset.id);}
 else if(a==="modal-like"){closeM();swipe("like");}
