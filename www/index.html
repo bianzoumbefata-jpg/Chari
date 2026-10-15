@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Chari · Rencontres au Tchad</title>
 
 <!-- PWA & Mobile Meta Tags -->
@@ -120,15 +120,30 @@
   --ring: rgba(40, 151, 255, 0.35);
   --hdr: #1F2024;
 }
-*,*::before,*::after{box-sizing:inherit}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-html,body{height:100%;margin:0}
+*,*::before,*::after{box-sizing:border-box}
+html{
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+}
+html,body{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
 body{
   background: var(--bg);
   color: var(--body);
   font: 400 15px/1.5 "Inter", "IBM Plex Sans Arabic", system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   letter-spacing: -0.01em;
+  position: relative;
+  touch-action: pan-y;
 }
 h1,h2,h3{
   color: var(--ink);
@@ -139,24 +154,32 @@ h1,h2,h3{
 h1{font-weight: 800; font-size: 26px; letter-spacing: -0.025em}
 h2{font-weight: 700; font-size: 20px; letter-spacing: -0.02em}
 h3{font-weight: 700; font-size: 15px}
-button,input,select,textarea{font:inherit}
+button,input,select,textarea{font:inherit;max-width:100%;box-sizing:border-box}
 button{cursor:pointer}
 :focus-visible{outline:3px solid var(--brand);outline-offset:2px}
 header :focus-visible,.ov :focus-visible{outline-color:var(--brand-light)}
 .app{
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  min-height: 100%;
+  width: 100%;
   max-width: 480px;
   margin: 0 auto;
   box-shadow: 0 0 50px rgba(31, 32, 36, 0.08);
   background: var(--bg);
+  overflow-x: hidden;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 header{
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 20px;
+  padding: 12px 16px;
   background: var(--hdr);
   color: var(--ink);
   border-bottom: 1px solid var(--line);
@@ -202,8 +225,21 @@ header{
   flex: none;
   background: var(--brand-grad);
 }
-main{flex:1;min-height:0;overflow:auto;padding:18px}
+main{
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px 14px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+}
 nav{
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   display: flex;
   border-top: 1px solid var(--line);
   background: var(--surf);
@@ -481,7 +517,14 @@ nav [aria-current]::after{
   outline: none;
   box-shadow: 0 0 0 3px rgba(0, 111, 253, 0.15);
 }
-.pf{display:grid;gap:16px}
+.pf{
+  display: grid;
+  gap: 14px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
 .pf h1{font-size:26px;font-weight:800;letter-spacing:-.025em}
 .sw{
   display: flex;
@@ -1309,6 +1352,93 @@ body.screen-protected .screen-shield{display:flex!important}
   70%{ box-shadow: 0 0 0 28px rgba(0, 111, 253, 0); }
   100%{ box-shadow: 0 0 0 0 rgba(0, 111, 253, 0); }
 }
+/* Mobile Phone Responsive Optimization - Epouse parfaitement l'ecran mobile */
+@media screen and (max-width: 480px) {
+  html, body {
+    width: 100vw;
+    max-width: 100vw;
+    overflow-x: hidden;
+    position: relative;
+  }
+  .app {
+    width: 100vw;
+    max-width: 100vw;
+    margin: 0;
+    box-shadow: none;
+    border: none;
+    border-radius: 0;
+    overflow-x: hidden;
+  }
+  header {
+    padding: 10px 14px;
+    width: 100%;
+    max-width: 100%;
+  }
+  main {
+    padding: 12px 12px 18px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .pf {
+    gap: 12px;
+    width: 100%;
+    max-width: 100%;
+  }
+  .card {
+    border-radius: 16px;
+    width: 100%;
+    max-width: 100%;
+  }
+  .ph {
+    height: min(44vh, 310px);
+    min-height: 200px;
+  }
+  .bd {
+    padding: 14px;
+  }
+  .bd h2 {
+    font-size: 21px;
+  }
+  .acts {
+    gap: 24px;
+    margin-top: 14px;
+  }
+  .act .i {
+    width: 54px;
+    height: 54px;
+    padding: 14px;
+  }
+  .btn {
+    min-height: 46px;
+    padding: 0 16px;
+    font-size: 14.5px;
+  }
+  .btn-google {
+    min-height: 50px;
+    font-size: 15px;
+    padding: 0 10px;
+    gap: 10px;
+  }
+  .fld {
+    min-height: 46px;
+    padding: 0 14px;
+    font-size: 14px;
+  }
+  .visa-card-box {
+    padding: 14px 14px;
+    margin: 10px 0;
+  }
+  .visa-card-num {
+    font-size: 14px;
+    letter-spacing: 1.2px;
+  }
+  .g-modal, .sheet-box {
+    width: 95%;
+    max-width: 95%;
+    padding: 18px 14px;
+  }
+}
 </style>
 </head>
 <body>
@@ -1760,7 +1890,7 @@ const LIM=20,B="#1E3A8A",G="#D97706",R="#E11D48";
 const flagSvg=`<span class="flag-mini" title="Tchad" aria-label="Tchad"><svg viewBox="0 0 30 20" width="18" height="12"><rect width="10" height="20" x="0" fill="#002664"/><rect width="10" height="20" x="10" fill="#FECB00"/><rect width="10" height="20" x="20" fill="#C60C30"/></svg></span>`;
 const T={
 fr:{d:"Découvrir",m:"Messages",p:"Profil",pass:"Passer",like:"J'aime",mt:"C'est un match !",ms:"Vous vous plaisez mutuellement.",wr:"Écrire à ",ct:"Continuer",done:"Vous avez tout vu pour aujourd'hui.",again:"Revoir les profils",none:"Pas encore de conversation.",nh:"Aimez des profils pour en démarrer une.",ph:"Écrire un message",snd:"Envoyer",bk:"Retour",my:"Mon profil",vg:"Vérification…",vd:"Profil vérifié",blur:"Visage masqué jusqu'au match",lite:"Économie de données",sf:"Conseils de sécurité",st:"Ne partagez jamais d'argent ni de codes. Retrouvez-vous dans un lieu public et prévenez un proche.",age:"Réservé aux 22 ans et plus.",demo:"Chari · Profils réels certifiés par selfie au Tchad.",lgb:"العربية",r:["Bonjour ! Ravi(e) de faire ta connaissance.","Tu es de quelle ville ?"],
-wl:"Bienvenue sur Chari",wl2:"Des rencontres amoureuses sérieuses entre un homme et une femme au Tchad, avec des profils vérifiés.",phl:"Numéro de téléphone",ph8:"Entrez un numéro à 8 chiffres.",orPhone:"ou avec votre numéro de téléphone",sndOtp:"Recevoir mon code par SMS",otp:"Confirmation du numéro",otps:"Code envoyé par SMS au ",otpd:"Entrez le code de confirmation.",cod:"Code à 6 chiffres",bad:"Code incorrect.",pr:"Votre profil",nm:"Prénom",job:"Profession / Métier",jobPh:"Ex: Enseignant, Commerçante, Infirmière...",tcty:"Ville de rencontre",allC:"Toutes les villes (Tchad)",noCity:"Aucun profil dans cette ville",noCityD:"Aucun profil disponible actuellement dans cette ville. Essayez d'élargir à tout le Tchad !",iam:"Je suis",fem:"Une femme",mal:"Un homme",ag:"Âge",agE:"Chari est réservé aux 22 ans et plus.",cty:"Votre ville",kd:"Nombre d'enfants",it:"Je cherche",req:"Complétez tous les champs.",sf1:"Identification par selfie obligatoire",sf2:"Prenez un selfie en direct avec votre caméra : notre intelligence artificielle analyse et certifie l'authenticité de votre visage.",shot:"Prendre mon selfie certifié",sf3:"Ce selfie confirme votre identité réelle. Il reste indélébile parmi vos photos et protège la communauté.",pj:"profils vus aujourd'hui",unl:"Premium actif : profils illimités aujourd'hui",pw:"Limite du jour atteinte",pw2:"Vous avez vu vos 20 profils gratuits aujourd'hui.",pss:"Pass Premium du jour",pss2:"Profils illimités jusqu'à minuit et mode incognito.",op:"Payer avec",pn:"Numéro de paiement",pb:"Payer 5 000 FCFA",pg:"Paiement en cours…",pd:"Démo : aucun paiement réel n'est effectué.",paid:"Paiement reçu. Premium activé.",plan:"Votre formule",free:"Gratuite : 20 profils par jour",prem:"Pass Premium du jour actif",up:"Passer Premium (5 000 FCFA)",dm:"Démo : passer à 19 profils vus",opVisa:"Carte Visa",cardNum:"Numéro de carte Visa",cardExp:"Date d'expiration (MM/AA)",cardCvv:"Code CVV (3 chiffres)",cardNom:"Nom du porteur",cardNomPh:"Ex: MAHAMAT ADAM",cardSec:"Paiement 100% sécurisé Visa 3D Secure",cardNumE:"Numéro de carte incomplet (16 chiffres requis).",cardExpE:"Date d'expiration invalide (format MM/AA).",cardCvvE:"Code CVV invalide (3 chiffres).",cardNomE:"Entrez le nom présent sur la carte.",visaPaid:"Paiement Visa validé ! Pass Premium du jour activé.",
+wl:"Bienvenue sur Chari",wl2:"Des rencontres amoureuses sérieuses entre un homme et une femme au Tchad, avec des profils vérifiés.",phl:"Numéro de téléphone",ph8:"Entrez un numéro à 8 chiffres.",orPhone:"ou avec votre numéro de téléphone",sndOtp:"Recevoir mon code par SMS",otp:"Confirmation du numéro",otps:"Code envoyé par SMS au ",otpd:"Entrez le code de confirmation.",cod:"Code à 6 chiffres",bad:"Code incorrect.",pr:"Votre profil",nm:"Prénom",job:"Profession / Métier",jobPh:"Ex: Enseignant, Commerçante, Infirmière...",tcty:"Ville de rencontre",allC:"Toutes les villes (Tchad)",noCity:"Aucun profil dans cette ville",noCityD:"Aucun profil disponible actuellement dans cette ville. Essayez d'élargir à tout le Tchad !",iam:"Je suis",fem:"Une femme",mal:"Un homme",ag:"Âge",agE:"Chari est réservé aux 22 ans et plus.",cty:"Votre ville",kd:"Nombre d'enfants",it:"Je cherche",req:"Complétez tous les champs.",sf1:"Identification par selfie obligatoire",sf2:"Prenez un selfie en direct avec votre caméra : notre intelligence artificielle analyse et certifie l'authenticité de votre visage.",shot:"Prendre mon selfie certifié",sf3:"Ce selfie confirme votre identité réelle. Il reste indélébile parmi vos photos et protège la communauté.",pj:"profils vus aujourd'hui",unl:"Premium actif : profils & likes illimités pendant 1 mois",pw:"Limite du jour atteinte",pw2:"Vous avez vu vos 20 profils gratuits aujourd'hui.",pss:"Abonnement Premium (1 Mois)",pss2:"Profils illimités pendant 30 jours, likes & messages illimités et mode incognito.",op:"Paiement par carte bancaire",pn:"Numéro de paiement",pb:"Payer 5 000 FCFA (1 mois)",pg:"Paiement en cours…",pd:"Paiement 100% sécurisé et garanti.",paid:"Paiement validé ! Votre abonnement Premium 1 mois (5 000 FCFA) est activé.",plan:"Votre formule",free:"Gratuite : 20 profils par jour",prem:"Abonnement Premium actif (1 mois)",up:"Passer Premium (5 000 FCFA / mois)",dm:"Démo : passer à 19 profils vus",opVisa:"Carte bancaire (Visa / Mastercard)",cardNum:"Numéro de carte",cardExp:"Date d'expiration (MM/AA)",cardCvv:"Code CVV (3 chiffres)",cardNom:"Nom du porteur",cardNomPh:"Ex: MAHAMAT ADAM",cardSec:"Paiement 100% sécurisé Visa & Mastercard 3D Secure",cardNumE:"Numéro de carte incomplet (16 chiffres requis).",cardExpE:"Date d'expiration invalide (format MM/AA).",cardCvvE:"Code CVV invalide (3 chiffres).",cardNomE:"Entrez le nom présent sur la carte.",visaPaid:"Paiement validé ! Votre abonnement Premium 1 mois (5 000 FCFA) est activé.",
 gBtn:"S'identifier avec Google",fbAuthBtn:"S'identifier avec Google",gNote:"🛡️ Inscription et identification 100% sécurisées avec votre compte Google. La certification de votre visage par selfie direct est obligatoire pour garantir des rencontres authentiques.",gVerif:"Compte Google vérifié",fbAuthVerif:"Compte Google vérifié",logout:"Se déconnecter",logoutConfirm:"Voulez-vous vous déconnecter de Chari ? Vos coordonnées et messages seront conservés et vous reprendrez exactement au même endroit.",gModalT:"Connexion Google",gModalD:"Sélectionnez votre compte Google pour une vérification instantanée :",gConfirm:"Valider mon compte",cityFilt:"Ville",seekCity:"Recherche",heroTag:"Rencontres au Tchad",hob:"Passe-temps & Centres d'intérêt",hobLbl:"Vos passe-temps favoris",hobHint:"Choisissez vos passe-temps et passions :",edHb:"Modifier mes passe-temps",saveHb:"Enregistrer",bio:"À propos de moi",bioLbl:"Petite description",bioPh:"Ex: Souriant(e), j'aime les discussions sincères, les voyages et je cherche du sérieux...",bioHint:"Présentez-vous en quelques mots :",edBio:"Modifier ma description",saveBio:"Enregistrer ma description",bioDef:"Je recherche une relation sincère, durable et basée sur le respect mutuel.",
 vidCall:"Appel vidéo",callHd:"Appel vidéo HD",calling:"Appel en cours…",callingContact:"Appel en cours…",ringingContact:"Sonnerie chez ",callAnswered:"En communication HD",callEnd:"Appel vidéo terminé",callHangup:"Raccrocher",opt:"Options",repUser:"Signaler ce profil",blkUser:"Bloquer cet utilisateur",blkConfirmT:"Bloquer cet utilisateur ?",blkConfirmD:"Vous ne verrez plus ce profil et vos messages seront masqués.",blkBtn:"Bloquer",blkDone:"Utilisateur bloqué avec succès.",repTitle:"Signaler ce profil",repDesc:"Pour quelle raison souhaitez-vous signaler ce profil ?",repDone:"Signalement envoyé. Notre équipe au Tchad examinera ce profil sous 24h.",repFake:"Faux profil ou usurpation",repHarass:"Comportement inapproprié ou harcèlement",repScam:"Arnaque financière ou demande d'argent",repOther:"Autre motif",unblk:"Débloquer",blkedList:"Utilisateurs bloqués",noBlked:"Aucun utilisateur bloqué.",unblkDone:"Utilisateur débloqué.",
 langSpk:"Langue parlée",lngFr:"Français",lngAr:"Arabe",lngBoth:"Français & Arabe",
@@ -1789,7 +1919,7 @@ scBlockT:"Capture d'écran interdite",scBlockD:"Pour préserver l'intimité et l
 chatTab:"Discussions",reqTab:"Demandes de Matchs",noReq:"Aucune demande reçue pour l'instant",noReqDesc:"Vos nouveaux admirateurs et personnes souhaitant vous contacter apparaîtront ici.",acceptReq:"J'aime",declineReq:"Passer",reqDeclined:"Demande rejetée. Vous ne vous reverrez plus sur Chari.",dailyReqLimit:"Limite quotidienne atteinte (20/20 demandes envoyées aujourd'hui). Réinitialisation quotidienne à 00h00 ou passez à Chari Premium pour des likes illimités !",dailyAcceptLimit:"Limite quotidienne atteinte (10/10 demandes acceptées aujourd'hui). Réinitialisation quotidienne à 00h00 ou passez à Chari Premium !",dailyReqQuota:"Demandes envoyées",dailyAcceptQuota:"Demandes acceptées",resetMidnight:"Réinitialisation à 00h00",editMsg:"Modifier le message",editMsgTimeLeft:"Délai restant pour modifier ce message : ",saveEdit:"Enregistrer",cancelEdit:"Annuler",msgEditedTag:"(modifié)",editExpired:"Le délai de 10 minutes pour modifier ce message est expiré.",incogActive:"Mode Incognito activé : vous pouvez explorer tous les profils en toute discrétion, mais personne ne peut voir le vôtre.",incogInactive:"Mode Incognito désactivé : votre profil est de nouveau visible.",incogBanner:"Mode Incognito actif : votre profil est masqué pour tous les autres membres.",viewProfile:"Consulter le profil",onbPhotosTitle:"Vos photos de profil",onbPhotosDesc:"Votre selfie est votre 1ère photo certifiée. Ajoutez jusqu'à 4 photos supplémentaires pour compléter votre profil (5 photos max) :",photosAdvice:"💡 Les profils avec plusieurs photos ont 4 fois plus de chances de matcher !",finishOnbPhotos:"Terminer et découvrir les profils ✨",onlyMatchedCanChat:"Vous devez être en match pour pouvoir vous écrire.",
 k:{ser:"Relation amoureuse",mar:"Mariage",fam:"Famille",etu:"Études",ent:"Entrepreneuriat",foi:"Foi",mus:"Musique",foo:"Football",cui:"Cuisine",voy:"Voyage",fr:"Français",ar:"Arabe",sa:"Sara"}},
 ar:{d:"اكتشف",m:"الرسائل",p:"ملفي",pass:"تخطَّ",like:"إعجاب",mt:"تطابق!",ms:"أنتما معجبان ببعضكما.",wr:"راسل ",ct:"متابعة",done:"شاهدت كل شيء لهذا اليوم.",again:"إعادة العرض",none:"لا توجد محادثات بعد.",nh:"أعجب بملفات لبدء محادثة.",ph:"اكتب رسالة",snd:"إرسال",bk:"رجوع",my:"ملفي الشخصي",vg:"جارٍ التحقق…",vd:"ملف موثّق",blur:"الوجه مخفي حتى التطابق",lite:"توفير البيانات",sf:"نصائح للأمان",st:"لا ترسل المال أو الرموز أبداً. التقِ في مكان عام وأخبر شخصاً مقرباً.",age:"للبالغين 22 سنة فأكثر فقط.",demo:"شاري · ملفات حقيقية موثقة بالسيلفي في تشاد.",lgb:"Français",r:["مرحباً! سعيد بالتعرف عليك.","من أي مدينة أنت؟"],
-wl:"مرحباً بك في شاري",wl2:"علاقات عاطفية جادة بين رجل وامرأة في تشاد، مع ملفات موثّقة.",phl:"رقم الهاتف",ph8:"أدخل 8 أرقام لرقمك.",orPhone:"أو عبر حساب Google",sndOtp:"استلام الرمز",otp:"تأكيد الحساب",otps:"تم إرسال الرمز إلى ",otpd:"أدخل رمز التأكيد.",cod:"الرمز المكوّن من 6 أرقام",bad:"الرمز غير صحيح.",pr:"ملفك الشخصي",nm:"الاسم الأول",job:"المهنة / العمل",jobPh:"مثال: معلم، تاجر، ممرضة...",tcty:"المدينة المراد التعارف فيها",allC:"جميع المدن (تشاد)",noCity:"لا توجد ملفات في هذه المدينة",noCityD:"لا توجد ملفات متوفرة حالياً في هذه المدينة. جرب توسيع البحث ليشمل جميع المدن!",iam:"أنا",fem:"امرأة",mal:"رجل",ag:"العمر",agE:"التطبيق مخصص لمن بلغ 22 سنة فأكثر.",cty:"مدينتك",kd:"عدد الأطفال",it:"أبحث عن",req:"أكمل جميع الحقول.",sf1:"توثيق الهوية عبر السيلفي الإلزامي",sf2:"التقط صورة سيلفي مباشرة عبر الكاميرا: يقوم الذكاء الاصطناعي بالتحقق الصارم من ملامح الوجه البشري.",shot:"التقاط السيلفي الموثق",sf3:"تؤكد هذه الصورة هويتك الحقيقية وتحمي المجتمع في تشاد من الحسابات المزيفة وتبقى ثابتة في ملفك الشخصي.",pj:"ملفاً شاهدته اليوم",unl:"بريميوم مفعّل: ملفات غير محدودة اليوم",pw:"بلغت حد اليوم",pw2:"شاهدت ملفاتك المجانية العشرين اليوم.",pss:"باقة بريميوم لليوم",pss2:"ملفات غير محدودة حتى منتصف الليل ووضع التخفّي.",op:"الدفع عبر",pn:"رقم الدفع",pb:"ادفع 5 000 FCFA",pg:"جارٍ الدفع…",pd:"تجريبي: لا يتم أي دفع حقيقي.",paid:"تم استلام الدفع. تم تفعيل بريميوم.",plan:"باقتك",free:"مجانية: 20 ملفاً في اليوم",prem:"باقة بريميوم لليوم مفعّلة",up:"الترقية إلى بريميوم (5 000 FCFA)",dm:"تجريبي: الانتقال إلى 19 ملفاً",opVisa:"بطاقة Visa",cardNum:"رقم بطاقة Visa",cardExp:"تاريخ الانتهاء (MM/AA)",cardCvv:"رمز الأمان (3 أرقام)",cardNom:"اسم صاحب البطاقة",cardNomPh:"مثال: MAHAMAT ADAM",cardSec:"دفع آمن 100% عبر Visa و 3D Secure",cardNumE:"رقم بطاقة Visa غير مكتمل (16 رقماً).",cardExpE:"تاريخ انتهاء غير صحيح (MM/AA).",cardCvvE:"رمز CVV غير صحيح (3 أرقام).",cardNomE:"يرجى كتابة اسم صاحب البطاقة.",visaPaid:"تم التحقق من بطاقة Visa بنجاح! تم تفعيل بريميوم.",
+wl:"مرحباً بك في شاري",wl2:"علاقات عاطفية جادة بين رجل وامرأة في تشاد، مع ملفات موثّقة.",phl:"رقم الهاتف",ph8:"أدخل 8 أرقام لرقمك.",orPhone:"أو عبر حساب Google",sndOtp:"استلام الرمز",otp:"تأكيد الحساب",otps:"تم إرسال الرمز إلى ",otpd:"أدخل رمز التأكيد.",cod:"الرمز المكوّن من 6 أرقام",bad:"الرمز غير صحيح.",pr:"ملفك الشخصي",nm:"الاسم الأول",job:"المهنة / العمل",jobPh:"مثال: معلم، تاجر، ممرضة...",tcty:"المدينة المراد التعارف فيها",allC:"جميع المدن (تشاد)",noCity:"لا توجد ملفات في هذه المدينة",noCityD:"لا توجد ملفات متوفرة حالياً في هذه المدينة. جرب توسيع البحث ليشمل جميع المدن!",iam:"أنا",fem:"امرأة",mal:"رجل",ag:"العمر",agE:"التطبيق مخصص لمن بلغ 22 سنة فأكثر.",cty:"مدينتك",kd:"عدد الأطفال",it:"أبحث عن",req:"أكمل جميع الحقول.",sf1:"توثيق الهوية عبر السيلفي الإلزامي",sf2:"التقط صورة سيلفي مباشرة عبر الكاميرا: يقوم الذكاء الاصطناعي بالتحقق الصارم من ملامح الوجه البشري.",shot:"التقاط السيلفي الموثق",sf3:"تؤكد هذه الصورة هويتك الحقيقية وتحمي المجتمع في تشاد من الحسابات المزيفة وتبقى ثابتة في ملفك الشخصي.",pj:"ملفاً شاهدته اليوم",unl:"بريميوم مفعّل: ملفات وطلبات غير محدودة لمدة شهر",pw:"بلغت حد اليوم",pw2:"شاهدت ملفاتك المجانية العشرين اليوم.",pss:"اشتراك بريميوم (شهر واحد)",pss2:"ملفات غير محدودة لمدة 30 يوماً وإعجابات غير محدودة ووضع التخفّي.",op:"الدفع بالبطاقة البنكية",pn:"رقم الدفع",pb:"ادفع 5 000 FCFA (شهر واحد)",pg:"جارٍ الدفع…",pd:"دفع آمن ومحمي بنسبة 100%.",paid:"تم استلام الدفع. تم تفعيل اشتراك بريميوم لمدة شهر.",plan:"باقتك",free:"مجانية: 20 ملفاً في اليوم",prem:"اشتراك بريميوم مفعّل (شهر واحد)",up:"الترقية إلى بريميوم (5 000 FCFA / شهر)",dm:"تجريبي: الانتقال إلى 19 ملفاً",opVisa:"بطاقة بنكية (Visa / Mastercard)",cardNum:"رقم البطاقة البنكية",cardExp:"تاريخ الانتهاء (MM/AA)",cardCvv:"رمز الأمان (3 أرقام)",cardNom:"اسم صاحب البطاقة",cardNomPh:"مثال: MAHAMAT ADAM",cardSec:"دفع آمن 100% عبر Visa و Mastercard و 3D Secure",cardNumE:"رقم البطاقة غير مكتمل (16 رقماً).",cardExpE:"تاريخ انتهاء غير صحيح (MM/AA).",cardCvvE:"رمز CVV غير صحيح (3 أرقام).",cardNomE:"يرجى كتابة اسم صاحب البطاقة.",visaPaid:"تم التحقق من البطاقة بنجاح! تم تفعيل اشتراك بريميوم لمدة شهر.",
 gBtn:"تسجيل الدخول عبر Google",fbAuthBtn:"تسجيل الدخول عبر Google",gNote:"🛡️ تسجيل وهوية موثّقة 100% باستخدام حساب Google. التوثيق بسيلفي مباشر إلزامي للتحقق من الوجه البشري وحماية مجتمعنا في تشاد.",gVerif:"حساب Google موثّق",fbAuthVerif:"حساب Google موثّق",logout:"تسجيل الخروج",logoutConfirm:"هل تريد بالتأكيد تسجيل الخروج؟ سيتم الاحتفاظ بجميع بياناتك وملفك وتعود فوراً لنفس المكان عند الدخول مجدداً.",gModalT:"تسجيل الدخول عبر Google",gModalD:"اختر حسابك للحصول على توثيق فوري:",gConfirm:"تأكيد الحساب",cityFilt:"المدينة",seekCity:"البحث في",heroTag:"علاقات عاطفية موثّقة",hob:"الهوايات والاهتمامات",hobLbl:"هواياتك المفضلة",hobHint:"اختر هواياتك واهتماماتك المفضلة:",edHb:"تعديل هواياتي",saveHb:"حفظ",bio:"نبذة عني",bioLbl:"وصف قصير",bioPh:"مثال: شخص بشوش، أحب الحوار الصادق، السفر وأبحث عن الاستقرار...",bioHint:"عرّف بنفسك في بضع كلمات:",edBio:"تعديل الوصف",saveBio:"حفظ الوصف",bioDef:"أبحث عن علاقة صادقة ومبنية على الاحترام المتبادل.",
 vidCall:"مكالمة فيديو",callHd:"مكالمة فيديو HD",calling:"جارٍ الاتصال…",callingContact:"جارٍ الاتصال…",ringingContact:"يرن لدى ",callAnswered:"مكالمة نشطة بجودة HD",callEnd:"انتهت المكالمة",callHangup:"إنهاء المكالمة",opt:"خيارات",repUser:"الإبلاغ عن هذا الملف",blkUser:"حظر هذا المستخدم",blkConfirmT:"هل تريد حظر هذا المستخدم؟",blkConfirmD:"لن يظهر هذا الملف مجدداً وستختفي الرسائل.",blkBtn:"حظر",blkDone:"تم حظر المستخدم بنجاح.",repTitle:"الإبلاغ عن الملف",repDesc:"ما هو سبب إبلاغك عن هذا الملف الشخصي؟",repDone:"تم إرسال البلاغ. سيقوم فريقنا في تشاد بمراجعة الملف خلال 24 ساعة.",repFake:"ملف مزيف أو انتحال شخصية",repHarass:"مضايقة أو سلوك غير لائق",repScam:"احتيال مالي أو طلب أموال",repOther:"سبب آخر",unblk:"إلغاء الحظر",blkedList:"المستخدمون المحظورون",noBlked:"لا يوجد أي مستخدم محظور.",unblkDone:"تم إلغاء حظر المستخدم.",
 langSpk:"اللغة المنطوقة",lngFr:"الفرنسية",lngAr:"العربية",lngBoth:"الفرنسية والعربية",
@@ -1893,7 +2023,7 @@ function createBlankState(email="", uid="", name=""){
 return {
 lang:"fr",blur:true,lite:false,tc:"all",mode:"google",em:email||"",ph5:[],inc:false,ed:null,step:0,savedStep:0,showEmailAuth:false,
 u:{id:uid||"",n:name||"",jb:"",a:"",c:"N'Djamena",tc:"all",bio:"",lng:"fr",rel:"mus",kd:0,i:"ser",hb:[],gVerif:true},
-card:{num:"",exp:"",cvv:"",nom:""},g:"",ph:"",i:0,seen:0,prem:0,pay:0,op:"",pp:0,vs:0,selfie:"",
+card:{num:"",exp:"",cvv:"",nom:""},g:"",ph:"",i:0,seen:0,prem:0,pay:0,op:"visa",pp:0,vs:0,selfie:"",
 tab:"d",chat:null,mt:[],ms:{},busy:0,blocked:[],feedbacks:[],mSubTab:"chat",reqSubTab:"rec",
 incomingRequests:[],sentRequests:[],passed:[],dailyLimits:{date:getDailyDateKey(),sent:0,accepted:0}
 };
@@ -2066,9 +2196,57 @@ ${t.finishOnbPhotos||"Terminer et découvrir les profils ✨"}
 return "";
 }
 function payv(){
-const t=x(),lim=!st.prem&&st.seen>=LIM,isV=st.op==="visa";
+st.op="visa";
+const t=x(),lim=!st.prem&&st.seen>=LIM;
 const cn=(st.card&&st.card.num)||"",ce=(st.card&&st.card.exp)||"",cv=(st.card&&st.card.cvv)||"",cm=(st.card&&st.card.nom)||(st.u&&st.u.n?(st.u.n.toUpperCase()+" ADAM"):"");
-return`<div class="pf"><div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><button class="ib" data-a="pay-back" aria-label="${t.bk}" title="${t.bk}">${ic("back")}</button><h1 style="margin:0;font-size:22px">${lim?t.pw:t.pss}</h1></div>${lim?`<p>${t.pw2}</p>`:""}<div class="plan"><h2>${t.pss}</h2><span class="price">5 000 FCFA</span><p>${t.pss2}</p></div><div><p id="ol" class="lbl">${t.op}</p><div class="ops" role="group" aria-labelledby="ol"><button class="opb" data-a="op" data-k="moov" aria-pressed="${st.op==="moov"}">Moov Money</button><button class="opb" data-a="op" data-k="airtel" aria-pressed="${st.op==="airtel"}">Airtel Money</button><button class="opb" data-a="op" data-k="visa" aria-pressed="${st.op==="visa"}"><svg viewBox="0 0 36 22" width="28" height="17" style="vertical-align:middle;margin-inline-end:4px" aria-hidden="true"><rect width="36" height="22" rx="3" fill="#1A1F71"/><path d="M14.5 16.5l2.2-11h2.5l-2.2 11h-2.5zm10.7-10.7c-.5-.2-1.3-.4-2.2-.4-2.4 0-4.1 1.2-4.1 3 0 1.3 1.2 2 2.1 2.4.9.4 1.2.7 1.2 1.1 0 .6-.7.9-1.4.9-1 0-1.5-.1-2.3-.5l-.3-.2-.3 1.9c.5.2 1.5.4 2.5.4 2.6 0 4.2-1.2 4.2-3.1 0-1-.6-1.8-2-2.4-.8-.4-1.3-.7-1.3-1.1 0-.4.4-.8 1.3-.8.7 0 1.3.1 1.7.3l.2.1.4-1.7zm6.8 0h-1.9c-.6 0-1 .2-1.3.8l-3.6 8.9h2.6l.5-1.4h3.2l.3 1.4h2.3l-2.1-9.7zm-2.8 6.4l1-2.7.6 2.7h-1.6zm-17.8-6.4l-2.4 6.7-.3-1.3c-.4-1.5-1.8-3.1-3.3-3.9l2.2 8.2h2.6l3.9-9.7h-2.7z" fill="#FFF"/><path d="M4.6 5.8l-2.4 8.2c-.3 1.1.6 1.8 1.6 1.8h3.8l.6-1.5H5.8L4.6 5.8z" fill="#F7B600"/></svg>Visa</button></div></div>${isV?`<div class="visa-card-box"><div class="visa-card-chip"></div><svg class="visa-logo-white" viewBox="0 0 50 16" width="46" height="15" aria-hidden="true"><path d="M19.7 15.2l2.9-14.4h3.3l-2.9 14.4h-3.3zm14.1-14c-.7-.3-1.7-.5-2.9-.5-3.2 0-5.4 1.6-5.4 3.9 0 1.7 1.6 2.7 2.8 3.2 1.2.6 1.6.9 1.6 1.4 0 .8-.9 1.2-1.8 1.2-1.3 0-2-.2-3.1-.7l-.4-.2-.4 2.5c.7.3 2 .5 3.3.5 3.4 0 5.5-1.6 5.5-4.1 0-1.4-.8-2.4-2.7-3.2-1.1-.5-1.7-.9-1.7-1.4 0-.5.5-1 1.7-1 .9 0 1.7.2 2.2.4l.3.1.4-2.1zm8.9 0h-2.5c-.8 0-1.3.2-1.7 1.1l-4.7 11.7h3.4l.7-1.9h4.2l.4 1.9h3l-2.8-12.8zm-3.7 8.4l1.3-3.6.8 3.6h-2.1zm-23.4-8.4l-3.2 8.8-.4-1.7c-.6-2-2.4-4.1-4.4-5.1l2.9 10.8h3.4l5.1-12.8h-3.4z" fill="#FFF"/><path d="M6.1 1.2L2.9 12c-.4 1.4.8 2.4 2.1 2.4h5l.8-2H7.7L6.1 1.2z" fill="#F7B600"/></svg><div class="visa-card-num">${cn?cn:"•••• •••• •••• ••••"}</div><div class="visa-card-bottom"><div><div class="visa-card-lbl">TITULAIRE</div><div class="visa-card-val visa-card-nom-val">${cm?esc(cm):"NOM PRENOM"}</div></div><div><div class="visa-card-lbl">EXPIRE</div><div class="visa-card-val visa-card-exp-val">${ce?esc(ce):"MM/AA"}</div></div></div></div><div><label for="c-num">${t.cardNum}</label><input class="fld" id="c-num" type="tel" inputmode="numeric" placeholder="4000 1234 5678 9010" maxlength="19" value="${esc(cn)}"></div><div style="display:flex;gap:10px"><div><label for="c-exp">${t.cardExp}</label><input class="fld" id="c-exp" type="text" inputmode="numeric" placeholder="12/28" maxlength="5" value="${esc(ce)}"></div><div><label for="c-cvv">${t.cardCvv}</label><input class="fld" id="c-cvv" type="password" inputmode="numeric" placeholder="123" maxlength="3" value="${esc(cv)}"></div></div><div><label for="c-nom">${t.cardNom}</label><input class="fld" id="c-nom" type="text" placeholder="${t.cardNomPh}" maxlength="30" value="${esc(cm)}"></div><p class="err" id="eP" role="alert"></p><div class="visa-sec-badge"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg><span>${t.cardSec}</span></div>`:`<div><label for="pp">${t.pn}</label><div class="ph2"><span>+235</span><input class="fld" id="pp" type="tel" inputmode="numeric" placeholder="66 00 00 00" value="${esc(st.ph)}"></div><p class="err" id="eP" role="alert"></p></div>`}<button class="btn" data-a="pay" ${!st.op||st.pp?"disabled":""}>${st.pp?(isV?"Vérification 3D Secure…":t.pg):(isV?"Payer 5 000 FCFA (Visa)":t.pb)}</button><p class="mut">${t.pd}</p><button class="btn sec" data-a="pay-back" style="margin-top:8px;display:flex;align-items:center;justify-content:center;gap:8px">${ic("back")}<span>${t.bk}</span></button></div>`}
+return`<div class="pf">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
+<button class="ib" data-a="pay-back" aria-label="${t.bk}" title="${t.bk}">${ic("back")}</button>
+<h1 style="margin:0;font-size:22px">${lim?t.pw:t.pss}</h1>
+</div>
+${lim?`<p style="margin:0 0 10px;color:var(--mut);font-size:13px">${t.pw2}</p>`:""}
+
+<div class="plan" style="background:linear-gradient(135deg,rgba(0,111,253,0.08) 0%,rgba(245,158,11,0.12) 100%);border:1.5px solid var(--gold);border-radius:18px;padding:16px 14px;box-shadow:var(--sh-md)">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px">
+<h2 style="font-size:17px;font-weight:700;color:var(--ink);margin:0">${t.pss}</h2>
+<span class="price" style="font-size:19px;font-weight:800;color:var(--brand);white-space:nowrap">5 000 FCFA <span style="font-size:12px;font-weight:600;color:var(--mut)">/ mois</span></span>
+</div>
+<p style="margin:0;font-size:12.5px;line-height:1.45;color:var(--body)">${t.pss2}</p>
+</div>
+
+<div style="background:var(--surf);border:1.5px solid var(--line);border-radius:18px;padding:16px 14px;margin:4px 0;box-shadow:var(--sh-sm);overflow-x:hidden">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;color:var(--brand);font-weight:700;font-size:14px">
+<svg viewBox="0 0 36 22" width="28" height="17" style="vertical-align:middle" aria-hidden="true"><rect width="36" height="22" rx="3" fill="#1A1F71"/><path d="M14.5 16.5l2.2-11h2.5l-2.2 11h-2.5zm10.7-10.7c-.5-.2-1.3-.4-2.2-.4-2.4 0-4.1 1.2-4.1 3 0 1.3 1.2 2 2.1 2.4.9.4 1.2.7 1.2 1.1 0 .6-.7.9-1.4.9-1 0-1.5-.1-2.3-.5l-.3-.2-.3 1.9c.5.2 1.5.4 2.5.4 2.6 0 4.2-1.2 4.2-3.1 0-1-.6-1.8-2-2.4-.8-.4-1.3-.7-1.3-1.1 0-.4.4-.8 1.3-.8.7 0 1.3.1 1.7.3l.2.1.4-1.7zm6.8 0h-1.9c-.6 0-1 .2-1.3.8l-3.6 8.9h2.6l.5-1.4h3.2l.3 1.4h2.3l-2.1-9.7zm-2.8 6.4l1-2.7.6 2.7h-1.6zm-17.8-6.4l-2.4 6.7-.3-1.3c-.4-1.5-1.8-3.1-3.3-3.9l2.2 8.2h2.6l3.9-9.7h-2.7z" fill="#FFF"/><path d="M4.6 5.8l-2.4 8.2c-.3 1.1.6 1.8 1.6 1.8h3.8l.6-1.5H5.8L4.6 5.8z" fill="#F7B600"/></svg>
+<span>${t.opVisa||"Carte bancaire (Visa / Mastercard)"}</span>
+</div>
+
+<div class="visa-card-box">
+<div class="visa-card-chip"></div>
+<svg class="visa-logo-white" viewBox="0 0 50 16" width="46" height="15" aria-hidden="true"><path d="M19.7 15.2l2.9-14.4h3.3l-2.9 14.4h-3.3zm14.1-14c-.7-.3-1.7-.5-2.9-.5-3.2 0-5.4 1.6-5.4 3.9 0 1.7 1.6 2.7 2.8 3.2 1.2.6 1.6.9 1.6 1.4 0 .8-.9 1.2-1.8 1.2-1.3 0-2-.2-3.1-.7l-.4-.2-.4 2.5c.7.3 2 .5 3.3.5 3.4 0 5.5-1.6 5.5-4.1 0-1.4-.8-2.4-2.7-3.2-1.1-.5-1.7-.9-1.7-1.4 0-.5.5-1 1.7-1 .9 0 1.7.2 2.2.4l.3.1.4-2.1zm8.9 0h-2.5c-.8 0-1.3.2-1.7 1.1l-4.7 11.7h3.4l.7-1.9h4.2l.4 1.9h3l-2.8-12.8zm-3.7 8.4l1.3-3.6.8 3.6h-2.1zm-23.4-8.4l-3.2 8.8-.4-1.7c-.6-2-2.4-4.1-4.4-5.1l2.9 10.8h3.4l5.1-12.8h-3.4z" fill="#FFF"/><path d="M6.1 1.2L2.9 12c-.4 1.4.8 2.4 2.1 2.4h5l.8-2H7.7L6.1 1.2z" fill="#F7B600"/></svg>
+<div class="visa-card-num">${cn?cn:"•••• •••• •••• ••••"}</div>
+<div class="visa-card-bottom">
+<div><div class="visa-card-lbl">TITULAIRE</div><div class="visa-card-val visa-card-nom-val">${cm?esc(cm):"NOM PRENOM"}</div></div>
+<div><div class="visa-card-lbl">EXPIRE</div><div class="visa-card-val visa-card-exp-val">${ce?esc(ce):"MM/AA"}</div></div>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:12px">
+<div><label for="c-num">${t.cardNum}</label><input class="fld" id="c-num" type="tel" inputmode="numeric" placeholder="4000 1234 5678 9010" maxlength="19" value="${esc(cn)}"></div>
+<div style="display:flex;gap:10px"><div style="flex:1;min-width:0"><label for="c-exp">${t.cardExp}</label><input class="fld" id="c-exp" type="text" inputmode="numeric" placeholder="12/28" maxlength="5" value="${esc(ce)}"></div><div style="flex:1;min-width:0"><label for="c-cvv">${t.cardCvv}</label><input class="fld" id="c-cvv" type="password" inputmode="numeric" placeholder="123" maxlength="3" value="${esc(cv)}"></div></div>
+<div><label for="c-nom">${t.cardNom}</label><input class="fld" id="c-nom" type="text" placeholder="${t.cardNomPh}" maxlength="30" value="${esc(cm)}"></div>
+</div>
+<p class="err" id="eP" role="alert" style="margin:4px 0 0"></p>
+
+<div class="visa-sec-badge" style="margin-top:10px"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg><span>${t.cardSec}</span></div>
+</div>
+
+<button class="btn gold" data-a="pay" ${st.pp?"disabled":""} style="min-height:50px;font-size:15.5px;font-weight:700">
+${st.pp?(st.lang==="ar"?"جارٍ التحقق 3D Secure…":"Vérification 3D Secure…"):t.pb}
+</button>
+<p class="mut" style="font-size:12px;text-align:center;margin:6px 0">${t.pd}</p>
+<button class="btn sec" data-a="pay-back" style="display:flex;align-items:center;justify-content:center;gap:8px">${ic("back")}<span>${t.bk}</span></button>
+</div>`;
+}
 function dis(){
 checkAndResetDailyLimits();
 const t=x(),p=pool()[st.i];
@@ -3479,9 +3657,8 @@ else if(a==="edc"){st.ed=null;render()}
 else if(a==="snap-cam")snapCam();
 else if(a==="retake-selfie"){st.selfie="";st.ph5=st.ph5.filter(p=>!p.isSelfie);st.vs=0;save();render();setTimeout(startCam,120);}
 else if(a==="val-selfie"){ensureSelfieInPh5();save();syncProfileToSupabase();stopCam();if(!isProfileComplete()){go(2,"#nm");}else{go(4);}say(x().vd);}
-else if(a==="op"){st.op=k;render();$(`[data-a=op][data-k=${k}]`).focus()}
 else if(a==="pay"){
-if(st.op==="visa"){
+st.op="visa";
 const cn=$("#c-num")?$("#c-num").value.replace(/\D/g,""):"";
 const ce=$("#c-exp")?$("#c-exp").value.trim():"";
 const cv=$("#c-cvv")?$("#c-cvv").value.trim():"";
@@ -3491,13 +3668,13 @@ if(!/^\d{2}\/\d{2}$/.test(ce)){$("#eP").textContent=t.cardExpE;$("#c-exp").focus
 if(cv.length!==3){$("#eP").textContent=t.cardCvvE;$("#c-cvv").focus();return}
 if(cm.length<2){$("#eP").textContent=t.cardNomE;$("#c-nom").focus();return}
 st.pp=1;render();
-setTimeout(()=>{st.pp=0;st.prem=1;st.pay=0;st.op="";render();say(x().visaPaid)},2200);
-}else{
-const v=$("#pp")?$("#pp").value.replace(/\D/g,""):"";
-if(v.length!==8){$("#eP").textContent=t.ph8;$("#pp").focus();return}
-st.ph=v.replace(/(\d\d)(?=\d)/g,"$1 ");st.pp=1;render();
-setTimeout(()=>{st.pp=0;st.prem=1;st.pay=0;st.op="";render();say(x().paid)},2000);
-}
+setTimeout(()=>{
+st.pp=0;st.prem=1;st.pay=0;st.op="visa";
+save();
+syncProfileToSupabase();
+render();
+say(x().visaPaid);
+},2200);
 }
 else if(a==="up"){st.payFrom=st.tab;st.pay=1;st.tab="d";render()}
 else if(a==="np"||a==="pay-back"){
