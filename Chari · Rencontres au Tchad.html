@@ -1125,12 +1125,25 @@ body.screen-protected .screen-shield{display:flex!important}
   gap: 6px;
 }
 .btn-accept-req{
-  background: linear-gradient(135deg, #006FFD 0%, #0056C7 100%);
+  background: linear-gradient(135deg, #E11D48 0%, #BE123C 100%);
   color: #fff;
   border: none;
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgba(225,29,72,0.25);
 }
 .btn-accept-req:hover{
-  background: linear-gradient(135deg, #0056C7 0%, #004399 100%);
+  background: linear-gradient(135deg, #BE123C 0%, #9F1239 100%);
+}
+.btn-decline-req{
+  border: 1.5px solid #CBD5E1;
+  color: #64748B;
+  background: #FFF;
+  font-weight: 600;
+}
+.btn-decline-req:hover{
+  background: #F1F5F9;
+  color: #0F172A;
+  border-color: #94A3B8;
 }
 /* Multi-photo Story Bars on Discovery Card */
 .card-photo-container{position:relative;width:100%;height:100%;overflow:hidden;border-radius:18px 18px 0 0}
@@ -1567,7 +1580,10 @@ if(!st.ms[otherId])st.ms[otherId]=[];
 if(st.incomingRequests)st.incomingRequests=st.incomingRequests.filter(r=>String(r.id)!==String(otherId));
 if(st.sentRequests)st.sentRequests=st.sentRequests.filter(r=>String(r.id)!==String(otherId));
 }else if(l.receiver_id===uid&&l.sender_id!==uid){
-if(!st.mt.includes(l.sender_id)&&!(st.passed||[]).includes(l.sender_id)){
+const sSender=String(l.sender_id);
+const passedSet=new Set((st.passed||[]).map(String));
+const blockedSet=new Set((st.blocked||[]).map(String));
+if(!st.mt.map(String).includes(sSender)&&!passedSet.has(sSender)&&!blockedSet.has(sSender)){
 pendingSenderIds.push(l.sender_id);
 }
 }
@@ -1615,6 +1631,42 @@ save();
 if(st.tab==='m'||st.tab==='req')render();
 }
 }catch(e){console.warn("loadLikes err:",e)}
+}
+async function loadBlockedUsersFromSupabase(){
+if(!sbClient)return;
+const uid=await ensureUserProfileId();
+if(!uid)return;
+try{
+const {data,error}=await sbClient.from('user_blocks').select('blocked_id, reason').eq('user_id',uid);
+if(!error&&data&&data.length>0){
+if(!st.passed)st.passed=[];
+if(!st.blocked)st.blocked=[];
+let changed=false;
+data.forEach(b=>{
+if(!b.blocked_id)return;
+const bid=String(b.blocked_id);
+if(b.reason==='passed'){
+if(!st.passed.map(String).includes(bid)){
+st.passed.push(bid);
+changed=true;
+}
+}else{
+if(!st.blocked.map(String).includes(bid)){
+st.blocked.push(bid);
+changed=true;
+}
+if(!st.passed.map(String).includes(bid)){
+st.passed.push(bid);
+changed=true;
+}
+}
+});
+if(changed){
+save();
+if(st.tab==='d'||st.tab==='req')render();
+}
+}
+}catch(e){console.warn("loadBlockedUsersFromSupabase err:",e)}
 }
 async function loadProfilesFromSupabase(){
 if(!sbClient)return;
@@ -1694,7 +1746,7 @@ fbMsgPh:"Dites-nous ce que vous pensez de Chari, vos souhaits ou vos remarques..
 fbMsgErr:"Veuillez écrire quelques mots pour expliquer votre avis.",
 fbSuccess:"Merci infiniment pour votre retour ! Notre équipe au Tchad en prendra compte.",
 scBlockT:"Capture d'écran interdite",scBlockD:"Pour préserver l'intimité et la sécurité des membres sur Chari, les captures d'écran et enregistrements vidéo sont strictement interdits.",scToast:"⚠️ Capture d'écran bloquée : la vie privée des membres est protégée sur Chari.",scDismiss:"Continuer sur Chari",
-chatTab:"Discussions",reqTab:"Demandes de Matchs",noReq:"Aucune demande reçue pour l'instant",noReqDesc:"Vos nouveaux admirateurs et personnes souhaitant vous contacter apparaîtront ici.",acceptReq:"Accepter & Matcher",declineReq:"Passer",dailyReqLimit:"Limite quotidienne atteinte (20/20 demandes envoyées aujourd'hui). Réinitialisation quotidienne à 00h00 ou passez à Chari Premium pour des likes illimités !",dailyAcceptLimit:"Limite quotidienne atteinte (10/10 demandes acceptées aujourd'hui). Réinitialisation quotidienne à 00h00 ou passez à Chari Premium !",dailyReqQuota:"Demandes envoyées",dailyAcceptQuota:"Demandes acceptées",resetMidnight:"Réinitialisation à 00h00",editMsg:"Modifier le message",editMsgTimeLeft:"Délai restant pour modifier ce message : ",saveEdit:"Enregistrer",cancelEdit:"Annuler",msgEditedTag:"(modifié)",editExpired:"Le délai de 10 minutes pour modifier ce message est expiré.",incogActive:"Mode Incognito activé : vous pouvez explorer tous les profils en toute discrétion, mais personne ne peut voir le vôtre.",incogInactive:"Mode Incognito désactivé : votre profil est de nouveau visible.",incogBanner:"Mode Incognito actif : votre profil est masqué pour tous les autres membres.",viewProfile:"Consulter le profil",onbPhotosTitle:"Vos photos de profil",onbPhotosDesc:"Votre selfie est votre 1ère photo certifiée. Ajoutez jusqu'à 4 photos supplémentaires pour compléter votre profil (5 photos max) :",photosAdvice:"💡 Les profils avec plusieurs photos ont 4 fois plus de chances de matcher !",finishOnbPhotos:"Terminer et découvrir les profils ✨",onlyMatchedCanChat:"Vous devez être en match pour pouvoir vous écrire.",
+chatTab:"Discussions",reqTab:"Demandes de Matchs",noReq:"Aucune demande reçue pour l'instant",noReqDesc:"Vos nouveaux admirateurs et personnes souhaitant vous contacter apparaîtront ici.",acceptReq:"J'aime (Matcher)",declineReq:"Passer",reqDeclined:"Demande refusée. Vous ne reverrez plus ce profil.",dailyReqLimit:"Limite quotidienne atteinte (20/20 demandes envoyées aujourd'hui). Réinitialisation quotidienne à 00h00 ou passez à Chari Premium pour des likes illimités !",dailyAcceptLimit:"Limite quotidienne atteinte (10/10 demandes acceptées aujourd'hui). Réinitialisation quotidienne à 00h00 ou passez à Chari Premium !",dailyReqQuota:"Demandes envoyées",dailyAcceptQuota:"Demandes acceptées",resetMidnight:"Réinitialisation à 00h00",editMsg:"Modifier le message",editMsgTimeLeft:"Délai restant pour modifier ce message : ",saveEdit:"Enregistrer",cancelEdit:"Annuler",msgEditedTag:"(modifié)",editExpired:"Le délai de 10 minutes pour modifier ce message est expiré.",incogActive:"Mode Incognito activé : vous pouvez explorer tous les profils en toute discrétion, mais personne ne peut voir le vôtre.",incogInactive:"Mode Incognito désactivé : votre profil est de nouveau visible.",incogBanner:"Mode Incognito actif : votre profil est masqué pour tous les autres membres.",viewProfile:"Consulter le profil",onbPhotosTitle:"Vos photos de profil",onbPhotosDesc:"Votre selfie est votre 1ère photo certifiée. Ajoutez jusqu'à 4 photos supplémentaires pour compléter votre profil (5 photos max) :",photosAdvice:"💡 Les profils avec plusieurs photos ont 4 fois plus de chances de matcher !",finishOnbPhotos:"Terminer et découvrir les profils ✨",onlyMatchedCanChat:"Vous devez être en match pour pouvoir vous écrire.",
 k:{ser:"Relation amoureuse",mar:"Mariage",fam:"Famille",etu:"Études",ent:"Entrepreneuriat",foi:"Foi",mus:"Musique",foo:"Football",cui:"Cuisine",voy:"Voyage",fr:"Français",ar:"Arabe",sa:"Sara"}},
 ar:{d:"اكتشف",m:"الرسائل",p:"ملفي",pass:"تخطَّ",like:"إعجاب",mt:"تطابق!",ms:"أنتما معجبان ببعضكما.",wr:"راسل ",ct:"متابعة",done:"شاهدت كل شيء لهذا اليوم.",again:"إعادة العرض",none:"لا توجد محادثات بعد.",nh:"أعجب بملفات لبدء محادثة.",ph:"اكتب رسالة",snd:"إرسال",bk:"رجوع",my:"ملفي الشخصي",vg:"جارٍ التحقق…",vd:"ملف موثّق",blur:"الوجه مخفي حتى التطابق",lite:"توفير البيانات",sf:"نصائح للأمان",st:"لا ترسل المال أو الرموز أبداً. التقِ في مكان عام وأخبر شخصاً مقرباً.",age:"للبالغين 22 سنة فأكثر فقط.",demo:"شاري · ملفات حقيقية موثقة بالسيلفي في تشاد.",lgb:"Français",r:["مرحباً! سعيد بالتعرف عليك.","من أي مدينة أنت؟"],
 wl:"مرحباً بك في شاري",wl2:"علاقات عاطفية جادة بين رجل وامرأة في تشاد، مع ملفات موثّقة.",phl:"رقم الهاتف",ph8:"أدخل 8 أرقام لرقمك.",orPhone:"أو عبر حساب Google",sndOtp:"استلام الرمز",otp:"تأكيد الحساب",otps:"تم إرسال الرمز إلى ",otpd:"أدخل رمز التأكيد.",cod:"الرمز المكوّن من 6 أرقام",bad:"الرمز غير صحيح.",pr:"ملفك الشخصي",nm:"الاسم الأول",job:"المهنة / العمل",jobPh:"مثال: معلم، تاجر، ممرضة...",tcty:"المدينة المراد التعارف فيها",allC:"جميع المدن (تشاد)",noCity:"لا توجد ملفات في هذه المدينة",noCityD:"لا توجد ملفات متوفرة حالياً في هذه المدينة. جرب توسيع البحث ليشمل جميع المدن!",iam:"أنا",fem:"امرأة",mal:"رجل",ag:"العمر",agE:"التطبيق مخصص لمن بلغ 22 سنة فأكثر.",cty:"مدينتك",kd:"عدد الأطفال",it:"أبحث عن",req:"أكمل جميع الحقول.",sf1:"توثيق الهوية عبر السيلفي الإلزامي",sf2:"التقط صورة سيلفي مباشرة عبر الكاميرا: يقوم الذكاء الاصطناعي بالتحقق الصارم من ملامح الوجه البشري.",shot:"التقاط السيلفي الموثق",sf3:"تؤكد هذه الصورة هويتك الحقيقية وتحمي المجتمع في تشاد من الحسابات المزيفة وتبقى ثابتة في ملفك الشخصي.",pj:"ملفاً شاهدته اليوم",unl:"بريميوم مفعّل: ملفات غير محدودة اليوم",pw:"بلغت حد اليوم",pw2:"شاهدت ملفاتك المجانية العشرين اليوم.",pss:"باقة بريميوم لليوم",pss2:"ملفات غير محدودة حتى منتصف الليل ووضع التخفّي.",op:"الدفع عبر",pn:"رقم الدفع",pb:"ادفع 5 000 FCFA",pg:"جارٍ الدفع…",pd:"تجريبي: لا يتم أي دفع حقيقي.",paid:"تم استلام الدفع. تم تفعيل بريميوم.",plan:"باقتك",free:"مجانية: 20 ملفاً في اليوم",prem:"باقة بريميوم لليوم مفعّلة",up:"الترقية إلى بريميوم (5 000 FCFA)",dm:"تجريبي: الانتقال إلى 19 ملفاً",opVisa:"بطاقة Visa",cardNum:"رقم بطاقة Visa",cardExp:"تاريخ الانتهاء (MM/AA)",cardCvv:"رمز الأمان (3 أرقام)",cardNom:"اسم صاحب البطاقة",cardNomPh:"مثال: MAHAMAT ADAM",cardSec:"دفع آمن 100% عبر Visa و 3D Secure",cardNumE:"رقم بطاقة Visa غير مكتمل (16 رقماً).",cardExpE:"تاريخ انتهاء غير صحيح (MM/AA).",cardCvvE:"رمز CVV غير صحيح (3 أرقام).",cardNomE:"يرجى كتابة اسم صاحب البطاقة.",visaPaid:"تم التحقق من بطاقة Visa بنجاح! تم تفعيل بريميوم.",
@@ -1723,7 +1775,7 @@ fbMsgPh:"اكتب ملاحظاتك، اقتراحاتك أو تجربتك مع �
 fbMsgErr:"يرجى كتابة بضع كلمات توضح رأيك.",
 fbSuccess:"شكراً جزيلاً على تقييمك وملاحظاتك! سيهتم فريقنا في تشاد باقتراحك.",
 scBlockT:"التقاط الشاشة ممنوع",scBlockD:"لحماية خصوصية وأمان المشتركين في شاري، يمنع منعاً باتاً تصوير أو تسجيل الشاشة.",scToast:"⚠️ تم حظر التقاط الشاشة: خصوصية الأعضاء محمية في شاري.",scDismiss:"المتابعة في شاري",
-chatTab:"المحادثات",reqTab:"طلبات التطابق",noReq:"لا توجد طلبات مستلمة حالياً",noReqDesc:"المعجبون والأشخاص الذين يرغبون في التعارف معك سيظهرون هنا.",acceptReq:"قبول وتطابق",declineReq:"تخطَّ",dailyReqLimit:"تم بلوغ الحد اليومي (20/20 طلباً مرسلاً اليوم). تتم إعادة التعيين يومياً عند الساعة 00:00 منتصف الليل. ترقَّ إلى بريميوم لإعجابات غير محدودة!",dailyAcceptLimit:"تم بلوغ الحد اليومي (10/10 طلبات مقبولة اليوم). تتم إعادة التعيين يومياً عند الساعة 00:00 منتصف الليل. ترقَّ إلى بريميوم لقبول غير محدود!",dailyReqQuota:"الطلبات المرسلة",dailyAcceptQuota:"الطلبات المقبولة",resetMidnight:"إعادة التعيين عند 00:00",editMsg:"تعديل الرسالة",editMsgTimeLeft:"الوقت المتبقي لتعديل الرسالة: ",saveEdit:"حفظ التعديل",cancelEdit:"إلغاء",msgEditedTag:"(معدلة)",editExpired:"انتهت مهلة الـ 10 دقائق لتعديل هذه الرسالة.",incogActive:"وضع التخفّي مفعّل: يمكنك مشاهدة جميع الملفات بسرية تامة، ولن يظهر ملفك لأحد.",incogInactive:"تم إيقاف وضع التخفّي: ملفك الشخصي مرئي الآن للجميع.",incogBanner:"وضع التخفّي مفعّل: ملفك الشخصي محجوب عن جميع الأعضاء الآخرين.",viewProfile:"عرض الملف الشخصي",onbPhotosTitle:"صور ملفك الشخصي",onbPhotosDesc:"صورتك السيلفي هي صورتك الأولى المعتمدة. يمكنك إضافة ما يصل إلى 4 صور إضافية لإكمال ملفك (5 صور كحد أقصى) :",photosAdvice:"💡 الملفات التي تحتوي على عدة صور تزيد فرص التطابق بأربع مرات!",finishOnbPhotos:"إنهاء واستكشاف الملفات ✨",onlyMatchedCanChat:"يجب أن يحدث تطابق حتى تتمكنا من المراسلة.",
+chatTab:"المحادثات",reqTab:"طلبات التطابق",noReq:"لا توجد طلبات مستلمة حالياً",noReqDesc:"المعجبون والأشخاص الذين يرغبون في التعارف معك سيظهرون هنا.",acceptReq:"إعجاب (مطابقة)",declineReq:"تخطَّ",reqDeclined:"تم تخطي الطلب، لن يظهر هذا الملف مجدداً.",dailyReqLimit:"تم بلوغ الحد اليومي (20/20 طلباً مرسلاً اليوم). تتم إعادة التعيين يومياً عند الساعة 00:00 منتصف الليل. ترقَّ إلى بريميوم لإعجابات غير محدودة!",dailyAcceptLimit:"تم بلوغ الحد اليومي (10/10 طلبات مقبولة اليوم). تتم إعادة التعيين يومياً عند الساعة 00:00 منتصف الليل. ترقَّ إلى بريميوم لقبول غير محدود!",dailyReqQuota:"الطلبات المرسلة",dailyAcceptQuota:"الطلبات المقبولة",resetMidnight:"إعادة التعيين عند 00:00",editMsg:"تعديل الرسالة",editMsgTimeLeft:"الوقت المتبقي لتعديل الرسالة: ",saveEdit:"حفظ التعديل",cancelEdit:"إلغاء",msgEditedTag:"(معدلة)",editExpired:"انتهت مهلة الـ 10 دقائق لتعديل هذه الرسالة.",incogActive:"وضع التخفّي مفعّل: يمكنك مشاهدة جميع الملفات بسرية تامة، ولن يظهر ملفك لأحد.",incogInactive:"تم إيقاف وضع التخفّي: ملفك الشخصي مرئي الآن للجميع.",incogBanner:"وضع التخفّي مفعّل: ملفك الشخصي محجوب عن جميع الأعضاء الآخرين.",viewProfile:"عرض الملف الشخصي",onbPhotosTitle:"صور ملفك الشخصي",onbPhotosDesc:"صورتك السيلفي هي صورتك الأولى المعتمدة. يمكنك إضافة ما يصل إلى 4 صور إضافية لإكمال ملفك (5 صور كحد أقصى) :",photosAdvice:"💡 الملفات التي تحتوي على عدة صور تزيد فرص التطابق بأربع مرات!",finishOnbPhotos:"إنهاء واستكشاف الملفات ✨",onlyMatchedCanChat:"يجب أن يحدث تطابق حتى تتمكنا من المراسلة.",
 k:{ser:"علاقة عاطفية",mar:"زواج",fam:"العائلة",etu:"الدراسة",ent:"ريادة الأعمال",foi:"الإيمان",mus:"الموسيقى",foo:"كرة القدم",cui:"الطبخ",voy:"السفر",fr:"الفرنسية",ar:"العربية",sa:"السارا"}}};
 const FN=["Achta","Fatimé","Hawa","Khadidja","Kaltouma","Mariam","Zara","Halimé","Amina","Aïcha","Rahma","Nadjma","Esther","Grace","Rachel","Prisca","Judith","Ruth","Sarah","Dorcas","Béatrice","Claudine","Odette","Léa"];
 const MN=["Mahamat","Abakar","Idriss","Hassan","Moussa","Ibrahim","Ousmane","Adam","Oumar","Youssouf","Daniel","Joseph","Samuel","Emmanuel","Moïse","Nathan","David","Paul","Pierre","Jean","Michel","Éric","Franck","Ali"];
@@ -2632,9 +2684,17 @@ say(st.lang==="ar"?`تم إرسال طلب إلى ${p.n}`:`Demande envoyée à $
 save();
 }else{
 if(!st.passed)st.passed=[];
-if(!st.passed.includes(p.id)){
-st.passed.push(p.id);
+const spid=String(p.id);
+if(!st.passed.map(String).includes(spid)){
+st.passed.push(spid);
 save();
+}
+if(sbClient){
+ensureUserProfileId().then(uid=>{
+if(uid){
+sbClient.from('user_blocks').insert({user_id:uid,blocked_id:spid,reason:'passed'}).catch(()=>{});
+}
+});
 }
 }
 const c=$(".card"),d=(isL?1:-1)*(st.lang==="ar"?-1:1);
@@ -3040,14 +3100,21 @@ match(reqUser);
 }
 
 function processDeclineRequest(rid){
-st.incomingRequests=(st.incomingRequests||[]).filter(r=>String(r.id)!==String(rid));
+const srid=String(rid);
+st.incomingRequests=(st.incomingRequests||[]).filter(r=>String(r.id)!==srid);
+st.sentRequests=(st.sentRequests||[]).filter(s=>String(s.id)!==srid);
+st.mt=(st.mt||[]).filter(m=>String(m)!==srid);
 if(!st.passed)st.passed=[];
-if(!st.passed.includes(rid))st.passed.push(rid);
+if(!st.passed.map(String).includes(srid))st.passed.push(srid);
+const pCur=pool()[st.i];
+if(pCur&&String(pCur.id)===srid){st.i++;}
 save();render();
+say(x().reqDeclined||"Demande refusée. Vous ne reverrez plus ce profil.");
 if(sbClient){
 ensureUserProfileId().then(uid=>{
 if(uid){
-sbClient.from('likes').delete().eq('sender_id',rid).eq('receiver_id',uid).catch(()=>{});
+sbClient.from('likes').delete().or(`and(sender_id.eq.${srid},receiver_id.eq.${uid}),and(sender_id.eq.${uid},receiver_id.eq.${srid})`).catch(()=>{});
+sbClient.from('user_blocks').insert({user_id:uid,blocked_id:srid,reason:'passed'}).catch(()=>{});
 }
 });
 }
@@ -3095,7 +3162,11 @@ const rEl=document.querySelector('input[name="rep-r"]:checked');
 const reason=rEl?rEl.value:'other';
 closeM();alert(t.repDone);say(t.repDone);
 if(sbClient){
-sbClient.from('user_blocks').insert({reason:'report:'+reason+':'+id}).then(({error})=>{if(error)console.warn("Supabase report err:",error)}).catch(()=>{});
+ensureUserProfileId().then(uid=>{
+if(uid){
+sbClient.from('user_blocks').insert({user_id:uid,blocked_id:id,reason:'report:'+reason}).catch(()=>{});
+}
+});
 }
 }
 function openBlockModal(id){
@@ -3105,14 +3176,21 @@ o.innerHTML=`<div style="flex:1;display:flex;align-items:center;justify-content:
 o.hidden=false;
 }
 function doBlock(id){
+const sid=String(id);
 if(!st.blocked)st.blocked=[];
-if(!st.blocked.includes(id))st.blocked.push(id);
+if(!st.blocked.map(String).includes(sid))st.blocked.push(sid);
+if(!st.passed)st.passed=[];
+if(!st.passed.map(String).includes(sid))st.passed.push(sid);
 save();closeM();
 if(st.chat===id){st.chat=null;st.tab="m"}
-const pCur=pool()[st.i];if(pCur&&pCur.id===id)st.i++;
+const pCur=pool()[st.i];if(pCur&&String(pCur.id)===sid)st.i++;
 render();say(x().blkDone);alert(x().blkDone);
 if(sbClient){
-sbClient.from('user_blocks').insert({reason:'block:'+id}).then(({error})=>{if(error)console.warn("Supabase block err:",error)}).catch(()=>{});
+ensureUserProfileId().then(uid=>{
+if(uid){
+sbClient.from('user_blocks').insert({user_id:uid,blocked_id:sid,reason:'block'}).catch(()=>{});
+}
+});
 }
 }
 function openBlockedListModal(){
@@ -3170,7 +3248,7 @@ add(id,msgObj);i.value="";
 recordMessageInSupabase(id,v,null,null,null,msgObj);
 }
 document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,k=b.dataset.k,t=x();
-if(a==="tab"){st.tab=k;st.chat=null;render();if(k==="d")loadProfilesFromSupabase();if(k==="m"||k==="req")loadLikesAndMatchesFromSupabase();}
+if(a==="tab"){st.tab=k;st.chat=null;render();if(k==="d"){loadBlockedUsersFromSupabase();loadProfilesFromSupabase();}if(k==="m"||k==="req"){loadBlockedUsersFromSupabase();loadLikesAndMatchesFromSupabase();}}
 else if(a==="lang"){st.lang=st.lang==="fr"?"ar":"fr";save();render();$("#lang").focus()}
 else if(a==="gauth"){signInWithGoogle()}
 else if(a==="req-subtab"){st.reqSubTab=k;render();}
@@ -3495,6 +3573,7 @@ go(st.savedStep>=5?st.savedStep:5);
 say(x().gVerif||"Compte Google vérifié");
 save();
 render();
+loadBlockedUsersFromSupabase();
 loadProfilesFromSupabase();
 loadLikesAndMatchesFromSupabase();
 }
@@ -3543,6 +3622,9 @@ if(st.tab==='m')render();
 .on('postgres_changes',{event:'*',schema:'public',table:'likes'},payload=>{
 loadLikesAndMatchesFromSupabase();
 })
+.on('postgres_changes',{event:'*',schema:'public',table:'user_blocks'},payload=>{
+loadBlockedUsersFromSupabase();
+})
 .on('postgres_changes',{event:'*',schema:'public',table:'profiles'},payload=>{
 loadProfilesFromSupabase();
 })
@@ -3553,6 +3635,7 @@ console.log("Supabase Realtime status:",status);
 }
 initSocialAuthListener();
 initRealtimeDatabaseSync();
+loadBlockedUsersFromSupabase();
 loadProfilesFromSupabase();
 loadLikesAndMatchesFromSupabase();
 
@@ -3564,6 +3647,7 @@ loadMessagesFromSupabase(st.chat);
 
 setInterval(()=>{
 if(st.step>=5){
+loadBlockedUsersFromSupabase();
 loadLikesAndMatchesFromSupabase();
 if(st.tab==='d'){
 loadProfilesFromSupabase();
