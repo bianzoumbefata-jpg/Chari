@@ -2038,6 +2038,7 @@ const SEED_PROFILES = [];
 let P = [];
 const ME={n:"",bg:[G,B],cl:"#C3CCDB",sk:"#9AA7BB"};
 const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const byId=id=>{
   if(!id)return null;
   const sId=String(id);
@@ -2310,7 +2311,7 @@ ${isFile?`<div style="background:rgba(0,111,253,0.10);border:1px solid rgba(0,11
 <div style="background:#ffffff;border:1.5px solid var(--line);border-radius:18px;padding:20px 16px;box-shadow:0 8px 30px rgba(0,0,0,0.06);margin:18px 0 16px;text-align:center">
 
 <button class="btn gold" data-a="direct-access" id="btn-direct-access" type="button" style="width:100%;min-height:52px;font-size:15.5px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;box-shadow:0 4px 18px rgba(217,119,6,0.35);border:none;border-radius:14px;cursor:pointer;">
-<span>🚀 ${st.lang==="ar"?"الدخول المباشر إلى التطبيق (ملء الملف) ➜":"Accéder directement à l'application ➜"}</span>
+<span>🚀 ${st.lang==="ar"?"فتح نموذج التسجيل مباشرة (إنشاء الحساب) ➜":"Accéder directement au formulaire d'inscription ➜"}</span>
 </button>
 
 <button class="btn sec" data-a="direct-discovery" id="btn-direct-discovery" type="button" style="min-height:42px;font-size:13.5px;font-weight:700;margin-bottom:16px;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:12px">
@@ -4628,6 +4629,10 @@ return;
 
 if(searchParams.get('auth')==='google'||searchParams.get('step')==='google'||searchParams.get('step')==='1'||hashStr==='google'){
 go(1, "#google-page-email");
+return;
+}
+if(searchParams.get('step')==='2'||searchParams.get('step')==='register'||searchParams.get('step')==='inscription'||searchParams.get('register')==='1'||searchParams.get('inscription')==='1'||hashStr==='register'||hashStr==='inscription'||hashStr==='step2'){
+go(2, "#nm");
 return;
 }
 
