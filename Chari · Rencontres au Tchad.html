@@ -505,17 +505,17 @@ nav [aria-current]::after{
   align-self: flex-start;
   border-bottom-left-radius: 4px;
 }
-.inp{display:flex;gap:8px;padding-top:10px}
+.inp{display:flex;gap:8px;padding-top:10px;align-items:center}
 .inp input{
   flex: 1;
   min-width: 0;
-  min-height: 48px;
-  border-radius: 12px;
+  min-height: 50px;
+  border-radius: 14px;
   border: 1.5px solid var(--neutral-light-darkest);
   background: var(--surf);
   color: var(--ink);
   padding: 0 16px;
-  font-size: 14px;
+  font-size: 16px;
   box-shadow: var(--sh-sm);
   transition: all .18s;
 }
@@ -523,6 +523,19 @@ nav [aria-current]::after{
   border-color: var(--brand);
   outline: none;
   box-shadow: 0 0 0 3px rgba(0, 111, 253, 0.15);
+}
+.btn-voice-rec, #btn-rec {
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  -webkit-touch-callout: none;
+}
+.btn-voice-rec.rec-holding, #btn-rec.rec-holding {
+  background: #ED3241 !important;
+  color: #FFFFFF !important;
+  transform: scale(1.15) !important;
+  box-shadow: 0 0 0 8px rgba(237, 50, 65, 0.35) !important;
+  animation: pulse-rec 1s infinite ease-in-out;
 }
 .pf{
   display: grid;
@@ -1392,13 +1405,15 @@ body.screen-protected .screen-shield{display:flex!important}
   100%{ box-shadow: 0 0 0 0 rgba(0, 111, 253, 0); }
 }
 /* Responsive Dimensions Optimization - Mobile Phone, Tablet, Desktop */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
   body {
     background: var(--bg);
+    font-size: 16px;
   }
   .app {
-    width: 100vw;
-    max-width: 100vw;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100%;
     margin: 0;
     box-shadow: none;
     border: none;
@@ -1407,87 +1422,155 @@ body.screen-protected .screen-shield{display:flex!important}
     height: 100dvh;
   }
   header {
-    padding: 10px 14px;
+    padding: 12px 16px;
+    min-height: 56px;
     width: 100%;
     max-width: 100%;
   }
+  .logo {
+    font-size: 26px;
+  }
   main {
-    padding: 12px 14px 22px;
+    padding: 14px 16px 28px;
     width: 100%;
     max-width: 100%;
     overflow-x: hidden;
   }
   .pf {
-    gap: 12px;
+    gap: 16px;
     width: 100%;
     max-width: 100%;
   }
+  .pf h1 {
+    font-size: 26px;
+    font-weight: 800;
+  }
+  .hero-box {
+    height: 200px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
   .card {
-    border-radius: 18px;
+    border-radius: 22px;
     width: 100%;
     max-width: 100%;
   }
   .ph {
-    height: min(46vh, 330px);
-    min-height: 220px;
+    height: min(56vh, 440px);
+    min-height: 280px;
   }
   .bd {
-    padding: 14px;
+    padding: 16px;
   }
   .bd h2 {
-    font-size: 21px;
+    font-size: 24px;
   }
   .acts {
-    gap: 24px;
-    margin-top: 14px;
+    gap: 28px;
+    margin-top: 16px;
   }
   .act .i {
-    width: 54px;
-    height: 54px;
-    padding: 14px;
+    width: 62px;
+    height: 62px;
+    padding: 16px;
+  }
+  .act .i svg {
+    width: 28px;
+    height: 28px;
   }
   .btn {
-    min-height: 48px;
-    padding: 0 16px;
-    font-size: 14.5px;
+    min-height: 54px;
+    padding: 0 18px;
+    font-size: 16px;
+    border-radius: 14px;
+    font-weight: 800;
   }
   .btn-google {
-    min-height: 52px;
-    font-size: 15px;
-    padding: 0 12px;
-    gap: 10px;
+    min-height: 56px;
+    font-size: 16px;
+    padding: 0 16px;
+    border-radius: 14px;
+    gap: 12px;
   }
-  .fld {
-    min-height: 48px;
-    padding: 0 14px;
-    font-size: 14.5px;
+  .fld, input, select, textarea {
+    min-height: 52px;
+    padding: 0 16px;
+    font-size: 16px !important;
+    border-radius: 14px;
   }
   .visa-card-box {
-    padding: 14px 14px;
-    margin: 10px 0;
+    padding: 16px 16px;
+    margin: 12px 0;
   }
   .visa-card-num {
-    font-size: 14px;
-    letter-spacing: 1.2px;
+    font-size: 15px;
+    letter-spacing: 1.5px;
+  }
+  .ch {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .log {
+    flex: 1;
+    padding: 12px 14px;
+    gap: 12px;
+  }
+  .bb {
+    font-size: 16px;
+    line-height: 1.45;
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 18px;
+  }
+  .inp {
+    padding: 10px 14px max(12px, env(safe-area-inset-bottom));
+    gap: 8px;
+  }
+  .inp input {
+    min-height: 50px;
+    font-size: 16px !important;
+    border-radius: 14px;
+    padding: 0 16px;
+  }
+  .ib, .send {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+  }
+  #btn-rec {
+    width: 48px;
+    height: 48px;
+  }
+  #nav {
+    min-height: 64px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+  }
+  #nav button {
+    font-size: 12.5px;
+  }
+  #nav svg {
+    width: 24px;
+    height: 24px;
   }
   .g-modal, .sheet-box, .profile-detail-modal {
     width: 95%;
     max-width: 95%;
-    padding: 20px 16px;
+    padding: 22px 18px;
     max-height: 92dvh;
     overflow-y: auto;
   }
 }
 
-@media screen and (min-width: 601px) {
+@media screen and (min-width: 769px) {
   body {
-    padding: 12px 0;
+    padding: 16px 0;
     background: radial-gradient(circle at 50% 15%, #1e293b 0%, #090d16 100%);
   }
   .app {
     max-width: 580px;
-    min-height: min(920px, calc(100dvh - 24px));
-    height: min(920px, calc(100dvh - 24px));
+    min-height: min(920px, calc(100dvh - 32px));
+    height: min(920px, calc(100dvh - 32px));
     border: 1px solid var(--line);
     border-radius: 24px;
     box-shadow: 0 16px 60px rgba(0, 0, 0, 0.5);
@@ -1779,6 +1862,30 @@ l.scrollTop=l.scrollHeight;
 }
 }catch(e){console.warn("loadMessagesFromSupabase err:",e)}
 }
+function updateNavBadges(){
+if(st.step<5)return;
+const t=x();
+const reqCount=(st.incomingRequests||[]).filter(r=>!(st.blocked||[]).includes(r.id)&&!(st.mt||[]).includes(r.id)&&!(st.passed||[]).includes(r.id)).length;
+const msgCount=(st.mt||[]).filter(id=>!(st.blocked||[]).includes(id)).length;
+const nav=$("#nav");
+if(!nav)return;
+const reqBtn=nav.querySelector('[data-k="req"]');
+if(reqBtn){
+let b=reqBtn.querySelector('.nav-badge');
+if(reqCount>0){
+if(!b){b=document.createElement('span');b.className='nav-badge';reqBtn.appendChild(b);}
+b.textContent=reqCount;
+}else if(b){b.remove();}
+}
+const mBtn=nav.querySelector('[data-k="m"]');
+if(mBtn){
+let b=mBtn.querySelector('.nav-badge');
+if(msgCount>0){
+if(!b){b=document.createElement('span');b.className='nav-badge';mBtn.appendChild(b);}
+b.textContent=msgCount;
+}else if(b){b.remove();}
+}
+}
 async function loadLikesAndMatchesFromSupabase(){
 if(!sbClient)return;
 const uid=await ensureUserProfileId();
@@ -1863,17 +1970,17 @@ st.incomingRequests.push(reqItem);
 }
 }
 save();
-render();
+if(st.tab==='m'&&st.chat){updateNavBadges();}else{render();}
 }else{
 if(st.incomingRequests&&st.incomingRequests.length>0){
 st.incomingRequests=[];
 save();
-render();
+if(st.tab==='m'&&st.chat){updateNavBadges();}else{render();}
 }
 if(st.sentRequests&&st.sentRequests.length>0){
 st.sentRequests=[];
 save();
-render();
+if(st.tab==='m'&&st.chat){updateNavBadges();}else{render();}
 }
 }
 }catch(e){console.warn("loadLikes err:",e)}
@@ -2210,7 +2317,17 @@ if(m)localStorage.setItem(k,JSON.stringify(p));
 }catch(e){}
 }
 }
-const activeK=localStorage.getItem("chari_active_key");
+let activeK=localStorage.getItem("chari_active_key");
+if(!activeK||!activeK.startsWith("chari_u_")||activeK.includes("guest")||activeK.includes("membre_chari")||activeK.includes("invite_chari")){
+for(let i=0;i<localStorage.length;i++){
+const k=localStorage.key(i);
+if(k&&k.startsWith("chari_u_")&&!k.includes("guest")&&!k.includes("membre_chari")&&!k.includes("invite_chari")){
+activeK=k;
+try{localStorage.setItem("chari_active_key",activeK);}catch(e){}
+break;
+}
+}
+}
 if(activeK&&activeK.startsWith("chari_u_")&&!activeK.includes("guest")&&!activeK.includes("membre_chari")&&!activeK.includes("invite_chari")){
 const raw=localStorage.getItem(activeK);
 if(raw){
@@ -2220,6 +2337,11 @@ currentActiveUserKey=activeK;
 for(let k in saved){
 if(k==="u")st.u=Object.assign({},st.u,saved.u);
 else st[k]=saved[k];
+}
+if(isProfileComplete(st)&&hasVerifiedSelfie(st)){
+st.step=5;st.savedStep=5;st.tab="d";
+}else if(isProfileComplete(st)){
+st.step=3;st.savedStep=3;
 }
 }
 }
@@ -2698,7 +2820,7 @@ if(!mtList.length)return`<div class="empty"><div style="font-size:42px;margin-bo
 return`<div class="pf" style="padding-top:8px"><h1 style="font-size:22px;margin-bottom:12px">💬 ${t.chatTab}</h1><ul class="list">${mtList.map(id=>{const p=byId(id);if(!p)return"";const l=st.ms[id]&&st.ms[id].slice(-1)[0];return`<li><button class="row" data-a="open" data-id="${id}"><span class="av">${av(p)}</span><span><strong>${esc(p.n)}</strong><br><span class="mut">${l?(l.img?"[Photo]":(l.voice?"[Note vocale]":(esc(l.t)+(l.isEdited?(" "+t.msgEditedTag):"")))):t.mt}</span></span></button></li>`}).join("")}</ul></div>`;
 }
 function chat(){const t=x(),p=byId(st.chat);if(!p)return msgs();
-return`<div class="ch"><div class="chh"><button class="ib" data-a="back" aria-label="${t.bk}">${ic("back")}</button><span class="av s">${av(p)}</span><h2 style="flex:1;min-width:0;display:flex;align-items:center;gap:6px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.n)}</span>${flagSvg}</h2><button class="ib" data-a="start-call" data-id="${p.id}" style="color:var(--brand)" title="${t.vidCall}" aria-label="${t.vidCall}">${ic("video")}</button><button class="ib" data-a="open-opt" data-id="${p.id}" title="${t.opt}" aria-label="${t.opt}">${ic("dots")}</button></div><p class="note">${ic("shield")}<span>${t.st}</span></p><div id="log" class="log" aria-live="polite"></div><div class="inp"><input id="chat-file" type="file" accept="image/*" hidden><button class="ib" data-a="chat-pic" title="Photo" aria-label="Photo">${ic("cam")}</button><button class="ib" data-a="chat-rec" id="btn-rec" title="Vocale" aria-label="Vocale">${ic("mic")}</button><input id="in" type="text" placeholder="${t.ph}" aria-label="${t.ph}" autocomplete="off"><button class="send" data-a="send" aria-label="${t.snd}">${ic("send")}</button></div></div>`}
+return`<div class="ch"><div class="chh"><button class="ib" data-a="back" aria-label="${t.bk}">${ic("back")}</button><span class="av s">${av(p)}</span><h2 style="flex:1;min-width:0;display:flex;align-items:center;gap:6px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.n)}</span>${flagSvg}</h2><button class="ib" data-a="start-call" data-id="${p.id}" style="color:var(--brand)" title="${t.vidCall}" aria-label="${t.vidCall}">${ic("video")}</button><button class="ib" data-a="open-opt" data-id="${p.id}" title="${t.opt}" aria-label="${t.opt}">${ic("dots")}</button></div><p class="note">${ic("shield")}<span>${t.st}</span></p><div id="log" class="log" aria-live="polite"></div><div class="inp"><input id="chat-file" type="file" accept="image/*" hidden><button class="ib" data-a="chat-pic" title="Photo" aria-label="Photo">${ic("cam")}</button><button class="ib btn-voice-rec" data-a="chat-rec" id="btn-rec" title="Vocale" aria-label="Vocale">${ic("mic")}</button><input id="in" type="text" placeholder="${t.ph}" aria-label="${t.ph}" autocomplete="off"><button class="send" data-a="send" aria-label="${t.snd}">${ic("send")}</button></div></div>`}
 function prof(){const t=x(),u=st.u,n=st.ph5.length;
 const hbList=(u.hb||[]);
 const uBio=u.bio||t.bioDef;
@@ -2813,6 +2935,20 @@ $("#nav").innerHTML=on?"":[
 ["m","chat",t.m,msgCount],
 ["p","user",t.p,0]
 ].map(([k,i,l,cnt])=>`<button data-a="tab" data-k="${k}" ${st.tab===k?'aria-current="page"':""} style="position:relative">${ic(i)}<span>${l}</span>${cnt>0?`<span class="nav-badge">${cnt}</span>`:""}</button>`).join("");
+const currentIn=$("#in");
+const isChatActive=(!on && st.tab==="m" && st.chat && $("#log") && currentIn);
+if(isChatActive){
+const l=$("#log");
+if(l){
+const mList=st.ms[st.chat]||[];
+if(l.children.length!==mList.length){
+l.innerHTML="";
+mList.forEach((m,idx)=>bub(l,m,idx,st.chat));
+l.scrollTop=l.scrollHeight;
+}
+}
+return;
+}
 $("#v").innerHTML=on?onb():st.tab==="d"?dis():st.tab==="req"?reqView():st.tab==="m"?(st.chat?chat():msgs()):(st.ed?edv():prof());
 if(st.ed&&!on&&st.tab==="p")drawEd();
 if(!on&&st.tab==="m"&&st.chat){const l=$("#log");if(l){l.innerHTML="";(st.ms[st.chat]||[]).forEach((m,idx)=>bub(l,m,idx,st.chat));l.scrollTop=l.scrollHeight;}}}
@@ -3272,52 +3408,118 @@ if(isReciprocalMatch)match(p);else{const b=$("[data-a=like]");if(b)b.focus()}
 };
 const rm=st.lite||matchMedia("(prefers-reduced-motion: reduce)").matches;
 if(c&&!rm&&c.animate)c.animate([{transform:"none",opacity:1},{transform:`translateX(${d*90}px) rotate(${d*7}deg)`,opacity:0}],{duration:220}).onfinish=go2;else go2()}
-let recState={active:false,sec:0,timer:null,mr:null,chunks:[],stream:null};
+let recState={active:false,holdActive:false,sec:0,timer:null,mr:null,chunks:[],stream:null,startTime:0,lastRelease:0,cancelled:false};
+
+async function startVoiceHold(btn){
+  if(!st.chat||!(st.mt||[]).includes(st.chat)){
+    alert(x().onlyMatchedCanChat||"Vous devez être en match pour enregistrer une note vocale.");
+    return;
+  }
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+    alert(st.lang==="ar"?"المتصفح لا يدعم تسجيل الصوت":"Votre appareil ne supporte pas l'enregistrement audio direct.");
+    return;
+  }
+  if(recState.holdActive||recState.active)return;
+  recState.holdActive=true;
+  recState.cancelled=false;
+  recState.sec=0;
+  recState.chunks=[];
+  recState.startTime=Date.now();
+
+  const b=btn||$("#btn-rec");
+  const inp=$("#in");
+  if(b){b.classList.add("rec-holding");b.classList.add("rec-pulse");}
+  if(inp){inp.placeholder=st.lang==="ar"?"🎙️ جارٍ التسجيل... ارفع إصبعك للإرسال":"🎙️ Parlez maintenant... Relâchez pour envoyer";}
+  if(navigator.vibrate){try{navigator.vibrate(35);}catch(e){}}
+
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
+    if(!recState.holdActive){
+      stream.getTracks().forEach(t=>t.stop());
+      return;
+    }
+    recState.stream=stream;
+    recState.active=true;
+    recState.timer=setInterval(()=>{
+      if(!recState.holdActive){clearInterval(recState.timer);return;}
+      recState.sec++;
+      const m=Math.floor(recState.sec/60),s=(recState.sec%60).toString().padStart(2,"0");
+      if(inp)inp.placeholder=st.lang==="ar"?`🎙️ جارٍ التسجيل... ${m}:${s} (ارفع للإرسال)`:`🎙️ Enregistrement... ${m}:${s} (Relâchez pour envoyer)`;
+      if(recState.sec>=120){endVoiceHold(false);}
+    },1000);
+
+    const mime=MediaRecorder.isTypeSupported('audio/webm;codecs=opus')?'audio/webm;codecs=opus':
+      MediaRecorder.isTypeSupported('audio/mp4')?'audio/mp4':
+      MediaRecorder.isTypeSupported('audio/ogg')?'audio/ogg':'';
+    const mr=new MediaRecorder(stream,mime?{mimeType:mime}:{});
+    recState.mr=mr;
+    mr.ondataavailable=ev=>{if(ev.data&&ev.data.size>0)recState.chunks.push(ev.data)};
+    mr.onstop=()=>{
+      const bType=mr.mimeType||'audio/webm';
+      const blob=new Blob(recState.chunks,{type:bType});
+      if(recState.stream){
+        recState.stream.getTracks().forEach(t=>t.stop());
+        recState.stream=null;
+      }
+      const durSec=Math.max(1,Math.round((Date.now()-recState.startTime)/1000));
+      if(!recState.cancelled&&blob.size>100){
+        const reader=new FileReader();
+        reader.onloadend=()=>{
+          sendVoiceNote(reader.result,durSec);
+          if(navigator.vibrate){try{navigator.vibrate([20,30,20]);}catch(e){}}
+        };
+        reader.readAsDataURL(blob);
+      }
+      recState.cancelled=false;
+      recState.active=false;
+    };
+    mr.start(100);
+  }catch(err){
+    console.warn("Microphone error:",err);
+    recState.holdActive=false;
+    recState.active=false;
+    if(b){b.classList.remove("rec-holding");b.classList.remove("rec-pulse");}
+    if(inp)inp.placeholder=x().ph;
+    alert(st.lang==="ar"?"يرجى السماح بالوصول إلى الميكروفون للتحدث":"Veuillez autoriser l'accès au microphone pour enregistrer votre message vocal.");
+  }
+}
+
+function endVoiceHold(cancelled){
+  if(!recState.holdActive&&!recState.active)return;
+  const holdDur=Date.now()-(recState.startTime||Date.now());
+  recState.holdActive=false;
+  recState.lastRelease=Date.now();
+  if(cancelled||holdDur<600){
+    recState.cancelled=true;
+    if(holdDur<600&&!cancelled){
+      say(st.lang==="ar"?"اضغط مع الاستمرار للتحدث، ارفع للإرسال":"Maintenez le bouton appuyé pour parler, relâchez pour envoyer");
+    }
+  }else{
+    recState.cancelled=false;
+  }
+  clearInterval(recState.timer);
+
+  const b=$("#btn-rec");
+  const inp=$("#in");
+  if(b){b.classList.remove("rec-holding");b.classList.remove("rec-pulse");}
+  if(inp)inp.placeholder=x().ph;
+
+  if(recState.mr&&recState.mr.state==="recording"){
+    recState.mr.stop();
+  }else if(recState.stream){
+    recState.stream.getTracks().forEach(t=>t.stop());
+    recState.stream=null;
+    recState.active=false;
+  }
+}
+
 function toggleVoiceRec(){
-if(!st.chat||!(st.mt||[]).includes(st.chat)){
-alert(x().onlyMatchedCanChat||"Vous devez être en match pour enregistrer une note vocale.");
-return;
-}
-const btn=$("#btn-rec"),inp=$("#in");
-if(!recState.active){
-if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
-alert(st.lang==="ar"?"المتصفح لا يدعم تسجيل الصوت":"Votre appareil ne supporte pas l'enregistrement direct.");
-return;
-}
-navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}}).then(stream=>{
-recState.active=true;recState.sec=0;recState.chunks=[];recState.stream=stream;
-if(btn)btn.classList.add("rec-pulse");
-recState.timer=setInterval(()=>{
-recState.sec++;const m=Math.floor(recState.sec/60),s=(recState.sec%60).toString().padStart(2,"0");
-if(inp)inp.placeholder=st.lang==="ar"?`جارٍ تسجيل الصوت... ${m}:${s}`:`Enregistrement vocal direct... ${m}:${s}`;
-if(recState.sec>=120)toggleVoiceRec();
-},1000);
-const mime=MediaRecorder.isTypeSupported('audio/webm;codecs=opus')?'audio/webm;codecs=opus':
-MediaRecorder.isTypeSupported('audio/mp4')?'audio/mp4':
-MediaRecorder.isTypeSupported('audio/ogg')?'audio/ogg':'';
-const mr=new MediaRecorder(stream,mime?{mimeType:mime}:{});
-recState.mr=mr;
-mr.ondataavailable=ev=>{if(ev.data&&ev.data.size>0)recState.chunks.push(ev.data)};
-mr.onstop=()=>{
-const bType=mr.mimeType||'audio/webm';
-const blob=new Blob(recState.chunks,{type:bType});
-if(recState.stream){recState.stream.getTracks().forEach(t=>t.stop());recState.stream=null;}
-const reader=new FileReader();
-reader.onloadend=()=>{
-sendVoiceNote(reader.result,Math.max(1,recState.sec));
-};
-reader.readAsDataURL(blob);
-};
-mr.start(100);
-}).catch(()=>{
-alert(st.lang==="ar"?"يرجى السماح بالوصول إلى الميكروفون":"Veuillez autoriser l'accès au microphone pour enregistrer votre voix.");
-});
-}else{
-recState.active=false;clearInterval(recState.timer);
-if(btn)btn.classList.remove("rec-pulse");
-if(inp)inp.placeholder=x().ph;
-if(recState.mr&&recState.mr.state==="recording"){recState.mr.stop()}
-}
+  if(Date.now()-recState.lastRelease<500)return;
+  if(!recState.active){
+    startVoiceHold();
+  }else{
+    endVoiceHold(false);
+  }
 }
 function sendVoiceNote(url,sec){
 if(!st.chat)return;
@@ -3967,12 +4169,14 @@ else st[k]=saved[k];
 }
 }
 }catch(e){}
-st.step=2;
-st.savedStep=2;
-save();
-go(2,"#nm");
+if(isProfileComplete(st)&&hasVerifiedSelfie(st)){
+st.step=5;st.savedStep=5;st.tab="d";save();go(5);render();
+loadBlockedUsersFromSupabase();loadProfilesFromSupabase();loadLikesAndMatchesFromSupabase();
+return;
+}
 if(sbClient){
-sbClient.from('profiles').select('*').eq('email',val).limit(1).then(({data:pList})=>{
+try{
+const {data:pList}=await sbClient.from('profiles').select('*').eq('email',val).limit(1);
 if(pList&&pList.length>0&&pList[0].name&&pList[0].name!=='__DELETED__'&&pList[0].name!=='Test Col'){
 const p=pList[0];
 st.u.id=p.id;st.u.n=p.name;st.u.a=p.age;st.u.c=p.city;st.u.jb=p.job;st.u.bio=p.bio;
@@ -3981,9 +4185,16 @@ st.u.kd=p.children||0;st.u.i=p.intention||'ser';st.u.hb=p.hobbies||[];
 if(p.selfie_url){st.selfie=p.selfie_url;ensureSelfieInPh5();}
 st.prem=p.is_premium?1:0;
 save();
-if(st.step===2)render();
 }
-}).catch(()=>{});
+}catch(err){console.warn("Profile check error:",err)}
+}
+if(isProfileComplete(st)&&hasVerifiedSelfie(st)){
+st.step=5;st.savedStep=5;st.tab="d";save();go(5);render();
+loadBlockedUsersFromSupabase();loadProfilesFromSupabase();loadLikesAndMatchesFromSupabase();
+}else if(isProfileComplete(st)){
+st.step=3;st.savedStep=3;save();go(3);render();
+}else{
+st.step=2;st.savedStep=2;save();go(2,"#nm");render();
 }
 }
 else if(a==="guest-onb"||a==="direct-access"||a==="direct-discovery"||a==="google-direct-email"||a==="switch-mail-gmail"){
@@ -4249,11 +4460,52 @@ const btn=$("#btn-submit-google-auth")||$("#btn-submit-google-page")||$("#btn-em
 if(btn)btn.click();
 return;
 }
+if(e.key==="Enter"&&e.target&&e.target.id==="in"){
+e.preventDefault();
+send();
+return;
+}
 if(e.key==="PrintScreen"){e.preventDefault();triggerScreenshotBlocked();return}
 const ctrl=e.ctrlKey||e.metaKey;
 if(ctrl&&(e.key==="p"||e.key==="P"||e.key==="s"||e.key==="S")){e.preventDefault();triggerScreenshotBlocked();return}
 if(ctrl&&e.shiftKey&&(e.key==="s"||e.key==="S"||e.key==="i"||e.key==="I")){e.preventDefault();triggerScreenshotBlocked();return}
 if(e.key==="F12"){e.preventDefault();return}
+});
+// Push-to-talk: press & hold to record, release to send
+document.addEventListener("pointerdown",e=>{
+const btn=e.target&&e.target.closest&&e.target.closest("#btn-rec, [data-a='chat-rec']");
+if(btn){
+e.preventDefault();
+startVoiceHold(btn);
+}
+});
+document.addEventListener("pointerup",()=>{
+if(recState.holdActive){
+endVoiceHold(false);
+}
+});
+document.addEventListener("pointercancel",()=>{
+if(recState.holdActive){
+endVoiceHold(true);
+}
+});
+document.addEventListener("touchstart",e=>{
+const btn=e.target&&e.target.closest&&e.target.closest("#btn-rec, [data-a='chat-rec']");
+if(btn){
+e.preventDefault();
+if(!recState.holdActive)startVoiceHold(btn);
+}
+},{passive:false});
+document.addEventListener("touchend",e=>{
+if(recState.holdActive){
+e.preventDefault();
+endVoiceHold(false);
+}
+},{passive:false});
+document.addEventListener("touchcancel",()=>{
+if(recState.holdActive){
+endVoiceHold(true);
+}
 });
 // Screenshot protection on explicit key triggers only
 window.addEventListener("focus",()=>{document.body.classList.remove("screen-protected")});
@@ -4377,16 +4629,31 @@ ensureSelfieInPh5();
 checkAndResetDailyLimits();
 initIncomingRequests();
 
-// Toujours ouvrir le formulaire d'inscription (Etape 2) pour laisser la main à l'utilisateur :
+if(isProfileComplete(st)&&hasVerifiedSelfie(st)){
+st.step=5;
+st.savedStep=5;
+st.tab="d";
+say(st.lang==="ar"?"مرحباً بعودتك!":"Ravi de vous revoir !");
+save();
+go(5);
+render();
+loadBlockedUsersFromSupabase();
+loadProfilesFromSupabase();
+loadLikesAndMatchesFromSupabase();
+}else if(isProfileComplete(st)){
+st.step=3;
+st.savedStep=3;
+save();
+go(3);
+render();
+}else{
 st.step=2;
 st.savedStep=2;
 say(x().gVerif||"Compte Google vérifié");
 save();
 go(2,"#nm");
 render();
-loadBlockedUsersFromSupabase();
-loadProfilesFromSupabase();
-loadLikesAndMatchesFromSupabase();
+}
 }
 
 async function checkAndExchangeUrlAuth(){
@@ -4477,7 +4744,7 @@ const otherId=(m.sender_id===myId)?m.receiver_id:m.sender_id;
 if(otherId){
 loadMessagesFromSupabase(otherId);
 }
-if(st.tab==='m')render();
+if(st.tab==='m'&&!st.chat)render();
 }
 })
 .on('postgres_changes',{event:'*',schema:'public',table:'likes'},payload=>{
