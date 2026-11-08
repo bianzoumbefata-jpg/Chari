@@ -3282,7 +3282,6 @@ if(!error&&data&&data.session)verified=true;
 else console.warn("Supabase verifyOtp:",error);
 }catch(e){console.warn("verifyPhoneOtp catch:",e)}
 }
-if(!verified&&code==="123456")verified=true;
 if(verified){
 st.mode="tel";save();syncProfileToSupabase();
 if(!st.selfie)go(3);
