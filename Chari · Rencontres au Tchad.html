@@ -1979,7 +1979,8 @@ st.u.kd=p.children||0;st.u.i=p.intention||'ser';
 st.u.hb=Array.isArray(p.hobbies)?p.hobbies.filter(h=>h!=='__incognito__'):[];
 st.u.gf=Array.isArray(p.green_flags)?p.green_flags:[];st.u.rf=Array.isArray(p.red_flags)?p.red_flags:[];
 st.u.wa=p.whatsapp||"";
-st.prem=p.is_premium?1:0;st.inc=!!p.is_incognito;
+st.premUntil=p.premium_until||"";
+st.prem=(p.is_premium&&(!p.premium_until||new Date(p.premium_until)>new Date()))?1:0;st.inc=st.prem?!!p.is_incognito:false;
 st.selfieStatus=p.selfie_status||"pending";st.selfieRejectReason=p.selfie_reject_reason||"";
 if(p.verification_selfie_url)st.selfie=p.verification_selfie_url;
 if(r.photos&&r.photos.length){
@@ -2296,8 +2297,8 @@ req2:"Tous les champs marqués * sont obligatoires.",secId:"Identité",bdLbl:"Da
 blurPill:"Photos floutées jusqu'au dévoilement mutuel",blurInfo:"Vos photos restent floues pour les autres jusqu'à ce que vous acceptiez tous les deux de vous dévoiler.",
 revBoth:"Vous vous êtes dévoilés",revWa:"WhatsApp :",revUndo:"Me re-flouter",revWaitT:"Vous avez accepté de vous dévoiler",revWaitD:"En attente que {n} accepte aussi. Ses photos restent floutées d'ici là.",revCancel:"Annuler",revTheyT:"{n} souhaite se dévoiler",revAskT:"Photos floutées",revAskD:"Quand vous acceptez tous les deux, vos photos deviennent nettes et vos WhatsApp sont échangés.",revBtn:"Me dévoiler",revConfirm:"Vos photos nettes et votre WhatsApp seront visibles par cette personne si elle accepte aussi. Continuer ?",
 sfRejT:"Selfie refusé",sfRejD:"Votre selfie n'a pas été validé. Reprenez un selfie net, de face, bien éclairé.",sfRetake:"Reprendre",sfPendT:"Profil en cours de vérification",sfPendD:"Notre équipe vérifie votre selfie. Votre profil sera visible dès qu'il sera certifié.",
-edit:"Modifier",view:"Voir",mainPhoto:"Principale",setMain:"Principale",secSearch:"Ce que je recherche",secSafety:"Sécurité",
-priceMain:"5 000 FCFA",month:"mois",priceEq:"≈ 7,60 € · facturé en FCFA, converti par votre banque",premF1:"Profils illimités pendant 30 jours",premF2:"Demandes et acceptations illimitées",premF3:"Mode incognito",premF4:"Sans engagement",pss2:"Profils illimités, likes illimités et mode incognito pendant 30 jours.",up:"Passer Premium",free:"Formule gratuite : 20 profils par jour",prem:"Premium actif",payCard:"Payer par carte bancaire",pg:"Ouverture du paiement sécurisé…",payUnavail:"Le paiement par carte n'est pas encore activé. Il sera disponible très prochainement.",cardSec:"Paiement sécurisé sur la page de notre prestataire (3D Secure). Chari ne voit jamais votre numéro de carte.",
+edit:"Modifier",view:"Voir",premUntil:"Premium actif jusqu'au",payOk:"Paiement reçu, merci ! Votre Premium s'active dans quelques secondes.",payCancel:"Paiement annulé. Aucun montant n'a été débité.",payActive:"Premium activé pour 30 jours.",mainPhoto:"Principale",setMain:"Principale",secSearch:"Ce que je recherche",secSafety:"Sécurité",
+priceMain:"5 000 FCFA",month:"mois",priceEq:"≈ 7,60 € · facturé en FCFA, converti par votre banque",premF1:"Profils illimités pendant 30 jours",premF2:"Demandes et acceptations illimitées",premF3:"Mode incognito",premF4:"Sans engagement",pss2:"Profils illimités, likes illimités et mode incognito pendant 30 jours.",up:"Passer Premium",free:"Formule gratuite : 20 profils par jour",prem:"Premium actif",payCard:"Payer par carte bancaire",pg:"Ouverture du paiement sécurisé…",payUnavail:"Le paiement est momentanément indisponible. Réessayez dans quelques minutes.",cardSec:"Paiement sécurisé sur la page de notre prestataire (3D Secure). Chari ne voit jamais votre numéro de carte.",
 lngMap:{fr:"Français",ar:"Arabe",both:"Français & Arabe",en:"Anglais"},relMap:{mus:"Musulman(e)",chr:"Chrétien(ne)",oth:"Autre religion"},scBlockD:"Pour protéger l'intimité des membres, les captures et enregistrements d'écran sont interdits sur Chari.",selfieBadge:"Certifié",
 k:{ser:"Relation amoureuse",mar:"Mariage",fam:"Famille",etu:"Études",ent:"Entrepreneuriat",foi:"Foi",mus:"Musique",foo:"Football",cui:"Cuisine",voy:"Voyage",fr:"Français",ar:"Arabe",sa:"Sara"}},
 ar:{d:"اكتشف",m:"الرسائل",p:"ملفي",pass:"تخطَّ",like:"إعجاب",mt:"تطابق!",ms:"أنتما معجبان ببعضكما.",wr:"راسل ",ct:"متابعة",done:"شاهدت كل شيء لهذا اليوم.",again:"إعادة العرض",none:"لا توجد محادثات بعد.",nh:"أعجب بملفات لبدء محادثة.",ph:"اكتب رسالة",snd:"إرسال",bk:"رجوع",my:"ملفي الشخصي",vg:"جارٍ التحقق…",vd:"ملف موثّق",blur:"الوجه مخفي حتى التطابق",lite:"توفير البيانات",sf:"نصائح للأمان",st:"لا ترسل المال أو الرموز أبداً. التقِ في مكان عام وأخبر شخصاً مقرباً.",age:"للبالغين 22 سنة فأكثر فقط.",demo:"شاري · ملفات حقيقية موثقة بالسيلفي.",lgb:"Français",r:["مرحباً! سعيد بالتعرف عليك.","من أي مدينة أنت؟"],
@@ -2336,7 +2337,7 @@ req2:"جميع الحقول المعلّمة بـ * إلزامية.",secId:"ال
 blurPill:"الصور مموّهة حتى الكشف المتبادل",blurInfo:"تبقى صورك مموّهة للآخرين حتى تقبلا كلاكما الكشف.",
 revBoth:"تم الكشف المتبادل",revWa:"واتساب:",revUndo:"إعادة التمويه",revWaitT:"قبلتَ الكشف عن نفسك",revWaitD:"في انتظار موافقة {n}. تبقى صوره مموّهة حتى ذلك الحين.",revCancel:"إلغاء",revTheyT:"{n} يرغب في الكشف",revAskT:"الصور مموّهة",revAskD:"عندما تقبلان كلاكما تصبح الصور واضحة ويتم تبادل رقم واتساب.",revBtn:"اكشف عن نفسي",revConfirm:"ستظهر صورك الواضحة ورقم واتساب لهذا الشخص إذا قبل أيضاً. هل تريد المتابعة؟",
 sfRejT:"تم رفض السيلفي",sfRejD:"لم يتم قبول السيلفي. التقط صورة واضحة من الأمام في إضاءة جيدة.",sfRetake:"إعادة",sfPendT:"ملفك قيد التحقق",sfPendD:"يتحقق فريقنا من السيلفي. سيظهر ملفك فور توثيقه.",
-edit:"تعديل",view:"عرض",mainPhoto:"الرئيسية",setMain:"رئيسية",secSearch:"ما أبحث عنه",secSafety:"الأمان",
+edit:"تعديل",view:"عرض",premUntil:"بريميوم مفعّل حتى",payOk:"تم استلام الدفع، شكراً! سيتم تفعيل بريميوم خلال ثوانٍ.",payCancel:"تم إلغاء الدفع. لم يُخصم أي مبلغ.",payActive:"تم تفعيل بريميوم لمدة 30 يوماً.",mainPhoto:"الرئيسية",setMain:"رئيسية",secSearch:"ما أبحث عنه",secSafety:"الأمان",
 priceMain:"5 000 FCFA",month:"شهر",priceEq:"≈ 7.60 € · تُحتسب بالفرنك الإفريقي ويحوّلها بنكك",premF1:"ملفات غير محدودة لمدة 30 يوماً",premF2:"طلبات وقبول غير محدود",premF3:"وضع التخفّي",premF4:"بدون التزام",pss2:"ملفات وإعجابات غير محدودة ووضع التخفّي لمدة 30 يوماً.",up:"الترقية إلى بريميوم",free:"الباقة المجانية: 20 ملفاً في اليوم",prem:"بريميوم مفعّل",payCard:"الدفع بالبطاقة البنكية",pg:"جارٍ فتح صفحة الدفع الآمن…",payUnavail:"الدفع بالبطاقة غير مفعّل بعد. سيتوفر قريباً جداً.",cardSec:"دفع آمن على صفحة مزوّد الدفع (3D Secure). لا يرى شاري رقم بطاقتك أبداً.",
 lngMap:{fr:"الفرنسية",ar:"العربية",both:"الفرنسية والعربية",en:"الإنجليزية"},relMap:{mus:"مسلم(ة)",chr:"مسيحي(ة)",oth:"ديانة أخرى"},scBlockD:"لحماية خصوصية الأعضاء، يُمنع تصوير الشاشة أو تسجيلها في شاري.",selfieBadge:"موثّق",
 k:{ser:"علاقة عاطفية",mar:"زواج",fam:"العائلة",etu:"الدراسة",ent:"ريادة الأعمال",foi:"الإيمان",mus:"الموسيقى",foo:"كرة القدم",cui:"الطبخ",voy:"السفر",fr:"الفرنسية",ar:"العربية",sa:"السارا"}}};
@@ -3059,7 +3060,7 @@ ${row(t.hob,hbList.length?hbList.map(id=>{const h=HOBBIES.find(z=>z.id===id);ret
 <h2 class="sec-title">${t.secSearch}</h2>
 <div class="sf"><div><h3>${t.tcty}</h3><p>${st.tc==="all"?t.allC:esc(regionName(st.tc,st.lang))}</p></div><select class="fld small" id="p-tc" aria-label="${t.tcty}"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${countryList(st.lang).map(c=>`<option value="${c.c}" ${st.tc===c.c?"selected":""}>${flagEmoji(c.c)} ${esc(regionName(c.c,st.lang))}</option>`).join("")}</select></div>
 <h2 class="sec-title">${t.plan}</h2>
-<div class="sf ${st.prem?"prem":""}"><div><h3>${st.prem?t.prem:t.free}</h3><p>${t.pss2}</p></div></div>
+<div class="sf ${st.prem?"prem":""}"><div><h3>${st.prem?t.prem:t.free}</h3><p>${st.prem&&st.premUntil?t.premUntil+" "+new Date(st.premUntil).toLocaleDateString(st.lang==="ar"?"ar":"fr-FR"):t.pss2}</p></div></div>
 ${st.prem?"":`<button class="btn" data-a="up">${t.up}</button>`}
 ${st.prem?(sw("inc",t.incog)+`<p class="help">${t.incd}</p>`):`<button class="sw" data-a="up"><span>${t.incog}<br><small>${t.incl}</small></span>${ic("lock")}</button>`}
 ${sw("lite",t.lite)}
@@ -4736,6 +4737,21 @@ console.log("Supabase Realtime status:",status);
 });
 }catch(e){console.warn("Realtime error:",e)}
 }
+/* Retour de la page de paiement Stripe */
+(function handlePaymentReturn(){
+try{
+const sp=new URLSearchParams(window.location.search),r=sp.get("paiement");
+if(!r)return;
+history.replaceState(null,null,window.location.pathname);
+st.pay=0;
+if(r==="annule"){setTimeout(()=>alert(x().payCancel),400);return}
+if(r==="ok"){
+setTimeout(()=>alert(x().payOk),400);
+/* Le Premium est active par le serveur des que Stripe confirme : on recharge le profil */
+let n=0;const iv=setInterval(async()=>{n++;const mine=await loadMyProfileFromSupabase();if(mine){applyMyProfile(mine);save();if(st.prem){clearInterval(iv);render();say(x().payActive)}}if(n>=12)clearInterval(iv)},2500);
+}
+}catch(e){}
+})();
 initSocialAuthListener();
 initRealtimeDatabaseSync();
 loadBlockedUsersFromSupabase();
