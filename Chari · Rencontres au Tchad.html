@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Chari · Rencontres au Tchad</title>
+<title>Chari · Rencontres sérieuses</title>
 
 <!-- PWA & Mobile Meta Tags -->
-<meta name="theme-color" content="#12307A">
+<meta name="theme-color" content="#C2185B">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Chari">
@@ -14,26 +14,26 @@
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
 <style>
 :root{
   /* Figma Mobile Apps Prototyping Kit - Tokens officiels */
-  --highlight-darkest: #006FFD;
-  --highlight-dark: #2897FF;
-  --highlight-medium: #6FBAFF;
-  --highlight-light: #B4DBFF;
-  --highlight-lightest: #EAF2FF;
+  --highlight-darkest: #C2185B;
+  --highlight-dark: #E0457B;
+  --highlight-medium: #F48FB1;
+  --highlight-light: #F8C8DA;
+  --highlight-lightest: #FDEBF2;
 
-  --neutral-dark-darkest: #1F2024;
-  --neutral-dark-dark: #2F3036;
-  --neutral-dark-medium: #494A50;
-  --neutral-dark-light: #71727A;
-  --neutral-dark-lightest: #8F9098;
+  --neutral-dark-darkest: #2B1622;
+  --neutral-dark-dark: #43293A;
+  --neutral-dark-medium: #5C4253;
+  --neutral-dark-light: #77606E;
+  --neutral-dark-lightest: #8E7A86;
 
-  --neutral-light-darkest: #C5C6CC;
-  --neutral-light-dark: #D4D6DD;
-  --neutral-light-medium: #E8E9F1;
-  --neutral-light-light: #F8F9FE;
+  --neutral-light-darkest: #E3C9D5;
+  --neutral-light-dark: #EFD9E3;
+  --neutral-light-medium: #F5E6ED;
+  --neutral-light-light: #FFF6F9;
   --neutral-light-lightest: #FFFFFF;
 
   --support-success-dark: #298267;
@@ -56,17 +56,17 @@
   --mut: var(--neutral-dark-light);
   --brand: var(--highlight-darkest);
   --brand-light: var(--highlight-dark);
-  --brand-grad: linear-gradient(135deg, #006FFD 0%, #2897FF 100%);
+  --brand-grad: linear-gradient(135deg, #C2185B 0%, #EC4899 100%);
   --onb: #FFFFFF;
   --gold: #F59E0B;
   --gold-bg: #FEF3C7;
-  --gold-grad: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-  --heart: #ED3241;
-  --heart-grad: linear-gradient(135deg, #FF616D 0%, #ED3241 100%);
-  --heart-shadow: rgba(237, 50, 65, 0.35);
+  --gold-grad: linear-gradient(135deg, #E0457B 0%, #C2185B 100%);
+  --heart: #E11D48;
+  --heart-grad: linear-gradient(135deg, #F472B6 0%, #E11D48 100%);
+  --heart-shadow: rgba(225, 29, 72, 0.32);
   --onh: #FFFFFF;
   --line: var(--neutral-light-medium);
-  --ring: rgba(0, 111, 253, 0.25);
+  --ring: rgba(194, 24, 91, 0.28);
   --hdr: var(--neutral-light-lightest);
   --sh-sm: 0 1px 3px rgba(31, 32, 36, 0.05), 0 1px 2px rgba(31, 32, 36, 0.03);
   --sh-md: 0 6px 16px rgba(31, 32, 36, 0.06), 0 2px 4px rgba(31, 32, 36, 0.03);
@@ -77,48 +77,48 @@
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg: #141517;
-    --surf: #1F2024;
-    --ink: #F8F9FE;
-    --body: #D4D6DD;
-    --mut: #8F9098;
-    --brand: #2897FF;
-    --brand-light: #6FBAFF;
-    --brand-grad: linear-gradient(135deg, #006FFD 0%, #2897FF 100%);
+    --bg: #1A0F15;
+    --surf: #26161F;
+    --ink: #FCEEF4;
+    --body: #EBD7E1;
+    --mut: #BFA3B2;
+    --brand: #F06292;
+    --brand-light: #F8A5C2;
+    --brand-grad: linear-gradient(135deg, #C2185B 0%, #EC4899 100%);
     --onb: #FFFFFF;
     --gold: #FBBF24;
     --gold-bg: rgba(251, 191, 36, 0.15);
-    --gold-grad: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+    --gold-grad: linear-gradient(135deg, #F06292 0%, #C2185B 100%);
     --heart: #FF616D;
-    --heart-grad: linear-gradient(135deg, #FF616D 0%, #ED3241 100%);
+    --heart-grad: linear-gradient(135deg, #F472B6 0%, #E11D48 100%);
     --heart-shadow: rgba(237, 50, 65, 0.4);
-    --line: #2F3036;
-    --ring: rgba(40, 151, 255, 0.35);
-    --hdr: #1F2024;
+    --line: #3D2632;
+    --ring: rgba(240, 98, 146, 0.4);
+    --hdr: #26161F;
     --sh-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
     --sh-md: 0 6px 16px rgba(0, 0, 0, 0.35);
     --sh-lg: 0 16px 36px rgba(0, 0, 0, 0.45);
   }
 }
 :root[data-theme="dark"]{
-  --bg: #141517;
-  --surf: #1F2024;
-  --ink: #F8F9FE;
-  --body: #D4D6DD;
-  --mut: #8F9098;
-  --brand: #2897FF;
-  --brand-light: #6FBAFF;
-  --brand-grad: linear-gradient(135deg, #006FFD 0%, #2897FF 100%);
+  --bg: #1A0F15;
+  --surf: #26161F;
+  --ink: #FCEEF4;
+  --body: #EBD7E1;
+  --mut: #BFA3B2;
+  --brand: #F06292;
+  --brand-light: #F8A5C2;
+  --brand-grad: linear-gradient(135deg, #C2185B 0%, #EC4899 100%);
   --onb: #FFFFFF;
   --gold: #FBBF24;
   --gold-bg: rgba(251, 191, 36, 0.15);
-  --gold-grad: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+  --gold-grad: linear-gradient(135deg, #F06292 0%, #C2185B 100%);
   --heart: #FF616D;
-  --heart-grad: linear-gradient(135deg, #FF616D 0%, #ED3241 100%);
+  --heart-grad: linear-gradient(135deg, #F472B6 0%, #E11D48 100%);
   --heart-shadow: rgba(237, 50, 65, 0.4);
-  --line: #2F3036;
-  --ring: rgba(40, 151, 255, 0.35);
-  --hdr: #1F2024;
+  --line: #3D2632;
+  --ring: rgba(240, 98, 146, 0.4);
+  --hdr: #26161F;
 }
 *,*::before,*::after{box-sizing:border-box}
 html{
@@ -331,7 +331,7 @@ nav [aria-current]::after{
   align-items: center;
   background: var(--highlight-lightest);
   color: var(--highlight-darkest);
-  border: 1px solid rgba(0, 111, 253, 0.2);
+  border: 1px solid rgba(194,24,91, 0.2);
   border-radius: 999px;
   padding: 3px 10px;
   font-weight: 600;
@@ -398,18 +398,18 @@ nav [aria-current]::after{
   gap: 8px;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(0, 111, 253, 0.25);
+  box-shadow: 0 4px 14px rgba(194,24,91, 0.25);
   transition: all .18s;
   letter-spacing: -0.01em;
 }
 .btn:hover{
   background: var(--brand-light);
-  box-shadow: 0 6px 18px rgba(0, 111, 253, 0.32);
+  box-shadow: 0 6px 18px rgba(194,24,91, 0.32);
   transform: translateY(-1px);
 }
 .btn:active{transform:scale(0.98)}
 .btn:disabled{opacity:.5;cursor:default;box-shadow:none;transform:none}
-.btn.gold{background:var(--gold-grad);color:#FFFFFF;box-shadow:0 4px 14px rgba(217,119,6,0.3)}
+.btn.gold{background:var(--gold-grad);color:#FFFFFF;box-shadow:0 4px 14px rgba(194,24,91,0.3)}
 .btn.ghost{background:rgba(255,255,255,0.15);color:#fff;border:1.5px solid rgba(255,255,255,0.4);backdrop-filter:blur(8px)}
 .btn.sec{
   background: var(--surf);
@@ -463,7 +463,7 @@ nav [aria-current]::after{
 .send{
   background: var(--brand);
   color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 111, 253, 0.25);
+  box-shadow: 0 4px 12px rgba(194,24,91, 0.25);
 }
 .send:hover{transform:scale(1.05)}
 [dir=rtl] .ib .i,[dir=rtl] .send .i{transform:scaleX(-1)}
@@ -477,7 +477,7 @@ nav [aria-current]::after{
   background: var(--highlight-lightest);
   padding: 10px 14px;
   border-radius: 12px;
-  border: 1px solid rgba(0, 111, 253, 0.15);
+  border: 1px solid rgba(194,24,91, 0.15);
 }
 .note .i{width:18px;height:18px;color:var(--brand)}
 .log{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:10px 0}
@@ -499,7 +499,7 @@ nav [aria-current]::after{
   color: #fff;
   border: 0;
   border-bottom-right-radius: 4px;
-  box-shadow: 0 4px 14px rgba(0, 111, 253, 0.22);
+  box-shadow: 0 4px 14px rgba(194,24,91, 0.22);
 }
 .bb.th{
   align-self: flex-start;
@@ -522,7 +522,7 @@ nav [aria-current]::after{
 .inp input:focus{
   border-color: var(--brand);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 111, 253, 0.15);
+  box-shadow: 0 0 0 3px rgba(194,24,91, 0.15);
 }
 .btn-voice-rec, #btn-rec {
   user-select: none;
@@ -650,7 +650,7 @@ label,.lbl{
 .fld:focus{
   border-color: var(--brand);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 111, 253, 0.15);
+  box-shadow: 0 0 0 3px rgba(194,24,91, 0.15);
 }
 .ph2{display:flex;align-items:center;gap:10px;direction:ltr}.ph2 span{font-weight:700;color:var(--brand)}
 .err{color:var(--heart);margin:4px 0 0;min-height:1.4em;font-size:12px;font-weight:600}
@@ -695,7 +695,7 @@ label,.lbl{
   height: 200px;
   border-radius: 50%;
   border: 3.5px solid var(--brand);
-  box-shadow: 0 10px 26px rgba(0, 111, 253, 0.22);
+  box-shadow: 0 10px 26px rgba(194,24,91, 0.22);
   display: grid;
   place-items: center;
   overflow: hidden;
@@ -746,7 +746,7 @@ label,.lbl{
 .video-duration-badge{position:absolute;top:18px;left:12px;background:rgba(15,23,42,0.75);color:#fff;font-size:11px;font-weight:700;padding:2.5px 8px;border-radius:999px;backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.25);display:inline-flex;align-items:center;gap:4px;z-index:5;box-shadow:0 2px 6px rgba(0,0,0,0.3)}
 [dir="rtl"] .video-duration-badge{left:auto;right:12px}
 .btn-video-audio{position:absolute;bottom:12px;right:12px;background:rgba(15,23,42,0.75);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;z-index:7;backdrop-filter:blur(4px);transition:transform .15s, background .15s}
-.btn-video-audio:hover{transform:scale(1.08);background:rgba(0,111,253,0.85)}
+.btn-video-audio:hover{transform:scale(1.08);background:rgba(194,24,91,0.85)}
 [dir="rtl"] .btn-video-audio{right:auto;left:12px}
 .pe{width:100%;max-width:360px;aspect-ratio:1;border-radius:18px;border:1px solid var(--line);box-shadow:var(--sh-md);justify-self:center}
 .rg{width:100%;min-height:44px;accent-color:var(--brand)}
@@ -910,7 +910,7 @@ label,.lbl{
   color: var(--highlight-darkest);
   border-color: var(--highlight-darkest);
   font-weight: 600;
-  box-shadow: 0 2px 8px rgba(0, 111, 253, 0.15);
+  box-shadow: 0 2px 8px rgba(194,24,91, 0.15);
 }
 .h-chip:hover{border-color:var(--brand);transform:translateY(-1px)}
 .h-ic{font-size:15px}
@@ -938,12 +938,12 @@ label,.lbl{
 .rec-pulse{background:#ED3241!important;color:#fff!important;animation:pulse-rec 1.2s infinite ease-in-out}
 @keyframes pulse-rec{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(237,50,65,0.4)}50%{transform:scale(1.1);box-shadow:0 0 0 8px rgba(237,50,65,0)}}
 .visa-card-box{
-  background: linear-gradient(135deg, #006FFD 0%, #1A1F71 100%);
+  background: linear-gradient(135deg, #C2185B 0%, #1A1F71 100%);
   color: #fff;
   border-radius: 16px;
   padding: 18px 20px;
   margin: 14px 0;
-  box-shadow: 0 10px 26px rgba(0, 111, 253, 0.28);
+  box-shadow: 0 10px 26px rgba(194,24,91, 0.28);
   position: relative;
   overflow: hidden;
   font-family: 'SF Pro Display', 'Inter', monospace;
@@ -980,7 +980,7 @@ label,.lbl{
   justify-content: center;
   gap: 8px;
   background: var(--highlight-lightest);
-  border: 1px solid rgba(0, 111, 253, 0.18);
+  border: 1px solid rgba(194,24,91, 0.18);
   border-radius: 12px;
   padding: 9px 12px;
   color: var(--brand);
@@ -1007,7 +1007,7 @@ label,.lbl{
 .call-stage{position:relative;flex:1;display:flex;align-items:center;justify-content:center;background:#14151B;overflow:hidden}
 .call-remote-art{display:flex;flex-direction:column;align-items:center;gap:14px;position:relative}
 .call-remote-av{width:140px;height:140px;border-radius:50%;border:4px solid rgba(255,255,255,0.25);box-shadow:0 16px 40px rgba(0,0,0,0.6);overflow:hidden;position:relative}
-.call-waves{position:absolute;inset:-18px;border-radius:50%;border:2px solid rgba(0,111,253,0.35);animation:call-wave 2s infinite ease-out;pointer-events:none}
+.call-waves{position:absolute;inset:-18px;border-radius:50%;border:2px solid rgba(194,24,91,0.35);animation:call-wave 2s infinite ease-out;pointer-events:none}
 @keyframes call-wave{0%{transform:scale(0.85);opacity:0.8}100%{transform:scale(1.4);opacity:0}}
 .call-pip{position:absolute;top:calc(env(safe-area-inset-top,0px) + 72px);right:16px;width:104px;height:148px;border-radius:16px;background:#23242B;border:2px solid rgba(255,255,255,0.35);overflow:hidden;box-shadow:0 10px 28px rgba(0,0,0,0.5);z-index:25}
 [dir="rtl"] .call-pip{right:auto;left:16px}
@@ -1027,7 +1027,7 @@ label,.lbl{
 .sheet-btn.danger:hover{background:#ffe2e5;border-color:var(--heart)}
 .rep-option{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--surf);cursor:pointer;font-size:13px;font-weight:600;color:var(--ink);transition:all .15s;text-align:start}
 .rep-option:hover{border-color:var(--brand);background:var(--highlight-lightest)}
-.bb.sys{align-self:center;background:var(--highlight-lightest);color:var(--brand);border:1px solid rgba(0,111,253,0.18);font-size:12px;font-weight:600;padding:6px 14px;border-radius:999px;box-shadow:none;text-align:center;max-width:90%}
+.bb.sys{align-self:center;background:var(--highlight-lightest);color:var(--brand);border:1px solid rgba(194,24,91,0.18);font-size:12px;font-weight:600;padding:6px 14px;border-radius:999px;box-shadow:none;text-align:center;max-width:90%}
 .selfie-badge{position:absolute;bottom:6px;inset-inline-start:6px;background:var(--brand);color:#fff;padding:2px 7px;border-radius:999px;font-size:10px;font-weight:700;display:inline-flex;align-items:center;gap:4px;box-shadow:0 2px 6px rgba(0,0,0,0.3);z-index:2;white-space:nowrap}
 .selfie-badge .i{width:12px;height:12px;stroke-width:2.5}
 .pt.pt-selfie{border:2px solid var(--brand)!important}
@@ -1060,7 +1060,7 @@ body.screen-protected .screen-shield{display:flex!important}
   font-weight: 600;
 }
 .quota-banner.prem{
-  background: linear-gradient(135deg, rgba(0, 111, 253, 0.08) 0%, rgba(254, 203, 0, 0.12) 100%);
+  background: linear-gradient(135deg, rgba(194,24,91, 0.08) 0%, rgba(254, 203, 0, 0.12) 100%);
   border-color: rgba(254, 203, 0, 0.38);
 }
 .quota-left{display: flex; align-items: center; gap: 6px;}
@@ -1400,9 +1400,9 @@ body.screen-protected .screen-shield{display:flex!important}
   animation: callPulse 1.5s infinite ease-out;
 }
 @keyframes callPulse{
-  0%{ box-shadow: 0 0 0 0 rgba(0, 111, 253, 0.7); }
-  70%{ box-shadow: 0 0 0 28px rgba(0, 111, 253, 0); }
-  100%{ box-shadow: 0 0 0 0 rgba(0, 111, 253, 0); }
+  0%{ box-shadow: 0 0 0 0 rgba(194,24,91, 0.7); }
+  70%{ box-shadow: 0 0 0 28px rgba(194,24,91, 0); }
+  100%{ box-shadow: 0 0 0 0 rgba(194,24,91, 0); }
 }
 /* Responsive Dimensions Optimization - Mobile Phone, Tablet, Desktop */
 @media screen and (max-width: 768px) {
@@ -1580,6 +1580,179 @@ body.screen-protected .screen-shield{display:flex!important}
     height: 350px;
   }
 }
+
+/* =====================================================================
+   Chari 2.0 - Design rose
+   ===================================================================== */
+:root{
+  --rose-50:#FFF6F9; --rose-100:#FDEBF2; --rose-200:#F8C8DA; --rose-400:#F06292;
+  --rose-600:#C2185B; --rose-700:#A3154D; --plum-900:#2B1622;
+  --green:#15803D; --green-bg:#E8F7EE; --green-line:#B7E4C7;
+  --red:#C81E3A;   --red-bg:#FDECEF;   --red-line:#F5C2CC;
+  --amber:#B45309; --amber-bg:#FFF4E5;
+  --radius:16px; --radius-lg:22px;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --font-display:"Playfair Display","IBM Plex Sans Arabic",Georgia,serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --green:#4ADE80; --green-bg:rgba(74,222,128,.12); --green-line:rgba(74,222,128,.35);
+    --red:#FB7185;   --red-bg:rgba(251,113,133,.12);  --red-line:rgba(251,113,133,.35);
+    --amber:#FBBF24; --amber-bg:rgba(251,191,36,.12);
+    --rose-100:rgba(240,98,146,.14); --rose-50:#1A0F15;
+  }
+}
+body{background:radial-gradient(1200px 600px at 50% -10%,#FCE4EE 0%,#F7D3E2 35%,#EFC3D6 100%) fixed}
+@media (prefers-color-scheme:dark){body{background:radial-gradient(1200px 600px at 50% -10%,#3A1A2A 0%,#1A0F15 60%) fixed}}
+.app{box-shadow:0 0 80px rgba(194,24,91,.18)}
+header{background:color-mix(in srgb,var(--hdr) 88%,transparent);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);position:sticky;top:0}
+.logo{font-family:var(--font-display);font-weight:700;font-size:26px;letter-spacing:-.01em;background:var(--brand-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo::after{display:none}
+.logo-heart{color:var(--rose-600);display:inline-flex;animation:beat 2.4s var(--ease) infinite}
+@keyframes beat{0%,100%{transform:scale(1)}12%{transform:scale(1.18)}24%{transform:scale(1)}}
+.lg{border-color:var(--rose-200);background:var(--rose-100);color:var(--rose-700)}
+.lg:hover{background:var(--rose-200)}
+h1{font-family:var(--font-display);font-weight:700;letter-spacing:-.01em}
+[dir=rtl] h1,[dir=rtl] .logo{font-family:"IBM Plex Sans Arabic",system-ui,sans-serif}
+.btn{border-radius:14px;background:var(--brand-grad);box-shadow:0 6px 18px rgba(194,24,91,.28);font-weight:700;width:100%}
+.btn:hover{background:var(--brand-grad);filter:brightness(1.06);box-shadow:0 8px 22px rgba(194,24,91,.34)}
+.btn.gold{background:var(--brand-grad);box-shadow:0 6px 18px rgba(194,24,91,.28)}
+.btn.sec{background:var(--surf);color:var(--rose-700);border:1.5px solid var(--rose-200);box-shadow:none}
+.btn.sec:hover{background:var(--rose-100);border-color:var(--rose-400);filter:none}
+.btn.ghost{background:transparent;color:var(--rose-700);border:0;box-shadow:none}
+.btn.ghost:hover{background:var(--rose-100);filter:none}
+.btn.small{width:auto;min-height:40px;padding:0 14px;font-size:13px;flex:none}
+.btn.danger-outline{background:transparent;color:var(--red);border:1.5px solid var(--red-line);box-shadow:none;margin:18px 0 8px}
+.btn.danger-outline:hover{background:var(--red-bg);filter:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.link-btn{background:none;border:0;color:var(--rose-700);font-weight:600;font-size:13px;padding:10px 6px;min-height:44px;text-decoration:underline;text-underline-offset:3px}
+.small{font-size:12.5px}.center{text-align:center}
+.help{color:var(--mut);font-size:12.5px;line-height:1.45;margin:4px 0 8px}
+.fld{border-radius:12px;border:1.5px solid var(--neutral-light-darkest);min-height:48px;background:var(--surf);color:var(--ink);padding:0 14px;width:100%}
+textarea.fld{padding:12px 14px;line-height:1.45;resize:vertical;font-family:inherit}
+.fld:focus{border-color:var(--rose-600);box-shadow:0 0 0 4px var(--ring);outline:none}
+.fld.small{width:auto;min-height:40px;max-width:52%}
+label{display:block;font-weight:600;color:var(--ink);font-size:13.5px;margin:12px 0 6px}
+.err{color:var(--red);font-size:13px;font-weight:500;min-height:0;margin:4px 0}
+.err:empty{display:none}
+/* --- Page de connexion --- */
+.auth-page{display:flex;flex-direction:column;gap:14px;padding-bottom:24px}
+.auth-hero{position:relative;border-radius:var(--radius-lg);overflow:hidden;height:210px;box-shadow:0 14px 34px rgba(194,24,91,.25)}
+.auth-hero .hero-img{width:100%;height:100%;object-fit:cover;display:block}
+.auth-hero .hero-overlay{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;padding:18px;background:linear-gradient(180deg,rgba(43,22,34,0) 30%,rgba(43,22,34,.78) 100%)}
+.logo-big{font-family:var(--font-display);font-size:38px;font-weight:700;color:#fff;line-height:1}
+.hero-tag{color:#FFE4EE;font-weight:600;font-size:14px}
+.auth-card{background:var(--surf);border:1px solid var(--line);border-radius:var(--radius-lg);padding:22px 18px;box-shadow:var(--sh-md);display:flex;flex-direction:column;gap:10px}
+.auth-card h1{font-size:25px}
+.auth-card>.mut{margin:0 0 6px}
+.auth-icon{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;margin:0 auto 6px;background:var(--rose-100);color:var(--rose-600)}
+.auth-icon .i{width:28px;height:28px}
+.btn-google{width:100%;min-height:52px;display:flex;align-items:center;justify-content:center;gap:12px;background:#fff;color:#1F1F1F;border:1.5px solid #E5E7EB;border-radius:14px;font-weight:700;font-size:15px;box-shadow:0 2px 10px rgba(0,0,0,.06);transition:transform .15s var(--ease),box-shadow .15s}
+.btn-google:hover{box-shadow:0 6px 18px rgba(0,0,0,.1)}
+.btn-google:active{transform:scale(.98)}
+.divider{display:flex;align-items:center;gap:12px;color:var(--mut);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin:4px 0}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
+.auth-form{display:flex;flex-direction:column}
+.auth-form label{margin-top:10px}
+.auth-form .btn{margin-top:14px}
+.auth-seg{margin-top:2px}
+.trust{list-style:none;padding:12px 0 0;margin:6px 0 0;border-top:1px solid var(--line);display:grid;gap:8px}
+.trust li{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--body)}
+.trust .i{width:18px;height:18px;color:var(--rose-600)}
+/* --- Formulaire d'inscription --- */
+.form-page{padding-bottom:30px}
+.form-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+.form-head h1{font-size:24px;flex:1}
+.fs{border:1px solid var(--line);border-radius:var(--radius);padding:6px 14px 14px;margin:14px 0;background:var(--surf)}
+.fs legend{font-weight:700;color:var(--rose-700);font-size:13px;text-transform:uppercase;letter-spacing:.05em;padding:0 6px}
+.wa-row{display:flex;gap:8px;align-items:stretch}
+.wa-cc{display:grid;place-items:center;min-width:64px;padding:0 10px;border-radius:12px;background:var(--rose-100);color:var(--rose-700);font-weight:700;border:1.5px solid var(--rose-200)}
+[dir=rtl] .wa-row{flex-direction:row-reverse}
+.note.ok{background:var(--green-bg);color:var(--green);border-color:var(--green-line)}
+.note.ok .i{color:var(--green)}
+.seg{display:flex;gap:6px;background:var(--rose-100);padding:4px;border-radius:14px}
+.seg button{flex:1;min-height:44px;border:0;border-radius:11px;background:transparent;color:var(--rose-700);font-weight:600}
+.seg button[aria-pressed=true]{background:var(--surf);color:var(--ink);box-shadow:var(--sh-sm)}
+.h-chip{min-height:40px}
+.h-chip.on{background:var(--brand-grad)!important;color:#fff!important;border-color:transparent!important}
+/* --- Green / Red flags --- */
+.flags{display:grid;gap:10px;margin:12px 0 4px}
+.flags.compact{gap:6px}
+.flag-group{display:grid;gap:6px}
+.flag-title{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:12.5px;text-transform:uppercase;letter-spacing:.05em}
+.flag-title::before{content:"";width:10px;height:10px;border-radius:2px 6px 6px 2px;display:inline-block}
+.flag-title.green{color:var(--green)}.flag-title.green::before{background:var(--green)}
+.flag-title.red{color:var(--red)}.flag-title.red::before{background:var(--red)}
+.flag-title .count{font-weight:600;color:var(--mut);text-transform:none;letter-spacing:0}
+.flag-list{display:flex;flex-wrap:wrap;gap:6px}
+.flag-chip{border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:600;border:1px solid}
+.flag-chip.green{background:var(--green-bg);color:var(--green);border-color:var(--green-line)}
+.flag-chip.red{background:var(--red-bg);color:var(--red);border-color:var(--red-line)}
+.flags.compact .flag-chip{font-size:11.5px;padding:3px 9px}
+.flag-picker.green .h-chip.on{background:var(--green)!important}
+.flag-picker.red .h-chip.on{background:var(--red)!important}
+/* --- Devoilement mutuel --- */
+.reveal{display:flex;align-items:center;gap:12px;border-radius:var(--radius);padding:12px 14px;margin:10px 0;border:1px solid var(--rose-200);background:var(--rose-100)}
+.reveal>.i{width:22px;height:22px;color:var(--rose-600);flex:none}
+.reveal>div{flex:1;min-width:0;display:grid;gap:2px}
+.reveal strong{color:var(--ink);font-size:14px}
+.reveal span{color:var(--body);font-size:12.5px;line-height:1.4}
+.reveal.wait{background:var(--amber-bg);border-color:transparent}
+.reveal.wait>.i{color:var(--amber)}
+.reveal.done{background:var(--green-bg);border-color:var(--green-line)}
+.reveal.done>.i{color:var(--green)}
+.wa-link{color:var(--green);font-weight:700;font-size:13.5px;text-decoration:underline}
+/* --- Bandeaux de statut --- */
+.status-banner{display:flex;align-items:center;gap:12px;border-radius:var(--radius);padding:12px 14px;margin:0 0 12px}
+.status-banner>.i{width:22px;height:22px;flex:none}
+.status-banner>div{flex:1;display:grid;gap:2px}
+.status-banner strong{font-size:14px;color:var(--ink)}
+.status-banner span{font-size:12.5px;color:var(--body)}
+.status-banner.wait{background:var(--amber-bg)}.status-banner.wait>.i{color:var(--amber)}
+.status-banner.bad{background:var(--red-bg)}.status-banner.bad>.i{color:var(--red)}
+/* --- Cartes & profil --- */
+.card{border-radius:var(--radius-lg);border-color:var(--line);box-shadow:0 12px 32px rgba(194,24,91,.10)}
+.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(43,22,34,.72)}
+body.privacy-blur main,body.privacy-blur .ov{filter:blur(22px);transition:none}
+img,video{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.ph .pill{inset-block-start:12px;inset-block-end:auto;z-index:6;max-width:calc(100% - 70px)}
+.pill .i{width:14px;height:14px}
+.vbadge{display:inline-grid;place-items:center;color:var(--rose-600)}
+.vbadge .i{width:20px;height:20px}
+.badge{background:var(--rose-100);color:var(--rose-700);border-color:var(--rose-200)}
+.badge.brand{background:var(--brand-grad);color:#fff;border:0;margin:0}
+.chips li{background:var(--rose-50);border-color:var(--rose-200);color:var(--body)}
+.quota-banner{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px}
+.quota-reset{font-size:11.5px;color:var(--mut)}
+.me-card .quote{margin:12px 0 4px;font-style:italic;color:var(--ink);background:var(--rose-50);padding:10px 14px;border-radius:12px;border-inline-start:3px solid var(--rose-400);cursor:pointer}
+.sec-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--rose-700);margin:22px 4px 8px;font-family:inherit}
+.sf{border-radius:var(--radius);gap:12px;align-items:center}
+.sf>div{flex:1;min-width:0}
+.sf.accent{background:var(--rose-100);border-color:var(--rose-200)}
+.sf .btn.small{max-width:46%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sf.prem{background:var(--brand-grad);color:#fff}
+.sf.prem h3,.sf.prem p{color:#fff}
+.bb.me{background:var(--brand-grad);box-shadow:0 4px 14px rgba(194,24,91,.22)}
+.send{background:var(--brand-grad)}
+nav{background:color-mix(in srgb,var(--surf) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+nav [aria-current]{color:var(--rose-600)}
+nav [aria-current]::after{background:var(--brand-grad);width:34px}
+.nav-badge{background:var(--heart)!important}
+.strip{background:var(--brand-grad)}
+.modal-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:16px}
+.g-modal{max-width:460px;width:100%;text-align:start;display:flex;flex-direction:column;gap:10px}
+/* --- Paiement --- */
+.pay-page .form-head{justify-content:flex-start}
+.plan-card{position:relative;border-radius:var(--radius-lg);padding:22px 20px;margin:12px 0 16px;color:#fff;background:linear-gradient(145deg,#2B1622 0%,#7A1240 55%,#C2185B 100%);box-shadow:0 18px 40px rgba(122,18,64,.35)}
+.plan-tag{display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.plan-price{font-family:var(--font-display);font-size:38px;font-weight:700;margin:12px 0 2px;color:#fff}
+.plan-price small{font-family:inherit;font-size:15px;font-weight:500;opacity:.85}
+.plan-card .mut{color:#FBD5E5}
+.plan-list{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px}
+.plan-list li{display:flex;gap:10px;align-items:center;font-size:14px}
+.plan-list .i{width:18px;height:18px;color:#FBCFE0}
+.card-logos{display:flex;justify-content:center;gap:10px;margin:6px 0 14px}
+.card-logos span{font-weight:800;font-size:12px;letter-spacing:.05em;color:var(--mut);border:1px solid var(--line);border-radius:8px;padding:4px 10px}
 </style>
 </head>
 <body>
@@ -1609,7 +1782,7 @@ body.screen-protected .screen-shield{display:flex!important}
 <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
 </defs></svg>
 <div class="app">
-<header><div style="display:flex;align-items:center;gap:8px"><span class="logo">Chari</span><span class="flag-td" title="Tchad" aria-label="Tchad"><svg viewBox="0 0 30 20" width="22" height="15" style="border-radius:3px;box-shadow:0 1px 3px rgba(0,0,0,0.18);vertical-align:middle;display:block;overflow:hidden"><rect width="10" height="20" x="0" fill="#002664"/><rect width="10" height="20" x="10" fill="#FECB00"/><rect width="10" height="20" x="20" fill="#C60C30"/></svg></span></div><button class="lg" id="lang" data-a="lang" aria-label="Langue / اللغة"></button></header>
+<header><div style="display:flex;align-items:center;gap:8px"><span class="logo">Chari</span><span class="logo-heart" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.2 4.3 2.4.8-1.2 2.3-2.4 4.4-2.4 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg></span></div><button class="lg" id="lang" data-a="lang" aria-label="Langue / اللغة"></button></header>
 <div class="strip" aria-hidden="true"></div>
 <main id="v"></main>
 <nav id="nav" aria-label="Navigation"></nav>
@@ -1654,6 +1827,7 @@ return sbClient;
 }
 initSupabase();
 window.addEventListener('load',()=>{initSupabase();});
+const rndToken=()=>{try{return crypto.randomUUID().replace(/-/g,"")}catch(e){return Math.random().toString(36).slice(2)+Date.now().toString(36)}};
 async function uploadMediaToSupabase(dataUrl,fileName,contentType){
 if(!sbClient||!dataUrl||!dataUrl.startsWith("data:"))return dataUrl;
 try{
@@ -1661,8 +1835,9 @@ const b=(window.CHARI_SUPABASE&&window.CHARI_SUPABASE.bucket)||"photo";
 const res=await fetch(dataUrl);const blob=await res.blob();
 const ct=contentType||blob.type||'image/jpeg';
 const clean=(fileName||`media_${Date.now()}`).replace(/[^a-zA-Z0-9_.-]/g,'_');
-const path=`uploads/${clean}`;
-const {data,error}=await sbClient.storage.from(b).upload(path,blob,{contentType:ct,upsert:true});
+/* Jeton aleatoire : l'adresse d'une photo nette ne peut pas etre devinee */
+const path=`uploads/${rndToken()}_${clean}`;
+const {data,error}=await sbClient.storage.from(b).upload(path,blob,{contentType:ct,upsert:false});
 if(!error&&data){
 const {data:pub}=sbClient.storage.from(b).getPublicUrl(path);
 if(pub&&pub.publicUrl)return pub.publicUrl;
@@ -1671,50 +1846,76 @@ if(pub&&pub.publicUrl)return pub.publicUrl;
 return dataUrl;
 }
 const uploadImageToSupabase=uploadMediaToSupabase;
+/* Version tres floutee d'une image (visible avant le devoilement mutuel) */
+function blurDataUrl(src){
+return new Promise(resolve=>{
+const img=new Image();img.crossOrigin="anonymous";
+img.onload=()=>{try{
+const w=96,h=Math.max(1,Math.round(96*(img.height/img.width||1.25)));
+const c=document.createElement("canvas");c.width=w;c.height=h;const g=c.getContext("2d");
+g.filter="blur(6px)";g.drawImage(img,-8,-8,w+16,h+16);
+const big=document.createElement("canvas");big.width=360;big.height=Math.round(360*h/w);const g2=big.getContext("2d");
+g2.filter="blur(10px)";g2.drawImage(c,-12,-12,big.width+24,big.height+24);
+resolve(big.toDataURL("image/jpeg",0.7));
+}catch(e){resolve(null)}};
+img.onerror=()=>resolve(null);img.src=src;});
+}
 async function ensureUserProfileId(){
-if(st.u&&st.u.id&&st.u.id.length>20)return st.u.id;
-if(!sbClient)return null;
+if(!sbClient||!sbClient.auth)return (st.u&&st.u.id)||null;
 try{
-if(sbClient.auth){
 const {data:{session}}=await sbClient.auth.getSession();
 if(session&&session.user&&session.user.id){
 if(!st.u)st.u={};
-st.u.id=session.user.id;
-if(session.user.email)st.em=session.user.email;
-save();
+if(!st.u.id||st.u.id.length<20)st.u.id=session.user.id;
+if(session.user.email)st.em=session.user.email.toLowerCase();
 return st.u.id;
 }
-}
-let q=sbClient.from('profiles').select('id');
-if(st.em)q=q.eq('email',st.em);
-else if(st.u&&st.u.n)q=q.eq('name',st.u.n);
-else return null;
-const {data}=await q.limit(1);
-if(data&&data.length>0){st.u.id=data[0].id;save();return st.u.id;}
 }catch(e){console.warn("ensureUserProfileId err:",e)}
-return st.u?st.u.id:null;
+return null;
 }
+let syncBusy=false,syncAgain=false;
 async function syncProfileToSupabase(){
-if(!sbClient||!st.u||!st.u.n||st.u.n==='__DELETED__'||st.u.n==='Test Col')return;
+if(!sbClient||!st.u||!st.u.n)return;
+if(syncBusy){syncAgain=true;return}
+syncBusy=true;
+try{
 const uid=await ensureUserProfileId();
+if(!uid)return;
 let sUrl=st.selfie||null;
 if(sUrl&&sUrl.startsWith("data:")){
-const up=await uploadImageToSupabase(sUrl,`selfie_${st.u.id||st.u.n}_${Date.now()}.jpg`);
-if(up&&!up.startsWith("data:")){sUrl=up;st.selfie=up;save();}
+const up=await uploadImageToSupabase(sUrl,`selfie_${Date.now()}.jpg`);
+if(up&&!up.startsWith("data:")){sUrl=up;st.selfie=up;ensureSelfieInPh5();save();}
 }
-const pHobbies=[...(st.u.hb||[])];
-if(st.inc){if(!pHobbies.includes('__incognito__'))pHobbies.push('__incognito__');}
-else{const idx=pHobbies.indexOf('__incognito__');if(idx>=0)pHobbies.splice(idx,1);}
-
-const mainAvatarUrl = (st.ph5 && st.ph5.length > 0)
-? (st.ph5[0].poster || st.ph5[0].p || st.ph5[0].o || sUrl)
-: sUrl;
+/* Medias : version nette + version floutee */
+let chg=false;
+for(let idx=0;idx<(st.ph5||[]).length;idx++){
+const itm=st.ph5[idx];
+const isV=!!(itm.isVideo||(itm.o&&itm.o.startsWith("data:video/")));
+let blurData=null;
+if(!itm.b){const srcForBlur=isV?(itm.poster||null):(itm.o||itm.p);if(srcForBlur)blurData=await blurDataUrl(srcForBlur);}
+if(itm.o&&itm.o.startsWith("data:")){
+const up=await uploadMediaToSupabase(itm.o,`${isV?'vid':'photo'}_${idx}.${isV?'mp4':'jpg'}`,isV?'video/mp4':'image/jpeg');
+if(up&&!up.startsWith("data:")){itm.o=up;itm.p=up;chg=true;}
+}
+if(isV&&itm.poster&&itm.poster.startsWith("data:")){
+const up=await uploadMediaToSupabase(itm.poster,`poster_${idx}.jpg`,'image/jpeg');
+if(up&&!up.startsWith("data:")){itm.poster=up;chg=true;}
+}
+if(blurData){const up=await uploadMediaToSupabase(blurData,`blur_${idx}.jpg`,'image/jpeg');if(up&&!up.startsWith("data:")){itm.b=up;chg=true;}}
+}
+if(chg)save();
+const main=(st.ph5&&st.ph5[0])||null;
+const mainUrl=main?((main.isVideo?main.poster:main.o)||sUrl):sUrl;
+const mainBlur=main&&main.b?main.b:null;
+const pHobbies=(st.u.hb||[]).filter(h=>h!=='__incognito__');
 const pData={
+id:uid,
 name:st.u.n,
 gender:st.g,
-age:st.u.a,
+birth_date:st.u.bd||null,
 city:st.u.c,
-target_city:st.u.tc||'all',
+country:st.u.ctry||null,
+target_country:st.tc||'all',
 job:st.u.jb,
 bio:st.u.bio||'',
 language:st.u.lng||'fr',
@@ -1722,65 +1923,68 @@ religion:st.u.rel||'mus',
 children:st.u.kd||0,
 intention:st.u.i||'ser',
 hobbies:pHobbies,
-selfie_url:mainAvatarUrl||sUrl,
-avatar_url:mainAvatarUrl||sUrl,
-verification_selfie_url:sUrl,
-is_premium:!!st.prem
+green_flags:(st.u.gf||[]).slice(0,5),
+red_flags:(st.u.rf||[]).slice(0,5),
+whatsapp:st.u.wa||null,
+is_incognito:!!st.inc,
+selfie_url:mainUrl||null,
+avatar_url:mainUrl||null,
+avatar_blur_url:mainBlur,
+verification_selfie_url:sUrl
 };
-if(uid)pData.id=uid;
 if(st.em)pData.email=st.em;
-if(st.ph)pData.phone=st.ph;
-
-try{
-const onC=pData.id?'id':(pData.email?'email':undefined);
-const opts=onC?{onConflict:onC}:{};
-let {data,error}=await sbClient.from('profiles').upsert(pData,opts).select('id');
-if(error&&/column|schema cache/i.test(error.message||"")){
-delete pData.avatar_url;delete pData.verification_selfie_url;
-({data,error}=await sbClient.from('profiles').upsert(pData,opts).select('id'));
-}
-if(!error&&data&&data.length>0){
-st.u.id=data[0].id;
-save();
-}else if(error){
+const {error}=await sbClient.from('profiles').upsert(pData,{onConflict:'id'});
+if(error){
 console.warn("Supabase profile sync:",error);
+if(/25 ans|25 and|reserve/i.test(error.message||""))alert(x().agE);
+return;
 }
-if(st.ph5&&st.ph5.length){
-let chg=false;
-for(let idx=0;idx<st.ph5.length;idx++){
-const itm=st.ph5[idx];
-const isV=itm.isVideo || (itm.o&&itm.o.startsWith("data:video/"));
-if(itm.o&&itm.o.startsWith("data:")){
-const ext=isV?'mp4':'jpg';
-const mime=isV?'video/mp4':'image/jpeg';
-const upO=await uploadMediaToSupabase(itm.o,`${isV?'vid':'photo'}_${uid||st.u.n}_${idx}_orig_${Date.now()}.${ext}`,mime);
-if(upO&&!upO.startsWith("data:")){itm.o=upO;if(isV)itm.p=upO;chg=true;}
-}
-if(!isV && itm.p&&itm.p.startsWith("data:")){
-const upP=await uploadMediaToSupabase(itm.p,`photo_${uid||st.u.n}_${idx}_blur_${Date.now()}.jpg`,'image/jpeg');
-if(upP&&!upP.startsWith("data:")){itm.p=upP;chg=true;}
-}
-if(isV && itm.poster && itm.poster.startsWith("data:")){
-const upPost=await uploadMediaToSupabase(itm.poster,`poster_${uid||st.u.n}_${idx}_${Date.now()}.jpg`,'image/jpeg');
-if(upPost&&!upPost.startsWith("data:")){itm.poster=upPost;chg=true;}
-}
-}
-if(chg)save();
-if(uid){
-try{
-await sbClient.from('user_photos').delete().eq('user_id',uid);
-const photoRows=st.ph5.map((itm,idx)=>({
+const photoRows=(st.ph5||[]).filter(itm=>itm.o&&!itm.o.startsWith("data:")).map((itm,idx)=>({
 user_id:uid,
-photo_url:itm.o||itm.p||st.selfie,
-blurred_url:itm.poster||itm.p||itm.o||st.selfie,
-is_selfie:(idx===0||!!itm.isSelfie),
+photo_url:itm.o,
+blurred_url:itm.b||itm.o,
+poster_url:itm.isVideo?(itm.poster||null):null,
+is_video:!!itm.isVideo,
+is_selfie:!!itm.isSelfie,
 position:idx
 }));
-await sbClient.from('user_photos').insert(photoRows);
-}catch(err){console.warn("user_photos sync err:",err)}
-}
-}
+await sbClient.from('user_photos').delete().eq('user_id',uid);
+if(photoRows.length)await sbClient.from('user_photos').insert(photoRows);
 }catch(e){console.warn("Supabase profile err:",e)}
+finally{
+syncBusy=false;
+if(syncAgain){syncAgain=false;setTimeout(syncProfileToSupabase,50);}
+}
+}
+/* Profil complet de l'utilisateur connecte (colonnes privees comprises) */
+async function loadMyProfileFromSupabase(){
+if(!sbClient)return null;
+try{
+const {data,error}=await sbClient.rpc('get_my_profile');
+if(error){console.warn("get_my_profile:",error);return null}
+const p=Array.isArray(data)?data[0]:data;
+if(!p||!p.name||p.name==='__DELETED__')return null;
+const {data:ph}=await sbClient.rpc('get_my_photos');
+return {p,photos:Array.isArray(ph)?ph:[]};
+}catch(e){console.warn("loadMyProfile err:",e);return null}
+}
+function applyMyProfile(r){
+if(!r||!r.p)return;
+const p=r.p;
+st.u.id=p.id;st.u.n=p.name||st.u.n;st.u.jb=p.job||"";st.u.bio=p.bio||"";
+st.u.bd=p.birth_date||"";st.u.a=p.birth_date?ageFrom(p.birth_date):(p.age||"");
+st.u.ctry=p.country||st.u.ctry||"TD";st.u.c=p.city||"";st.tc=p.target_country||"all";
+st.g=p.gender||st.g;st.u.g=st.g;st.u.lng=p.language||'fr';st.u.rel=p.religion||'mus';
+st.u.kd=p.children||0;st.u.i=p.intention||'ser';
+st.u.hb=Array.isArray(p.hobbies)?p.hobbies.filter(h=>h!=='__incognito__'):[];
+st.u.gf=Array.isArray(p.green_flags)?p.green_flags:[];st.u.rf=Array.isArray(p.red_flags)?p.red_flags:[];
+st.u.wa=p.whatsapp||"";
+st.prem=p.is_premium?1:0;st.inc=!!p.is_incognito;
+st.selfieStatus=p.selfie_status||"pending";st.selfieRejectReason=p.selfie_reject_reason||"";
+if(p.verification_selfie_url)st.selfie=p.verification_selfie_url;
+if(r.photos&&r.photos.length){
+st.ph5=r.photos.map(ph=>({o:ph.photo_url,p:ph.photo_url,b:ph.blurred_url,poster:ph.poster_url||undefined,isVideo:!!ph.is_video,isSelfie:!!ph.is_selfie}));
+}else if(st.selfie){ensureSelfieInPh5();}
 }
 async function recordLikeInSupabase(receiverProfileId,isMatch){
 if(!sbClient)return;
@@ -1928,38 +2132,14 @@ st.sentRequests=st.sentRequests.filter(s=>activeSentReceiverIds.has(String(s.id)
 if(pendingSenderIds.length>0){
 const missingIds=pendingSenderIds.filter(pid=>!st.incomingRequests.some(r=>String(r.id)===String(pid)&&r.n&&r.n!=='Nouveau membre'&&r.n!=='__DELETED__'));
 if(missingIds.length>0){
-const {data:profRows}=await sbClient.from('profiles').select('*, user_photos(id, photo_url, blurred_url, is_selfie, position)').in('id',missingIds);
+const {data:mrows}=await sbClient.rpc('list_members',{p_ids:missingIds});
+const profRows=Array.isArray(mrows)?mrows:[];
 missingIds.forEach(pid=>{
 const sPid=String(pid);
 if(passedSet.has(sPid)||blockedSet.has(sPid)||st.mt.map(String).includes(sPid))return;
-const row=profRows&&profRows.find(r=>String(r.id)===sPid);
-const rawPhotos=row&&Array.isArray(row.user_photos)&&row.user_photos.length>0
-?row.user_photos.sort((a,b)=>(a.position||0)-(b.position||0)).map(up=>up.photo_url||up.blurred_url)
-:[];
-const pPhotos=rawPhotos.length>0?rawPhotos:(row&&row.selfie_url?[row.selfie_url]:[]);
-const validName=(row&&row.name&&row.name!=='__DELETED__')?row.name:"Nouveau membre";
-const reqItem={
-id:sPid,
-n:validName,
-g:(row&&row.gender)||(st.g==="m"?"f":"m"),
-a:(row&&row.age)||25,
-c:(row&&row.city)||"N'Djamena",
-jb:(row&&row.job)||"Membre vérifié",
-bio:(row&&row.bio)||"",
-rel:(row&&row.religion)||"mus",
-religion:(row&&row.religion)||"mus",
-lng:(row&&row.language)||"fr",
-language:(row&&row.language)||"fr",
-kd:row&&row.children!==undefined?row.children:0,
-children:row&&row.children!==undefined?row.children:0,
-i:(row&&row.intention)||"ser",
-intention:(row&&row.intention)||"ser",
-hb:(row&&row.hobbies)||[],
-hobbies:(row&&row.hobbies)||[],
-selfie_url:(row&&row.selfie_url)||pPhotos[0]||"",
-photos:pPhotos,
-time:Date.now()
-};
+const row=profRows.find(r=>String(r.id)===sPid);
+if(!row)return;
+const reqItem=Object.assign(memberToP(row),{time:Date.now()});
 const existingIdx=st.incomingRequests.findIndex(r=>String(r.id)===sPid);
 if(existingIdx>=0){
 st.incomingRequests[existingIdx]=reqItem;
@@ -2021,70 +2201,69 @@ if(st.tab==='d'||st.tab==='req')render();
 }
 }catch(e){console.warn("loadBlockedUsersFromSupabase err:",e)}
 }
-async function loadProfilesFromSupabase(){
-if(!sbClient)return;
-try{
-const {data,error}=await sbClient.from('profiles').select('*, user_photos(id, photo_url, blurred_url, is_selfie, position)').order('created_at',{ascending:false});
-if(!error&&data){
-const mapped=data.filter(r=>{
-if(!r.name||r.name==='__DELETED__'||r.name==='Test Col')return false;
-const isMe=(st.u&&st.u.id&&r.id===st.u.id)||(st.em&&r.email&&r.email===st.em);
-if(isMe){
-if(r.selfie_status&&(st.selfieStatus!==r.selfie_status||st.selfieRejectReason!==(r.selfie_reject_reason||""))){
-st.selfieStatus=r.selfie_status;st.selfieRejectReason=r.selfie_reject_reason||"";
-if(st.step>=5)setTimeout(render,0);
-}
-return false;
-}
-if(st.u&&r.name===st.u.n)return false;
-if(r.selfie_status==='rejected')return false;
-const isIncog=r.is_incognito===true||(Array.isArray(r.hobbies)&&r.hobbies.includes('__incognito__'));
-if(isIncog)return false;
-return true;
-}).map(row=>{
-const rawPhotos=Array.isArray(row.user_photos)&&row.user_photos.length>0
-  ?row.user_photos.sort((a,b)=>(a.position||0)-(b.position||0)).map(up=>up.photo_url||up.blurred_url)
-  :[];
-const pPhotos=rawPhotos.length>0?rawPhotos:(row.selfie_url?[row.selfie_url]:[]);
-const bioObj=typeof row.bio==='string'?{fr:row.bio,ar:row.bio}:(row.bio||{fr:'',ar:''});
+/* Conversion d'une fiche membre (fonction list_members) vers le format de l'app */
+function memberToP(row){
+const photos=(Array.isArray(row.photos)?row.photos:[]).filter(ph=>ph&&ph.url).map(ph=>ph.video?{url:ph.url,poster:ph.poster,isVideo:true}:ph.url);
+const avatar=row.avatar||(photos[0]&&(photos[0].poster||photos[0]))||"";
+if(row.revealed!==undefined)st.reveals[String(row.id)]={me:!!row.i_revealed,them:!!row.they_revealed,both:!!row.revealed,wa:row.whatsapp||""};
 return{
 id:row.id,
 n:row.name,
 g:row.gender||'f',
-a:row.age||25,
-c:row.city||"N'Djamena",
-tc:row.target_city||"all",
+a:row.age||MIN_AGE,
+c:row.city||"",
+ctry:row.country||"",
+tctry:row.target_country||"all",
 jb:row.job||"",
 bio:row.bio||"",
-b:bioObj,
+b:{fr:row.bio||"",ar:row.bio||""},
 lng:row.language||"fr",
 rel:row.religion||"mus",
-kd:row.children!==undefined?row.children:0,
+religion:row.religion||"mus",
+language:row.language||"fr",
+kd:row.children!==undefined&&row.children!==null?row.children:0,
+children:row.children||0,
 i:row.intention||"ser",
-hb:row.hobbies||["spo"],
+intention:row.intention||"ser",
+hb:Array.isArray(row.hobbies)?row.hobbies.filter(h=>h!=='__incognito__'):[],
+hobbies:Array.isArray(row.hobbies)?row.hobbies:[],
+gf:Array.isArray(row.green_flags)?row.green_flags:[],
+rf:Array.isArray(row.red_flags)?row.red_flags:[],
 l:row.language==="both"?["fr","ar"]:[row.language||"fr"],
-v:(row.hobbies&&row.hobbies.length)?row.hobbies:["fam"],
-selfie_url:row.selfie_url||pPhotos[0]||"",
-photos:pPhotos,
-is_verified:!!row.is_verified,
+v:[],
+selfie_url:avatar,
+photos:photos.length?photos:(avatar?[avatar]:[]),
+revealed:!!row.revealed,
+is_verified:row.selfie_status==='approved'||!!row.is_verified,
 is_premium:!!row.is_premium,
 y:1
 };
-});
-const existingDbIds=new Set(mapped.map(p=>String(p.id)));
-const merged=[...mapped,...SEED_PROFILES.filter(s=>!existingDbIds.has(String(s.id)))];
-P=merged;
-if(st.tab==='d')render();
 }
+async function loadProfilesFromSupabase(){
+if(!sbClient||!st.u||!st.u.id)return;
+try{
+const {data,error}=await sbClient.rpc('list_members');
+if(error){console.warn("list_members:",error);return}
+let rows=Array.isArray(data)?data:[];
+/* Personnes liees (matchs, demandes) qui ne sont pas dans la decouverte */
+const have=new Set(rows.map(r=>String(r.id)));
+const linked=[...(st.mt||[]),...(st.sentRequests||[]).map(r=>r.id),...(st.incomingRequests||[]).map(r=>r.id)].map(String).filter(id=>id.length>20&&!have.has(id));
+if(linked.length){
+const {data:more}=await sbClient.rpc('list_members',{p_ids:[...new Set(linked)]});
+if(Array.isArray(more))rows=rows.concat(more);
+}
+P=rows.filter(r=>r&&r.name&&r.name!=='__DELETED__'&&String(r.id)!==String(st.u.id)).map(memberToP);
+if(st.tab==='d'&&!$("#ov:not([hidden])"))render();
+else if(st.tab==='m'&&st.chat)updateRevealBar();
 }catch(e){console.warn("loadProfilesFromSupabase err:",e)}
 }
 const LIM=20,B="#1E3A8A",G="#D97706",R="#E11D48";
-const flagSvg=`<span class="flag-mini" title="Tchad" aria-label="Tchad"><svg viewBox="0 0 30 20" width="18" height="12"><rect width="10" height="20" x="0" fill="#002664"/><rect width="10" height="20" x="10" fill="#FECB00"/><rect width="10" height="20" x="20" fill="#C60C30"/></svg></span>`;
+const flagSvg="";
 const T={
-fr:{d:"Découvrir",m:"Messages",p:"Profil",pass:"Passer",like:"J'aime",mt:"C'est un match !",ms:"Vous vous plaisez mutuellement.",wr:"Écrire à ",ct:"Continuer",done:"Vous avez tout vu pour aujourd'hui.",again:"Revoir les profils",none:"Pas encore de conversation.",nh:"Aimez des profils pour en démarrer une.",ph:"Écrire un message",snd:"Envoyer",bk:"Retour",my:"Mon profil",vg:"Vérification…",vd:"Profil vérifié",blur:"Visage masqué jusqu'au match",lite:"Économie de données",sf:"Conseils de sécurité",st:"Ne partagez jamais d'argent ni de codes. Retrouvez-vous dans un lieu public et prévenez un proche.",age:"Réservé aux 22 ans et plus.",demo:"Chari · Profils réels certifiés par selfie au Tchad.",lgb:"العربية",r:["Bonjour ! Ravi(e) de faire ta connaissance.","Tu es de quelle ville ?"],
-wl:"Bienvenue sur Chari",wl2:"Des rencontres amoureuses sérieuses entre un homme et une femme au Tchad, avec des profils vérifiés.",phl:"Numéro de téléphone",ph8:"Entrez un numéro à 8 chiffres.",orPhone:"ou avec votre numéro de téléphone",sndOtp:"Recevoir mon code par SMS",otp:"Confirmation du numéro",otps:"Code envoyé par SMS au ",otpd:"Entrez le code de confirmation.",cod:"Code à 6 chiffres",bad:"Code incorrect.",pr:"Votre profil",nm:"Prénom",job:"Profession / Métier",jobPh:"Ex: Enseignant, Commerçante, Infirmière...",tcty:"Ville de rencontre",allC:"Toutes les villes (Tchad)",noCity:"Aucun profil dans cette ville",noCityD:"Aucun profil disponible actuellement dans cette ville. Essayez d'élargir à tout le Tchad !",iam:"Je suis",fem:"Une femme",mal:"Un homme",ag:"Âge",agE:"Chari est réservé aux 22 ans et plus.",cty:"Votre ville",kd:"Nombre d'enfants",it:"Je cherche",req:"Complétez tous les champs.",sf1:"Identification par selfie obligatoire",sf2:"Prenez un selfie en direct avec votre caméra : notre intelligence artificielle analyse et certifie l'authenticité de votre visage.",shot:"Prendre mon selfie certifié",sf3:"Ce selfie confirme votre identité réelle. Il reste indélébile parmi vos photos et protège la communauté.",pj:"profils vus aujourd'hui",unl:"Premium actif : profils & likes illimités pendant 1 mois",pw:"Limite du jour atteinte",pw2:"Vous avez exploré vos 20 profils gratuits d'aujourd'hui. Vos accès pour 20 nouvelles personnes seront automatiquement renouvelés à 00h00 (Heure du Tchad).",pss:"Abonnement Premium (1 Mois)",pss2:"Profils illimités pendant 30 jours, likes & messages illimités et mode incognito.",op:"Paiement par carte bancaire",pn:"Numéro de paiement",pb:"Payer 5 000 FCFA (1 mois)",pg:"Paiement en cours…",pd:"Paiement 100% sécurisé et garanti.",paid:"Paiement validé ! Votre abonnement Premium 1 mois (5 000 FCFA) est activé.",plan:"Votre formule",free:"Gratuite : 20 profils par jour",prem:"Abonnement Premium actif (1 mois)",up:"Passer Premium (5 000 FCFA / mois)",dm:"Démo : passer à 19 profils vus",opVisa:"Carte bancaire (Visa / Mastercard)",cardNum:"Numéro de carte",cardExp:"Date d'expiration (MM/AA)",cardCvv:"Code CVV (3 chiffres)",cardNom:"Nom du porteur",cardNomPh:"Ex: MAHAMAT ADAM",cardSec:"Paiement 100% sécurisé Visa & Mastercard 3D Secure",cardNumE:"Numéro de carte incomplet (16 chiffres requis).",cardExpE:"Date d'expiration invalide (format MM/AA).",cardCvvE:"Code CVV invalide (3 chiffres).",cardNomE:"Entrez le nom présent sur la carte.",visaPaid:"Paiement validé ! Votre abonnement Premium 1 mois (5 000 FCFA) est activé.",
-gBtn:"S'inscrire avec Google",fbAuthBtn:"S'inscrire avec Google",gNote:"🛡️ Inscription et identification 100% sécurisées avec votre compte Google. La certification de votre visage par selfie direct est obligatoire pour garantir des rencontres authentiques.",gVerif:"Compte Google vérifié",fbAuthVerif:"Compte Google vérifié",logout:"Se déconnecter",logoutConfirm:"Voulez-vous vous déconnecter de Chari ? Vos coordonnées et messages seront conservés et vous reprendrez exactement au même endroit.",gModalT:"Connexion Google",gModalD:"Sélectionnez votre compte Google pour une vérification instantanée :",gConfirm:"Valider mon compte",cityFilt:"Ville",seekCity:"Recherche",heroTag:"Rencontres au Tchad",hob:"Passe-temps & Centres d'intérêt",hobLbl:"Vos passe-temps favoris",hobHint:"Choisissez vos passe-temps et passions :",edHb:"Modifier mes passe-temps",saveHb:"Enregistrer",bio:"À propos de moi",bioLbl:"Petite description",bioPh:"Ex: Souriant(e), j'aime les discussions sincères, les voyages et je cherche du sérieux...",bioHint:"Présentez-vous en quelques mots :",edBio:"Modifier ma description",saveBio:"Enregistrer ma description",bioDef:"Je recherche une relation sincère, durable et basée sur le respect mutuel.",
-vidCall:"Appel vidéo",callHd:"Appel vidéo HD",calling:"Appel en cours…",callingContact:"Appel en cours…",ringingContact:"Sonnerie chez ",callAnswered:"En communication HD",callEnd:"Appel vidéo terminé",callHangup:"Raccrocher",opt:"Options",repUser:"Signaler ce profil",blkUser:"Bloquer cet utilisateur",blkConfirmT:"Bloquer cet utilisateur ?",blkConfirmD:"Vous ne verrez plus ce profil et vos messages seront masqués.",blkBtn:"Bloquer",blkDone:"Utilisateur bloqué avec succès.",repTitle:"Signaler ce profil",repDesc:"Pour quelle raison souhaitez-vous signaler ce profil ?",repDone:"Signalement envoyé. Notre équipe au Tchad examinera ce profil sous 24h.",repFake:"Faux profil ou usurpation",repHarass:"Comportement inapproprié ou harcèlement",repScam:"Arnaque financière ou demande d'argent",repOther:"Autre motif",unblk:"Débloquer",blkedList:"Utilisateurs bloqués",noBlked:"Aucun utilisateur bloqué.",unblkDone:"Utilisateur débloqué.",
+fr:{d:"Découvrir",m:"Messages",p:"Profil",pass:"Passer",like:"J'aime",mt:"C'est un match !",ms:"Vous vous plaisez mutuellement.",wr:"Écrire à ",ct:"Continuer",done:"Vous avez tout vu pour aujourd'hui.",again:"Revoir les profils",none:"Pas encore de conversation.",nh:"Aimez des profils pour en démarrer une.",ph:"Écrire un message",snd:"Envoyer",bk:"Retour",my:"Mon profil",vg:"Vérification…",vd:"Profil vérifié",blur:"Visage masqué jusqu'au match",lite:"Économie de données",sf:"Conseils de sécurité",st:"Ne partagez jamais d'argent ni de codes. Retrouvez-vous dans un lieu public et prévenez un proche.",age:"Réservé aux 22 ans et plus.",demo:"Chari · Profils réels certifiés par selfie.",lgb:"العربية",r:["Bonjour ! Ravi(e) de faire ta connaissance.","Tu es de quelle ville ?"],
+wl:"Bienvenue sur Chari",wl2:"Des rencontres amoureuses sérieuses entre un homme et une femme, avec des profils vérifiés.",phl:"Numéro de téléphone",ph8:"Entrez un numéro à 8 chiffres.",orPhone:"ou avec votre numéro de téléphone",sndOtp:"Recevoir mon code par SMS",otp:"Confirmation du numéro",otps:"Code envoyé par SMS au ",otpd:"Entrez le code de confirmation.",cod:"Code à 6 chiffres",bad:"Code incorrect.",pr:"Votre profil",nm:"Prénom",job:"Profession / Métier",jobPh:"Ex: Enseignant, Commerçante, Infirmière...",tcty:"Ville de rencontre",allC:"Toutes les villes",noCity:"Aucun profil dans cette ville",noCityD:"Aucun profil disponible actuellement dans cette ville.",iam:"Je suis",fem:"Une femme",mal:"Un homme",ag:"Âge",agE:"Chari est réservé aux 22 ans et plus.",cty:"Votre ville",kd:"Nombre d'enfants",it:"Je cherche",req:"Complétez tous les champs.",sf1:"Identification par selfie obligatoire",sf2:"Prenez un selfie en direct avec votre caméra : notre intelligence artificielle analyse et certifie l'authenticité de votre visage.",shot:"Prendre mon selfie certifié",sf3:"Ce selfie confirme votre identité réelle. Il reste indélébile parmi vos photos et protège la communauté.",pj:"profils vus aujourd'hui",unl:"Premium actif : profils & likes illimités pendant 1 mois",pw:"Limite du jour atteinte",pw2:"Vous avez exploré vos 20 profils gratuits d'aujourd'hui. Vos accès pour 20 nouvelles personnes seront automatiquement renouvelés à 00h00 (heure locale).",pss:"Abonnement Premium (1 Mois)",pss2:"Profils illimités pendant 30 jours, likes & messages illimités et mode incognito.",op:"Paiement par carte bancaire",pn:"Numéro de paiement",pb:"Payer 5 000 FCFA (1 mois)",pg:"Paiement en cours…",pd:"Paiement 100% sécurisé et garanti.",paid:"Paiement validé ! Votre abonnement Premium 1 mois (5 000 FCFA) est activé.",plan:"Votre formule",free:"Gratuite : 20 profils par jour",prem:"Abonnement Premium actif (1 mois)",up:"Passer Premium (5 000 FCFA / mois)",dm:"Démo : passer à 19 profils vus",opVisa:"Carte bancaire (Visa / Mastercard)",cardNum:"Numéro de carte",cardExp:"Date d'expiration (MM/AA)",cardCvv:"Code CVV (3 chiffres)",cardNom:"Nom du porteur",cardNomPh:"Ex: MAHAMAT ADAM",cardSec:"Paiement 100% sécurisé Visa & Mastercard 3D Secure",cardNumE:"Numéro de carte incomplet (16 chiffres requis).",cardExpE:"Date d'expiration invalide (format MM/AA).",cardCvvE:"Code CVV invalide (3 chiffres).",cardNomE:"Entrez le nom présent sur la carte.",visaPaid:"Paiement validé ! Votre abonnement Premium 1 mois (5 000 FCFA) est activé.",
+gBtn:"S'inscrire avec Google",fbAuthBtn:"S'inscrire avec Google",gNote:"🛡️ Inscription et identification 100% sécurisées avec votre compte Google. La certification de votre visage par selfie direct est obligatoire pour garantir des rencontres authentiques.",gVerif:"Compte Google vérifié",fbAuthVerif:"Compte Google vérifié",logout:"Se déconnecter",logoutConfirm:"Voulez-vous vous déconnecter de Chari ? Vos coordonnées et messages seront conservés et vous reprendrez exactement au même endroit.",gModalT:"Connexion Google",gModalD:"Sélectionnez votre compte Google pour une vérification instantanée :",gConfirm:"Valider mon compte",cityFilt:"Ville",seekCity:"Recherche",heroTag:"Rencontres sérieuses",hob:"Passe-temps & Centres d'intérêt",hobLbl:"Vos passe-temps favoris",hobHint:"Choisissez vos passe-temps et passions :",edHb:"Modifier mes passe-temps",saveHb:"Enregistrer",bio:"À propos de moi",bioLbl:"Petite description",bioPh:"Ex: Souriant(e), j'aime les discussions sincères, les voyages et je cherche du sérieux...",bioHint:"Présentez-vous en quelques mots :",edBio:"Modifier ma description",saveBio:"Enregistrer ma description",bioDef:"Je recherche une relation sincère, durable et basée sur le respect mutuel.",
+vidCall:"Appel vidéo",callHd:"Appel vidéo HD",calling:"Appel en cours…",callingContact:"Appel en cours…",ringingContact:"Sonnerie chez ",callAnswered:"En communication HD",callEnd:"Appel vidéo terminé",callHangup:"Raccrocher",opt:"Options",repUser:"Signaler ce profil",blkUser:"Bloquer cet utilisateur",blkConfirmT:"Bloquer cet utilisateur ?",blkConfirmD:"Vous ne verrez plus ce profil et vos messages seront masqués.",blkBtn:"Bloquer",blkDone:"Utilisateur bloqué avec succès.",repTitle:"Signaler ce profil",repDesc:"Pour quelle raison souhaitez-vous signaler ce profil ?",repDone:"Signalement envoyé. Notre équipe examinera ce profil sous 24h.",repFake:"Faux profil ou usurpation",repHarass:"Comportement inapproprié ou harcèlement",repScam:"Arnaque financière ou demande d'argent",repOther:"Autre motif",unblk:"Débloquer",blkedList:"Utilisateurs bloqués",noBlked:"Aucun utilisateur bloqué.",unblkDone:"Utilisateur débloqué.",
 langSpk:"Langue parlée",lngFr:"Français",lngAr:"Arabe",lngBoth:"Français & Arabe",
 lngMap:{fr:"🗣️ Français",ar:"🗣️ Arabe",both:"🗣️ Français & Arabe"},
 rel:"Religion",relMus:"Musulman(e)",relChr:"Chrétien(ne)",relOth:"Autre religion",
@@ -2093,10 +2272,10 @@ mailb:"Google",telb:"Google",eml:"Adresse Gmail",emE:"Entrez une adresse valide.
 kid:["Sans enfant","1 enfant","2 enfants","3 enfants ou plus"],
 selfieBadge:"Selfie vérifié",selfieLock:"Le selfie certifié est obligatoire et ne peut pas être supprimé.",
 selfieNoFace:"❌ Aucun visage humain détecté. Veuillez cadrer clairement votre visage face à la caméra dans un endroit bien éclairé et réessayer.",selfieAnalyzing:"Analyse du visage…",selfieVerified:"Visage humain certifié avec succès !",
-noProfilesYet:"Bienvenue sur Chari !",noProfilesDesc:"La communauté repart à zéro ! Soyez parmi les premiers membres certifiés du Tchad en complétant votre profil.",
+noProfilesYet:"Bienvenue sur Chari !",noProfilesDesc:"La communauté repart à zéro ! Soyez parmi les premiers membres certifiés en complétant votre profil.",
 reqTabName:"Demandes",reqSentTab:"Envoyées",reqReceivedTab:"Reçues",noReqSent:"Aucune demande envoyée pour l'instant",noReqSentDesc:"Les profils que vous likez apparaîtront ici en attente de match.",
 fbTitle:"Donnez votre avis",fbSub:"Partagez vos suggestions ou signalez une amélioration.",fbBtn:"Écrire un avis",
-fbModalT:"Votre avis compte pour nous",fbModalD:"Aidez-nous à améliorer Chari au Tchad. Partagez votre expérience :",
+fbModalT:"Votre avis compte pour nous",fbModalD:"Aidez-nous à améliorer Chari. Partagez votre expérience :",
 fbRatingLbl:"Votre note globale",
 fbRatingNames:["Très insatisfait","Peu satisfait","Correct","Très bon","Excellent !"],
 fbCatLbl:"Catégorie de retour",
@@ -2106,14 +2285,25 @@ fbCatLove:"❤️ Compliment / Témoignage",
 fbCatSec:"🛡️ Sécurité & modération",
 fbMsgPh:"Dites-nous ce que vous pensez de Chari, vos souhaits ou vos remarques...",
 fbMsgErr:"Veuillez écrire quelques mots pour expliquer votre avis.",
-fbSuccess:"Merci infiniment pour votre retour ! Notre équipe au Tchad en prendra compte.",
+fbSuccess:"Merci infiniment pour votre retour ! Notre équipe en prendra compte.",
 scBlockT:"Capture d'écran interdite",scBlockD:"Pour préserver l'intimité et la sécurité des membres sur Chari, les captures d'écran et enregistrements vidéo sont strictement interdits.",scToast:"⚠️ Capture d'écran bloquée : la vie privée des membres est protégée sur Chari.",scDismiss:"Continuer sur Chari",
-chatTab:"Discussions",reqTab:"Demandes de Matchs",noReq:"Aucune demande reçue pour l'instant",noReqDesc:"Vos nouveaux admirateurs et personnes souhaitant vous contacter apparaîtront ici.",acceptReq:"J'aime",declineReq:"Passer",reqDeclined:"Demande rejetée. Vous ne vous reverrez plus sur Chari.",dailyReqLimit:"Limite quotidienne atteinte (20/20 demandes envoyées aujourd'hui). Réinitialisation automatique à 00h00 (Heure du Tchad) ou passez à Chari Premium pour des likes illimités !",dailyAcceptLimit:"Limite quotidienne atteinte (10/10 demandes acceptées aujourd'hui). Réinitialisation automatique à 00h00 (Heure du Tchad) ou passez à Chari Premium !",dailyReqQuota:"Demandes envoyées",dailyAcceptQuota:"Demandes acceptées",resetMidnight:"Réinitialisation à 00h00 (Heure du Tchad)",editMsg:"Modifier le message",editMsgTimeLeft:"Délai restant pour modifier ce message : ",saveEdit:"Enregistrer",cancelEdit:"Annuler",msgEditedTag:"(modifié)",editExpired:"Le délai de 10 minutes pour modifier ce message est expiré.",incogActive:"Mode Incognito activé : vous pouvez explorer tous les profils en toute discrétion, mais personne ne peut voir le vôtre.",incogInactive:"Mode Incognito désactivé : votre profil est de nouveau visible.",incogBanner:"Mode Incognito actif : votre profil est masqué pour tous les autres membres.",viewProfile:"Consulter le profil",onbPhotosTitle:"Vos photos & vidéos de profil",onbPhotosDesc:"Votre selfie est votre 1ère photo certifiée. Ajoutez jusqu'à 4 photos ou vidéos courtes de 10s max (1 photo et 4 vidéos possible) :",photosAdvice:"💡 Les profils avec des photos et vidéos courtes (10s) ont 4 fois plus de chances de matcher !",finishOnbPhotos:"Terminer et découvrir les profils ✨",onlyMatchedCanChat:"Vous devez être en match pour pouvoir vous écrire.",
+chatTab:"Discussions",reqTab:"Demandes de Matchs",noReq:"Aucune demande reçue pour l'instant",noReqDesc:"Vos nouveaux admirateurs et personnes souhaitant vous contacter apparaîtront ici.",acceptReq:"J'aime",declineReq:"Passer",reqDeclined:"Demande rejetée. Vous ne vous reverrez plus sur Chari.",dailyReqLimit:"Limite quotidienne atteinte (20/20 demandes envoyées aujourd'hui). Réinitialisation automatique à 00h00 (heure locale) ou passez à Chari Premium pour des likes illimités !",dailyAcceptLimit:"Limite quotidienne atteinte (10/10 demandes acceptées aujourd'hui). Réinitialisation automatique à 00h00 (heure locale) ou passez à Chari Premium !",dailyReqQuota:"Demandes envoyées",dailyAcceptQuota:"Demandes acceptées",resetMidnight:"Réinitialisation à 00h00 (heure locale)",editMsg:"Modifier le message",editMsgTimeLeft:"Délai restant pour modifier ce message : ",saveEdit:"Enregistrer",cancelEdit:"Annuler",msgEditedTag:"(modifié)",editExpired:"Le délai de 10 minutes pour modifier ce message est expiré.",incogActive:"Mode Incognito activé : vous pouvez explorer tous les profils en toute discrétion, mais personne ne peut voir le vôtre.",incogInactive:"Mode Incognito désactivé : votre profil est de nouveau visible.",incogBanner:"Mode Incognito actif : votre profil est masqué pour tous les autres membres.",viewProfile:"Consulter le profil",onbPhotosTitle:"Vos photos & vidéos de profil",onbPhotosDesc:"Votre selfie est votre 1ère photo certifiée. Ajoutez jusqu'à 4 photos ou vidéos courtes de 10s max (1 photo et 4 vidéos possible) :",photosAdvice:"💡 Les profils avec des photos et vidéos courtes (10s) ont 4 fois plus de chances de matcher !",finishOnbPhotos:"Terminer et découvrir les profils ✨",onlyMatchedCanChat:"Vous devez être en match pour pouvoir vous écrire.",
+age:"Réservé aux adultes de 25 ans et plus.",agE:"Chari est réservé aux personnes de 25 ans et plus.",heroTag:"Rencontres sérieuses, partout dans le monde",demo:"Chari · Profils réels certifiés par selfie.",wl2:"Des rencontres sérieuses entre un homme et une femme, avec des profils vérifiés.",allC:"Tous les pays",cityFilt:"Pays",tcty:"Pays recherché",noCity:"Aucun profil dans ce pays",noCityD:"Aucun profil disponible pour l'instant dans ce pays. Essayez « Tous les pays » !",noProfilesDesc:"Soyez parmi les premiers membres certifiés : complétez votre profil et invitez vos amis.",repDone:"Signalement envoyé. Notre équipe de modération examinera ce profil sous 24h.",fbModalD:"Aidez-nous à améliorer Chari. Partagez votre expérience :",fbSuccess:"Merci pour votre retour ! Notre équipe en prendra compte.",pw2:"Vous avez vu vos 20 profils gratuits du jour. Nouveaux profils à minuit (heure locale).",dailyReqLimit:"Limite du jour atteinte (20/20 demandes). Renouvellement à minuit (heure locale) ou passez Premium.",dailyAcceptLimit:"Limite du jour atteinte (10/10 acceptations). Renouvellement à minuit (heure locale) ou passez Premium.",resetMidnight:"Renouvellement à minuit (heure locale)",resetIn:"Renouvellement dans",blur:"Photos floutées jusqu'au dévoilement",gNote:"Inscription sécurisée. Le selfie en direct est obligatoire et vérifié par notre équipe.",
+gfTitle:"Green flags",rfTitle:"Red flags",flagMax:"5 choix maximum.",flagsSec:"Green flags & Red flags",flagsHelp:"Ce que vous appréciez (green flags) et ce que vous ne tolérez pas (red flags). 5 maximum chacun.",flagsEmpty:"Ajoutez vos green flags et red flags pour attirer les bonnes personnes.",flagsEdit:"Modifier mes flags",
+waLbl:"Numéro WhatsApp",waPh:"Ex : 66 12 34 56",waHelp:"Partagé uniquement quand vous et votre match acceptez tous les deux de vous dévoiler.",waE:"Numéro WhatsApp invalide : vérifiez le pays et le numéro.",waPrivate:"Visible seulement après dévoilement mutuel.",
+confT:"Confirmez votre adresse e-mail",confD:"Nous avons envoyé un lien de confirmation à",confResend:"Renvoyer l'e-mail",authSignupT:"Créez votre compte",authLoginT:"Bon retour parmi nous",authSub:"Des rencontres sérieuses avec des profils vérifiés.",gContinue:"Continuer avec Google",authSignupTab:"Inscription",authLoginTab:"Connexion",authSignupBtn:"Créer mon compte",authLoginBtn:"Se connecter",forgotPwd:"Mot de passe oublié ?",eml:"Adresse e-mail",pwd:"Mot de passe",pwdPh:"8 caractères minimum",pwdE:"Le mot de passe doit contenir au moins 8 caractères.",emE:"Entrez une adresse e-mail valide.",orDivider:"ou",trust1:"Chaque profil est certifié par un selfie vérifié",trust2:"Photos floutées jusqu'à ce que vous acceptiez tous les deux",trust3:"Captures d'écran bloquées dans l'application",emVerif:"E-mail vérifié",gVerif:"Compte Google vérifié",
+req2:"Tous les champs marqués * sont obligatoires.",secId:"Identité",bdLbl:"Date de naissance",bdHelp:"25 ans minimum. Seul votre âge est affiché.",bdReq:"Indiquez votre date de naissance.",secWhere:"Où vivez-vous ?",ctryLbl:"Pays",cty:"Ville",cityPh:"Ex : N'Djamena, Paris, Dubaï…",secAbout:"À propos de vous",lngEn:"Anglais",
+blurPill:"Photos floutées jusqu'au dévoilement mutuel",blurInfo:"Vos photos restent floues pour les autres jusqu'à ce que vous acceptiez tous les deux de vous dévoiler.",
+revBoth:"Vous vous êtes dévoilés",revWa:"WhatsApp :",revUndo:"Me re-flouter",revWaitT:"Vous avez accepté de vous dévoiler",revWaitD:"En attente que {n} accepte aussi. Ses photos restent floutées d'ici là.",revCancel:"Annuler",revTheyT:"{n} souhaite se dévoiler",revAskT:"Photos floutées",revAskD:"Quand vous acceptez tous les deux, vos photos deviennent nettes et vos WhatsApp sont échangés.",revBtn:"Me dévoiler",revConfirm:"Vos photos nettes et votre WhatsApp seront visibles par cette personne si elle accepte aussi. Continuer ?",
+sfRejT:"Selfie refusé",sfRejD:"Votre selfie n'a pas été validé. Reprenez un selfie net, de face, bien éclairé.",sfRetake:"Reprendre",sfPendT:"Profil en cours de vérification",sfPendD:"Notre équipe vérifie votre selfie. Votre profil sera visible dès qu'il sera certifié.",
+edit:"Modifier",view:"Voir",mainPhoto:"Principale",setMain:"Principale",secSearch:"Ce que je recherche",secSafety:"Sécurité",
+priceMain:"5 000 FCFA",month:"mois",priceEq:"≈ 7,60 € · facturé en FCFA, converti par votre banque",premF1:"Profils illimités pendant 30 jours",premF2:"Demandes et acceptations illimitées",premF3:"Mode incognito",premF4:"Sans engagement",pss2:"Profils illimités, likes illimités et mode incognito pendant 30 jours.",up:"Passer Premium",free:"Formule gratuite : 20 profils par jour",prem:"Premium actif",payCard:"Payer par carte bancaire",pg:"Ouverture du paiement sécurisé…",payUnavail:"Le paiement par carte n'est pas encore activé. Il sera disponible très prochainement.",cardSec:"Paiement sécurisé sur la page de notre prestataire (3D Secure). Chari ne voit jamais votre numéro de carte.",
+lngMap:{fr:"Français",ar:"Arabe",both:"Français & Arabe",en:"Anglais"},relMap:{mus:"Musulman(e)",chr:"Chrétien(ne)",oth:"Autre religion"},scBlockD:"Pour protéger l'intimité des membres, les captures et enregistrements d'écran sont interdits sur Chari.",selfieBadge:"Certifié",
 k:{ser:"Relation amoureuse",mar:"Mariage",fam:"Famille",etu:"Études",ent:"Entrepreneuriat",foi:"Foi",mus:"Musique",foo:"Football",cui:"Cuisine",voy:"Voyage",fr:"Français",ar:"Arabe",sa:"Sara"}},
-ar:{d:"اكتشف",m:"الرسائل",p:"ملفي",pass:"تخطَّ",like:"إعجاب",mt:"تطابق!",ms:"أنتما معجبان ببعضكما.",wr:"راسل ",ct:"متابعة",done:"شاهدت كل شيء لهذا اليوم.",again:"إعادة العرض",none:"لا توجد محادثات بعد.",nh:"أعجب بملفات لبدء محادثة.",ph:"اكتب رسالة",snd:"إرسال",bk:"رجوع",my:"ملفي الشخصي",vg:"جارٍ التحقق…",vd:"ملف موثّق",blur:"الوجه مخفي حتى التطابق",lite:"توفير البيانات",sf:"نصائح للأمان",st:"لا ترسل المال أو الرموز أبداً. التقِ في مكان عام وأخبر شخصاً مقرباً.",age:"للبالغين 22 سنة فأكثر فقط.",demo:"شاري · ملفات حقيقية موثقة بالسيلفي في تشاد.",lgb:"Français",r:["مرحباً! سعيد بالتعرف عليك.","من أي مدينة أنت؟"],
-wl:"مرحباً بك في شاري",wl2:"علاقات عاطفية جادة بين رجل وامرأة في تشاد، مع ملفات موثّقة.",phl:"رقم الهاتف",ph8:"أدخل 8 أرقام لرقمك.",orPhone:"أو عبر حساب Google",sndOtp:"استلام الرمز",otp:"تأكيد الحساب",otps:"تم إرسال الرمز إلى ",otpd:"أدخل رمز التأكيد.",cod:"الرمز المكوّن من 6 أرقام",bad:"الرمز غير صحيح.",pr:"ملفك الشخصي",nm:"الاسم الأول",job:"المهنة / العمل",jobPh:"مثال: معلم، تاجر، ممرضة...",tcty:"المدينة المراد التعارف فيها",allC:"جميع المدن (تشاد)",noCity:"لا توجد ملفات في هذه المدينة",noCityD:"لا توجد ملفات متوفرة حالياً في هذه المدينة. جرب توسيع البحث ليشمل جميع المدن!",iam:"أنا",fem:"امرأة",mal:"رجل",ag:"العمر",agE:"التطبيق مخصص لمن بلغ 22 سنة فأكثر.",cty:"مدينتك",kd:"عدد الأطفال",it:"أبحث عن",req:"أكمل جميع الحقول.",sf1:"توثيق الهوية عبر السيلفي الإلزامي",sf2:"التقط صورة سيلفي مباشرة عبر الكاميرا: يقوم الذكاء الاصطناعي بالتحقق الصارم من ملامح الوجه البشري.",shot:"التقاط السيلفي الموثق",sf3:"تؤكد هذه الصورة هويتك الحقيقية وتحمي المجتمع في تشاد من الحسابات المزيفة وتبقى ثابتة في ملفك الشخصي.",pj:"ملفاً شاهدته اليوم",unl:"بريميوم مفعّل: ملفات وطلبات غير محدودة لمدة شهر",pw:"بلغت حد الزيارات اليومية",pw2:"لقد استنفدت 20 ملفاً مجانياً لهذا اليوم. سيتم تجديد 20 ملفاً جديداً لك تلقائياً عند الساعة 00:00 منتصف الليل (بتوقيت تشاد).",pss:"اشتراك بريميوم (شهر واحد)",pss2:"ملفات غير محدودة لمدة 30 يوماً وإعجابات غير محدودة ووضع التخفّي.",op:"الدفع بالبطاقة البنكية",pn:"رقم الدفع",pb:"ادفع 5 000 FCFA (شهر واحد)",pg:"جارٍ الدفع…",pd:"دفع آمن ومحمي بنسبة 100%.",paid:"تم استلام الدفع. تم تفعيل اشتراك بريميوم لمدة شهر.",plan:"باقتك",free:"مجانية: 20 ملفاً في اليوم",prem:"اشتراك بريميوم مفعّل (شهر واحد)",up:"الترقية إلى بريميوم (5 000 FCFA / شهر)",dm:"تجريبي: الانتقال إلى 19 ملفاً",opVisa:"بطاقة بنكية (Visa / Mastercard)",cardNum:"رقم البطاقة البنكية",cardExp:"تاريخ الانتهاء (MM/AA)",cardCvv:"رمز الأمان (3 أرقام)",cardNom:"اسم صاحب البطاقة",cardNomPh:"مثال: MAHAMAT ADAM",cardSec:"دفع آمن 100% عبر Visa و Mastercard و 3D Secure",cardNumE:"رقم البطاقة غير مكتمل (16 رقماً).",cardExpE:"تاريخ انتهاء غير صحيح (MM/AA).",cardCvvE:"رمز CVV غير صحيح (3 أرقام).",cardNomE:"يرجى كتابة اسم صاحب البطاقة.",visaPaid:"تم التحقق من البطاقة بنجاح! تم تفعيل اشتراك بريميوم لمدة شهر.",
-gBtn:"التسجيل بحساب Google",fbAuthBtn:"التسجيل بحساب Google",gNote:"🛡️ تسجيل وهوية موثّقة 100% باستخدام حساب Google. التوثيق بسيلفي مباشر إلزامي للتحقق من الوجه البشري وحماية مجتمعنا في تشاد.",gVerif:"حساب Google موثّق",fbAuthVerif:"حساب Google موثّق",logout:"تسجيل الخروج",logoutConfirm:"هل تريد بالتأكيد تسجيل الخروج؟ سيتم الاحتفاظ بجميع بياناتك وملفك وتعود فوراً لنفس المكان عند الدخول مجدداً.",gModalT:"تسجيل الدخول عبر Google",gModalD:"اختر حسابك للحصول على توثيق فوري:",gConfirm:"تأكيد الحساب",cityFilt:"المدينة",seekCity:"البحث في",heroTag:"علاقات عاطفية موثّقة",hob:"الهوايات والاهتمامات",hobLbl:"هواياتك المفضلة",hobHint:"اختر هواياتك واهتماماتك المفضلة:",edHb:"تعديل هواياتي",saveHb:"حفظ",bio:"نبذة عني",bioLbl:"وصف قصير",bioPh:"مثال: شخص بشوش، أحب الحوار الصادق، السفر وأبحث عن الاستقرار...",bioHint:"عرّف بنفسك في بضع كلمات:",edBio:"تعديل الوصف",saveBio:"حفظ الوصف",bioDef:"أبحث عن علاقة صادقة ومبنية على الاحترام المتبادل.",
-vidCall:"مكالمة فيديو",callHd:"مكالمة فيديو HD",calling:"جارٍ الاتصال…",callingContact:"جارٍ الاتصال…",ringingContact:"يرن لدى ",callAnswered:"مكالمة نشطة بجودة HD",callEnd:"انتهت المكالمة",callHangup:"إنهاء المكالمة",opt:"خيارات",repUser:"الإبلاغ عن هذا الملف",blkUser:"حظر هذا المستخدم",blkConfirmT:"هل تريد حظر هذا المستخدم؟",blkConfirmD:"لن يظهر هذا الملف مجدداً وستختفي الرسائل.",blkBtn:"حظر",blkDone:"تم حظر المستخدم بنجاح.",repTitle:"الإبلاغ عن الملف",repDesc:"ما هو سبب إبلاغك عن هذا الملف الشخصي؟",repDone:"تم إرسال البلاغ. سيقوم فريقنا في تشاد بمراجعة الملف خلال 24 ساعة.",repFake:"ملف مزيف أو انتحال شخصية",repHarass:"مضايقة أو سلوك غير لائق",repScam:"احتيال مالي أو طلب أموال",repOther:"سبب آخر",unblk:"إلغاء الحظر",blkedList:"المستخدمون المحظورون",noBlked:"لا يوجد أي مستخدم محظور.",unblkDone:"تم إلغاء حظر المستخدم.",
+ar:{d:"اكتشف",m:"الرسائل",p:"ملفي",pass:"تخطَّ",like:"إعجاب",mt:"تطابق!",ms:"أنتما معجبان ببعضكما.",wr:"راسل ",ct:"متابعة",done:"شاهدت كل شيء لهذا اليوم.",again:"إعادة العرض",none:"لا توجد محادثات بعد.",nh:"أعجب بملفات لبدء محادثة.",ph:"اكتب رسالة",snd:"إرسال",bk:"رجوع",my:"ملفي الشخصي",vg:"جارٍ التحقق…",vd:"ملف موثّق",blur:"الوجه مخفي حتى التطابق",lite:"توفير البيانات",sf:"نصائح للأمان",st:"لا ترسل المال أو الرموز أبداً. التقِ في مكان عام وأخبر شخصاً مقرباً.",age:"للبالغين 22 سنة فأكثر فقط.",demo:"شاري · ملفات حقيقية موثقة بالسيلفي.",lgb:"Français",r:["مرحباً! سعيد بالتعرف عليك.","من أي مدينة أنت؟"],
+wl:"مرحباً بك في شاري",wl2:"علاقات عاطفية جادة بين رجل وامرأة، مع ملفات موثّقة.",phl:"رقم الهاتف",ph8:"أدخل 8 أرقام لرقمك.",orPhone:"أو عبر حساب Google",sndOtp:"استلام الرمز",otp:"تأكيد الحساب",otps:"تم إرسال الرمز إلى ",otpd:"أدخل رمز التأكيد.",cod:"الرمز المكوّن من 6 أرقام",bad:"الرمز غير صحيح.",pr:"ملفك الشخصي",nm:"الاسم الأول",job:"المهنة / العمل",jobPh:"مثال: معلم، تاجر، ممرضة...",tcty:"المدينة المراد التعارف فيها",allC:"جميع المدن",noCity:"لا توجد ملفات في هذه المدينة",noCityD:"لا توجد ملفات متوفرة حالياً في هذه المدينة. جرب توسيع البحث ليشمل جميع المدن!",iam:"أنا",fem:"امرأة",mal:"رجل",ag:"العمر",agE:"التطبيق مخصص لمن بلغ 22 سنة فأكثر.",cty:"مدينتك",kd:"عدد الأطفال",it:"أبحث عن",req:"أكمل جميع الحقول.",sf1:"توثيق الهوية عبر السيلفي الإلزامي",sf2:"التقط صورة سيلفي مباشرة عبر الكاميرا: يقوم الذكاء الاصطناعي بالتحقق الصارم من ملامح الوجه البشري.",shot:"التقاط السيلفي الموثق",sf3:"تؤكد هذه الصورة هويتك الحقيقية وتحمي المجتمع من الحسابات المزيفة وتبقى ثابتة في ملفك الشخصي.",pj:"ملفاً شاهدته اليوم",unl:"بريميوم مفعّل: ملفات وطلبات غير محدودة لمدة شهر",pw:"بلغت حد الزيارات اليومية",pw2:"لقد استنفدت 20 ملفاً مجانياً لهذا اليوم. سيتم تجديد 20 ملفاً جديداً لك تلقائياً عند الساعة 00:00 منتصف الليل (بالتوقيت المحلي).",pss:"اشتراك بريميوم (شهر واحد)",pss2:"ملفات غير محدودة لمدة 30 يوماً وإعجابات غير محدودة ووضع التخفّي.",op:"الدفع بالبطاقة البنكية",pn:"رقم الدفع",pb:"ادفع 5 000 FCFA (شهر واحد)",pg:"جارٍ الدفع…",pd:"دفع آمن ومحمي بنسبة 100%.",paid:"تم استلام الدفع. تم تفعيل اشتراك بريميوم لمدة شهر.",plan:"باقتك",free:"مجانية: 20 ملفاً في اليوم",prem:"اشتراك بريميوم مفعّل (شهر واحد)",up:"الترقية إلى بريميوم (5 000 FCFA / شهر)",dm:"تجريبي: الانتقال إلى 19 ملفاً",opVisa:"بطاقة بنكية (Visa / Mastercard)",cardNum:"رقم البطاقة البنكية",cardExp:"تاريخ الانتهاء (MM/AA)",cardCvv:"رمز الأمان (3 أرقام)",cardNom:"اسم صاحب البطاقة",cardNomPh:"مثال: MAHAMAT ADAM",cardSec:"دفع آمن 100% عبر Visa و Mastercard و 3D Secure",cardNumE:"رقم البطاقة غير مكتمل (16 رقماً).",cardExpE:"تاريخ انتهاء غير صحيح (MM/AA).",cardCvvE:"رمز CVV غير صحيح (3 أرقام).",cardNomE:"يرجى كتابة اسم صاحب البطاقة.",visaPaid:"تم التحقق من البطاقة بنجاح! تم تفعيل اشتراك بريميوم لمدة شهر.",
+gBtn:"التسجيل بحساب Google",fbAuthBtn:"التسجيل بحساب Google",gNote:"🛡️ تسجيل وهوية موثّقة 100% باستخدام حساب Google. التوثيق بسيلفي مباشر إلزامي للتحقق من الوجه البشري وحماية مجتمعنا.",gVerif:"حساب Google موثّق",fbAuthVerif:"حساب Google موثّق",logout:"تسجيل الخروج",logoutConfirm:"هل تريد بالتأكيد تسجيل الخروج؟ سيتم الاحتفاظ بجميع بياناتك وملفك وتعود فوراً لنفس المكان عند الدخول مجدداً.",gModalT:"تسجيل الدخول عبر Google",gModalD:"اختر حسابك للحصول على توثيق فوري:",gConfirm:"تأكيد الحساب",cityFilt:"المدينة",seekCity:"البحث في",heroTag:"علاقات عاطفية موثّقة",hob:"الهوايات والاهتمامات",hobLbl:"هواياتك المفضلة",hobHint:"اختر هواياتك واهتماماتك المفضلة:",edHb:"تعديل هواياتي",saveHb:"حفظ",bio:"نبذة عني",bioLbl:"وصف قصير",bioPh:"مثال: شخص بشوش، أحب الحوار الصادق، السفر وأبحث عن الاستقرار...",bioHint:"عرّف بنفسك في بضع كلمات:",edBio:"تعديل الوصف",saveBio:"حفظ الوصف",bioDef:"أبحث عن علاقة صادقة ومبنية على الاحترام المتبادل.",
+vidCall:"مكالمة فيديو",callHd:"مكالمة فيديو HD",calling:"جارٍ الاتصال…",callingContact:"جارٍ الاتصال…",ringingContact:"يرن لدى ",callAnswered:"مكالمة نشطة بجودة HD",callEnd:"انتهت المكالمة",callHangup:"إنهاء المكالمة",opt:"خيارات",repUser:"الإبلاغ عن هذا الملف",blkUser:"حظر هذا المستخدم",blkConfirmT:"هل تريد حظر هذا المستخدم؟",blkConfirmD:"لن يظهر هذا الملف مجدداً وستختفي الرسائل.",blkBtn:"حظر",blkDone:"تم حظر المستخدم بنجاح.",repTitle:"الإبلاغ عن الملف",repDesc:"ما هو سبب إبلاغك عن هذا الملف الشخصي؟",repDone:"تم إرسال البلاغ. سيقوم فريقنا بمراجعة الملف خلال 24 ساعة.",repFake:"ملف مزيف أو انتحال شخصية",repHarass:"مضايقة أو سلوك غير لائق",repScam:"احتيال مالي أو طلب أموال",repOther:"سبب آخر",unblk:"إلغاء الحظر",blkedList:"المستخدمون المحظورون",noBlked:"لا يوجد أي مستخدم محظور.",unblkDone:"تم إلغاء حظر المستخدم.",
 langSpk:"اللغة المنطوقة",lngFr:"الفرنسية",lngAr:"العربية",lngBoth:"الفرنسية والعربية",
 lngMap:{fr:"🗣️ الفرنسية",ar:"🗣️ العربية",both:"🗣️ الفرنسية والعربية"},
 rel:"الديانة",relMus:"مسلم(ة)",relChr:"مسيحي(ة)",relOth:"ديانة أخرى",
@@ -2122,10 +2312,10 @@ mailb:"Google",telb:"Google",eml:"بريد Gmail",emE:"أدخل بريداً إ�
 kid:["بلا أطفال","طفل واحد","طفلان","3 أطفال أو أكثر"],
 selfieBadge:"سيلفي موثّق",selfieLock:"صورة السيلفي الموثقة إلزامية ولا يمكن حذفها.",
 selfieNoFace:"❌ لم يتم اكتشاف وجه بشري. يرجى توجيه وجهك بوضوح أمام الكاميرا في مكان جيد الإضاءة وإعادة المحاولة.",selfieAnalyzing:"جارٍ التحقق من ملامح الوجه…",selfieVerified:"تم توثيق الوجه البشري بنجاح!",
-noProfilesYet:"مرحباً بك في شاري!",noProfilesDesc:"بدأ المجتمع من جديد من الصفر! كن من أول الأعضاء الموثقين في تشاد بإكمال ملفك وسيلفيك.",
+noProfilesYet:"مرحباً بك في شاري!",noProfilesDesc:"بدأ المجتمع من جديد من الصفر! كن من أول الأعضاء الموثقين بإكمال ملفك وسيلفيك.",
 reqTabName:"الطلبات",reqSentTab:"المرسلة",reqReceivedTab:"المستلمة",noReqSent:"لم تقم بإرسال طلبات بعد",noReqSentDesc:"الملفات التي تعجب بها ستظهر هنا في انتظار التطابق.",
 fbTitle:"شاركنا رأيك وملاحظاتك",fbSub:"شاركنا اقتراحاتك أو أفكارك لتحسين التطبيق.",fbBtn:"كتابة تقييم",
-fbModalT:"رأيك يهمنا كثيراً",fbModalD:"ساعدنا في تطوير تطبيق شاري في تشاد. شاركنا تجربتك ومقترحاتك:",
+fbModalT:"رأيك يهمنا كثيراً",fbModalD:"ساعدنا في تطوير تطبيق شاري. شاركنا تجربتك ومقترحاتك:",
 fbRatingLbl:"تقييمك العام",
 fbRatingNames:["غير راضٍ تماماً","غير راضٍ","مقبول","جيد جداً","ممتاز جداً !"],
 fbCatLbl:"نوع الملاحظة",
@@ -2135,12 +2325,65 @@ fbCatLove:"❤️ إعجاب وتجربة جميلة",
 fbCatSec:"🛡️ الأمان والخصوصية",
 fbMsgPh:"اكتب ملاحظاتك، اقتراحاتك أو تجربتك مع التطبيق هنا...",
 fbMsgErr:"يرجى كتابة بضع كلمات توضح رأيك.",
-fbSuccess:"شكراً جزيلاً على تقييمك وملاحظاتك! سيهتم فريقنا في تشاد باقتراحك.",
+fbSuccess:"شكراً جزيلاً على تقييمك وملاحظاتك! سيهتم فريقنا باقتراحك.",
 scBlockT:"التقاط الشاشة ممنوع",scBlockD:"لحماية خصوصية وأمان المشتركين في شاري، يمنع منعاً باتاً تصوير أو تسجيل الشاشة.",scToast:"⚠️ تم حظر التقاط الشاشة: خصوصية الأعضاء محمية في شاري.",scDismiss:"المتابعة في شاري",
-chatTab:"المحادثات",reqTab:"طلبات التطابق",noReq:"لا توجد طلبات مستلمة حالياً",noReqDesc:"المعجبون والأشخاص الذين يرغبون في التعارف معك سيظهرون هنا.",acceptReq:"إعجاب",declineReq:"تخطَّ",reqDeclined:"تم رفض الطلب، لن تظهرا لبعضكما مجدداً على شاري.",dailyReqLimit:"تم بلوغ الحد اليومي (20/20 طلباً مرسلاً اليوم). تتم إعادة التعيين تلقائياً عند الساعة 00:00 منتصف الليل (بتوقيت تشاد). ترقَّ إلى بريميوم لإعجابات غير محدودة!",dailyAcceptLimit:"تم بلوغ الحد اليومي (10/10 طلبات مقبولة اليوم). تتم إعادة التعيين تلقائياً عند الساعة 00:00 منتصف الليل (بتوقيت تشاد). ترقَّ إلى بريميوم لقبول غير محدود!",dailyReqQuota:"الطلبات المرسلة",dailyAcceptQuota:"الطلبات المقبولة",resetMidnight:"إعادة التعيين عند 00:00 (بتوقيت تشاد)",editMsg:"تعديل الرسالة",editMsgTimeLeft:"الوقت المتبقي لتعديل الرسالة: ",saveEdit:"حفظ التعديل",cancelEdit:"إلغاء",msgEditedTag:"(معدلة)",editExpired:"انتهت مهلة الـ 10 دقائق لتعديل هذه الرسالة.",incogActive:"وضع التخفّي مفعّل: يمكنك مشاهدة جميع الملفات بسرية تامة، ولن يظهر ملفك لأحد.",incogInactive:"تم إيقاف وضع التخفّي: ملفك الشخصي مرئي الآن للجميع.",incogBanner:"وضع التخفّي مفعّل: ملفك الشخصي محجوب عن جميع الأعضاء الآخرين.",viewProfile:"عرض الملف الشخصي",onbPhotosTitle:"صور وفيديوهات ملفك الشخصي",onbPhotosDesc:"صورتك السيلفي هي أول صورة معتمدة. يمكنك إضافة ما يصل إلى 4 صور أو مقاطع فيديو قصيرة حتى 10 ثوانٍ (مثلاً صورة و 4 فيديوهات) :",photosAdvice:"💡 الملفات التي تحتوي على فيديوهات قصيرة (10 ثوانٍ) وصور تزيد فرص التطابق بأربع مرات!",finishOnbPhotos:"إنهاء واستكشاف الملفات ✨",onlyMatchedCanChat:"يجب أن يحدث تطابق حتى تتمكنا من المراسلة.",
+chatTab:"المحادثات",reqTab:"طلبات التطابق",noReq:"لا توجد طلبات مستلمة حالياً",noReqDesc:"المعجبون والأشخاص الذين يرغبون في التعارف معك سيظهرون هنا.",acceptReq:"إعجاب",declineReq:"تخطَّ",reqDeclined:"تم رفض الطلب، لن تظهرا لبعضكما مجدداً على شاري.",dailyReqLimit:"تم بلوغ الحد اليومي (20/20 طلباً مرسلاً اليوم). تتم إعادة التعيين تلقائياً عند الساعة 00:00 منتصف الليل (بالتوقيت المحلي). ترقَّ إلى بريميوم لإعجابات غير محدودة!",dailyAcceptLimit:"تم بلوغ الحد اليومي (10/10 طلبات مقبولة اليوم). تتم إعادة التعيين تلقائياً عند الساعة 00:00 منتصف الليل (بالتوقيت المحلي). ترقَّ إلى بريميوم لقبول غير محدود!",dailyReqQuota:"الطلبات المرسلة",dailyAcceptQuota:"الطلبات المقبولة",resetMidnight:"إعادة التعيين عند 00:00 (بالتوقيت المحلي)",editMsg:"تعديل الرسالة",editMsgTimeLeft:"الوقت المتبقي لتعديل الرسالة: ",saveEdit:"حفظ التعديل",cancelEdit:"إلغاء",msgEditedTag:"(معدلة)",editExpired:"انتهت مهلة الـ 10 دقائق لتعديل هذه الرسالة.",incogActive:"وضع التخفّي مفعّل: يمكنك مشاهدة جميع الملفات بسرية تامة، ولن يظهر ملفك لأحد.",incogInactive:"تم إيقاف وضع التخفّي: ملفك الشخصي مرئي الآن للجميع.",incogBanner:"وضع التخفّي مفعّل: ملفك الشخصي محجوب عن جميع الأعضاء الآخرين.",viewProfile:"عرض الملف الشخصي",onbPhotosTitle:"صور وفيديوهات ملفك الشخصي",onbPhotosDesc:"صورتك السيلفي هي أول صورة معتمدة. يمكنك إضافة ما يصل إلى 4 صور أو مقاطع فيديو قصيرة حتى 10 ثوانٍ (مثلاً صورة و 4 فيديوهات) :",photosAdvice:"💡 الملفات التي تحتوي على فيديوهات قصيرة (10 ثوانٍ) وصور تزيد فرص التطابق بأربع مرات!",finishOnbPhotos:"إنهاء واستكشاف الملفات ✨",onlyMatchedCanChat:"يجب أن يحدث تطابق حتى تتمكنا من المراسلة.",
+age:"مخصص للبالغين من 25 سنة فأكثر.",agE:"شاري مخصص لمن بلغ 25 سنة فأكثر.",heroTag:"علاقات جادة في كل أنحاء العالم",demo:"شاري · ملفات حقيقية موثقة بالسيلفي.",wl2:"علاقات جادة بين رجل وامرأة مع ملفات موثّقة.",allC:"جميع الدول",cityFilt:"الدولة",tcty:"الدولة المطلوبة",noCity:"لا توجد ملفات في هذه الدولة",noCityD:"لا توجد ملفات حالياً في هذه الدولة. جرّب «جميع الدول»!",noProfilesDesc:"كن من أوائل الأعضاء الموثقين: أكمل ملفك وادعُ أصدقاءك.",repDone:"تم إرسال البلاغ. سيراجع فريق الإشراف هذا الملف خلال 24 ساعة.",fbModalD:"ساعدنا في تحسين شاري. شاركنا تجربتك:",fbSuccess:"شكراً على ملاحظاتك! سيأخذها فريقنا بعين الاعتبار.",pw2:"شاهدت 20 ملفاً مجانياً اليوم. ملفات جديدة عند منتصف الليل (بالتوقيت المحلي).",dailyReqLimit:"تم بلوغ الحد اليومي (20/20 طلباً). التجديد عند منتصف الليل (بالتوقيت المحلي) أو ترقَّ إلى بريميوم.",dailyAcceptLimit:"تم بلوغ الحد اليومي (10/10 قبول). التجديد عند منتصف الليل (بالتوقيت المحلي) أو ترقَّ إلى بريميوم.",resetMidnight:"التجديد عند منتصف الليل (بالتوقيت المحلي)",resetIn:"التجديد خلال",blur:"الصور مموّهة حتى الكشف المتبادل",gNote:"تسجيل آمن. السيلفي المباشر إلزامي ويتحقق منه فريقنا.",
+gfTitle:"صفات إيجابية",rfTitle:"خطوط حمراء",flagMax:"5 اختيارات كحد أقصى.",flagsSec:"الصفات الإيجابية والخطوط الحمراء",flagsHelp:"ما تقدّره (صفات إيجابية) وما لا تقبله (خطوط حمراء). 5 كحد أقصى لكل منهما.",flagsEmpty:"أضف صفاتك الإيجابية وخطوطك الحمراء لجذب الأشخاص المناسبين.",flagsEdit:"تعديل",
+waLbl:"رقم واتساب",waPh:"مثال: 66 12 34 56",waHelp:"لا يُشارك إلا عندما تقبلان كلاكما الكشف عن نفسيكما.",waE:"رقم واتساب غير صالح: تحقق من الدولة والرقم.",waPrivate:"يظهر فقط بعد الكشف المتبادل.",
+confT:"أكّد بريدك الإلكتروني",confD:"أرسلنا رابط تأكيد إلى",confResend:"إعادة الإرسال",authSignupT:"أنشئ حسابك",authLoginT:"مرحباً بعودتك",authSub:"علاقات جادة مع ملفات موثّقة.",gContinue:"المتابعة باستخدام Google",authSignupTab:"تسجيل",authLoginTab:"دخول",authSignupBtn:"إنشاء حسابي",authLoginBtn:"تسجيل الدخول",forgotPwd:"نسيت كلمة المرور؟",eml:"البريد الإلكتروني",pwd:"كلمة المرور",pwdPh:"8 أحرف على الأقل",pwdE:"يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل.",emE:"أدخل بريداً إلكترونياً صالحاً.",orDivider:"أو",trust1:"كل ملف موثّق بسيلفي يتحقق منه فريقنا",trust2:"الصور مموّهة حتى تقبلا كلاكما",trust3:"لقطات الشاشة محظورة داخل التطبيق",emVerif:"بريد موثّق",gVerif:"حساب Google موثّق",
+req2:"جميع الحقول المعلّمة بـ * إلزامية.",secId:"الهوية",bdLbl:"تاريخ الميلاد",bdHelp:"25 سنة على الأقل. يظهر عمرك فقط.",bdReq:"أدخل تاريخ ميلادك.",secWhere:"أين تعيش؟",ctryLbl:"الدولة",cty:"المدينة",cityPh:"مثال: انجمينا، باريس، دبي…",secAbout:"عنك",lngEn:"الإنجليزية",
+blurPill:"الصور مموّهة حتى الكشف المتبادل",blurInfo:"تبقى صورك مموّهة للآخرين حتى تقبلا كلاكما الكشف.",
+revBoth:"تم الكشف المتبادل",revWa:"واتساب:",revUndo:"إعادة التمويه",revWaitT:"قبلتَ الكشف عن نفسك",revWaitD:"في انتظار موافقة {n}. تبقى صوره مموّهة حتى ذلك الحين.",revCancel:"إلغاء",revTheyT:"{n} يرغب في الكشف",revAskT:"الصور مموّهة",revAskD:"عندما تقبلان كلاكما تصبح الصور واضحة ويتم تبادل رقم واتساب.",revBtn:"اكشف عن نفسي",revConfirm:"ستظهر صورك الواضحة ورقم واتساب لهذا الشخص إذا قبل أيضاً. هل تريد المتابعة؟",
+sfRejT:"تم رفض السيلفي",sfRejD:"لم يتم قبول السيلفي. التقط صورة واضحة من الأمام في إضاءة جيدة.",sfRetake:"إعادة",sfPendT:"ملفك قيد التحقق",sfPendD:"يتحقق فريقنا من السيلفي. سيظهر ملفك فور توثيقه.",
+edit:"تعديل",view:"عرض",mainPhoto:"الرئيسية",setMain:"رئيسية",secSearch:"ما أبحث عنه",secSafety:"الأمان",
+priceMain:"5 000 FCFA",month:"شهر",priceEq:"≈ 7.60 € · تُحتسب بالفرنك الإفريقي ويحوّلها بنكك",premF1:"ملفات غير محدودة لمدة 30 يوماً",premF2:"طلبات وقبول غير محدود",premF3:"وضع التخفّي",premF4:"بدون التزام",pss2:"ملفات وإعجابات غير محدودة ووضع التخفّي لمدة 30 يوماً.",up:"الترقية إلى بريميوم",free:"الباقة المجانية: 20 ملفاً في اليوم",prem:"بريميوم مفعّل",payCard:"الدفع بالبطاقة البنكية",pg:"جارٍ فتح صفحة الدفع الآمن…",payUnavail:"الدفع بالبطاقة غير مفعّل بعد. سيتوفر قريباً جداً.",cardSec:"دفع آمن على صفحة مزوّد الدفع (3D Secure). لا يرى شاري رقم بطاقتك أبداً.",
+lngMap:{fr:"الفرنسية",ar:"العربية",both:"الفرنسية والعربية",en:"الإنجليزية"},relMap:{mus:"مسلم(ة)",chr:"مسيحي(ة)",oth:"ديانة أخرى"},scBlockD:"لحماية خصوصية الأعضاء، يُمنع تصوير الشاشة أو تسجيلها في شاري.",selfieBadge:"موثّق",
 k:{ser:"علاقة عاطفية",mar:"زواج",fam:"العائلة",etu:"الدراسة",ent:"ريادة الأعمال",foi:"الإيمان",mus:"الموسيقى",foo:"كرة القدم",cui:"الطبخ",voy:"السفر",fr:"الفرنسية",ar:"العربية",sa:"السارا"}}};
 const CI=["N'Djamena","Moundou","Sarh","Abéché","Kélo","Koumra","Pala","Am Timan","Bongor","Mongo","Doba","Ati","Laï","Faya-Largeau","Mao","Biltine","Bol","Goz Beïda","Moussoro","Bokoro"];
 const HOBBIES=[{id:"spo",ic:"🏃",fr:"Sport",ar:"الرياضة"},{id:"lec",ic:"📚",fr:"Lecture",ar:"القراءة"},{id:"cui",ic:"🍳",fr:"Cuisine",ar:"الطبخ"},{id:"jv",ic:"🎮",fr:"Jeux vidéo",ar:"ألعاب فيديو"},{id:"voy",ic:"✈️",fr:"Voyage",ar:"السفر"},{id:"mus",ic:"🎵",fr:"Musique",ar:"الموسيقى"},{id:"foo",ic:"⚽",fr:"Football",ar:"كرة القدم"},{id:"cin",ic:"🎬",fr:"Cinéma",ar:"السينما"},{id:"ent",ic:"💼",fr:"Business",ar:"ريادة الأعمال"},{id:"art",ic:"🎨",fr:"Art & Mode",ar:"الفن والموضة"}];
+/* Pays du monde : code ISO -> indicatif telephonique (WhatsApp) */
+const DIAL="TD:235,CM:237,CF:236,NE:227,NG:234,SD:249,SS:211,LY:218,EG:20,DZ:213,MA:212,TN:216,MR:222,ML:223,SN:221,GM:220,GN:224,GW:245,SL:232,LR:231,CI:225,BF:226,GH:233,TG:228,BJ:229,GA:241,GQ:240,CG:242,CD:243,AO:244,RW:250,BI:257,UG:256,KE:254,TZ:255,ET:251,ER:291,DJ:253,SO:252,MG:261,MU:230,KM:269,SC:248,CV:238,ST:239,ZA:27,ZM:260,ZW:263,MZ:258,MW:265,BW:267,NA:264,LS:266,SZ:268,FR:33,BE:32,CH:41,LU:352,MC:377,DE:49,AT:43,NL:31,GB:44,IE:353,ES:34,PT:351,IT:39,GR:30,SE:46,NO:47,DK:45,FI:358,PL:48,CZ:420,SK:421,HU:36,RO:40,BG:359,HR:385,RS:381,UA:380,RU:7,TR:90,CY:357,MT:356,US:1,CA:1,MX:52,BR:55,AR:54,CL:56,CO:57,PE:51,VE:58,HT:509,CU:53,DO:1,SA:966,AE:971,QA:974,KW:965,BH:973,OM:968,YE:967,JO:962,LB:961,SY:963,IQ:964,IR:98,IL:972,PS:970,IN:91,PK:92,BD:880,LK:94,NP:977,AF:93,CN:86,JP:81,KR:82,ID:62,MY:60,SG:65,TH:66,VN:84,PH:63,AU:61,NZ:64".split(",").map(s=>{const[c,d]=s.split(":");return{c,d}});
+const regionName=(code,lang)=>{try{return new Intl.DisplayNames([lang==="ar"?"ar":"fr"],{type:"region"}).of(code)||code}catch(e){return code}};
+const countryList=lang=>DIAL.slice().sort((a,b)=>regionName(a.c,lang).localeCompare(regionName(b.c,lang),lang==="ar"?"ar":"fr"));
+const flagEmoji=c=>c&&c.length===2?String.fromCodePoint(...[...c.toUpperCase()].map(ch=>127397+ch.charCodeAt(0))):"";
+const dialOf=c=>{const f=DIAL.find(x=>x.c===c);return f?f.d:""};
+const guessCountry=()=>{try{const l=(navigator.language||"").split("-")[1];if(l&&DIAL.some(x=>x.c===l.toUpperCase()))return l.toUpperCase()}catch(e){}return "TD"};
+/* Age a partir de la date de naissance */
+const MIN_AGE=25;
+const ageFrom=bd=>{if(!bd)return 0;const d=new Date(bd+"T00:00:00");if(isNaN(d))return 0;const n=new Date();let a=n.getFullYear()-d.getFullYear();const m=n.getMonth()-d.getMonth();if(m<0||(m===0&&n.getDate()<d.getDate()))a--;return a};
+function normWa(v,ctry){let s=String(v||"").replace(/[^\d+]/g,"");if(!s)return"";if(s.startsWith("00"))s="+"+s.slice(2);if(!s.startsWith("+")){s=s.replace(/^0+/,"");s="+"+dialOf(ctry||"TD")+s}return s}
+const maxBirthDate=()=>{const n=new Date();n.setFullYear(n.getFullYear()-MIN_AGE);return n.toISOString().slice(0,10)};
+/* Green flags / Red flags (5 maximum chacun) */
+const GREEN_FLAGS=[
+{id:"honest",fr:"Honnête et transparent(e)",ar:"صادق(ة) وشفاف(ة)"},
+{id:"listen",fr:"Sait écouter",ar:"يُحسن الإصغاء"},
+{id:"respect",fr:"Respectueux(se)",ar:"محترم(ة)"},
+{id:"family",fr:"Attaché(e) à la famille",ar:"متعلق(ة) بالعائلة"},
+{id:"faith",fr:"Pratique sa foi",ar:"ملتزم(ة) دينياً"},
+{id:"ambition",fr:"Ambitieux(se)",ar:"طموح(ة)"},
+{id:"humor",fr:"Sens de l'humour",ar:"روح الدعابة"},
+{id:"reliable",fr:"Tient ses promesses",ar:"يفي بوعوده"},
+{id:"calm",fr:"Calme dans les conflits",ar:"هادئ(ة) عند الخلاف"},
+{id:"generous",fr:"Généreux(se)",ar:"كريم(ة)"},
+{id:"healthy",fr:"Mode de vie sain",ar:"نمط حياة صحي"},
+{id:"serious",fr:"Cherche du sérieux",ar:"يبحث عن الجدية"}];
+const RED_FLAGS=[
+{id:"lies",fr:"Le mensonge",ar:"الكذب"},
+{id:"jealous",fr:"Jalousie excessive",ar:"الغيرة المفرطة"},
+{id:"smoke",fr:"Le tabac",ar:"التدخين"},
+{id:"alcohol",fr:"L'alcool",ar:"الكحول"},
+{id:"disrespect",fr:"Le manque de respect",ar:"قلة الاحترام"},
+{id:"ghosting",fr:"Disparaître sans prévenir",ar:"الاختفاء دون إنذار"},
+{id:"money",fr:"Demander de l'argent",ar:"طلب المال"},
+{id:"violence",fr:"La violence",ar:"العنف"},
+{id:"control",fr:"Vouloir tout contrôler",ar:"حب السيطرة"},
+{id:"lazy",fr:"Le manque d'ambition",ar:"انعدام الطموح"},
+{id:"rude",fr:"L'impolitesse",ar:"قلة الأدب"},
+{id:"unfaithful",fr:"L'infidélité",ar:"الخيانة"}];
+const flagLabel=(list,id)=>{const f=list.find(x=>x.id===id);return f?f[st.lang]||f.fr:""};
+const flagsHtml=(p,compact)=>{const g=(p.gf||[]).map(id=>flagLabel(GREEN_FLAGS,id)).filter(Boolean),r=(p.rf||[]).map(id=>flagLabel(RED_FLAGS,id)).filter(Boolean);if(!g.length&&!r.length)return"";const t=x();return`<div class="flags${compact?" compact":""}">${g.length?`<div class="flag-group"><span class="flag-title green">${t.gfTitle}</span><div class="flag-list">${g.map(l=>`<span class="flag-chip green">${esc(l)}</span>`).join("")}</div></div>`:""}${r.length?`<div class="flag-group"><span class="flag-title red">${t.rfTitle}</span><div class="flag-list">${r.map(l=>`<span class="flag-chip red">${esc(l)}</span>`).join("")}</div></div>`:""}</div>`};
+const flagPicker=(kind)=>{const list=kind==="g"?GREEN_FLAGS:RED_FLAGS,sel=(kind==="g"?st.u.gf:st.u.rf)||[];return`<div class="h-chips flag-picker ${kind==="g"?"green":"red"}" role="group">${list.map(f=>{const on=sel.includes(f.id);return`<button type="button" class="h-chip ${on?"on":""}" data-a="togflag" data-kind="${kind}" data-h="${f.id}" aria-pressed="${on}"><span>${f[st.lang]||f.fr}</span></button>`}).join("")}</div>`};
 const SEED_PROFILES = [];
 let P = [];
 const ME={n:"",bg:[G,B],cl:"#C3CCDB",sk:"#9AA7BB"};
@@ -2199,7 +2442,7 @@ const pool=()=>{
     if (!p || !p.n || p.n === '__DELETED__') return false;
     const pid = String(p.id);
     if (st.g && p.g === st.g) return false;
-    if (st.tc && st.tc !== "all" && p.c !== st.tc) return false;
+    if (st.tc && st.tc !== "all" && p.ctry !== st.tc) return false;
     if (blockedSet.has(pid)) return false;
     // Permanent exclusion of passed profiles
     if (passedSet.has(pid)) return false;
@@ -2214,8 +2457,9 @@ const pool=()=>{
   });
 };
 // Official Chad Timezone: Africa/Ndjamena (WAT = UTC+1, no Daylight Saving Time)
+/* Les quotas se renouvellent a minuit, heure locale de l'utilisateur */
 function getChadDateObj(){
-return new Date(Date.now() + 3600000);
+return new Date(Date.now() - new Date().getTimezoneOffset()*60000);
 }
 function getChadDateKey(){
 const cd = getChadDateObj();
@@ -2252,8 +2496,8 @@ return "chari_u_"+String(raw).trim().toLowerCase().replace(/[^a-z0-9_-]/g,"_");
 function createBlankState(email="", uid="", name=""){
 return {
 lang:"fr",blur:true,lite:false,tc:"all",mode:"google",em:email||"",ph5:[],inc:false,ed:null,step:0,savedStep:0,showEmailAuth:false,
-u:{id:uid||"",n:name||"",jb:"",a:"",c:"N'Djamena",tc:"all",bio:"",lng:"fr",rel:"mus",kd:0,i:"ser",hb:[],gVerif:true},
-card:{num:"",exp:"",cvv:"",nom:""},g:"",ph:"",i:0,seen:0,prem:0,pay:0,op:"visa",pp:0,vs:0,selfie:"",
+u:{id:uid||"",n:name||"",jb:"",a:"",bd:"",ctry:guessCountry(),c:"",tc:"all",bio:"",lng:"fr",rel:"mus",kd:0,i:"ser",hb:[],gf:[],rf:[],wa:"",gVerif:true},
+g:"",ph:"",i:0,seen:0,prem:0,pay:0,pp:0,vs:0,selfie:"",selfieStatus:"pending",selfieRejectReason:"",reveals:{},authMode:"signup",
 tab:"d",chat:null,mt:[],ms:{},busy:0,blocked:[],feedbacks:[],mSubTab:"chat",reqSubTab:"rec",
 incomingRequests:[],sentRequests:[],passed:[],reqPhotoIdx:{},dailyLimits:{date:getChadDateKey(),sent:0,accepted:0,seen:0}
 };
@@ -2266,13 +2510,14 @@ const n=typeof u.n==='string'?u.n.trim():'';
 const jb=typeof u.jb==='string'?u.jb.trim():'';
 const bio=typeof u.bio==='string'?u.bio.trim():'';
 const c=typeof u.c==='string'?u.c.trim():'';
-const a=+u.a;
+const a=u.bd?ageFrom(u.bd):+u.a;
 const g=s.g||u.g;
 const hasGender=(g==="f"||g==="m");
 const hasHobbies=Array.isArray(u.hb)&&u.hb.length>=1;
 const hasLng=!!u.lng;
 const hasRel=!!u.rel;
-return (n.length>=2 && jb.length>=2 && bio.length>=5 && c.length>=2 && a>=22 && hasGender && hasHobbies && hasLng && hasRel);
+const hasWa=/^\+[1-9][0-9]{6,14}$/.test(u.wa||"");
+return (n.length>=2 && jb.length>=2 && bio.length>=5 && c.length>=2 && !!u.ctry && a>=MIN_AGE && hasGender && hasHobbies && hasLng && hasRel && hasWa);
 }
 function hasVerifiedSelfie(state){
 const s=state||st;
@@ -2283,14 +2528,15 @@ const st = createBlankState();
 
 function syncStep2InputsToState(){
   if(st.step!==2)return;
-  const nm=$("#nm"),jb=$("#jb"),bio=$("#bio"),ag=$("#ag"),cy=$("#cy"),tc=$("#tc"),lng=$("#lng"),rel=$("#rel"),kd=$("#kd"),it=$("#it");
+  const nm=$("#nm"),jb=$("#jb"),bio=$("#bio"),bd=$("#bd"),cy=$("#cy"),ctry=$("#ctry"),wa=$("#wa"),lng=$("#lng"),rel=$("#rel"),kd=$("#kd"),it=$("#it");
   if(!st.u)st.u={};
   if(nm&&nm.value!==undefined)st.u.n=nm.value.trim();
   if(jb&&jb.value!==undefined)st.u.jb=jb.value.trim();
   if(bio&&bio.value!==undefined)st.u.bio=bio.value.trim();
-  if(ag&&ag.value!==undefined)st.u.a=ag.value.trim();
-  if(cy&&cy.value!==undefined)st.u.c=cy.value;
-  if(tc&&tc.value!==undefined)st.u.tc=tc.value;
+  if(bd&&bd.value!==undefined){st.u.bd=bd.value;st.u.a=ageFrom(bd.value)||"";}
+  if(cy&&cy.value!==undefined)st.u.c=cy.value.trim();
+  if(ctry&&ctry.value!==undefined)st.u.ctry=ctry.value;
+  if(wa&&wa.value!==undefined)st.u.wa=normWa(wa.value,st.u.ctry);
   if(lng&&lng.value!==undefined)st.u.lng=lng.value;
   if(rel&&rel.value!==undefined)st.u.rel=rel.value;
   if(kd&&kd.value!==undefined)st.u.kd=+kd.value;
@@ -2426,89 +2672,89 @@ const sw=(k,l)=>`<button class="sw" role="switch" aria-checked="${st[k]}" data-a
 function onb(){const t=x(),s=st.step;
 if(s===0 || s===1){
 const isAr=st.lang==="ar";
-const isFile=window.location.protocol==="file:";
-return`<div class="pf google-auth-page" style="padding-bottom:28px">
-<div class="hero-box"><img src="couple.jpg" alt="Chari - Rencontres au Tchad" class="hero-img"><div class="hero-overlay"><span class="hero-tag">${t.heroTag} ${flagSvg}</span></div></div>
-
-<div style="text-align:center;margin:12px 0 16px">
-<h1 style="margin:0 0 8px;font-size:24px;font-weight:800;color:var(--ink)">
-${isAr?"تسجيل الدخول والتسجيل عبر Google":"Identification & Inscription avec Google"}
-</h1>
-<p style="margin:0 auto;font-size:13.5px;color:var(--mut);line-height:1.5;max-width:44ch">
-${isAr?"لضمان صحة وموثوقية مجتمعنا في تشاد ومنع الحسابات الوهمية تماماً، يتم الدخول إلى تطبيق شاري حصرياً باستخدام حساب Google أو بريد Gmail."
-:"Pour garantir des profils 100% réels et sécurisés au Tchad, l'accès à Chari s'effectue exclusivement avec votre compte Google ou adresse Gmail."}
-</p>
+const signup=st.authMode!=="login";
+if(st.pendingConfirm){
+return`<div class="pf auth-page">
+<div class="auth-card" style="text-align:center">
+<div class="auth-icon" aria-hidden="true">${ic("mail")}</div>
+<h1>${t.confT}</h1>
+<p class="mut">${t.confD} <strong>${esc(st.pendingConfirm)}</strong></p>
+<button class="btn" data-a="resend-conf" type="button">${t.confResend}</button>
+<button class="btn ghost" data-a="auth-back" type="button">${t.bk}</button>
+</div></div>`;
+}
+return`<div class="pf auth-page">
+<div class="auth-hero">
+<img src="couple.jpg" alt="" class="hero-img">
+<div class="hero-overlay"><span class="logo-big">Chari</span><span class="hero-tag">${t.heroTag}</span></div>
 </div>
-
-${isFile?`<div style="background:rgba(0,111,253,0.10);border:1px solid rgba(0,111,253,0.3);border-radius:12px;padding:10px 12px;margin:0 0 14px;font-size:12px;color:var(--ink);display:flex;align-items:center;gap:10px"><span style="font-size:18px">🌐</span><div style="flex:1"><strong>Application en ligne :</strong> Accédez à la version officielle sur <a href="https://chari-flame.vercel.app" style="color:var(--brand);font-weight:700">chari-flame.vercel.app</a></div><a class="btn" href="https://chari-flame.vercel.app" style="width:auto;min-height:30px;padding:2px 10px;font-size:11px;text-decoration:none">Ouvrir</a></div>`:''}
-
-<div style="background:#ffffff;border:1.5px solid var(--line);border-radius:20px;padding:22px 18px;box-shadow:0 8px 30px rgba(0,0,0,0.06);margin-bottom:16px">
-
-<button class="btn-google" data-a="launch-google-oauth" type="button" id="btn-google-oauth" style="width:100%;min-height:54px;font-size:15.5px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:12px;background:#ffffff;color:#1F1F1F;border:2px solid #E2E8F0;border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,0.08);cursor:pointer;transition:transform 0.15s ease, box-shadow 0.15s ease;">
+<div class="auth-card">
+<h1>${signup?t.authSignupT:t.authLoginT}</h1>
+<p class="mut">${t.authSub}</p>
+<button class="btn-google" data-a="launch-google-oauth" type="button" id="btn-google-oauth">
 <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-<span>${isAr?"المتابعة بحساب Google (1-نقرة تلقائية)":"Continuer avec Google (1-clic)"}</span>
+<span>${t.gContinue}</span>
 </button>
-
-<div style="display:flex;align-items:center;gap:12px;margin:18px 0 16px">
-<div style="flex:1;height:1px;background:var(--line)"></div>
-<span style="font-size:11.5px;font-weight:700;color:var(--mut);letter-spacing:0.6px;text-transform:uppercase">${isAr?"أو تأكيد بريدك Gmail مباشرة":"OU SAISIE DIRECTE GMAIL"}</span>
-<div style="flex:1;height:1px;background:var(--line)"></div>
+<div class="divider"><span>${t.orDivider}</span></div>
+<div class="seg auth-seg" role="tablist">
+<button type="button" role="tab" data-a="auth-mode" data-k="signup" aria-pressed="${signup}" aria-selected="${signup}">${t.authSignupTab}</button>
+<button type="button" role="tab" data-a="auth-mode" data-k="login" aria-pressed="${!signup}" aria-selected="${!signup}">${t.authLoginTab}</button>
 </div>
-
-<div style="display:flex;flex-direction:column;gap:8px;text-align:start">
-<label for="google-email" style="font-size:13px;font-weight:700;color:var(--ink);display:flex;align-items:center;gap:6px">
-<span>📧</span> <span>${isAr?"عنوان بريدك Gmail (@gmail.com) :":"Votre adresse Gmail (@gmail.com) :"}</span>
-</label>
-<input class="fld" id="google-email" type="email" autocomplete="email" placeholder="votre.nom@gmail.com" value="${esc(st.em||"")}" style="font-size:15px">
-<p class="err" id="google-err" role="alert" style="margin:2px 0 0;font-size:12.5px"></p>
-<button class="btn gold" data-a="submit-google-auth" id="btn-submit-google-auth" type="button" style="min-height:50px;font-size:15px;font-weight:800;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:8px">
-<span>✓</span> <span>${isAr?"تأكيد حساب Google والمتابعة ➜":"Valider mon compte Google & Continuer ➜"}</span>
-</button>
+<form class="auth-form" onsubmit="event.preventDefault();submitEmailAuth()">
+<label for="em">${t.eml}</label>
+<input class="fld" id="em" type="email" autocomplete="email" inputmode="email" required placeholder="nom@exemple.com" value="${esc(st.em||"")}">
+<label for="pwd">${t.pwd}</label>
+<input class="fld" id="pwd" type="password" autocomplete="${signup?"new-password":"current-password"}" required minlength="8" placeholder="${t.pwdPh}">
+<p class="err" id="auth-err" role="alert"></p>
+<button class="btn" id="btn-email-auth" data-a="email-auth" type="submit">${signup?t.authSignupBtn:t.authLoginBtn}</button>
+${signup?"":`<button type="button" class="link-btn" data-a="reset-pwd">${t.forgotPwd}</button>`}
+</form>
+<ul class="trust">
+<li>${ic("ok")}<span>${t.trust1}</span></li>
+<li>${ic("lock")}<span>${t.trust2}</span></li>
+<li>${ic("shield")}<span>${t.trust3}</span></li>
+</ul>
 </div>
-</div>
-
-<div style="background:rgba(0,111,253,0.06);border:1px solid rgba(0,111,253,0.2);border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
-<div style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--ink)">
-<span style="color:#34A853;font-size:16px">✓</span>
-<span>${isAr?"شعار «حساب Google موثّق» يُضاف تلقائياً إلى بروفايلك":"Badge Compte Vérifié Google attribué à votre profil"}</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--ink)">
-<span style="color:#4285F4;font-size:16px">🛡️</span>
-<span>${isAr?"حماية ضد الحسابات المزيفة (100% بروفايلات حقيقية)":"Protection anti-faux profils (100% profils réels au Tchad)"}</span>
-</div>
-<div style="display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;color:var(--ink)">
-<span style="color:#EA4335;font-size:16px">🔒</span>
-<span>${isAr?"بياناتك الشخصية مشفرة ومحمية بسرية تامة":"Vos données personnelles restent sécurisées et confidentielles"}</span>
-</div>
-</div>
-
-<p class="mut" style="font-size:12px;margin:12px 0 0;text-align:center">${t.age}</p>
+<p class="mut small center">${t.age}</p>
 </div>`;
 }
-if(s===2)return`<div class="pf">
-<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-<h1 style="margin:0">${t.pr}</h1>
-<button type="button" data-a="back-to-step0" style="background:none;border:none;color:var(--brand);font-size:12.5px;font-weight:600;cursor:pointer;padding:4px 8px;display:inline-flex;align-items:center;gap:4px">
-<span>←</span> <span>${st.lang==='ar'?'تغيير حساب Google':'Changer de compte Google'}</span>
-</button>
+if(s===2){
+const ctryOpts=countryList(st.lang).map(c=>`<option value="${c.c}" ${st.u.ctry===c.c?"selected":""}>${flagEmoji(c.c)} ${esc(regionName(c.c,st.lang))} (+${c.d})</option>`).join("");
+return`<div class="pf form-page">
+<div class="form-head">
+<h1>${t.pr}</h1>
+<button type="button" class="link-btn" data-a="logout">${t.logout}</button>
 </div>
-${st.u.gVerif?`<div style="display:flex;align-items:center;gap:8px;background:rgba(52,168,83,0.12);color:#1e7e34;padding:8px 12px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:12px"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="#34A853" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg><span>${t.gVerif}${st.em?" : "+esc(st.em):""}</span></div>`:""}
-<p style="font-size:13px;color:var(--mut);margin:0 0 14px;line-height:1.4">${st.lang==="ar"?"جميع الحقول التالية إلزامية. يرجى ملؤها بنفسك للمتابعة:":"Tous les champs ci-dessous sont obligatoires. Veuillez les remplir vous-même pour continuer :"}</p>
-<div><label for="nm">${t.nm} *</label><input class="fld" id="nm" type="text" autocomplete="given-name" maxlength="30" value="${esc(st.u.n||"")}" placeholder="Ex: Mahamat, Achte..."></div>
+${st.em?`<div class="note ok">${ic("ok")}<span>${st.u.gVerif?t.gVerif:t.emVerif} : ${esc(st.em)}</span></div>`:""}
+<p class="mut">${t.req2}</p>
+<fieldset class="fs"><legend>${t.secId}</legend>
+<div><label for="nm">${t.nm} *</label><input class="fld" id="nm" type="text" autocomplete="given-name" maxlength="30" value="${esc(st.u.n||"")}"></div>
+<div><label id="gl">${t.iam} *</label><div class="seg" role="group" aria-labelledby="gl"><button type="button" data-a="gd" data-k="f" aria-pressed="${st.g==="f"}">${t.fem}</button><button type="button" data-a="gd" data-k="m" aria-pressed="${st.g==="m"}">${t.mal}</button></div></div>
+<div><label for="bd">${t.bdLbl} *</label><input class="fld" id="bd" type="date" max="${maxBirthDate()}" min="1925-01-01" value="${esc(st.u.bd||"")}" autocomplete="bday"><p class="help">${t.bdHelp}</p><p class="err" id="eA" role="alert"></p></div>
+</fieldset>
+<fieldset class="fs"><legend>${t.secWhere}</legend>
+<div><label for="ctry">${t.ctryLbl} *</label><select class="fld" id="ctry" autocomplete="country">${ctryOpts}</select></div>
+<div><label for="cy">${t.cty} *</label><input class="fld" id="cy" type="text" maxlength="40" autocomplete="address-level2" value="${esc(st.u.c||"")}" placeholder="${t.cityPh}"></div>
+<div><label for="wa">${t.waLbl} *</label><div class="wa-row"><span class="wa-cc" id="wa-cc">+${dialOf(st.u.ctry)}</span><input class="fld" id="wa" type="tel" inputmode="tel" autocomplete="tel-national" maxlength="20" value="${esc((st.u.wa||"").replace("+"+dialOf(st.u.ctry),""))}" placeholder="${t.waPh}"></div><p class="help">${t.waHelp}</p></div>
+</fieldset>
+<fieldset class="fs"><legend>${t.secAbout}</legend>
 <div><label for="jb">${t.job} *</label><input class="fld" id="jb" type="text" placeholder="${t.jobPh}" maxlength="35" value="${esc(st.u.jb||"")}"></div>
-<div><label for="bio">${t.bioLbl} *</label><textarea class="fld" id="bio" rows="3" style="resize:vertical;font-family:inherit;padding:10px;line-height:1.4" placeholder="${t.bioPh}" maxlength="240">${esc(st.u.bio||"")}</textarea></div>
-<div><label id="gl">${t.iam} *</label><div class="seg" role="group" aria-labelledby="gl"><button data-a="gd" data-k="f" aria-pressed="${st.g==="f"}">${t.fem}</button><button data-a="gd" data-k="m" aria-pressed="${st.g==="m"}">${t.mal}</button></div></div>
-<div><label for="ag">${t.ag} (≥ 22 ans) *</label><input class="fld" id="ag" type="number" inputmode="numeric" min="22" max="99" value="${st.u.a||""}" placeholder="Ex: 25"><p class="err" id="eA" role="alert"></p></div>
-<div><label for="cy">${t.cty} * ${flagSvg}</label><select class="fld" id="cy">${CI.map(c=>`<option ${st.u.c===c?"selected":""}>${c}</option>`).join("")}</select></div>
-<div><label for="tc">${t.tcty} * ${flagSvg}</label><select class="fld" id="tc"><option value="all" ${(!st.u.tc||st.u.tc==="all")?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.u.tc===c?"selected":""}>${c}</option>`).join("")}</select></div>
-<div><label for="lng">${t.langSpk} *</label><select class="fld" id="lng"><option value="fr" ${(st.u.lng||"fr")==="fr"?"selected":""}>${t.lngFr}</option><option value="ar" ${st.u.lng==="ar"?"selected":""}>${t.lngAr}</option><option value="both" ${st.u.lng==="both"?"selected":""}>${t.lngBoth}</option></select></div>
+<div><label for="bio">${t.bioLbl} *</label><textarea class="fld" id="bio" rows="3" placeholder="${t.bioPh}" maxlength="240">${esc(st.u.bio||"")}</textarea></div>
+<div><label for="lng">${t.langSpk} *</label><select class="fld" id="lng"><option value="fr" ${(st.u.lng||"fr")==="fr"?"selected":""}>${t.lngFr}</option><option value="ar" ${st.u.lng==="ar"?"selected":""}>${t.lngAr}</option><option value="both" ${st.u.lng==="both"?"selected":""}>${t.lngBoth}</option><option value="en" ${st.u.lng==="en"?"selected":""}>${t.lngEn}</option></select></div>
 <div><label for="rel">${t.rel} *</label><select class="fld" id="rel"><option value="mus" ${(st.u.rel||"mus")==="mus"?"selected":""}>${t.relMus}</option><option value="chr" ${st.u.rel==="chr"?"selected":""}>${t.relChr}</option><option value="oth" ${st.u.rel==="oth"?"selected":""}>${t.relOth}</option></select></div>
-<div><label>${t.hobLbl} (choisissez au moins 1) *</label><p class="mut" style="margin:2px 0 6px">${t.hobHint}</p><div class="h-chips" role="group" aria-label="${t.hobLbl}">${HOBBIES.map(h=>{const on=(st.u.hb||[]).includes(h.id);return`<button type="button" class="h-chip ${on?"on":""}" data-a="toghb" data-h="${h.id}" aria-pressed="${on}"><span>${h[st.lang]}</span></button>`}).join("")}</div></div>
 <div><label for="kd">${t.kd} *</label><select class="fld" id="kd">${t.kid.map((k,i)=>`<option value="${i}" ${st.u.kd===i?"selected":""}>${k}</option>`).join("")}</select></div>
 <div><label for="it">${t.it} *</label><select class="fld" id="it"><option value="ser" ${st.u.i==="ser"?"selected":""}>${t.k.ser}</option><option value="mar" ${st.u.i==="mar"?"selected":""}>${t.k.mar}</option></select></div>
+<div><label>${t.hobLbl} *</label><p class="help">${t.hobHint}</p><div class="h-chips" role="group" aria-label="${t.hobLbl}">${HOBBIES.map(h=>{const on=(st.u.hb||[]).includes(h.id);return`<button type="button" class="h-chip ${on?"on":""}" data-a="toghb" data-h="${h.id}" aria-pressed="${on}"><span>${h[st.lang]}</span></button>`}).join("")}</div></div>
+</fieldset>
+<fieldset class="fs"><legend>${t.flagsSec}</legend>
+<p class="help">${t.flagsHelp}</p>
+<div><label class="flag-title green">${t.gfTitle} <span class="count" data-flag-count="g">${(st.u.gf||[]).length}/5</span></label>${flagPicker("g")}</div>
+<div><label class="flag-title red">${t.rfTitle} <span class="count" data-flag-count="r">${(st.u.rf||[]).length}/5</span></label>${flagPicker("r")}</div>
+</fieldset>
 <p class="err" id="e2" role="alert"></p>
-<button class="btn" data-a="s2">${t.ct}</button>
+<button class="btn" data-a="s2" type="button">${t.ct}</button>
 </div>`;
+}
 if(s===3)return`<div class="pf">
 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
 <h1 style="margin:0">${t.sf1}</h1>
@@ -2562,7 +2808,7 @@ ${ic("cam")}
 💡 ${st.lang==='ar'?'يمكنك إضافة صور أو فيديوهات حتى 10 ثوانٍ (مثلاً صورة واحدة و 4 فيديوهات). اضغط على ⭐ تعيين كبروفايل لاختيار صورتك الرئيسية.':'Vous pouvez ajouter des photos ou vidéos courtes de 10s max (ex: 1 photo et 4 vidéos). Cliquez sur ⭐ Définir profil pour choisir votre photo principale.'}
 </p>
 <input id="pf-direct" type="file" accept="image/*,video/*" hidden>
-<div class="sf" style="background:rgba(0,111,253,0.06);border:1px solid rgba(0,111,253,0.2);margin-bottom:18px">
+<div class="sf" style="background:rgba(194,24,91,0.06);border:1px solid rgba(194,24,91,0.2);margin-bottom:18px">
 <div style="display:flex;align-items:flex-start;gap:10px">
 <span style="font-size:20px">✨</span>
 <p style="margin:0;font-size:12.5px;line-height:1.4;color:var(--ink)">
@@ -2570,7 +2816,7 @@ ${t.photosAdvice||"💡 Les profils avec des photos et vidéos courtes ont 4 foi
 </p>
 </div>
 </div>
-<button class="btn gold" data-a="finish-onb-photos" type="button" style="min-height:50px;font-size:16px;box-shadow:0 4px 16px rgba(217,119,6,0.3)">
+<button class="btn gold" data-a="finish-onb-photos" type="button" style="min-height:50px;font-size:16px;box-shadow:0 4px 16px rgba(194,24,91,0.3)">
 ${t.finishOnbPhotos||"Terminer et découvrir les profils ✨"}
 </button>
 </div>`;
@@ -2578,81 +2824,42 @@ ${t.finishOnbPhotos||"Terminer et découvrir les profils ✨"}
 return "";
 }
 function payv(){
-st.op="visa";
 const t=x(),lim=!st.prem&&st.seen>=LIM;
-const cn=(st.card&&st.card.num)||"",ce=(st.card&&st.card.exp)||"",cv=(st.card&&st.card.cvv)||"",cm=(st.card&&st.card.nom)||(st.u&&st.u.n?(st.u.n.toUpperCase()+" ADAM"):"");
-const chadCountdown=getChadCountdownStr();
-return`<div class="pf">
-<div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
-<button class="ib" data-a="pay-back" aria-label="${t.bk}" title="${t.bk}">${ic("back")}</button>
-<h1 style="margin:0;font-size:22px">${lim?t.pw:t.pss}</h1>
+return`<div class="pf pay-page">
+<div class="form-head"><button class="ib" data-a="pay-back" aria-label="${t.bk}">${ic("back")}</button><h1>${lim?t.pw:t.pss}</h1></div>
+${lim?`<div class="status-banner wait">${ic("shield")}<div><strong>${t.pw}</strong><span>${t.pw2} ${t.resetIn} ${getChadCountdownStr()}</span></div></div>`:""}
+<div class="plan-card">
+<span class="plan-tag">Premium</span>
+<p class="plan-price">${t.priceMain}<small> / ${t.month}</small></p>
+<p class="mut small">${t.priceEq}</p>
+<ul class="plan-list"><li>${ic("ok")}<span>${t.premF1}</span></li><li>${ic("ok")}<span>${t.premF2}</span></li><li>${ic("ok")}<span>${t.premF3}</span></li><li>${ic("ok")}<span>${t.premF4}</span></li></ul>
 </div>
-${lim?`<p style="margin:0 0 10px;color:var(--mut);font-size:13px">${t.pw2}</p>
-<div style="background:linear-gradient(135deg,rgba(0,111,253,0.08),rgba(16,185,129,0.08));border:1.5px solid rgba(0,111,253,0.25);border-radius:16px;padding:14px 16px;margin:8px 0 16px;box-shadow:0 4px 16px rgba(0,0,0,0.04)">
-<div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
-<span style="font-size:24px">⏰</span>
-<div>
-<h3 style="margin:0;font-size:14.5px;font-weight:700;color:var(--ink)">${st.lang==="ar"?"تجديد تلقائي لـ 20 ملفاً":"Renouvellement automatique à 00h00"}</h3>
-<span style="font-size:11.5px;color:var(--brand);font-weight:600">${st.lang==="ar"?"بتوقيت تشاد الرسمي (WAT • UTC+1)":"Heure officielle du Tchad (WAT • UTC+1)"} ${flagSvg}</span>
-</div>
-</div>
-<p style="margin:4px 0 8px;font-size:12.5px;line-height:1.45;color:var(--body)">
-${st.lang==="ar"
-?"لقد استنفدت زيارة 20 ملفاً شخصياً لهذا اليوم. عند حلول الساعة 00:00 (منتصف الليل بتوقيت تشاد)، ستحصل تلقائياً على 20 زيارة جديدة حتى 00:00 التالية."
-:"Vous avez exploré vos 20 profils d'aujourd'hui. À <strong>00h00 (minuit au Tchad)</strong>, vos accès seront automatiquement réinitialisés pour découvrir <strong>20 nouvelles personnes</strong> jusqu'au lendemain 00h00."}
-</p>
-<div style="display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.85);border-radius:10px;padding:8px 12px;margin-top:6px;font-size:12px;border:1px solid rgba(0,111,253,0.15)">
-<span style="color:var(--mut);font-weight:500">${st.lang==="ar"?"الوقت المتبقي للتجديد :":"Temps restant avant 00h00 :"}</span>
-<strong style="color:var(--brand);font-size:13px">⏳ ${chadCountdown}</strong>
-</div>
-</div>`:""}
-
-<div class="plan" style="background:linear-gradient(135deg,rgba(0,111,253,0.08) 0%,rgba(245,158,11,0.12) 100%);border:1.5px solid var(--gold);border-radius:18px;padding:16px 14px;box-shadow:var(--sh-md)">
-<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px">
-<h2 style="font-size:17px;font-weight:700;color:var(--ink);margin:0">${t.pss}</h2>
-<span class="price" style="font-size:19px;font-weight:800;color:var(--brand);white-space:nowrap">5 000 FCFA <span style="font-size:12px;font-weight:600;color:var(--mut)">/ mois</span></span>
-</div>
-<p style="margin:0;font-size:12.5px;line-height:1.45;color:var(--body)">${t.pss2}</p>
-</div>
-
-<div style="background:var(--surf);border:1.5px solid var(--line);border-radius:18px;padding:16px 14px;margin:4px 0;box-shadow:var(--sh-sm);overflow-x:hidden">
-<div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;color:var(--brand);font-weight:700;font-size:14px">
-<svg viewBox="0 0 36 22" width="28" height="17" style="vertical-align:middle" aria-hidden="true"><rect width="36" height="22" rx="3" fill="#1A1F71"/><path d="M14.5 16.5l2.2-11h2.5l-2.2 11h-2.5zm10.7-10.7c-.5-.2-1.3-.4-2.2-.4-2.4 0-4.1 1.2-4.1 3 0 1.3 1.2 2 2.1 2.4.9.4 1.2.7 1.2 1.1 0 .6-.7.9-1.4.9-1 0-1.5-.1-2.3-.5l-.3-.2-.3 1.9c.5.2 1.5.4 2.5.4 2.6 0 4.2-1.2 4.2-3.1 0-1-.6-1.8-2-2.4-.8-.4-1.3-.7-1.3-1.1 0-.4.4-.8 1.3-.8.7 0 1.3.1 1.7.3l.2.1.4-1.7zm6.8 0h-1.9c-.6 0-1 .2-1.3.8l-3.6 8.9h2.6l.5-1.4h3.2l.3 1.4h2.3l-2.1-9.7zm-2.8 6.4l1-2.7.6 2.7h-1.6zm-17.8-6.4l-2.4 6.7-.3-1.3c-.4-1.5-1.8-3.1-3.3-3.9l2.2 8.2h2.6l3.9-9.7h-2.7z" fill="#FFF"/><path d="M4.6 5.8l-2.4 8.2c-.3 1.1.6 1.8 1.6 1.8h3.8l.6-1.5H5.8L4.6 5.8z" fill="#F7B600"/></svg>
-<span>${t.opVisa||"Carte bancaire (Visa / Mastercard)"}</span>
-</div>
-
-<div class="visa-card-box">
-<div class="visa-card-chip"></div>
-<svg class="visa-logo-white" viewBox="0 0 50 16" width="46" height="15" aria-hidden="true"><path d="M19.7 15.2l2.9-14.4h3.3l-2.9 14.4h-3.3zm14.1-14c-.7-.3-1.7-.5-2.9-.5-3.2 0-5.4 1.6-5.4 3.9 0 1.7 1.6 2.7 2.8 3.2 1.2.6 1.6.9 1.6 1.4 0 .8-.9 1.2-1.8 1.2-1.3 0-2-.2-3.1-.7l-.4-.2-.4 2.5c.7.3 2 .5 3.3.5 3.4 0 5.5-1.6 5.5-4.1 0-1.4-.8-2.4-2.7-3.2-1.1-.5-1.7-.9-1.7-1.4 0-.5.5-1 1.7-1 .9 0 1.7.2 2.2.4l.3.1.4-2.1zm8.9 0h-2.5c-.8 0-1.3.2-1.7 1.1l-4.7 11.7h3.4l.7-1.9h4.2l.4 1.9h3l-2.8-12.8zm-3.7 8.4l1.3-3.6.8 3.6h-2.1zm-23.4-8.4l-3.2 8.8-.4-1.7c-.6-2-2.4-4.1-4.4-5.1l2.9 10.8h3.4l5.1-12.8h-3.4z" fill="#FFF"/><path d="M6.1 1.2L2.9 12c-.4 1.4.8 2.4 2.1 2.4h5l.8-2H7.7L6.1 1.2z" fill="#F7B600"/></svg>
-<div class="visa-card-num">${cn?cn:"•••• •••• •••• ••••"}</div>
-<div class="visa-card-bottom">
-<div><div class="visa-card-lbl">TITULAIRE</div><div class="visa-card-val visa-card-nom-val">${cm?esc(cm):"NOM PRENOM"}</div></div>
-<div><div class="visa-card-lbl">EXPIRE</div><div class="visa-card-val visa-card-exp-val">${ce?esc(ce):"MM/AA"}</div></div>
-</div>
-</div>
-
-<div style="display:flex;flex-direction:column;gap:10px;margin-top:12px">
-<div><label for="c-num">${t.cardNum}</label><input class="fld" id="c-num" type="tel" inputmode="numeric" placeholder="4000 1234 5678 9010" maxlength="19" value="${esc(cn)}"></div>
-<div style="display:flex;gap:10px"><div style="flex:1;min-width:0"><label for="c-exp">${t.cardExp}</label><input class="fld" id="c-exp" type="text" inputmode="numeric" placeholder="12/28" maxlength="5" value="${esc(ce)}"></div><div style="flex:1;min-width:0"><label for="c-cvv">${t.cardCvv}</label><input class="fld" id="c-cvv" type="password" inputmode="numeric" placeholder="123" maxlength="3" value="${esc(cv)}"></div></div>
-<div><label for="c-nom">${t.cardNom}</label><input class="fld" id="c-nom" type="text" placeholder="${t.cardNomPh}" maxlength="30" value="${esc(cm)}"></div>
-</div>
-<p class="err" id="eP" role="alert" style="margin:4px 0 0"></p>
-
-<div class="visa-sec-badge" style="margin-top:10px"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg><span>${t.cardSec}</span></div>
-</div>
-
-<button class="btn gold" data-a="pay" ${st.pp?"disabled":""} style="min-height:50px;font-size:15.5px;font-weight:700">
-${st.pp?(st.lang==="ar"?"جارٍ التحقق 3D Secure…":"Vérification 3D Secure…"):t.pb}
-</button>
-<p class="mut" style="font-size:12px;text-align:center;margin:6px 0">${t.pd}</p>
-<button class="btn sec" data-a="pay-back" style="display:flex;align-items:center;justify-content:center;gap:8px">${ic("back")}<span>${t.bk}</span></button>
+<p class="err" id="eP" role="alert"></p>
+<button class="btn" data-a="pay-card" id="btn-pay-card" ${st.pp?"disabled aria-busy=\"true\"":""}>${ic("lock")}<span>${st.pp?t.pg:t.payCard}</span></button>
+<p class="help center">${t.cardSec}</p>
+<div class="card-logos" aria-hidden="true"><span>VISA</span><span>Mastercard</span></div>
+<button class="btn ghost" data-a="pay-back">${t.bk}</button>
 </div>`;
+}
+/* Paiement par carte : la page de paiement securisee du prestataire est ouverte.
+   La carte n'est JAMAIS saisie dans Chari. Le Premium est active par le serveur
+   (fonction Supabase "create-checkout" + webhook du prestataire). */
+async function startCardCheckout(){
+const t=x(),err=$("#eP");if(err)err.textContent="";
+if(!sbClient||!sbClient.functions){if(err)err.textContent=t.payUnavail;return}
+st.pp=1;render();
+try{
+const {data,error}=await sbClient.functions.invoke("create-checkout",{body:{plan:"premium_month",return_url:getOAuthRedirectUrl()}});
+if(error||!data||!data.url)throw error||new Error("no url");
+window.location.href=data.url;
+}catch(e){console.warn("checkout:",e);st.pp=0;render();const er=$("#eP");if(er)er.textContent=t.payUnavail;}
 }
 function dis(){
 checkAndResetDailyLimits();
 const t=x(),p=pool()[st.i];
 if(st.pay||(!st.prem&&st.seen>=LIM))return payv();
-const cbar=`<div class="cbar"><span class="ctag">${t.cityFilt} ${flagSvg}</span><select class="csel" id="sel-tc" aria-label="${t.tcty}"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.tc===c?"selected":""}>${c}</option>`).join("")}</select></div>`;
+const present=[...new Set(P.map(q=>q.ctry).filter(Boolean))];
+const cbar=`${selfieStatusBanner()}<div class="cbar"><label class="ctag" for="sel-tc">${t.cityFilt}</label><select class="csel" id="sel-tc" aria-label="${t.tcty}"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${countryList(st.lang).filter(c=>present.includes(c.c)||st.tc===c.c).map(c=>`<option value="${c.c}" ${st.tc===c.c?"selected":""}>${flagEmoji(c.c)} ${esc(regionName(c.c,st.lang))}</option>`).join("")}</select></div>`;
 const seenRem=Math.max(0,LIM-st.seen);
 const cnt=`<p class="cnt">${st.prem?t.unl:`${st.seen}/${LIM} ${t.pj} <span style="font-size:11.5px;font-weight:500;color:var(--mut)">(${st.lang==="ar"?"متبقي":"reste"} ${seenRem})</span>`}${st.inc?`<span class="badge" style="background:#1E293B;color:#fff">🕶️ ${t.incb}</span>`:""}</p>${st.prem?"":`<div class="bar" aria-hidden="true"><i style="width:${Math.min(100,st.seen*100/LIM)}%"></i></div>`}`;
 const sentCount=(st.dailyLimits&&st.dailyLimits.sent)||0;
@@ -2660,7 +2867,7 @@ const sentRem=Math.max(0,20-sentCount);
 const chadCountdown=getChadCountdownStr();
 const qBadge=st.prem
 ? `<div class="quota-banner prem"><span class="quota-left">✨ <strong>${t.prem}</strong> • ${t.dailyReqQuota} illimitées</span>${st.inc?`<span class="badge" style="background:#1E293B;color:#fff">🕶️ ${t.incb}</span>`:""}</div>`
-: `<div class="quota-banner"><span class="quota-left">💌 ${t.dailyReqQuota} : <strong>${sentCount}/20</strong> (reste ${sentRem})</span><span style="font-size:11px;color:var(--mut)" title="${st.lang==="ar"?"تجديد الحصة عند 00:00 بتوقيت تشاد":"Réinitialisation quotidienne à 00h00 heure du Tchad"}">⏳ 00h00 (${st.lang==="ar"?"تشاد":"Tchad"}) • ${chadCountdown}</span></div>`;
+: `<div class="quota-banner"><span class="quota-left">${t.dailyReqQuota} : <strong>${sentCount}/20</strong></span><span class="quota-reset" title="${t.resetMidnight}">${t.resetIn} ${chadCountdown}</span></div>`;
 const incBanner=st.inc?`<div style="display:flex;align-items:center;gap:8px;background:rgba(30,41,59,0.08);border:1px solid #1E293B;border-radius:10px;padding:6px 12px;margin-bottom:8px;font-size:12px;color:var(--ink)"><span>🕶️</span><span style="font-weight:600">${t.incogBanner}</span></div>`:"";
 if(!p)return cbar+incBanner+qBadge+cnt+`<div class="empty"><div style="font-size:42px;margin-bottom:8px">🌟</div><h2>${st.tc!=="all"?t.noCity:(t.noProfilesYet||t.done)}</h2><p>${st.tc!=="all"?t.noCityD:(t.noProfilesDesc||"")}</p><button class="btn" data-a="${st.tc!=="all"?"reset-tc":"tab"}" data-k="${st.tc!=="all"?"":"p"}" style="max-width:260px;margin:12px auto 0">${st.tc!=="all"?t.allC:t.my}</button></div>`;
 const bioText=(p.b&&p.b[st.lang])||p.bio||(p.b&&p.b.fr)||"";
@@ -2692,7 +2899,7 @@ ${isVid?`
 <button class="btn sec" style="position:absolute;bottom:10px;left:10px;width:auto;min-height:30px;padding:3px 12px;font-size:12px;background:rgba(0,0,0,0.65);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:999px;backdrop-filter:blur(4px);z-index:7" data-a="view-user-profile" data-id="${p.id}">👁️ ${t.viewProfile||"Voir le profil"}</button>
 </div>`
 :`<div class="card-photo-container">${av(p,st.blur)}<button class="ib" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.5);color:#fff;border-radius:50%;width:36px;height:36px;backdrop-filter:blur(4px);z-index:7" data-a="open-opt" data-id="${p.id}">${ic("dots")}</button></div>`;
-return cbar+incBanner+qBadge+cnt+`<article class="card ${st.blur?'blur':''}"><div class="ph">${photoHtml}${st.blur?`<span class="pill">${t.blur}</span>`:""}</div><div class="bd" style="cursor:pointer" data-a="view-user-profile" data-id="${p.id}"><h2>${esc(p.n)}, ${p.a}${ic("ok")}</h2><p class="mut">${esc(p.c)} ${flagSvg}<span class="badge">${(t.k&&t.k[p.i])||t.k.ser}</span></p><p class="b">${esc(bioText)}</p><ul class="chips"><li>${(t.relMap&&t.relMap[p.rel])||t.relMus}</li><li>${(t.lngMap&&t.lngMap[p.lng])||t.lngFr}</li><li>${(t.kid&&t.kid[p.kd])||t.kid[0]}</li>${[...(p.l||[]),...(p.v||[])].map(k=>`<li>${(t.k&&t.k[k])||k}</li>`).join("")}</ul></div></article><div class="acts"><button class="act" data-a="pass">${ic("x")}<span>${t.pass}</span></button><button class="act like" data-a="like">${ic("heart")}<span>${t.like}</span></button></div>`;
+return cbar+incBanner+qBadge+cnt+`<article class="card"><div class="ph">${photoHtml}${p.revealed?"":`<span class="pill">${ic("lock")} ${t.blurPill}</span>`}</div><div class="bd" style="cursor:pointer" data-a="view-user-profile" data-id="${p.id}"><h2>${esc(p.n)}, ${p.a}${p.is_verified?`<span class="vbadge" title="${t.selfieBadge}">${ic("ok")}</span>`:""}</h2><p class="mut">${p.c?esc(p.c)+" · ":""}${p.ctry?flagEmoji(p.ctry)+" "+esc(regionName(p.ctry,st.lang)):""}<span class="badge">${(t.k&&t.k[p.i])||t.k.ser}</span></p><p class="b">${esc(bioText)}</p>${flagsHtml(p,true)}<ul class="chips"><li>${(t.relMap&&t.relMap[p.rel])||t.relMus}</li><li>${(t.lngMap&&t.lngMap[p.lng])||t.lngFr}</li><li>${(t.kid&&t.kid[p.kd])||t.kid[0]}</li>${(p.hb||[]).map(id=>{const h=HOBBIES.find(z=>z.id===id);return h?`<li>${h[st.lang]}</li>`:""}).join("")}</ul></div></article><div class="acts"><button class="act" data-a="pass" aria-label="${t.pass}">${ic("x")}<span>${t.pass}</span></button><button class="act like" data-a="like" aria-label="${t.like}">${ic("heart")}<span>${t.like}</span></button></div>`;
 }
 function reqView(){
 checkAndResetDailyLimits();
@@ -2720,7 +2927,7 @@ const accCount=(st.dailyLimits&&st.dailyLimits.accepted)||0;
 const accRem=Math.max(0,10-accCount);
 const quotaHtml=st.prem
 ? `<div class="quota-banner prem"><span class="quota-left">✨ <strong>${t.prem}</strong> • ${t.dailyAcceptQuota} illimitées</span></div>`
-: `<div class="quota-banner"><span class="quota-left">✅ ${t.dailyAcceptQuota} : <strong>${accCount}/10</strong> (reste ${accRem})</span><span style="font-size:11px;color:var(--mut)" title="${st.lang==="ar"?"تجديد الحصة عند 00:00 بتوقيت تشاد":"Réinitialisation à 00h00 heure du Tchad"}">⏳ 00h00 (${st.lang==="ar"?"تشاد":"Tchad"}) • ${getChadCountdownStr()}</span></div>`;
+: `<div class="quota-banner"><span class="quota-left">${t.dailyAcceptQuota} : <strong>${accCount}/10</strong></span><span class="quota-reset" title="${t.resetMidnight}">${t.resetIn} ${getChadCountdownStr()}</span></div>`;
 
 if(!reqList.length){
 return subtabsHtml+quotaHtml+`<div class="empty"><div style="font-size:42px;margin-bottom:8px">💌</div><h2>${t.noReq}</h2><p>${t.noReqDesc}</p><button class="btn" data-a="tab" data-k="d" style="max-width:240px;margin:12px auto 0">${t.d}</button></div>`;
@@ -2785,7 +2992,7 @@ const sentCount=(st.dailyLimits&&st.dailyLimits.sent)||0;
 const sentRem=Math.max(0,20-sentCount);
 const quotaHtml=st.prem
 ? `<div class="quota-banner prem"><span class="quota-left">✨ <strong>${t.prem}</strong> • ${t.dailyReqQuota} illimitées</span></div>`
-: `<div class="quota-banner"><span class="quota-left">💌 ${t.dailyReqQuota} : <strong>${sentCount}/20</strong> (reste ${sentRem})</span><span style="font-size:11px;color:var(--mut)" title="${st.lang==="ar"?"تجديد الحصة عند 00:00 بتوقيت تشاد":"Réinitialisation à 00h00 heure du Tchad"}">⏳ 00h00 (${st.lang==="ar"?"تشاد":"Tchad"}) • ${getChadCountdownStr()}</span></div>`;
+: `<div class="quota-banner"><span class="quota-left">${t.dailyReqQuota} : <strong>${sentCount}/20</strong></span><span class="quota-reset" title="${t.resetMidnight}">${t.resetIn} ${getChadCountdownStr()}</span></div>`;
 
 if(!sentList.length){
 return subtabsHtml+quotaHtml+`<div class="empty"><div style="font-size:42px;margin-bottom:8px">📤</div><h2>${t.noReqSent||"Aucune demande envoyée"}</h2><p>${t.noReqSentDesc||"Les profils que vous likez apparaîtront ici en attente de match."}</p><button class="btn" data-a="tab" data-k="d" style="max-width:240px;margin:12px auto 0">${t.d}</button></div>`;
@@ -2820,12 +3027,49 @@ if(!mtList.length)return`<div class="empty"><div style="font-size:42px;margin-bo
 return`<div class="pf" style="padding-top:8px"><h1 style="font-size:22px;margin-bottom:12px">💬 ${t.chatTab}</h1><ul class="list">${mtList.map(id=>{const p=byId(id);if(!p)return"";const l=st.ms[id]&&st.ms[id].slice(-1)[0];return`<li><button class="row" data-a="open" data-id="${id}"><span class="av">${av(p)}</span><span><strong>${esc(p.n)}</strong><br><span class="mut">${l?(l.img?"[Photo]":(l.voice?"[Note vocale]":(esc(l.t)+(l.isEdited?(" "+t.msgEditedTag):"")))):t.mt}</span></span></button></li>`}).join("")}</ul></div>`;
 }
 function chat(){const t=x(),p=byId(st.chat);if(!p)return msgs();
-return`<div class="ch"><div class="chh"><button class="ib" data-a="back" aria-label="${t.bk}">${ic("back")}</button><span class="av s">${av(p)}</span><h2 style="flex:1;min-width:0;display:flex;align-items:center;gap:6px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.n)}</span>${flagSvg}</h2><button class="ib" data-a="start-call" data-id="${p.id}" style="color:var(--brand)" title="${t.vidCall}" aria-label="${t.vidCall}">${ic("video")}</button><button class="ib" data-a="open-opt" data-id="${p.id}" title="${t.opt}" aria-label="${t.opt}">${ic("dots")}</button></div><p class="note">${ic("shield")}<span>${t.st}</span></p><div id="log" class="log" aria-live="polite"></div><div class="inp"><input id="chat-file" type="file" accept="image/*" hidden><button class="ib" data-a="chat-pic" title="Photo" aria-label="Photo">${ic("cam")}</button><button class="ib btn-voice-rec" data-a="chat-rec" id="btn-rec" title="Vocale" aria-label="Vocale">${ic("mic")}</button><input id="in" type="text" placeholder="${t.ph}" aria-label="${t.ph}" autocomplete="off"><button class="send" data-a="send" aria-label="${t.snd}">${ic("send")}</button></div></div>`}
+return`<div class="ch"><div class="chh"><button class="ib" data-a="back" aria-label="${t.bk}">${ic("back")}</button><span class="av s">${av(p)}</span><h2 style="flex:1;min-width:0;display:flex;align-items:center;gap:6px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.n)}</span>${p.ctry?`<span aria-hidden="true">${flagEmoji(p.ctry)}</span>`:""}</h2><button class="ib" data-a="start-call" data-id="${p.id}" style="color:var(--brand)" title="${t.vidCall}" aria-label="${t.vidCall}">${ic("video")}</button><button class="ib" data-a="open-opt" data-id="${p.id}" title="${t.opt}" aria-label="${t.opt}">${ic("dots")}</button></div><div id="reveal-bar">${revealBar(p)}</div><p class="note">${ic("shield")}<span>${t.st}</span></p><div id="log" class="log" aria-live="polite"></div><div class="inp"><input id="chat-file" type="file" accept="image/*" hidden><button class="ib" data-a="chat-pic" title="Photo" aria-label="Photo">${ic("cam")}</button><button class="ib btn-voice-rec" data-a="chat-rec" id="btn-rec" title="Vocale" aria-label="Vocale">${ic("mic")}</button><input id="in" type="text" placeholder="${t.ph}" aria-label="${t.ph}" autocomplete="off"><button class="send" data-a="send" aria-label="${t.snd}">${ic("send")}</button></div></div>`}
 function prof(){const t=x(),u=st.u,n=st.ph5.length;
 const hbList=(u.hb||[]);
 const uBio=u.bio||t.bioDef;
 const blkCount=(st.blocked||[]).length;
-return`<div class="pf"><h1>${t.my}</h1><div class="card"><div class="bd"><div class="chh"><span class="av l">${me(0)}</span><div><h2>${esc(u.n||"")}, ${u.a}${ic("ok")}</h2><p class="mut">${u.jb?esc(u.jb)+" · ":""}${u.c} ${flagSvg}</p></div></div><p class="b" style="margin:10px 0 8px;font-style:italic;color:var(--ink);background:rgba(0,0,0,.03);padding:10px 14px;border-radius:12px;border-inline-start:3px solid var(--brand);cursor:pointer" data-a="edbio" title="${t.edBio}">“${esc(uBio)}”</p><ul class="chips"><li>${t.vd}</li><li style="cursor:pointer" data-a="edj" title="${t.job}">${esc(u.jb||"")}</li><li style="cursor:pointer" data-a="edc" title="${t.cty}">${esc(u.c)}</li><li style="cursor:pointer" data-a="edtc" title="${t.tcty}">${t.seekCity}: ${esc(st.tc==="all"?t.allC:st.tc)}</li><li style="cursor:pointer" data-a="edrel" title="${t.rel}">${(t.relMap&&t.relMap[u.rel])||t.relMus}</li><li style="cursor:pointer" data-a="edlng" title="${t.langSpk}">${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</li><li>${t.kid[u.kd]}</li><li>${t.k[u.i]}</li>${u.gVerif?`<li style="border-color:#34A853;color:#1e7e34">${t.gVerif}</li>`:""}${st.inc?`<li>${t.incb}</li>`:""}</ul></div></div><div class="sf"><div><h3>${t.rel} & ${t.langSpk}</h3><p>${(t.relMap&&t.relMap[u.rel])||t.relMus} · ${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edrel">${t.rel}</button></div><div class="sf"><div><h3>${t.bio}</h3><p style="white-space:pre-wrap;color:var(--ink)">${esc(uBio)}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="edbio">${t.edBio}</button></div><div class="sf"><div><h3>${t.hob}</h3><p>${hbList.length?hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?h[st.lang]:""}).filter(Boolean).join(" · "):t.hobHint}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-edhb">${t.edHb}</button></div><div class="h-chips" style="margin-top:-6px;margin-bottom:12px">${hbList.map(id=>{const h=HOBBIES.find(x=>x.id===id);return h?`<span class="h-chip on" style="cursor:pointer" data-a="open-edhb"><span>${h[st.lang]}</span></span>`:""}).join("")}</div><div class="sf"><div><h3>${t.tcty}</h3><p>${st.tc==="all"?t.allC:st.tc} ${flagSvg}</p></div><select class="fld" style="width:auto;min-height:38px;padding:4px 8px;margin-inline-start:auto" id="p-tc"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${CI.map(c=>`<option value="${c}" ${st.tc===c?"selected":""}>${c}</option>`).join("")}</select></div><div class="sf"><div><h3>${t.phs} (${n}/5)</h3><p>${t.ph5i}</p></div></div><div class="grid5">${st.ph5.map((q,i)=>{const isVid=q.isVideo;const imgSrc=(isVid&&q.poster)?q.poster:(q.p||q.o);return`<div class="pt ${q.isSelfie?'pt-selfie':''}"><img src="${imgSrc}" alt="${isVid?'Vidéo':'Photo'} ${i+1}" onerror="this.onerror=null;this.src='couple.jpg'">${isVid?`<span class="video-grid-badge">🎥 ${q.duration?q.duration+'s':'10s'}</span>`:''}${i===0?`<span class="profile-main-badge">⭐ ${st.lang==='ar'?'الرئيسية':'Profil'}</span>`:`<button type="button" class="btn-make-avatar" data-a="set-avatar" data-k="${i}" title="${st.lang==='ar'?'تعيين كصورة شخصية رئيسية':'Définir comme photo de profil'}">⭐ ${st.lang==='ar'?'تعيين كبروفايل':'Définir profil'}</button>`}${q.isSelfie?`<span class="selfie-badge">${ic("ok")} ${t.selfieBadge}</span>`:`<button class="ib rmb" data-a="rmp" data-k="${i}" aria-label="${t.rm}">${ic("x")}</button>`}</div>`}).join("")}${n<5?`<button class="pt add" data-a="addp">${ic("cam")}<span>${t.add}</span></button>`:""}</div><p class="mut" style="font-size:12px;margin:6px 0 10px">${st.lang==='ar'?'💡 يمكنك إضافة صور أو فيديوهات حتى 10 ثوانٍ (مثلاً صورة واحدة و 4 فيديوهات). اضغط على «تعيين كبروفايل» لاختيار صورتك الرئيسية.':'💡 Vous pouvez ajouter des photos ou vidéos de 10s max (ex: 1 photo et 4 vidéos). Cliquez sur « Définir profil » pour choisir votre photo principale.'}</p><input id="pf" type="file" accept="image/*,video/*" hidden><div class="sf"><div><h3>${t.blkedList} (${blkCount})</h3><p>${blkCount?blkCount+" "+(st.lang==="ar"?"مستخدم محظور":"utilisateur(s) bloqué(s)"):t.noBlked}</p></div><button class="btn sec" style="width:auto;min-height:36px;padding:4px 12px;margin-inline-start:auto" data-a="open-blocked">${t.blkedList}</button></div><div class="sf" style="border:1.5px solid rgba(0,111,253,0.3);background:var(--neutral-light-light);cursor:pointer" data-a="open-fb"><div><h3 style="color:var(--brand);display:flex;align-items:center;gap:6px">⭐ ${t.fbTitle}</h3><p style="color:var(--ink);font-size:13px">${t.fbSub}</p></div><button class="btn" style="width:auto;min-height:36px;padding:4px 14px;margin-inline-start:auto" data-a="open-fb">${t.fbBtn}</button></div><div class="sf"><div><h3>${t.plan}</h3><p>${st.prem?t.prem:t.free}</p></div></div>${st.prem?"":`<button class="btn" data-a="up">${t.up}</button><button class="btn sec" data-a="d19">${t.dm}</button>`}${st.prem?(sw("inc",t.incog)+`<p class="mut">${t.incd}</p>`+(st.inc?`<div class="sf" style="background:rgba(30,41,59,0.06);border:1.5px solid #1E293B;border-radius:14px;padding:12px 14px;margin:8px 0"><div style="display:flex;align-items:center;gap:12px"><span style="font-size:26px">🕶️</span><div><h4 style="margin:0 0 2px;color:var(--ink);font-size:14px;font-weight:700">${t.incog} (${x().incb})</h4><p style="margin:0;font-size:12px;color:var(--mut);line-height:1.4">${t.incogBanner}</p></div></div></div>`:"")):`<button class="sw" data-a="up"><span>${t.incog}<br><small>${t.incl}</small></span>${ic("lock")}</button>`}${sw("blur",t.blur)}${sw("lite",t.lite)}<div class="sf">${ic("shield")}<div><h3>${t.sf}</h3><p>${t.st}</p></div></div><button class="btn sec" data-a="logout" style="border-color:var(--heart);color:var(--heart);margin:14px 0 6px;display:flex;align-items:center;justify-content:center;gap:8px">${ic("phone-off")}<span>${t.logout}</span></button><p class="mut">${t.age}</p><p class="mut">${t.demo}</p></div>`}
+const ctryName=u.ctry?flagEmoji(u.ctry)+" "+regionName(u.ctry,st.lang):"";
+const row=(title,val,act,btn)=>`<div class="sf"><div><h3>${title}</h3><p>${val}</p></div>${act?`<button class="btn sec small" data-a="${act}">${btn||t.edit}</button>`:""}</div>`;
+const ctryOpts=countryList(st.lang).map(c=>`<option value="${c.c}" ${u.ctry===c.c?"selected":""}>${flagEmoji(c.c)} ${esc(regionName(c.c,st.lang))}</option>`).join("");
+return`<div class="pf">
+<h1>${t.my}</h1>
+${selfieStatusBanner()}
+<div class="card me-card"><div class="bd"><div class="chh"><span class="av l">${me(1)}</span><div><h2>${esc(u.n||"")}, ${u.bd?ageFrom(u.bd):u.a}${st.selfieStatus==="approved"?`<span class="vbadge" title="${t.selfieBadge}">${ic("ok")}</span>`:""}</h2><p class="mut">${u.jb?esc(u.jb)+" · ":""}${esc(u.c||"")}${ctryName?" · "+esc(ctryName):""}</p></div></div>
+<p class="quote" data-a="edbio" title="${t.edBio}">“${esc(uBio)}”</p>
+${flagsHtml({gf:u.gf,rf:u.rf})||`<p class="help">${t.flagsEmpty}</p>`}
+<button class="btn sec small" data-a="open-flags">${t.flagsEdit}</button>
+</div></div>
+<h2 class="sec-title">${t.secAbout}</h2>
+${row(t.bio,`<span style="white-space:pre-wrap">${esc(uBio)}</span>`,"edbio")}
+${row(t.job,esc(u.jb||""),"edj")}
+<div class="sf"><div><h3>${t.ctryLbl}</h3><p>${esc(ctryName)}</p></div><select class="fld small" id="p-ctry" aria-label="${t.ctryLbl}">${ctryOpts}</select></div>
+${row(t.cty,esc(u.c||""),"edc")}
+${row(t.waLbl,`${esc(u.wa||"—")}<br><small class="mut">${t.waPrivate}</small>`,"edwa")}
+${row(t.bdLbl,u.bd?new Date(u.bd+"T00:00:00").toLocaleDateString(st.lang==="ar"?"ar":"fr-FR"):"—")}
+${row(t.rel+" & "+t.langSpk,`${(t.relMap&&t.relMap[u.rel])||t.relMus} · ${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}`,"edrel")}
+${row(t.hob,hbList.length?hbList.map(id=>{const h=HOBBIES.find(z=>z.id===id);return h?h[st.lang]:""}).filter(Boolean).join(" · "):t.hobHint,"open-edhb")}
+<h2 class="sec-title">${t.phs} (${n}/5)</h2>
+<p class="help">${t.ph5i} ${t.blurInfo}</p>
+<div class="grid5">${st.ph5.map((q,i)=>{const isVid=q.isVideo;const imgSrc=(isVid&&q.poster)?q.poster:(q.p||q.o);return`<div class="pt ${q.isSelfie?'pt-selfie':''}"><img src="${imgSrc}" alt="${isVid?'Vidéo':'Photo'} ${i+1}" onerror="this.onerror=null;this.src='couple.jpg'">${isVid?`<span class="video-grid-badge">${ic("video")}</span>`:''}${i===0?`<span class="profile-main-badge">${t.mainPhoto}</span>`:`<button type="button" class="btn-make-avatar" data-a="set-avatar" data-k="${i}">${t.setMain}</button>`}${q.isSelfie?`<span class="selfie-badge">${ic("ok")} ${t.selfieBadge}</span>`:`<button class="ib rmb" data-a="rmp" data-k="${i}" aria-label="${t.rm}">${ic("x")}</button>`}</div>`}).join("")}${n<5?`<button class="pt add" data-a="addp" aria-label="${t.add}">${ic("cam")}<span>${t.add}</span></button>`:""}</div>
+<input id="pf" type="file" accept="image/*,video/*" hidden>
+<h2 class="sec-title">${t.secSearch}</h2>
+<div class="sf"><div><h3>${t.tcty}</h3><p>${st.tc==="all"?t.allC:esc(regionName(st.tc,st.lang))}</p></div><select class="fld small" id="p-tc" aria-label="${t.tcty}"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${countryList(st.lang).map(c=>`<option value="${c.c}" ${st.tc===c.c?"selected":""}>${flagEmoji(c.c)} ${esc(regionName(c.c,st.lang))}</option>`).join("")}</select></div>
+<h2 class="sec-title">${t.plan}</h2>
+<div class="sf ${st.prem?"prem":""}"><div><h3>${st.prem?t.prem:t.free}</h3><p>${t.pss2}</p></div></div>
+${st.prem?"":`<button class="btn" data-a="up">${t.up}</button>`}
+${st.prem?(sw("inc",t.incog)+`<p class="help">${t.incd}</p>`):`<button class="sw" data-a="up"><span>${t.incog}<br><small>${t.incl}</small></span>${ic("lock")}</button>`}
+${sw("lite",t.lite)}
+<h2 class="sec-title">${t.secSafety}</h2>
+<div class="sf">${ic("shield")}<div><h3>${t.sf}</h3><p>${t.st}</p></div></div>
+${row(t.blkedList+" ("+blkCount+")",blkCount?blkCount+" "+(st.lang==="ar"?"مستخدم محظور":"utilisateur(s) bloqué(s)"):t.noBlked,"open-blocked",t.view)}
+<div class="sf accent"><div><h3>${t.fbTitle}</h3><p>${t.fbSub}</p></div><button class="btn small" data-a="open-fb">${t.fbBtn}</button></div>
+<button class="btn danger-outline" data-a="logout">${ic("phone-off")}<span>${t.logout}</span></button>
+<p class="mut small center">${t.age}</p>
+</div>`}
 function prot(src,e){const c=document.createElement("canvas");c.width=c.height=360;const g=c.getContext("2d");g.drawImage(src,0,0);
 const X=e.x*3.6,Y=e.y*3.6,R=e.r*3.6,m=document.createElement("canvas");m.width=m.height=8;m.getContext("2d").drawImage(src,X-R,Y-R,2*R,2*R,0,0,8,8);
 g.save();g.beginPath();g.ellipse(X,Y,R*.8,R,0,0,7);g.clip();g.imageSmoothingEnabled=false;g.drawImage(m,X-R,Y-R,2*R,2*R);g.restore();return c}
@@ -2894,7 +3138,7 @@ const el=$("#edit-timer-num");if(el)el.textContent=`${mins}:${secs.toString().pa
 };
 const mInitial=Math.floor(leftMs/60000);
 const sInitial=Math.floor((leftMs%60000)/1000).toString().padStart(2,"0");
-o.innerHTML=`<div style="flex:1;display:flex;align-items:center;justify-content:center;padding:16px"><div class="g-modal" style="max-width:440px;text-align:start"><h2 style="font-size:20px;color:var(--ink);margin:0;display:flex;align-items:center;gap:8px">✏️ ${t.editMsg}</h2><div style="display:flex;align-items:center;gap:6px;background:rgba(0,111,253,0.08);border:1px solid rgba(0,111,253,0.2);border-radius:10px;padding:8px 12px;font-size:12px;color:var(--ink);margin:8px 0"><span>⏳</span><span>${t.editMsgTimeLeft} <strong id="edit-timer-num" style="color:var(--brand)">${mInitial}:${sInitial}</strong></span></div><textarea class="fld" id="txt-edit-msg" rows="4" style="resize:vertical;font-family:inherit;padding:10px;line-height:1.4" maxlength="400">${esc(msg.t||"")}</textarea><button class="btn" data-a="save-edit-msg" data-cid="${chatId}" data-mid="${mid}" data-idx="${idx}">${t.saveEdit}</button><button class="btn sec" data-a="cm" style="min-height:40px">${t.cancelEdit}</button></div></div>`;
+o.innerHTML=`<div style="flex:1;display:flex;align-items:center;justify-content:center;padding:16px"><div class="g-modal" style="max-width:440px;text-align:start"><h2 style="font-size:20px;color:var(--ink);margin:0;display:flex;align-items:center;gap:8px">✏️ ${t.editMsg}</h2><div style="display:flex;align-items:center;gap:6px;background:rgba(194,24,91,0.08);border:1px solid rgba(194,24,91,0.2);border-radius:10px;padding:8px 12px;font-size:12px;color:var(--ink);margin:8px 0"><span>⏳</span><span>${t.editMsgTimeLeft} <strong id="edit-timer-num" style="color:var(--brand)">${mInitial}:${sInitial}</strong></span></div><textarea class="fld" id="txt-edit-msg" rows="4" style="resize:vertical;font-family:inherit;padding:10px;line-height:1.4" maxlength="400">${esc(msg.t||"")}</textarea><button class="btn" data-a="save-edit-msg" data-cid="${chatId}" data-mid="${mid}" data-idx="${idx}">${t.saveEdit}</button><button class="btn sec" data-a="cm" style="min-height:40px">${t.cancelEdit}</button></div></div>`;
 o.hidden=false;
 clearInterval(editCountdownTimer);
 editCountdownTimer=setInterval(updateTimer,1000);
@@ -3106,193 +3350,95 @@ const t=x(),o=$("#ov");
 o.innerHTML=`<div class="strip" aria-hidden="true"></div><div class="mi"><h2>${t.mt}</h2><p>${t.ms}</p><div class="pair"><span class="av l">${me(1)}</span>${ic("heart")}<span class="av l">${av(p)}</span></div><button class="btn gold" data-a="wr" data-id="${p.id}">${t.wr}${esc(p.n)}</button><button class="btn ghost" data-a="cm">${t.ct}</button></div><div class="strip" aria-hidden="true"></div>`;
 o.hidden=false;say(t.mt);o.querySelector(".btn").focus()}
 function closeM(){$("#ov").hidden=true}
-async function signUpWithEmail(){
+/* ---- Devoilement mutuel : photos nettes + WhatsApp seulement si les deux acceptent ---- */
+function revealBar(p){
+const t=x(),r=st.reveals[String(p.id)]||{};
+if(r.both){
+const wa=(r.wa||"").replace(/[^\d]/g,"");
+return`<div class="reveal done">${ic("ok")}<div><strong>${t.revBoth}</strong>${wa?`<a class="wa-link" href="https://wa.me/${wa}" target="_blank" rel="noopener">${t.revWa} ${esc(r.wa)}</a>`:""}</div><button class="link-btn" data-a="unreveal" data-id="${p.id}">${t.revUndo}</button></div>`;
+}
+if(r.me)return`<div class="reveal wait">${ic("lock")}<div><strong>${t.revWaitT}</strong><span>${t.revWaitD.replace("{n}",esc(p.n))}</span></div><button class="link-btn" data-a="unreveal" data-id="${p.id}">${t.revCancel}</button></div>`;
+return`<div class="reveal ask">${ic("lock")}<div><strong>${r.them?t.revTheyT.replace("{n}",esc(p.n)):t.revAskT}</strong><span>${t.revAskD}</span></div><button class="btn small" data-a="reveal" data-id="${p.id}">${t.revBtn}</button></div>`;
+}
+function updateRevealBar(){const el=$("#reveal-bar"),p=st.chat&&byId(st.chat);if(el&&p)el.innerHTML=revealBar(p)}
+async function doReveal(id){
+if(!sbClient||!id)return;
+if(!confirm(x().revConfirm))return;
+const uid=await ensureUserProfileId();if(!uid)return;
+const {error}=await sbClient.from('reveals').insert({user_id:uid,target_id:id});
+if(error&&!/duplicate/i.test(error.message||"")){alert(error.message);return}
+st.reveals[String(id)]=Object.assign({},st.reveals[String(id)],{me:true});
+updateRevealBar();await loadProfilesFromSupabase();updateRevealBar();
+}
+async function undoReveal(id){
+if(!sbClient||!id)return;
+const uid=await ensureUserProfileId();if(!uid)return;
+await sbClient.from('reveals').delete().eq('user_id',uid).eq('target_id',id);
+st.reveals[String(id)]={me:false,them:(st.reveals[String(id)]||{}).them,both:false,wa:""};
+updateRevealBar();loadProfilesFromSupabase();
+}
+function loadReveals(){return loadProfilesFromSupabase()}
+/* Bandeau de certification du selfie (valide par l'administrateur) */
+function selfieStatusBanner(){
+const t=x();
+if(st.selfieStatus==="approved")return"";
+if(st.selfieStatus==="rejected")return`<div class="status-banner bad">${ic("ban")}<div><strong>${t.sfRejT}</strong><span>${esc(st.selfieRejectReason||t.sfRejD)}</span></div><button class="btn small" data-a="retake-selfie-profile">${t.sfRetake}</button></div>`;
+return`<div class="status-banner wait">${ic("shield")}<div><strong>${t.sfPendT}</strong><span>${t.sfPendD}</span></div></div>`;
+}
+function openFlagsModal(){
+const t=x(),o=$("#ov");
+o.innerHTML=`<div class="modal-wrap"><div class="g-modal"><h2>${t.flagsSec}</h2><p class="help">${t.flagsHelp}</p><label class="flag-title green">${t.gfTitle} <span class="count" data-flag-count="g">${(st.u.gf||[]).length}/5</span></label>${flagPicker("g")}<label class="flag-title red">${t.rfTitle} <span class="count" data-flag-count="r">${(st.u.rf||[]).length}/5</span></label>${flagPicker("r")}<button class="btn" data-a="save-flags">${t.saveHb}</button><button class="btn ghost" data-a="cm">${t.bk}</button></div></div>`;
+o.hidden=false;
+}
+/* Inscription / connexion par e-mail + mot de passe (Supabase Auth) */
+function authErr(msg){const e=$("#auth-err");if(e)e.textContent=msg||"";}
+function authBusy(on){const b=$("#btn-email-auth");if(b){b.disabled=!!on;b.setAttribute("aria-busy",on?"true":"false");}}
+async function submitEmailAuth(){
 initSupabase();
-const emEl=$("#em"),pwEl=$("#pw"),e0=$("#e0");
-if(!emEl||!pwEl)return;
-const email=emEl.value.trim().toLowerCase();
-const password=pwEl.value;
-if(e0)e0.textContent="";
-if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){if(e0)e0.textContent=x().emE;emEl.focus();return;}
-if(password.length<6){if(e0)e0.textContent=x().pwdE;pwEl.focus();return;}
-const btn=$("#btn-em-signup");if(btn){btn.disabled=true;btn.textContent=st.lang==="ar"?"جارٍ التسجيل...":"Inscription en cours...";}
-if(!sbClient){
-st.em=email;st.mode="mail";if(!st.u)st.u={};st.u.gVerif=true;save();
-if(!st.selfie)go(3);else go(4);
-return;
-}
+const t=x(),isAr=st.lang==="ar";
+const email=($("#em")?$("#em").value:"").trim().toLowerCase();
+const pwd=$("#pwd")?$("#pwd").value:"";
+authErr("");
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){authErr(t.emE);$("#em").focus();return}
+if(pwd.length<8){authErr(t.pwdE);$("#pwd").focus();return}
+if(!sbClient||!sbClient.auth){authErr(isAr?"الخدمة غير متاحة حالياً.":"Service indisponible, réessayez dans un instant.");return}
+authBusy(true);
 try{
-const {data,error}=await sbClient.auth.signUp({
-email:email,
-password:password,
-options:{data:{name:email.split('@')[0]}}
-});
+if(st.authMode==="signup"){
+const {data,error}=await sbClient.auth.signUp({email,password:pwd,options:{emailRedirectTo:getOAuthRedirectUrl()}});
 if(error){
-const errMsg=(error.message||"").toLowerCase();
-if(errMsg.includes("already registered")||errMsg.includes("already exists")){
-return loginWithEmail();
+if(/already|registered|exists/i.test(error.message||"")){st.authMode="login";render();authErr(isAr?"هذا البريد مسجل بالفعل. سجّل الدخول.":"Cette adresse a déjà un compte : connectez-vous.");}
+else authErr(error.message);
+return;
 }
-if(errMsg.includes("rate limit")||errMsg.includes("over_email_send_rate_limit")){
-if(e0)e0.textContent=st.lang==="ar"?"تم بلوغ الحد الأقصى لإرسال الرسائل لـ Supabase مؤقتاً. يمكنك المتابعة برقم الهاتف أو المحاولة لاحقاً.":"Quota horaire d'envoi d'e-mails Supabase atteint. Vous pouvez aussi vous inscrire par Téléphone ou patienter quelques instants.";
+if(data&&data.session){await handleUserAuthSession(data.session);return}
+st.pendingConfirm=email;render();
 }else{
-if(e0)e0.textContent="Erreur Supabase : "+error.message;
-}
-if(btn){btn.disabled=false;btn.textContent=x().emReg;}
-return;
-}
-st.em=email;st.mode="mail";if(!st.u)st.u={};st.u.gVerif=true;
-if(!st.u.n)st.u.n=email.split('@')[0];
-save();syncProfileToSupabase();
-if(data&&!data.session){
-const isAr=st.lang==="ar";
-say(isAr?"تم إنشاء حسابك بنجاح! تم إرسال رابط تأكيد إلى بريدك "+email+" (تحقق أيضاً من البريد غير المرغوب فيه Spam).":"Compte créé avec succès ! Un lien de confirmation a été envoyé à "+email+" (vérifiez aussi le dossier Spams).");
-}
-if(!st.selfie)go(3);
-else if(!st.u||!st.u.jb||!st.u.a||!st.u.c)go(2,"#jb");
-else go(4);
-}catch(e){
-if(e0)e0.textContent="Erreur : "+(e.message||e);
-if(btn){btn.disabled=false;btn.textContent=x().emReg;}
-}
-}
-async function loginWithEmail(){
-initSupabase();
-const emEl=$("#em"),pwEl=$("#pw"),e0=$("#e0");
-if(!emEl||!pwEl)return;
-const email=emEl.value.trim().toLowerCase();
-const password=pwEl.value;
-if(e0)e0.textContent="";
-if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){if(e0)e0.textContent=x().emE;emEl.focus();return;}
-if(!password){if(e0)e0.textContent=x().pwdE;pwEl.focus();return;}
-const btn=$("#btn-em-login");if(btn){btn.disabled=true;btn.textContent=st.lang==="ar"?"جارٍ الاتصال...":"Connexion en cours...";}
-if(!sbClient){
-st.em=email;st.mode="mail";if(!st.u)st.u={};st.u.gVerif=true;save();
-if(!st.selfie)go(3);else go(4);
-return;
-}
-try{
-const {data,error}=await sbClient.auth.signInWithPassword({email:email,password:password});
+const {data,error}=await sbClient.auth.signInWithPassword({email,password:pwd});
 if(error){
-const isAr=st.lang==="ar";
-const errMsg=(error.message||"").toLowerCase();
-if(errMsg.includes("email not confirmed")){
-let profFound=false;
-try{
-const {data:pList}=await sbClient.from('profiles').select('*').eq('email',email).limit(1);
-if(pList&&pList.length>0&&pList[0].name&&pList[0].name!=='__DELETED__'&&pList[0].name!=='Test Col'){
-const p=pList[0];
-profFound=true;
-st.em=email;st.mode="mail";if(!st.u)st.u={};
-st.u.id=p.id;st.u.n=p.name;st.u.a=p.age;st.u.c=p.city;st.u.jb=p.job;st.u.bio=p.bio;
-st.u.g=p.gender;st.g=p.gender;st.u.lng=p.language||'fr';st.u.rel=p.religion||'mus';
-st.u.kd=p.children||0;st.u.i=p.intention||'ser';st.u.hb=p.hobbies||[];
-if(p.selfie_url){st.selfie=p.selfie_url;ensureSelfieInPh5();}
-st.prem=p.is_premium?1:0;
-save();
-say(isAr?"مرحباً بك مجدداً! تم تسجيل دخولك بنجاح.":"Bon retour parmi nous ! Vous êtes connecté.");
-if(!st.selfie)go(3);
-else if(!st.u.jb||!st.u.a||!st.u.c)go(2,"#jb");
-else go(4);
+const m=(error.message||"").toLowerCase();
+if(m.includes("not confirmed")){st.pendingConfirm=email;render();return}
+authErr(m.includes("invalid")?(isAr?"البريد أو كلمة المرور غير صحيحة.":"E-mail ou mot de passe incorrect."):error.message);
 return;
 }
-}catch(chkErr){console.warn("Check profile fallback:",chkErr)}
-if(!profFound){
-if(e0){
-e0.innerHTML=(isAr
-?`بريدك الإلكتروني غير مؤكد بعد. يرجى مراجعة صندوق Gmail (أو مجلد Spam) والنقر على رابط التفعيل.<br><button type="button" class="btn sec" data-a="resend-conf" style="margin-top:6px;min-height:32px;font-size:12px">إعادة إرسال رابط التأكيد</button>`
-:`Votre adresse e-mail n'a pas encore été confirmée. Veuillez vérifier votre boîte de réception Gmail (ou spams) et cliquer sur le lien de confirmation.<br><button type="button" class="btn sec" data-a="resend-conf" style="margin-top:6px;min-height:32px;font-size:12px">✉️ Renvoyer l'e-mail de confirmation</button>`);
+if(data&&data.session)await handleUserAuthSession(data.session);
 }
-if(btn){btn.disabled=false;btn.textContent=x().emLog;}
-return;
-}
-}else if(errMsg.includes("invalid login credentials")){
-if(e0)e0.textContent=isAr?"البريد الإلكتروني أو كلمة المرور غير صحيحة.":"Adresse e-mail ou mot de passe incorrect.";
-}else{
-if(e0)e0.textContent="Erreur : "+error.message;
-}
-if(btn){btn.disabled=false;btn.textContent=x().emLog;}
-return;
-}
-st.em=email;st.mode="mail";if(!st.u)st.u={};st.u.gVerif=true;
-const {data:pList}=await sbClient.from('profiles').select('*').eq('email',email).limit(1);
-if(pList&&pList.length>0&&pList[0].name&&pList[0].name!=='__DELETED__'&&pList[0].name!=='Test Col'){
-const p=pList[0];
-st.u.id=p.id;st.u.n=p.name;st.u.a=p.age;st.u.c=p.city;st.u.jb=p.job;st.u.bio=p.bio;
-st.u.g=p.gender;st.g=p.gender;st.u.lng=p.language||'fr';st.u.rel=p.religion||'mus';
-st.u.kd=p.children||0;st.u.i=p.intention||'ser';st.u.hb=p.hobbies||[];
-if(p.selfie_url){st.selfie=p.selfie_url;ensureSelfieInPh5();}
-st.prem=p.is_premium?1:0;
-save();syncProfileToSupabase();
-if(!isProfileComplete())go(2,"#nm");
-else if(!hasVerifiedSelfie())go(3);
-else go(4);
-}else{
-st.u.n="";st.selfie="";st.ph5=[];
-save();
-go(2,"#nm");
-}
-}catch(e){
-if(e0)e0.textContent="Erreur : "+(e.message||e);
-if(btn){btn.disabled=false;btn.textContent=x().emLog;}
-}
+}catch(e){authErr(e.message||String(e))}
+finally{authBusy(false)}
 }
 async function resendConfirmationEmail(){
-const emEl=$("#em");
-const email=emEl?emEl.value.trim().toLowerCase():(st.em||"");
-if(!email){alert(st.lang==="ar"?"يرجى إدخال بريدك الإلكتروني أولاً":"Veuillez entrer votre adresse e-mail d'abord.");return;}
-try{
-if(sbClient&&sbClient.auth){
-const {error}=await sbClient.auth.resend({type:'signup',email:email});
-if(error) alert("Supabase : "+error.message);
-else alert(st.lang==="ar"?"تم إعادة إرسال رابط التأكيد إلى بريدك بنجاح.":"E-mail de confirmation renvoyé avec succès ! Vérifiez votre boîte de réception et vos spams.");
+const email=st.pendingConfirm;if(!email||!sbClient)return;
+const {error}=await sbClient.auth.resend({type:'signup',email,options:{emailRedirectTo:getOAuthRedirectUrl()}});
+say(error?error.message:(st.lang==="ar"?"تم إرسال رابط التأكيد من جديد.":"E-mail de confirmation renvoyé."));
 }
-}catch(e){alert("Erreur : "+(e.message||e));}
-}
-async function sendPhoneOtp(){
-initSupabase();
-const phEl=$("#ph");if(!phEl)return;
-const raw=phEl.value.replace(/\D/g,"");
-if(raw.length!==8){const e0=$("#e0");if(e0)e0.textContent=x().ph8;phEl.focus();return;}
-const formatted=raw.replace(/(\d\d)(?=\d)/g,"$1 ");
-st.ph=formatted;st.mode="tel";
-const btn=$("#btn-send-otp");if(btn){btn.disabled=true;btn.textContent=st.lang==="ar"?"جارٍ إرسال الرمز...":"Envoi du SMS...";}
-const fullPhone='+235'+raw;
-if(sbClient&&sbClient.auth){
-try{
-const {data,error}=await sbClient.auth.signInWithOtp({phone:fullPhone});
-if(error)console.warn("Supabase signInWithOtp:",error);
-}catch(e){console.warn("sendPhoneOtp catch:",e)}
-}
-go(1,"#cd");
-say(x().otps+"+235 "+formatted);
-}
-async function verifyPhoneOtp(){
-const cdEl=$("#cd");if(!cdEl)return;
-const code=cdEl.value.trim();
-const e1=$("#e1");if(e1)e1.textContent="";
-if(!/^\d{6}$/.test(code)){if(e1)e1.textContent=x().bad;cdEl.focus();return;}
-const btn=$("#btn-val-otp");if(btn){btn.disabled=true;btn.textContent=st.lang==="ar"?"جارٍ التحقق...":"Vérification...";}
-let verified=false;
-const raw=(st.ph||"").replace(/\D/g,"");
-const fullPhone='+235'+raw;
-if(sbClient&&sbClient.auth&&raw){
-try{
-const {data,error}=await sbClient.auth.verifyOtp({phone:fullPhone,token:code,type:'sms'});
-if(!error&&data&&data.session)verified=true;
-else console.warn("Supabase verifyOtp:",error);
-}catch(e){console.warn("verifyPhoneOtp catch:",e)}
-}
-if(verified){
-st.mode="tel";save();syncProfileToSupabase();
-if(!st.selfie)go(3);
-else if(!st.u||!st.u.jb||!st.u.a||!st.u.c)go(2,"#jb");
-else go(4);
-say(x().vd);
-}else{
-if(btn){btn.disabled=false;btn.textContent=x().ct;}
-if(e1)e1.textContent=x().bad;
-cdEl.focus();
-}
+async function sendPasswordReset(){
+const email=($("#em")?$("#em").value:"").trim().toLowerCase();
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){authErr(x().emE);if($("#em"))$("#em").focus();return}
+if(!sbClient)return;
+const {error}=await sbClient.auth.resetPasswordForEmail(email,{redirectTo:getOAuthRedirectUrl()});
+authErr("");
+say(error?error.message:(st.lang==="ar"?"تم إرسال رابط إعادة التعيين إلى بريدك.":"Un lien de réinitialisation a été envoyé à votre adresse."));
+alert(error?error.message:(st.lang==="ar"?"تحقق من بريدك الإلكتروني.":"Vérifiez votre boîte e-mail (et les spams)."));
 }
 const PROD_URL="https://chari-flame.vercel.app";
 function getOAuthRedirectUrl(){
@@ -3335,7 +3481,7 @@ async function signInWithFacebook(){
 launchGoogleOAuth();
 }
 function openGoogleSetupModal(){
-go(0, "#google-email");
+go(0, "#em");
 }
 function openHobbyModal(){
 const t=x(),o=$("#ov");
@@ -3799,7 +3945,7 @@ ${isV?`<span style="position:absolute;top:2px;right:2px;background:rgba(0,0,0,0.
 <div>
 <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
 <h2 style="margin:0;font-size:22px;color:var(--ink)">${esc(p.n)}, ${p.a}</h2>
-<span class="badge" style="background:var(--brand);color:#fff">🇹🇩 ${esc(p.c)}</span>
+<span class="badge brand">${p.ctry?flagEmoji(p.ctry)+" ":""}${esc([p.c,p.ctry?regionName(p.ctry,st.lang):""].filter(Boolean).join(", "))}</span>
 </div>
 <p style="margin:4px 0 0;color:var(--mut);font-size:14px;font-weight:600">
 ${p.jb?esc(p.jb):""}${(p.jb?" · ":"")+((t.k&&t.k[p.i])||t.k.ser)}
@@ -3811,6 +3957,8 @@ ${bioText?`
 <p style="margin:0;font-size:14px;line-height:1.5;color:var(--ink);background:rgba(0,0,0,0.03);padding:10px 14px;border-radius:12px;border-inline-start:3px solid var(--brand);white-space:pre-wrap">“${esc(bioText)}”</p>
 </div>
 `:''}
+${(p.gf&&p.gf.length)||(p.rf&&p.rf.length)?`<div class="profile-modal-section"><h4>${t.flagsSec}</h4>${flagsHtml(p)}</div>`:""}
+${isMatched?`<div class="profile-modal-section">${revealBar(p)}</div>`:(p.revealed?"":`<p class="help center">${ic("lock")} ${t.blurPill}</p>`)}
 <div class="profile-modal-section">
 <h4>${t.pr||"Détails du profil"}</h4>
 <div style="display:flex;flex-wrap:wrap;gap:8px">
@@ -4127,77 +4275,29 @@ if(a==="tab"){st.tab=k;st.chat=null;render();if(k==="d"){loadBlockedUsersFromSup
 else if(a==="lang"){syncStep2InputsToState();st.lang=st.lang==="fr"?"ar":"fr";save();render();$("#lang").focus()}
 else if(a==="gauth"||a==="launch-google-oauth"){closeM();launchGoogleOAuth()}
 else if(a==="toggle-email-auth"){st.showEmailAuth=!st.showEmailAuth;render()}
-else if(a==="back-to-step0"||a==="back-to-step1"){go(0,"#google-email")}
+else if(a==="back-to-step0"||a==="back-to-step1"){go(0,"#em")}
 else if(a==="back-to-step2"){go(2,"#nm")}
-else if(a==="submit-google-auth"||a==="submit-google-page"||a==="em-direct"||a==="submit-google-modal"){
-const inp=$("#google-email")||$("#google-page-email")||$("#em")||$("#gmail-modal-input");
-const err=$("#google-err")||$("#google-page-err")||$("#e0")||$("#gmail-modal-err");
-if(!inp)return;
-let val=inp.value.trim().toLowerCase();
-if(!val){
-if(err)err.textContent=st.lang==="ar"?"يرجى إدخال عنوان بريدك Gmail.":"Veuillez entrer votre adresse Gmail.";
-inp.focus();return;
+else if(a==="email-auth"){submitEmailAuth()}
+else if(a==="auth-mode"){st.authMode=k;st.pendingConfirm="";render();const em=$("#em");if(em)em.focus()}
+else if(a==="reset-pwd"){sendPasswordReset()}
+else if(a==="resend-conf"){resendConfirmationEmail()}
+else if(a==="auth-back"){st.pendingConfirm="";render()}
+else if(a==="togflag"){
+const kind=b.dataset.kind,hid=b.dataset.h,key=kind==="g"?"gf":"rf";
+if(!st.u[key])st.u[key]=[];
+const idx=st.u[key].indexOf(hid);
+if(idx>=0)st.u[key].splice(idx,1);
+else{if(st.u[key].length>=5){say(t.flagMax);alert(t.flagMax);return}st.u[key].push(hid);}
+const on=st.u[key].includes(hid);b.classList.toggle("on",on);b.setAttribute("aria-pressed",on);
+const cnt=document.querySelector(`[data-flag-count="${kind}"]`);if(cnt)cnt.textContent=`${st.u[key].length}/5`;
 }
-if(!val.includes("@")){
-val=val+"@gmail.com";
-inp.value=val;
-}
-if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)){
-if(err)err.textContent=st.lang==="ar"?"يرجى إدخال عنوان بريد Google أو Gmail صالح (مثال: nom@gmail.com).":"Veuillez entrer une adresse e-mail ou Gmail valide (ex: nom@gmail.com).";
-inp.focus();return;
-}
-if(err)err.textContent="";
-closeM();
-st.em=val;
-st.mode="google";
-if(!st.u)st.u={};
-st.u.gVerif=true;
-if(!st.u.n)st.u.n=val.split('@')[0];
-const targetKey=getUserKey(null,val);
-currentActiveUserKey=targetKey;
-try{localStorage.setItem("chari_active_key",targetKey);}catch(e){}
-try{
-const raw=localStorage.getItem(targetKey);
-if(raw){
-const saved=JSON.parse(raw);
-if(saved&&saved.u){
-for(let k in saved){
-if(k==="u")st.u=Object.assign({},st.u,saved.u);
-else st[k]=saved[k];
-}
-}
-}
-}catch(e){}
-if(isProfileComplete(st)&&hasVerifiedSelfie(st)){
-st.step=5;st.savedStep=5;st.tab="d";save();go(5);render();
-loadBlockedUsersFromSupabase();loadProfilesFromSupabase();loadLikesAndMatchesFromSupabase();
-return;
-}
-if(sbClient){
-try{
-const {data:pList}=await sbClient.from('profiles').select('*').eq('email',val).limit(1);
-if(pList&&pList.length>0&&pList[0].name&&pList[0].name!=='__DELETED__'&&pList[0].name!=='Test Col'){
-const p=pList[0];
-st.u.id=p.id;st.u.n=p.name;st.u.a=p.age;st.u.c=p.city;st.u.jb=p.job;st.u.bio=p.bio;
-st.u.g=p.gender;st.g=p.gender;st.u.lng=p.language||'fr';st.u.rel=p.religion||'mus';
-st.u.kd=p.children||0;st.u.i=p.intention||'ser';st.u.hb=p.hobbies||[];
-if(p.selfie_url){st.selfie=p.selfie_url;ensureSelfieInPh5();}
-st.prem=p.is_premium?1:0;
-save();
-}
-}catch(err){console.warn("Profile check error:",err)}
-}
-if(isProfileComplete(st)&&hasVerifiedSelfie(st)){
-st.step=5;st.savedStep=5;st.tab="d";save();go(5);render();
-loadBlockedUsersFromSupabase();loadProfilesFromSupabase();loadLikesAndMatchesFromSupabase();
-}else if(isProfileComplete(st)){
-st.step=3;st.savedStep=3;save();go(3);render();
-}else{
-st.step=2;st.savedStep=2;save();go(2,"#nm");render();
-}
-}
+else if(a==="save-flags"){closeM();save();syncProfileToSupabase();render()}
+else if(a==="open-flags"){openFlagsModal()}
+else if(a==="reveal"){doReveal(b.dataset.id)}
+else if(a==="unreveal"){undoReveal(b.dataset.id)}
+else if(a==="edwa"){const n=prompt(t.waLbl+" (+"+dialOf(st.u.ctry)+"...)",st.u.wa||"");if(n!==null){const v=normWa(n,st.u.ctry);if(!/^\+[1-9][0-9]{6,14}$/.test(v)){alert(t.waE);return}st.u.wa=v;save();syncProfileToSupabase();render()}}
 else if(a==="guest-onb"||a==="direct-access"||a==="direct-discovery"||a==="google-direct-email"||a==="switch-mail-gmail"){
-go(0,"#google-email");
+go(0,"#em");
 }
 else if(a==="req-subtab"){st.reqSubTab=k;render();}
 else if(a==="toghb"){
@@ -4241,14 +4341,19 @@ say(x().logout);
 }
 }
 else if(a==="gd"){st.g=k;document.querySelectorAll("[data-a=gd]").forEach(n=>n.setAttribute("aria-pressed",n.dataset.k===k))}
-else if(a==="s2"){const nm=$("#nm").value.trim(),jb=$("#jb").value.trim(),bio=$("#bio")?$("#bio").value.trim():"",ag=$("#ag")?$("#ag").value.trim():"",tc=$("#tc")?$("#tc").value:"all",lng=$("#lng")?$("#lng").value:"fr",rel=$("#rel")?$("#rel").value:"mus",cy=$("#cy")?$("#cy").value:"N'Djamena",kd=$("#kd")?+$("#kd").value:0,it=$("#it")?$("#it").value:"ser";$("#eA").textContent="";$("#e2").textContent="";
-if(!nm||nm.length<2){$("#e2").textContent=st.lang==="ar"?"يرجى إدخال اسمك (حقل إجباري).":"Veuillez entrer votre prénom ou nom (champ obligatoire).";$("#nm").focus();return}
-if(!jb||jb.length<2){$("#e2").textContent=st.lang==="ar"?"يرجى إدخال مهنتك أو عملك (حقل إجباري).":"Veuillez renseigner votre profession ou travail (champ obligatoire).";$("#jb").focus();return}
-if(!bio||bio.length<5){$("#e2").textContent=st.lang==="ar"?"يرجى كتابة نبذة شخصية عنك (حقل إجباري، 5 أحرف على الأقل).":"Veuillez rédiger une courte présentation (bio obligatoire, min 5 caractères).";$("#bio").focus();return}
-if(!st.g){$("#e2").textContent=st.lang==="ar"?"يرجى تحديد جنسك (رجل أو امرأة).":"Veuillez sélectionner votre genre (homme ou femme).";return}
-if(!ag||+ag<22){$("#eA").textContent=t.agE;$("#ag").focus();return}
-if(!st.u||!st.u.hb||st.u.hb.length<1){$("#e2").textContent=st.lang==="ar"?"يرجى اختيار مركز اهتمام واحد على الأقل.":"Veuillez sélectionner au moins un centre d'intérêt (champ obligatoire).";return}
-st.tc=tc;st.u=Object.assign({},st.u,{n:nm,jb:jb,bio:bio,g:st.g,a:+ag,c:cy,tc:tc,lng:lng,rel:rel,kd:kd,i:it,hb:st.u.hb||[]});save();syncProfileToSupabase();
+else if(a==="s2"){syncStep2InputsToState();const u=st.u,isAr=st.lang==="ar",e2=$("#e2"),eA=$("#eA");e2.textContent="";eA.textContent="";
+const fail=(msg,sel)=>{e2.textContent=msg;const el=sel&&$(sel);if(el){el.focus();el.scrollIntoView({block:"center",behavior:"smooth"})}};
+if(!u.n||u.n.length<2)return fail(isAr?"يرجى إدخال اسمك.":"Veuillez entrer votre prénom.","#nm");
+if(!st.g)return fail(isAr?"يرجى تحديد جنسك.":"Veuillez indiquer si vous êtes une femme ou un homme.");
+if(!u.bd){eA.textContent=t.bdReq;return fail(t.bdReq,"#bd")}
+if(ageFrom(u.bd)<MIN_AGE){eA.textContent=t.agE;return fail(t.agE,"#bd")}
+if(!u.c||u.c.length<2)return fail(isAr?"يرجى إدخال مدينتك.":"Veuillez indiquer votre ville.","#cy");
+if(!/^\+[1-9][0-9]{6,14}$/.test(u.wa||""))return fail(t.waE,"#wa");
+if(!u.jb||u.jb.length<2)return fail(isAr?"يرجى إدخال مهنتك.":"Veuillez indiquer votre profession.","#jb");
+if(!u.bio||u.bio.length<5)return fail(isAr?"يرجى كتابة نبذة قصيرة.":"Veuillez écrire une courte présentation (5 caractères minimum).","#bio");
+if(!u.hb||u.hb.length<1)return fail(isAr?"اختر اهتماماً واحداً على الأقل.":"Choisissez au moins un centre d'intérêt.");
+st.u=Object.assign({},u,{g:st.g,a:ageFrom(u.bd),lng:$("#lng").value,rel:$("#rel").value,kd:+$("#kd").value,i:$("#it").value});
+save();syncProfileToSupabase();
 if(!hasVerifiedSelfie())go(3);else go(4);
 }
 else if(a==="edrel"){const n=prompt(`${t.rel}\n1: ${t.relMus}\n2: ${t.relChr}\n3: ${t.relOth}`,st.u.rel==="chr"?"2":(st.u.rel==="oth"?"3":"1"));if(n==="1")st.u.rel="mus";else if(n==="2")st.u.rel="chr";else if(n==="3")st.u.rel="oth";save();syncProfileToSupabase();render()}
@@ -4322,27 +4427,10 @@ else if(a==="rmp"){if(st.ph5[+k]&&st.ph5[+k].isSelfie){alert(t.selfieLock);retur
 else if(a==="eda"){st.ph5.push({o:st.ed.src.toDataURL("image/jpeg",.85),p:prot(st.ed.src,st.ed).toDataURL("image/jpeg",.85)});st.ed=null;save();syncProfileToSupabase();render()}
 else if(a==="edc"){st.ed=null;render()}
 else if(a==="snap-cam")snapCam();
+else if(a==="retake-selfie-profile"){st.selfie="";st.ph5=st.ph5.filter(q=>!q.isSelfie);save();go(3);}
 else if(a==="retake-selfie"){st.selfie="";st.ph5=st.ph5.filter(p=>!p.isSelfie);st.vs=0;save();render();setTimeout(startCam,120);}
 else if(a==="val-selfie"){ensureSelfieInPh5();save();syncProfileToSupabase();stopCam();if(!isProfileComplete()){go(2,"#nm");}else{go(4);}say(x().vd);}
-else if(a==="pay"){
-st.op="visa";
-const cn=$("#c-num")?$("#c-num").value.replace(/\D/g,""):"";
-const ce=$("#c-exp")?$("#c-exp").value.trim():"";
-const cv=$("#c-cvv")?$("#c-cvv").value.trim():"";
-const cm=$("#c-nom")?$("#c-nom").value.trim():"";
-if(cn.length<16){$("#eP").textContent=t.cardNumE;$("#c-num").focus();return}
-if(!/^\d{2}\/\d{2}$/.test(ce)){$("#eP").textContent=t.cardExpE;$("#c-exp").focus();return}
-if(cv.length!==3){$("#eP").textContent=t.cardCvvE;$("#c-cvv").focus();return}
-if(cm.length<2){$("#eP").textContent=t.cardNomE;$("#c-nom").focus();return}
-st.pp=1;render();
-setTimeout(()=>{
-st.pp=0;st.prem=1;st.pay=0;st.op="visa";
-save();
-syncProfileToSupabase();
-render();
-say(x().visaPaid);
-},2200);
-}
+else if(a==="pay-card"){startCardCheckout()}
 else if(a==="up"){st.payFrom=st.tab;st.pay=1;st.tab="d";render()}
 else if(a==="np"||a==="pay-back"){
 st.pay=0;
@@ -4350,7 +4438,6 @@ if(st.payFrom){st.tab=st.payFrom;st.payFrom=null;}
 else if(!st.prem&&st.seen>=LIM){st.tab="p";}
 render();
 }
-else if(a==="d19"){st.seen=19;if(st.dailyLimits)st.dailyLimits.seen=19;save();st.tab="d";render()}
 else if(a==="pass"||a==="like")swipe(a);
 else if(a==="again"){st.i=0;st.cardPhotoIdx=0;render()}
 else if(a==="open"){
@@ -4386,6 +4473,8 @@ else if(a==="dismiss-shield"){document.body.classList.remove("screen-protected")
 else if(a==="cm"){if(editCountdownTimer)clearInterval(editCountdownTimer);closeM();render();const l=$("[data-a=like]");if(l)l.focus()}});
 document.addEventListener("change",e=>{
 if(e.target.id==="sel-tc"||e.target.id==="p-tc"){st.tc=e.target.value;if(st.u)st.u.tc=st.tc;st.i=0;st.cardPhotoIdx=0;save();syncProfileToSupabase();render();return}
+if(e.target.id==="ctry"){st.u.ctry=e.target.value;const cc=$("#wa-cc");if(cc)cc.textContent="+"+dialOf(st.u.ctry);return}
+if(e.target.id==="p-ctry"){st.u.ctry=e.target.value;save();syncProfileToSupabase();render();return}
 if(e.target.id==="chat-file"&&e.target.files[0]){
 if(!st.chat||!(st.mt||[]).includes(st.chat)){
 alert(x().onlyMatchedCanChat||"Vous devez être en match pour envoyer une photo.");
@@ -4418,30 +4507,6 @@ document.addEventListener("input",e=>{
 const d=e.target.dataset.e;if(d&&st.ed){st.ed[d]=+e.target.value;drawEd()}
 if(e.target.id==="pp"||e.target.id==="ph")st.ph=e.target.value;
 if(e.target.id==="em")st.em=e.target.value;
-if(e.target.id==="c-num"){
-let v=e.target.value.replace(/\D/g,"").slice(0,16);
-v=v.replace(/(\d{4})(?=\d)/g,"$1 ").trim();
-e.target.value=v;
-if(!st.card)st.card={};st.card.num=v;
-const el=$(".visa-card-num");if(el)el.textContent=v||"•••• •••• •••• ••••";
-}
-if(e.target.id==="c-exp"){
-let v=e.target.value.replace(/\D/g,"").slice(0,4);
-if(v.length>=3)v=v.slice(0,2)+"/"+v.slice(2);
-e.target.value=v;
-if(!st.card)st.card={};st.card.exp=v;
-const el=$(".visa-card-exp-val");if(el)el.textContent=v||"MM/AA";
-}
-if(e.target.id==="c-cvv"){
-let v=e.target.value.replace(/\D/g,"").slice(0,3);
-e.target.value=v;
-if(!st.card)st.card={};st.card.cvv=v;
-}
-if(e.target.id==="c-nom"){
-let v=e.target.value.toUpperCase();
-if(!st.card)st.card={};st.card.nom=v;
-const el=$(".visa-card-nom-val");if(el)el.textContent=v||"NOM PRENOM";
-}
 });
 function triggerScreenshotBlocked(){
 const t=x();
@@ -4453,12 +4518,6 @@ document.addEventListener("contextmenu",e=>e.preventDefault());
 document.addEventListener("dragstart",e=>e.preventDefault());
 document.addEventListener("keyup",e=>{if(e.key==="PrintScreen")triggerScreenshotBlocked()});
 document.addEventListener("keydown",e=>{
-if(e.key==="Enter"&&e.target&&(e.target.id==="google-email"||e.target.id==="google-page-email"||e.target.id==="em")){
-e.preventDefault();
-const btn=$("#btn-submit-google-auth")||$("#btn-submit-google-page")||$("#btn-em-direct")||document.querySelector("[data-a=submit-google-auth]");
-if(btn)btn.click();
-return;
-}
 if(e.key==="Enter"&&e.target&&e.target.id==="in"){
 e.preventDefault();
 send();
@@ -4508,15 +4567,16 @@ endVoiceHold(true);
 });
 // Screenshot protection on explicit key triggers only
 window.addEventListener("focus",()=>{document.body.classList.remove("screen-protected")});
+// Contenu flouté quand l'app passe en arrière-plan (aperçu du sélecteur d'applications)
+document.addEventListener("visibilitychange",()=>{document.body.classList.toggle("privacy-blur",document.hidden)});
+window.addEventListener("blur",()=>{if(st.step>=5)document.body.classList.add("privacy-blur")});
+window.addEventListener("focus",()=>{document.body.classList.remove("privacy-blur")});
 render();
 let authListenerAttached=false;
 async function handleUserAuthSession(session){
 try{localStorage.removeItem("chari_admin_login");}catch(e){}
 if(!session||!session.user){
-if(st.mode==="mail"&&st.em){
-return;
-}
-if(st.mode==="google"&&(st.step>=5||!st.em)){
+if(st.step>=2){
 currentActiveUserKey=null;
 try{localStorage.removeItem("chari_active_key");}catch(e){}
 const blank=createBlankState();
@@ -4529,129 +4589,45 @@ return;
 const u=session.user;
 const meta=u.user_metadata||{};
 const gEmail=(u.email||"").trim().toLowerCase();
-const gName=meta.full_name||meta.name||(gEmail?gEmail.split('@')[0]:"");
+const gName=meta.full_name||meta.name||"";
 const uid=u.id;
+if(handleUserAuthSession.lastUid===uid&&st.step>=2&&st.u&&st.u.id===uid)return;
+handleUserAuthSession.lastUid=uid;
 const targetKey=getUserKey(uid,gEmail);
-
-if(typeof window!=='undefined'&&window.location&&window.location.hash&&window.location.hash.includes('access_token')){
+if(window.location&&window.location.hash&&window.location.hash.includes('access_token')){
 try{history.replaceState(null,null,window.location.pathname+window.location.search);}catch(e){}
 }
-
-let hasValidDbProfile=false;
-let dbProf=null;
-
-if(sbClient){
-try{
-const {data:profData}=await sbClient.from('profiles').select('*').or(`id.eq.${uid},email.eq.${gEmail}`).limit(1);
-if(profData&&profData.length>0){
-const r=profData[0];
-if(r.name&&r.name!=='__DELETED__'&&r.name!=='Test Col'){
-hasValidDbProfile=true;
-dbProf=r;
-}
-}
-}catch(err){console.warn("Profile check error:",err)}
-}
-
 currentActiveUserKey=targetKey;
-try{localStorage.setItem("chari_active_key", targetKey);}catch(e){}
-
-if(!hasValidDbProfile){
-try{localStorage.removeItem(targetKey);}catch(e){}
+try{localStorage.setItem("chari_active_key",targetKey);}catch(e){}
+/* Preferences locales (langue, quotas du jour) */
+let saved=null;
+try{const raw=localStorage.getItem(targetKey);if(raw)saved=JSON.parse(raw);}catch(e){}
 const blank=createBlankState(gEmail,uid,gName);
 for(let k in blank)st[k]=blank[k];
-st.u.id=uid;
-st.em=gEmail;
-st.u.gVerif=true;
-st.mode="google";
-st.u.n=gName||"";
-st.selfie="";
-st.ph5=[];
-st.incomingRequests=[];
-st.sentRequests=[];
-st.mt=[];
-st.passed=[];
-st.blocked=[];
-st.step=2;
-st.savedStep=2;
-save();
-go(2,"#nm");
-say(st.lang==="ar"?"مرحباً! يرجى إكمال نموذج التسجيل للبدء.":"Bienvenue ! Veuillez renseigner vos informations de profil.");
-render();
-return;
-}
-
-try{
-const savedRaw=localStorage.getItem(targetKey);
-if(savedRaw){
-const s=JSON.parse(savedRaw);
-["lang","blur","lite","tc","mSubTab","reqSubTab"].forEach(k=>{if(k in s)st[k]=s[k]});
-if(Array.isArray(s.feedbacks))st.feedbacks=s.feedbacks;
+if(saved){
+["lang","blur","lite","mSubTab","reqSubTab","passed","blocked","sentRequests","incomingRequests","mt","ms"].forEach(k=>{if(k in saved)st[k]=saved[k]});
 const todayKey=getChadDateKey();
-if(s.dailyLimits&&s.dailyLimits.date===todayKey){
-st.dailyLimits=s.dailyLimits;
-if(typeof s.dailyLimits.seen==='number')st.seen=s.dailyLimits.seen;
-}else{
-st.dailyLimits={date:todayKey,sent:0,accepted:0,seen:0};
-st.seen=0;
+if(saved.dailyLimits&&saved.dailyLimits.date===todayKey){st.dailyLimits=saved.dailyLimits;st.seen=saved.dailyLimits.seen||0;}
 }
-if(typeof s.seen==='number'&&st.dailyLimits&&st.dailyLimits.date===todayKey){
-st.seen=s.seen;
+st.u.id=uid;st.em=gEmail;st.mode=(u.app_metadata&&u.app_metadata.provider)||"email";st.u.gVerif=st.mode==="google";
+const mine=await loadMyProfileFromSupabase();
+if(mine){
+applyMyProfile(mine);
+}else if(saved&&saved.u&&saved.u.n){
+/* Inscription commencee sur cet appareil mais pas encore enregistree */
+st.u=Object.assign({},st.u,saved.u,{id:uid});st.g=saved.g||st.g;st.selfie=saved.selfie||"";st.ph5=saved.ph5||[];
 }
-}
-}catch(e){}
-
-st.u.id=dbProf.id||uid;
-st.em=gEmail;
-st.u.gVerif=true;
-st.mode="google";
-st.u.n=dbProf.name||gName||"";
-st.u.a=dbProf.age||st.u.a||"";
-st.u.c=dbProf.city||st.u.c||"N'Djamena";
-st.u.tc=dbProf.target_city||st.u.tc||'all';
-st.u.jb=dbProf.job||st.u.jb||'';
-st.u.bio=dbProf.bio||st.u.bio||'';
-st.g=dbProf.gender||st.g||'';
-st.u.lng=dbProf.language||st.u.lng||'fr';
-st.u.rel=dbProf.religion||st.u.rel||'mus';
-st.u.kd=dbProf.children!==undefined?dbProf.children:0;
-st.u.i=dbProf.intention||st.u.i||'ser';
-st.u.hb=Array.isArray(dbProf.hobbies)?dbProf.hobbies.filter(h=>h!=='__incognito__'):(st.u.hb||[]);
-if(dbProf.selfie_url){
-st.selfie=dbProf.selfie_url;
-ensureSelfieInPh5();
-}
-st.prem=dbProf.is_premium?1:0;
-st.inc=!!dbProf.is_incognito||(Array.isArray(dbProf.hobbies)&&dbProf.hobbies.includes('__incognito__'));
-
-ensureSelfieInPh5();
 checkAndResetDailyLimits();
 initIncomingRequests();
-
 if(isProfileComplete(st)&&hasVerifiedSelfie(st)){
-st.step=5;
-st.savedStep=5;
-st.tab="d";
-say(st.lang==="ar"?"مرحباً بعودتك!":"Ravi de vous revoir !");
-save();
-go(5);
-render();
-loadBlockedUsersFromSupabase();
-loadProfilesFromSupabase();
-loadLikesAndMatchesFromSupabase();
+st.step=5;st.savedStep=5;st.tab=st.tab||"d";
+save();go(5);
+loadBlockedUsersFromSupabase();loadLikesAndMatchesFromSupabase().then(loadProfilesFromSupabase);loadReveals();
 }else if(isProfileComplete(st)){
-st.step=3;
-st.savedStep=3;
-save();
-go(3);
-render();
+st.step=3;st.savedStep=3;save();go(3);
 }else{
-st.step=2;
-st.savedStep=2;
-say(x().gVerif||"Compte Google vérifié");
-save();
-go(2,"#nm");
-render();
+st.step=2;st.savedStep=2;save();go(2,"#nm");
+say(st.lang==="ar"?"مرحباً! أكمل ملفك للبدء.":"Bienvenue ! Complétez votre profil pour commencer.");
 }
 }
 
@@ -4666,12 +4642,12 @@ const errDesc=searchParams.get('error_description')||hashParams.get('error_descr
 if(errDesc){
 console.warn("OAuth redirect error:",errDesc);
 alert((st.lang==="ar"?"تعذر إتمام الدخول بـ Google: ":"Erreur Google OAuth : ")+decodeURIComponent(errDesc.replace(/\+/g,' ')));
-go(0, "#google-email");
+go(0, "#em");
 return;
 }
 
 if(searchParams.get('auth')==='google'||searchParams.get('step')==='google'||searchParams.get('step')==='1'||hashStr==='google'){
-go(0, "#google-email");
+go(0, "#em");
 return;
 }
 if(searchParams.get('step')==='2'||searchParams.get('step')==='register'||searchParams.get('step')==='inscription'||searchParams.get('register')==='1'||searchParams.get('inscription')==='1'||hashStr==='register'||hashStr==='inscription'||hashStr==='step2'){
@@ -4752,7 +4728,7 @@ loadLikesAndMatchesFromSupabase();
 .on('postgres_changes',{event:'*',schema:'public',table:'user_blocks'},payload=>{
 loadBlockedUsersFromSupabase();
 })
-.on('postgres_changes',{event:'*',schema:'public',table:'profiles'},payload=>{
+.on('postgres_changes',{event:'*',schema:'public',table:'reveals'},payload=>{
 loadProfilesFromSupabase();
 })
 .subscribe((status)=>{
