@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;600&family=Playfair+Display:wght@600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap">
 <style>
 :root{
   /* Figma Mobile Apps Prototyping Kit - Tokens officiels */
@@ -1753,11 +1753,272 @@ nav [aria-current]::after{background:var(--brand-grad);width:34px}
 .plan-list .i{width:18px;height:18px;color:#FBCFE0}
 .card-logos{display:flex;justify-content:center;gap:10px;margin:6px 0 14px}
 .card-logos span{font-weight:800;font-size:12px;letter-spacing:.05em;color:var(--mut);border:1px solid var(--line);border-radius:8px;padding:4px 10px}
+
+/* =====================================================================
+   Chari 2.1 - Rencontres immersives, Activite, Profil, Parametres
+   ===================================================================== */
+:root[data-theme="dark"]{--rose-100:rgba(240,98,146,.14);--rose-50:#1A0F15;--rose-200:#5A2A42;--green:#4ADE80;--green-bg:rgba(74,222,128,.12);--green-line:rgba(74,222,128,.35);--red:#FB7185;--red-bg:rgba(251,113,133,.12);--red-line:rgba(251,113,133,.35);--amber:#FBBF24;--amber-bg:rgba(251,191,36,.12)}
+:root[data-theme="dark"] body{background:radial-gradient(1200px 600px at 50% -10%,#3A1A2A 0%,#1A0F15 60%) fixed}
+:root[data-theme="light"] body{background:radial-gradient(1200px 600px at 50% -10%,#FCE4EE 0%,#F7D3E2 35%,#EFC3D6 100%) fixed}
+/* Carte de rencontre immersive */
+.cbar{display:flex;align-items:center;gap:8px}
+.cbar .csel{flex:1;min-width:0}
+.filter-btn{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:999px;border:1.5px solid var(--rose-200);background:var(--surf);color:var(--rose-700);font-weight:700;font-size:13px}
+.filter-btn .i{width:18px;height:18px}
+.swipe-card{position:relative;border:0;margin-top:12px}
+.swipe-card .ph{height:min(54vh,480px);min-height:340px;border-radius:var(--radius-lg)}
+.card-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(20,8,15,.82) 100%);pointer-events:none;z-index:4}
+.card-info{position:absolute;inset-inline:0;bottom:0;padding:16px 18px 18px;color:#fff;z-index:5;cursor:pointer;display:grid;gap:6px}
+.card-info h2{color:#fff;font-size:28px;font-weight:800;text-shadow:0 2px 12px rgba(0,0,0,.35);font-family:inherit}
+.card-info p{margin:0;color:#FFE4EE;font-weight:600;font-size:14px}
+.card-tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:999px;font-size:12px;font-weight:700;background:rgba(255,255,255,.18);color:#fff;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.3)}
+.tag .i{width:14px;height:14px}
+.tag.cert{background:#fff;color:var(--rose-700);border-color:#fff}
+.tag.dim{background:rgba(0,0,0,.35)}
+.card-info .flags{margin:2px 0 0}
+.card-info .flag-chip.green{background:rgba(22,163,74,.85);color:#fff;border-color:transparent}
+.card-info .flag-chip.red{background:rgba(200,30,58,.85);color:#fff;border-color:transparent}
+.card-info .flag-title{display:none}
+.fav-btn{position:absolute;top:12px;inset-inline-start:12px;z-index:7;width:44px;height:44px;border-radius:50%;border:0;display:grid;place-items:center;background:rgba(255,255,255,.88);color:var(--mut);box-shadow:0 4px 14px rgba(0,0,0,.18);transition:transform .2s var(--ease)}
+.fav-btn .i{width:22px;height:22px}
+.fav-btn.on{background:#FFC83D;color:#fff}
+.fav-btn.on .i{fill:currentColor}
+.fav-btn:active{transform:scale(.9)}
+.swipe-card .ph .pill{display:none}
+.acts{gap:22px;margin:16px 0 10px}
+.act .i{width:62px;height:62px;padding:18px}
+.act.mid .i{width:54px;height:54px;padding:15px;background:var(--plum-900);color:#fff;border:0;box-shadow:0 8px 20px rgba(43,22,34,.3)}
+.act.like .i{width:66px;height:66px}
+.quota-banner,.cnt{opacity:.9}
+/* Bandeau degrade (Discussions, Activite, Profil) */
+.hero-band{margin:-14px -16px 0;padding:18px 16px 26px;background:var(--brand-grad);color:#fff;border-radius:0 0 26px 26px;position:relative}
+.hero-band h1,.hero-band h2{color:#fff}
+.hero-band h2{font-size:17px;margin-bottom:12px}
+.hero-band.compact{padding-bottom:10px;text-align:center}
+.sheet{background:var(--surf);border-radius:22px;margin-top:-14px;position:relative;padding:16px 14px 10px;box-shadow:0 -6px 24px rgba(194,24,91,.10);min-height:200px}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;font-weight:700;color:var(--ink);margin-bottom:6px}
+.match-row{display:flex;gap:14px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.match-bubble{display:grid;justify-items:center;gap:6px;background:none;border:0;color:#fff;font-weight:600;font-size:12.5px;min-width:68px}
+.av.m{width:64px;height:64px;border:3px solid #fff}
+.match-empty{display:flex;align-items:center;gap:14px}
+.match-empty p{margin:0;font-weight:600;color:#fff}
+.match-count{width:72px;height:82px;border-radius:16px;background:rgba(255,255,255,.22);display:grid;place-items:center;align-content:center;gap:2px;flex:none}
+.match-count .i{width:26px;height:26px;fill:#fff;stroke:#fff}
+.conv-list .row{border:0;border-bottom:1px solid var(--line);border-radius:0;box-shadow:none;margin:0;padding:12px 4px}
+.row-main{flex:1;min-width:0;display:grid}
+.row-main .mut{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:2px 0 0}
+.row-time{font-size:12px;color:var(--mut);align-self:flex-start;padding-top:4px}
+.av{position:relative;overflow:visible}
+.av>svg,.av>img,.av>.av-img-box{border-radius:50%;overflow:hidden}
+.av-badge{position:absolute;bottom:-2px;inset-inline-end:-2px;width:20px;height:20px;border-radius:50%;background:var(--surf);display:grid;place-items:center;color:var(--rose-600)}
+.av-badge .i{width:16px;height:16px}
+.list-end{text-align:center;color:var(--mut);font-size:13px;margin:16px 0 4px}
+.small-empty{padding:28px 10px}
+/* Onglets Activite */
+.act-tabs{display:flex;justify-content:space-around;gap:6px;margin-top:12px}
+.act-tabs button{flex:1;min-height:44px;background:none;border:0;color:rgba(255,255,255,.8);font-weight:700;font-size:14.5px;border-bottom:3px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.act-tabs button.on{color:#fff;border-bottom-color:#fff}
+.pill-n{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:#fff;color:var(--rose-700);font-size:11.5px}
+.p-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px}
+.p-tile{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:3/4;background:var(--rose-100)}
+.p-open{position:absolute;inset:0;border:0;padding:0;background:none;text-align:start}
+.p-open img{width:100%;height:100%;object-fit:cover;display:block}
+.p-meta{position:absolute;inset-inline:0;bottom:0;padding:26px 10px 10px;background:linear-gradient(180deg,transparent,rgba(20,8,15,.82));color:#fff;display:grid;gap:2px}
+.p-meta strong{font-size:15px;display:flex;align-items:center;gap:4px}
+.p-meta small{font-size:11.5px;color:#FFE4EE}
+.vb .i{width:15px;height:15px;color:#fff}
+.p-x{position:absolute;top:8px;inset-inline-end:8px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(255,255,255,.92);display:grid;place-items:center;color:var(--ink)}
+.p-x .i{width:16px;height:16px}
+.empty-ic{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--rose-100);color:var(--rose-600)}
+.empty-ic .i{width:30px;height:30px}
+/* Profil */
+.prof-hero{text-align:center;padding-top:22px;padding-bottom:34px}
+.hero-gear{position:absolute;top:12px;inset-inline-end:12px;color:#fff;background:rgba(255,255,255,.18);border-radius:50%}
+.prof-av{position:relative;width:110px;margin:0 auto 10px}
+.av.xl{width:110px;height:110px;border:4px solid rgba(255,255,255,.85);box-shadow:0 10px 26px rgba(0,0,0,.2)}
+.av-edit{position:absolute;top:0;inset-inline-end:-4px;width:36px;height:36px;border-radius:50%;border:0;background:#fff;color:var(--rose-700);display:grid;place-items:center;box-shadow:var(--sh-md)}
+.av-edit .i{width:18px;height:18px}
+.prof-hero h1{font-size:24px;display:inline-flex;align-items:center;gap:6px;justify-content:center}
+.vbadge.light{color:#fff}
+.hero-sub{color:#FFE4EE;margin:4px 0 0;font-size:13.5px}
+.cert-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;min-width:0;margin:16px 0 0;padding:12px 14px;border-radius:16px;background:rgba(43,22,34,.55);text-align:start;font-weight:600;font-size:13.5px}
+.cert-cta.bad{background:rgba(200,30,58,.55)}
+.chip-wait{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.2);padding:6px 12px;border-radius:999px;font-size:12px;white-space:nowrap}
+.chip-wait .i{width:15px;height:15px}
+.btn.light{background:#fff;color:var(--rose-700);box-shadow:none}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.tile{display:grid;justify-items:center;gap:2px;padding:12px 6px;border-radius:16px;border:1px solid var(--line);background:var(--rose-50);color:var(--ink)}
+.tile .i{width:22px;height:22px;color:var(--rose-600)}
+.tile b{font-size:18px}
+.tile span{font-size:12px;color:var(--mut);font-weight:600}
+.promo{display:flex;align-items:center;gap:12px;width:100%;padding:14px;border-radius:18px;border:0;background:linear-gradient(135deg,#2B1622,#7A1240);color:#fff;text-align:start;margin-bottom:12px}
+.promo>span:nth-child(2){flex:1;display:grid;gap:2px}
+.promo small{color:#FBD5E5}
+.promo-ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--brand-grad)}
+.promo-ic .i{fill:#fff;stroke:#fff}
+.quote{margin:12px 0 4px;font-style:italic;color:var(--ink);background:var(--rose-50);padding:10px 14px;border-radius:12px;border-inline-start:3px solid var(--rose-400);cursor:pointer}
+.settings-link,.set-row{display:flex;align-items:center;gap:12px;width:100%;min-height:54px;padding:0 16px;border:0;background:none;color:var(--ink);font-size:15px;font-weight:600;text-align:start}
+.settings-link{margin:18px 0 6px;border-radius:16px;background:var(--rose-50);border:1px solid var(--line)}
+.settings-link span,.set-row>span:first-child{flex:1}
+.settings-link .i:first-child{color:var(--rose-600)}
+[dir=rtl] .settings-link .i:last-child,[dir=rtl] .set-row .i{transform:scaleX(-1)}
+/* Parametres */
+.settings-page .form-head{justify-content:flex-start}
+.set-title{font-size:13.5px;font-weight:700;color:var(--rose-600);margin:18px 6px 8px;font-family:inherit}
+.set-group{background:var(--surf);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-bottom:6px}
+.set-row+.set-row{border-top:1px solid var(--line)}
+.set-row:hover{background:var(--rose-50)}
+.set-row .i{width:18px;height:18px;color:var(--mut)}
+.set-val{color:var(--mut);font-weight:500;font-size:14px}
+.set-row.static{cursor:default}
+.set-row.static .sw{border:0;background:none;padding:0;min-height:0;width:auto}
+.set-row.danger{color:var(--red)}
+.legal-body{max-height:55vh;overflow:auto;font-size:14px;line-height:1.55;color:var(--body)}
+.legal-body ul{padding-inline-start:18px;display:grid;gap:8px}
+.rg{width:100%;accent-color:var(--rose-600);min-height:32px}
+#lang{display:none}
+nav:empty{display:none}
+.sheet,.hero-band{max-width:calc(100% + 32px);box-sizing:border-box}.sheet{overflow:hidden}.tile{min-width:0}.promo{min-width:0}
+
+/* =====================================================================
+   Chari - style "neumorphisme" rose (relief doux, double ombre,
+   champs en creux, bordure electrique au focus)
+   ===================================================================== */
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+:root{
+  --neu-bg:#F6E8EF;
+  --neu-dark:rgba(196,150,172,.55);
+  --neu-light:rgba(255,255,255,.95);
+  --neu-out:9px 9px 18px var(--neu-dark),-9px -9px 18px var(--neu-light);
+  --neu-out-lg:18px 18px 36px var(--neu-dark),-18px -18px 36px var(--neu-light);
+  --neu-out-sm:5px 5px 10px var(--neu-dark),-5px -5px 10px var(--neu-light);
+  --neu-in:inset 6px 6px 12px var(--neu-dark),inset -6px -6px 12px var(--neu-light);
+  --neu-in-sm:inset 3px 3px 7px var(--neu-dark),inset -3px -3px 7px var(--neu-light);
+  --bg:var(--neu-bg);--surf:var(--neu-bg);--hdr:var(--neu-bg);--line:transparent;
+  --electric:conic-gradient(from var(--ang),transparent 0deg,transparent 30deg,#FFB3D1 45deg,#F06292 65deg,#C2185B 80deg,transparent 105deg,transparent 360deg);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --neu-bg:#2A1922;--neu-dark:rgba(0,0,0,.55);--neu-light:rgba(255,255,255,.06);
+    --bg:var(--neu-bg);--surf:var(--neu-bg);--hdr:var(--neu-bg);
+  }
+}
+:root[data-theme="dark"]{--neu-bg:#2A1922;--neu-dark:rgba(0,0,0,.55);--neu-light:rgba(255,255,255,.06);--bg:var(--neu-bg);--surf:var(--neu-bg);--hdr:var(--neu-bg)}
+body{font-family:"Poppins","IBM Plex Sans Arabic",system-ui,sans-serif}
+h1,h2,h3{font-family:"Poppins","IBM Plex Sans Arabic",system-ui,sans-serif}
+.logo,.logo-big,.plan-price{font-family:var(--font-display)}
+[dir=rtl] body,[dir=rtl] h1,[dir=rtl] h2,[dir=rtl] h3{font-family:"IBM Plex Sans Arabic",system-ui,sans-serif}
+.app{background:var(--neu-bg);box-shadow:var(--neu-out-lg)}
+/* Cercles decoratifs flottants */
+.bg-circle{position:absolute;border-radius:50%;background:var(--neu-bg);box-shadow:15px 15px 30px var(--neu-dark),-15px -15px 30px var(--neu-light);z-index:0;pointer-events:none;animation:floating 6s ease-in-out infinite}
+.bg-circle.c1{width:150px;height:150px;top:18%;inset-inline-start:-50px}
+.bg-circle.c2{width:110px;height:110px;bottom:14%;inset-inline-end:-36px;animation-delay:1.5s}
+.bg-circle.c3{width:46px;height:46px;top:46%;inset-inline-end:16%;animation-delay:3s}
+@keyframes floating{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+header,main,nav{position:relative;z-index:1}
+/* En-tete et navigation en relief */
+header{background:var(--neu-bg);border:0;box-shadow:0 6px 14px -8px var(--neu-dark)}
+.strip{display:none}
+nav{background:var(--neu-bg);border:0;margin:0 10px 10px;border-radius:24px;box-shadow:var(--neu-out);min-height:66px}
+nav button{color:var(--mut);border-radius:18px;margin:6px 4px}
+nav [aria-current]{color:var(--rose-600);box-shadow:var(--neu-in-sm)}
+nav [aria-current]::after{display:none}
+.lg{background:var(--neu-bg);border:0;box-shadow:var(--neu-out-sm);color:var(--rose-700)}
+.lg:hover{background:var(--neu-bg);box-shadow:var(--neu-in-sm)}
+/* Cartes, panneaux, groupes : relief doux */
+.card,.auth-card,.fs,.sf,.set-group,.sheet,.g-modal,.row,.req-card,.tile,.status-banner,.reveal,.note,.quota-banner,.settings-link,.p-tile,.plan-card,.promo,.empty-ic{border:0!important}
+.card,.auth-card,.fs,.set-group,.g-modal,.req-card{background:var(--neu-bg);box-shadow:var(--neu-out)}
+.sheet{background:var(--neu-bg);box-shadow:0 -10px 24px -12px var(--neu-dark)}
+.sf,.row,.settings-link,.tile,.quota-banner{background:var(--neu-bg);box-shadow:var(--neu-out-sm)}
+.conv-list .row{box-shadow:none;border-bottom:1px solid color-mix(in srgb,var(--neu-dark) 40%,transparent)!important}
+.set-row+.set-row{border-top:1px solid color-mix(in srgb,var(--neu-dark) 35%,transparent)}
+.set-row:hover,.sf:hover{background:var(--neu-bg)}
+.tile:active,.row:active,.settings-link:active,.set-row:active{box-shadow:var(--neu-in-sm)}
+.quote,.chips li,.badge:not(.brand){background:var(--neu-bg);border:0;box-shadow:var(--neu-in-sm)}
+.swipe-card{box-shadow:var(--neu-out-lg)}
+.p-tile{box-shadow:var(--neu-out-sm)}
+.empty-ic,.auth-icon{background:var(--neu-bg);box-shadow:var(--neu-out-sm)}
+.status-banner.wait,.reveal.wait{background:color-mix(in srgb,var(--amber-bg) 70%,var(--neu-bg))}
+.status-banner.bad{background:color-mix(in srgb,var(--red-bg) 70%,var(--neu-bg))}
+.reveal{background:var(--neu-bg);box-shadow:var(--neu-in-sm)}
+.reveal.done{background:color-mix(in srgb,var(--green-bg) 70%,var(--neu-bg))}
+/* Champs en creux + bordure electrique au focus */
+.fld,.inp input,.csel{background:var(--neu-bg);border:2px solid transparent;border-radius:16px;box-shadow:var(--neu-in);color:var(--ink);transition:box-shadow .25s ease}
+.fld:focus,.inp input:focus,.csel:focus{outline:none;box-shadow:var(--neu-in-sm);background:linear-gradient(var(--neu-bg),var(--neu-bg)) padding-box,var(--electric) border-box;animation:electric 1.1s linear infinite}
+@keyframes electric{to{--ang:360deg}}
+select.fld:focus,select.csel:focus{animation:none;background:var(--neu-bg);border-color:var(--rose-400)}
+.wa-cc{background:var(--neu-bg);border:0;box-shadow:var(--neu-out-sm)}
+.seg{background:var(--neu-bg);box-shadow:var(--neu-in)}
+.seg button[aria-pressed=true]{background:var(--neu-bg);box-shadow:var(--neu-out-sm);color:var(--rose-700)}
+.h-chip{background:var(--neu-bg)!important;border:0!important;box-shadow:var(--neu-out-sm);color:var(--body)}
+.h-chip.on{box-shadow:var(--neu-in-sm)}
+/* Boutons : relief, remplissage degrade anime au survol */
+.btn{position:relative;isolation:isolate;overflow:hidden;background:var(--neu-bg);color:var(--rose-700);box-shadow:var(--neu-out);border-radius:17px;transition:color .3s ease,transform .3s ease,box-shadow .3s ease}
+.btn::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,#C2185B,#F06292,#C2185B);background-size:200% 100%;transform:translateY(0);transition:transform .35s ease}
+.btn:hover{filter:none;background:var(--neu-bg);color:#fff;transform:translateY(-3px);box-shadow:0 10px 25px rgba(194,24,91,.35)}
+.btn:hover::before{animation:btnMove 1.5s linear infinite}
+.btn:active{transform:scale(.97)}
+@keyframes btnMove{from{background-position:0 50%}to{background-position:200% 50%}}
+.btn{color:#fff}
+.btn.sec,.btn.ghost,.btn.danger-outline,.btn.light{color:var(--rose-700);background:var(--neu-bg);box-shadow:var(--neu-out-sm);border:0}
+.btn.sec::before,.btn.ghost::before,.btn.danger-outline::before,.btn.light::before{transform:translateY(100%)}
+.btn.sec:hover::before,.btn.ghost:hover::before,.btn.light:hover::before{transform:translateY(0)}
+.btn.sec:hover,.btn.ghost:hover,.btn.light:hover{color:#fff}
+.btn.danger-outline{color:var(--red)}
+.btn.danger-outline::before{background:linear-gradient(110deg,#C81E3A,#FB7185,#C81E3A);background-size:200% 100%}
+.btn.danger-outline:hover::before{transform:translateY(0)}
+.btn.danger-outline:hover{color:#fff}
+.btn-google{background:var(--neu-bg);border:0;box-shadow:var(--neu-out);color:var(--ink)}
+.btn-google:hover{box-shadow:var(--neu-in-sm)}
+.filter-btn,.fav-btn,.av-edit,.p-x{border:0;box-shadow:var(--neu-out-sm)}
+.filter-btn{background:var(--neu-bg)}
+.filter-btn:active{box-shadow:var(--neu-in-sm)}
+/* Boutons d'action ronds (passer / profil / j'aime) */
+.act .i{background:var(--neu-bg);border:0;box-shadow:var(--neu-out);color:var(--mut);transition:transform .35s ease,box-shadow .35s ease,color .35s ease}
+.act:hover .i{transform:translateY(-3px)}
+.act:active .i{box-shadow:var(--neu-in);transform:scale(.92)}
+.act.like .i{background:var(--brand-grad);color:#fff;box-shadow:0 10px 24px rgba(194,24,91,.4)}
+.act.mid .i{background:var(--neu-bg);color:var(--rose-700);box-shadow:var(--neu-out)}
+.ib{border-radius:50%}
+.ib:hover{box-shadow:var(--neu-out-sm)}
+.send{background:var(--neu-bg);color:var(--rose-600);box-shadow:var(--neu-out-sm);border-radius:50%}
+.send:hover{color:#fff;background:var(--rose-600);transform:rotate(-12deg) scale(1.06)}
+.bb.th{background:var(--neu-bg);border:0;box-shadow:var(--neu-out-sm)}
+/* Interrupteurs */
+.sw i{box-shadow:var(--neu-in-sm)}
+/* Page de connexion : carte qui pivote entre Inscription et Connexion */
+.auth-card{border-radius:30px;padding:26px 22px}
+.auth-card.flip-in{animation:cardFlip .7s cubic-bezier(.68,-0.35,.27,1.35)}
+@keyframes cardFlip{0%{transform:perspective(1600px) rotateY(-90deg);opacity:.2}100%{transform:perspective(1600px) rotateY(0);opacity:1}}
+.auth-logo{width:78px;height:78px;margin:-4px auto 6px;border-radius:50%;display:grid;place-items:center;color:var(--rose-600);background:var(--neu-bg);box-shadow:var(--neu-out);transition:transform .4s ease}
+.auth-logo:hover{transform:translateY(-5px) rotate(8deg)}
+.auth-logo .i{width:32px;height:32px}
+.auth-card h1{text-align:center}
+.auth-card>.mut{text-align:center}
+.pwd-wrap{position:relative}
+.pwd-wrap .fld{padding-inline-end:52px}
+.pwd-toggle{position:absolute;top:50%;inset-inline-end:8px;transform:translateY(-50%);width:40px;height:40px;border:0;border-radius:50%;background:none;color:var(--mut);display:grid;place-items:center}
+.pwd-toggle:hover{color:var(--rose-600)}
+.pwd-toggle .i{width:20px;height:20px}
+.switch-area{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:10px;font-size:13px;color:var(--mut)}
+.switch-circle{width:50px;height:50px;border:0;border-radius:50%;background:var(--neu-bg);color:var(--rose-600);display:grid;place-items:center;box-shadow:var(--neu-out-sm);transition:.35s ease}
+.switch-circle:hover{color:#fff;background:var(--rose-600);transform:rotate(180deg) scale(1.08);box-shadow:0 8px 25px rgba(194,24,91,.35)}
+.switch-circle .i{width:22px;height:22px}
+.auth-hero{box-shadow:var(--neu-out)}
+.hero-band{box-shadow:0 12px 26px -10px rgba(194,24,91,.45)}
+@media (prefers-reduced-motion:reduce){.bg-circle,.fld:focus,.btn:hover::before{animation:none!important}}
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol>
+<symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2.8 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.6l-5.8 3.1 1.1-6.5L2.6 9.6l6.5-.9z"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
 <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
 <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36z"/></symbol>
 <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></symbol>
@@ -1781,7 +2042,7 @@ nav [aria-current]::after{background:var(--brand-grad);width:34px}
 <symbol id="i-mail" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
 <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
 </defs></svg>
-<div class="app">
+<div class="app"><div class="bg-circle c1" aria-hidden="true"></div><div class="bg-circle c2" aria-hidden="true"></div><div class="bg-circle c3" aria-hidden="true"></div>
 <header><div style="display:flex;align-items:center;gap:8px"><span class="logo">Chari</span><span class="logo-heart" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.7 4.5c2.1 0 3.6 1.2 4.3 2.4.8-1.2 2.3-2.4 4.4-2.4 3.7 0 5.8 3.9 4.3 7.3C19.5 16.4 12 21 12 21z"/></svg></span></div><button class="lg" id="lang" data-a="lang" aria-label="Langue / اللغة"></button></header>
 <div class="strip" aria-hidden="true"></div>
 <main id="v"></main>
@@ -2300,6 +2561,13 @@ sfRejT:"Selfie refusé",sfRejD:"Votre selfie n'a pas été validé. Reprenez un 
 edit:"Modifier",view:"Voir",premUntil:"Premium actif jusqu'au",payOk:"Paiement reçu, merci ! Votre Premium s'active dans quelques secondes.",payCancel:"Paiement annulé. Aucun montant n'a été débité.",payActive:"Premium activé pour 30 jours.",mainPhoto:"Principale",setMain:"Principale",secSearch:"Ce que je recherche",secSafety:"Sécurité",
 priceMain:"5 000 FCFA",month:"mois",priceEq:"≈ 7,60 € · facturé en FCFA, converti par votre banque",premF1:"Profils illimités pendant 30 jours",premF2:"Demandes et acceptations illimitées",premF3:"Mode incognito",premF4:"Sans engagement",pss2:"Profils illimités, likes illimités et mode incognito pendant 30 jours.",up:"Passer Premium",free:"Formule gratuite : 20 profils par jour",prem:"Premium actif",payCard:"Payer par carte bancaire",pg:"Ouverture du paiement sécurisé…",payUnavail:"Le paiement est momentanément indisponible. Réessayez dans quelques minutes.",cardSec:"Paiement sécurisé sur la page de notre prestataire (3D Secure). Chari ne voit jamais votre numéro de carte.",
 lngMap:{fr:"Français",ar:"Arabe",both:"Français & Arabe",en:"Anglais"},relMap:{mus:"Musulman(e)",chr:"Chrétien(ne)",oth:"Autre religion"},scBlockD:"Pour protéger l'intimité des membres, les captures et enregistrements d'écran sont interdits sur Chari.",selfieBadge:"Certifié",
+navMeet:"Rencontres",navChat:"Discussions",navAct:"Activité",recentMatches:"Matchs récents",noNewMatch:"Pas encore de nouveau match. Likez des profils pour en recevoir !",lastPhoto:"Photo",lastVoice:"Message vocal",listEnd:"Fin de la liste",startChat:"Écrivez à vos matchs ci-dessus pour démarrer une discussion.",total:"Total :",refresh:"Actualiser",
+actLikes:"Likes",actViews:"Vues",actFavs:"Favoris",favLbl:"Ajouter aux favoris",favAdded:"Ajouté à vos favoris",favRemoved:"Retiré de vos favoris",favRemove:"Retirer des favoris",favEmpty:"Aucun favori pour l'instant. Touchez l'étoile sur un profil pour le retrouver ici.",viewsEmpty:"Personne n'a encore visité votre profil. Ajoutez de belles photos et vos flags pour attirer l'attention !",viewsHelp:"Les personnes qui ont consulté votre profil ces 30 derniers jours.",favHelp:"Vos favoris sont privés : personne ne sait qui vous ajoutez.",addedAgo:"Ajouté",viewedAgo:"Vu",
+certTag:"Certifié",blurShort:"Flouté",filters:"Filtres",settings:"Paramètres",certPending:"Votre profil est en cours de certification.",certWait:"En attente",promoT:"Passez Premium",promoD:"Profils illimités et mode incognito",
+setPrefs:"Préférences",setLang:"Langue d'affichage",setTheme:"Thème",themeSys:"Système",themeLight:"Clair",themeDark:"Sombre",setPrivacy:"Vie privée",setAppPrivacy:"Confidentialité de l'app",setHelp:"Assistance",setSupport:"Contacter le support",setAbout:"À propos",setTerms:"Conditions d'utilisation",setPolicy:"Politique de confidentialité",delAcc:"Supprimer mon compte",delConfirm1:"Supprimer définitivement votre compte ? Profil, photos, likes et messages seront effacés. Cette action est irréversible.",delConfirm2:"Pour confirmer, tapez SUPPRIMER",delWord:"SUPPRIMER",delDone:"Votre compte a été supprimé. Au revoir et merci d'avoir utilisé Chari.",on:"Activé",off:"Désactivé",ok:"J'ai compris",fAgeMin:"Âge minimum",yrs:"ans",fAgeMax:"Âge maximum",apply:"Appliquer",reset:"Réinitialiser",
+legalSafety:"<ul><li>Ne donnez jamais d'argent, de codes ou de coordonnées bancaires, même en cas d'urgence annoncée.</li><li>Restez sur Chari tant que vous n'êtes pas en confiance : le WhatsApp n'est partagé qu'après dévoilement mutuel.</li><li>Pour une première rencontre, choisissez un lieu public et prévenez un proche.</li><li>Faites un appel vidéo avant de vous rencontrer.</li><li>Signalez tout comportement suspect : notre équipe examine chaque signalement sous 24 h.</li></ul>",
+legalTerms:"<p>Chari est réservé aux personnes majeures de <b>25 ans et plus</b>, à la recherche d'une relation sérieuse.</p><ul><li>Un seul compte par personne, avec vos vraies informations et un selfie authentique.</li><li>Interdits : faux profils, harcèlement, propos haineux, contenus sexuels, arnaques et demandes d'argent.</li><li>Les captures d'écran du contenu des autres membres sont interdites.</li><li>Tout manquement peut entraîner la suppression du compte, sans remboursement.</li><li>L'abonnement Premium dure 30 jours, sans renouvellement automatique.</li></ul>",
+legalPrivacy:"<p>Nous collectons uniquement ce qui est nécessaire au service : identité, date de naissance, pays et ville, photos, selfie de vérification, numéro WhatsApp et messages.</p><ul><li>Votre e-mail, votre date de naissance exacte et votre WhatsApp ne sont jamais visibles par les autres membres. Le WhatsApp n'est échangé qu'après dévoilement mutuel.</li><li>Vos photos restent floutées pour les autres jusqu'au dévoilement mutuel.</li><li>Les messages sont accessibles à la modération uniquement en cas de signalement ou de contrôle de sécurité.</li><li>Les paiements sont traités par notre prestataire : Chari ne voit jamais votre carte.</li><li>Vous pouvez supprimer votre compte à tout moment depuis Paramètres : toutes vos données sont alors effacées.</li></ul>",
 k:{ser:"Relation amoureuse",mar:"Mariage",fam:"Famille",etu:"Études",ent:"Entrepreneuriat",foi:"Foi",mus:"Musique",foo:"Football",cui:"Cuisine",voy:"Voyage",fr:"Français",ar:"Arabe",sa:"Sara"}},
 ar:{d:"اكتشف",m:"الرسائل",p:"ملفي",pass:"تخطَّ",like:"إعجاب",mt:"تطابق!",ms:"أنتما معجبان ببعضكما.",wr:"راسل ",ct:"متابعة",done:"شاهدت كل شيء لهذا اليوم.",again:"إعادة العرض",none:"لا توجد محادثات بعد.",nh:"أعجب بملفات لبدء محادثة.",ph:"اكتب رسالة",snd:"إرسال",bk:"رجوع",my:"ملفي الشخصي",vg:"جارٍ التحقق…",vd:"ملف موثّق",blur:"الوجه مخفي حتى التطابق",lite:"توفير البيانات",sf:"نصائح للأمان",st:"لا ترسل المال أو الرموز أبداً. التقِ في مكان عام وأخبر شخصاً مقرباً.",age:"للبالغين 22 سنة فأكثر فقط.",demo:"شاري · ملفات حقيقية موثقة بالسيلفي.",lgb:"Français",r:["مرحباً! سعيد بالتعرف عليك.","من أي مدينة أنت؟"],
 wl:"مرحباً بك في شاري",wl2:"علاقات عاطفية جادة بين رجل وامرأة، مع ملفات موثّقة.",phl:"رقم الهاتف",ph8:"أدخل 8 أرقام لرقمك.",orPhone:"أو عبر حساب Google",sndOtp:"استلام الرمز",otp:"تأكيد الحساب",otps:"تم إرسال الرمز إلى ",otpd:"أدخل رمز التأكيد.",cod:"الرمز المكوّن من 6 أرقام",bad:"الرمز غير صحيح.",pr:"ملفك الشخصي",nm:"الاسم الأول",job:"المهنة / العمل",jobPh:"مثال: معلم، تاجر، ممرضة...",tcty:"المدينة المراد التعارف فيها",allC:"جميع المدن",noCity:"لا توجد ملفات في هذه المدينة",noCityD:"لا توجد ملفات متوفرة حالياً في هذه المدينة. جرب توسيع البحث ليشمل جميع المدن!",iam:"أنا",fem:"امرأة",mal:"رجل",ag:"العمر",agE:"التطبيق مخصص لمن بلغ 22 سنة فأكثر.",cty:"مدينتك",kd:"عدد الأطفال",it:"أبحث عن",req:"أكمل جميع الحقول.",sf1:"توثيق الهوية عبر السيلفي الإلزامي",sf2:"التقط صورة سيلفي مباشرة عبر الكاميرا: يقوم الذكاء الاصطناعي بالتحقق الصارم من ملامح الوجه البشري.",shot:"التقاط السيلفي الموثق",sf3:"تؤكد هذه الصورة هويتك الحقيقية وتحمي المجتمع من الحسابات المزيفة وتبقى ثابتة في ملفك الشخصي.",pj:"ملفاً شاهدته اليوم",unl:"بريميوم مفعّل: ملفات وطلبات غير محدودة لمدة شهر",pw:"بلغت حد الزيارات اليومية",pw2:"لقد استنفدت 20 ملفاً مجانياً لهذا اليوم. سيتم تجديد 20 ملفاً جديداً لك تلقائياً عند الساعة 00:00 منتصف الليل (بالتوقيت المحلي).",pss:"اشتراك بريميوم (شهر واحد)",pss2:"ملفات غير محدودة لمدة 30 يوماً وإعجابات غير محدودة ووضع التخفّي.",op:"الدفع بالبطاقة البنكية",pn:"رقم الدفع",pb:"ادفع 5 000 FCFA (شهر واحد)",pg:"جارٍ الدفع…",pd:"دفع آمن ومحمي بنسبة 100%.",paid:"تم استلام الدفع. تم تفعيل اشتراك بريميوم لمدة شهر.",plan:"باقتك",free:"مجانية: 20 ملفاً في اليوم",prem:"اشتراك بريميوم مفعّل (شهر واحد)",up:"الترقية إلى بريميوم (5 000 FCFA / شهر)",dm:"تجريبي: الانتقال إلى 19 ملفاً",opVisa:"بطاقة بنكية (Visa / Mastercard)",cardNum:"رقم البطاقة البنكية",cardExp:"تاريخ الانتهاء (MM/AA)",cardCvv:"رمز الأمان (3 أرقام)",cardNom:"اسم صاحب البطاقة",cardNomPh:"مثال: MAHAMAT ADAM",cardSec:"دفع آمن 100% عبر Visa و Mastercard و 3D Secure",cardNumE:"رقم البطاقة غير مكتمل (16 رقماً).",cardExpE:"تاريخ انتهاء غير صحيح (MM/AA).",cardCvvE:"رمز CVV غير صحيح (3 أرقام).",cardNomE:"يرجى كتابة اسم صاحب البطاقة.",visaPaid:"تم التحقق من البطاقة بنجاح! تم تفعيل اشتراك بريميوم لمدة شهر.",
@@ -2340,13 +2608,50 @@ sfRejT:"تم رفض السيلفي",sfRejD:"لم يتم قبول السيلفي.
 edit:"تعديل",view:"عرض",premUntil:"بريميوم مفعّل حتى",payOk:"تم استلام الدفع، شكراً! سيتم تفعيل بريميوم خلال ثوانٍ.",payCancel:"تم إلغاء الدفع. لم يُخصم أي مبلغ.",payActive:"تم تفعيل بريميوم لمدة 30 يوماً.",mainPhoto:"الرئيسية",setMain:"رئيسية",secSearch:"ما أبحث عنه",secSafety:"الأمان",
 priceMain:"5 000 FCFA",month:"شهر",priceEq:"≈ 7.60 € · تُحتسب بالفرنك الإفريقي ويحوّلها بنكك",premF1:"ملفات غير محدودة لمدة 30 يوماً",premF2:"طلبات وقبول غير محدود",premF3:"وضع التخفّي",premF4:"بدون التزام",pss2:"ملفات وإعجابات غير محدودة ووضع التخفّي لمدة 30 يوماً.",up:"الترقية إلى بريميوم",free:"الباقة المجانية: 20 ملفاً في اليوم",prem:"بريميوم مفعّل",payCard:"الدفع بالبطاقة البنكية",pg:"جارٍ فتح صفحة الدفع الآمن…",payUnavail:"الدفع بالبطاقة غير مفعّل بعد. سيتوفر قريباً جداً.",cardSec:"دفع آمن على صفحة مزوّد الدفع (3D Secure). لا يرى شاري رقم بطاقتك أبداً.",
 lngMap:{fr:"الفرنسية",ar:"العربية",both:"الفرنسية والعربية",en:"الإنجليزية"},relMap:{mus:"مسلم(ة)",chr:"مسيحي(ة)",oth:"ديانة أخرى"},scBlockD:"لحماية خصوصية الأعضاء، يُمنع تصوير الشاشة أو تسجيلها في شاري.",selfieBadge:"موثّق",
+navMeet:"تعارف",navChat:"المحادثات",navAct:"النشاط",recentMatches:"تطابقات حديثة",noNewMatch:"لا يوجد تطابق جديد بعد. أعجب بملفات لتحصل على تطابقات!",lastPhoto:"صورة",lastVoice:"رسالة صوتية",listEnd:"نهاية القائمة",startChat:"راسل تطابقاتك أعلاه لبدء محادثة.",total:"المجموع:",refresh:"تحديث",
+actLikes:"الإعجابات",actViews:"الزيارات",actFavs:"المفضلة",favLbl:"إضافة إلى المفضلة",favAdded:"تمت الإضافة إلى المفضلة",favRemoved:"تمت الإزالة من المفضلة",favRemove:"إزالة من المفضلة",favEmpty:"لا توجد مفضلة بعد. اضغط على النجمة في أي ملف لتجده هنا.",viewsEmpty:"لم يزر أحد ملفك بعد. أضف صوراً جميلة وصفاتك لجذب الانتباه!",viewsHelp:"الأشخاص الذين زاروا ملفك خلال آخر 30 يوماً.",favHelp:"مفضلتك خاصة: لا أحد يعرف من تضيف.",addedAgo:"أضيف",viewedAgo:"زار",
+certTag:"موثّق",blurShort:"مموّه",filters:"الفلاتر",settings:"الإعدادات",certPending:"ملفك قيد التوثيق.",certWait:"قيد الانتظار",promoT:"اشترك في بريميوم",promoD:"ملفات غير محدودة ووضع التخفّي",
+setPrefs:"التفضيلات",setLang:"لغة العرض",setTheme:"المظهر",themeSys:"النظام",themeLight:"فاتح",themeDark:"داكن",setPrivacy:"الخصوصية",setAppPrivacy:"خصوصية التطبيق",setHelp:"المساعدة",setSupport:"التواصل مع الدعم",setAbout:"حول التطبيق",setTerms:"شروط الاستخدام",setPolicy:"سياسة الخصوصية",delAcc:"حذف حسابي",delConfirm1:"هل تريد حذف حسابك نهائياً؟ سيتم مسح ملفك وصورك وإعجاباتك ورسائلك. لا يمكن التراجع.",delConfirm2:"للتأكيد، اكتب SUPPRIMER",delWord:"SUPPRIMER",delDone:"تم حذف حسابك. شكراً لاستخدامك شاري.",on:"مفعّل",off:"غير مفعّل",ok:"فهمت",fAgeMin:"العمر الأدنى",yrs:"سنة",fAgeMax:"العمر الأقصى",apply:"تطبيق",reset:"إعادة تعيين",
+legalSafety:"<ul><li>لا ترسل المال أو الرموز أو بياناتك البنكية أبداً، حتى في حالة طارئة مزعومة.</li><li>ابقَ على شاري حتى تثق بالشخص: لا يُشارك رقم واتساب إلا بعد الكشف المتبادل.</li><li>في اللقاء الأول اختر مكاناً عاماً وأخبر شخصاً مقرباً.</li><li>أجرِ مكالمة فيديو قبل اللقاء.</li><li>أبلغ عن أي سلوك مريب: يراجع فريقنا كل بلاغ خلال 24 ساعة.</li></ul>",
+legalTerms:"<p>شاري مخصص للبالغين من <b>25 سنة فأكثر</b> الباحثين عن علاقة جادة.</p><ul><li>حساب واحد لكل شخص، بمعلومات حقيقية وسيلفي أصلي.</li><li>يُمنع: الملفات المزيفة، المضايقة، خطاب الكراهية، المحتوى الجنسي، الاحتيال وطلب المال.</li><li>يُمنع تصوير محتوى الأعضاء الآخرين.</li><li>أي مخالفة قد تؤدي إلى حذف الحساب دون استرداد.</li><li>اشتراك بريميوم لمدة 30 يوماً دون تجديد تلقائي.</li></ul>",
+legalPrivacy:"<p>نجمع فقط ما يلزم للخدمة: الهوية، تاريخ الميلاد، الدولة والمدينة، الصور، سيلفي التوثيق، رقم واتساب والرسائل.</p><ul><li>بريدك وتاريخ ميلادك الدقيق ورقم واتساب لا تظهر أبداً للأعضاء الآخرين، ويُتبادل واتساب فقط بعد الكشف المتبادل.</li><li>تبقى صورك مموّهة حتى الكشف المتبادل.</li><li>لا يطّلع فريق الإشراف على الرسائل إلا عند وجود بلاغ أو فحص أمني.</li><li>تتم معالجة المدفوعات لدى مزوّد الدفع: لا يرى شاري بطاقتك أبداً.</li><li>يمكنك حذف حسابك في أي وقت من الإعدادات، فتُمسح جميع بياناتك.</li></ul>",
 k:{ser:"علاقة عاطفية",mar:"زواج",fam:"العائلة",etu:"الدراسة",ent:"ريادة الأعمال",foi:"الإيمان",mus:"الموسيقى",foo:"كرة القدم",cui:"الطبخ",voy:"السفر",fr:"الفرنسية",ar:"العربية",sa:"السارا"}}};
+/* English */
+T.en=Object.assign({},T.fr,{d:"Discover",m:"Messages",p:"Profile",pass:"Pass",like:"Like",mt:"It's a match!",ms:"You like each other.",wr:"Message ",ct:"Continue",done:"You've seen everyone for today.",again:"See profiles again",none:"No conversations yet.",nh:"Like some profiles to start one.",ph:"Write a message",snd:"Send",bk:"Back",my:"My profile",vg:"Verifying…",vd:"Verified profile",blur:"Photos blurred until reveal",lite:"Data saver",sf:"Safety tips",st:"Never share money or codes. Meet in a public place and tell someone close to you.",age:"For adults aged 25 and over only.",demo:"Chari · Real profiles certified by selfie.",lgb:"Français",r:["Hello! Nice to meet you.","Which city are you from?"],
+wl:"Welcome to Chari",wl2:"Serious relationships between a man and a woman, with verified profiles.",phl:"Phone number",ph8:"Enter an 8-digit number.",orPhone:"or with your phone number",sndOtp:"Get my code by SMS",otp:"Number confirmation",otps:"Code sent by SMS to ",otpd:"Enter the confirmation code.",cod:"6-digit code",bad:"Incorrect code.",pr:"Your profile",nm:"First name",job:"Job / Occupation",jobPh:"E.g. Teacher, Trader, Nurse...",tcty:"Country searched",allC:"All countries",noCity:"No profiles in this country",noCityD:"No profiles available in this country yet. Try “All countries”!",iam:"I am",fem:"A woman",mal:"A man",ag:"Age",agE:"Chari is for people aged 25 and over.",cty:"City",kd:"Number of children",it:"I'm looking for",req:"Please fill in all fields.",
+sf1:"Selfie verification required",sf2:"Take a live selfie with your camera: our system checks that your face is real.",shot:"Take my verified selfie",sf3:"This selfie confirms your real identity. It stays among your photos and protects the community.",pj:"profiles seen today",unl:"Premium active: unlimited profiles & likes for 1 month",pw:"Daily limit reached",pw2:"You've seen your 20 free profiles for today. New profiles at midnight (local time).",pss:"Premium subscription (1 month)",pss2:"Unlimited profiles, unlimited likes and incognito mode for 30 days.",op:"Card payment",pn:"Payment number",pb:"Pay 5,000 FCFA (1 month)",pg:"Opening secure payment…",pd:"100% secure payment.",paid:"Payment confirmed! Your 1-month Premium is active.",plan:"Your plan",free:"Free plan: 20 profiles per day",prem:"Premium active",up:"Go Premium",dm:"Demo: set 19 profiles seen",opVisa:"Bank card (Visa / Mastercard)",cardNum:"Card number",cardExp:"Expiry date (MM/YY)",cardCvv:"CVV (3 digits)",cardNom:"Cardholder name",cardNomPh:"E.g. JOHN SMITH",cardSec:"Secure payment on our provider's page (3D Secure). Chari never sees your card number.",cardNumE:"Incomplete card number.",cardExpE:"Invalid expiry date (MM/YY).",cardCvvE:"Invalid CVV.",cardNomE:"Enter the name on the card.",visaPaid:"Payment confirmed! Your 1-month Premium is active.",
+gBtn:"Sign up with Google",fbAuthBtn:"Sign up with Google",gNote:"Secure sign-up. A live selfie is required and checked by our team.",gVerif:"Verified Google account",fbAuthVerif:"Verified Google account",logout:"Log out",logoutConfirm:"Log out of Chari? Your details and messages are kept and you'll pick up exactly where you left off.",gModalT:"Google sign-in",gModalD:"Choose your Google account for instant verification:",gConfirm:"Confirm my account",cityFilt:"Country",seekCity:"Search",heroTag:"Serious dating, all over the world",hob:"Hobbies & interests",hobLbl:"Your favourite hobbies",hobHint:"Choose your hobbies and passions:",edHb:"Edit my hobbies",saveHb:"Save",bio:"About me",bioLbl:"Short description",bioPh:"E.g. Cheerful, I love sincere conversations, travelling, and I'm looking for something serious...",bioHint:"Introduce yourself in a few words:",edBio:"Edit my description",saveBio:"Save my description",bioDef:"I'm looking for a sincere, lasting relationship based on mutual respect.",
+vidCall:"Video call",callHd:"HD video call",calling:"Calling…",callingContact:"Calling…",ringingContact:"Ringing ",callAnswered:"Connected in HD",callEnd:"Video call ended",callHangup:"Hang up",opt:"Options",repUser:"Report this profile",blkUser:"Block this user",blkConfirmT:"Block this user?",blkConfirmD:"You won't see this profile again and your messages will be hidden.",blkBtn:"Block",blkDone:"User blocked.",repTitle:"Report this profile",repDesc:"Why do you want to report this profile?",repDone:"Report sent. Our moderation team will review this profile within 24h.",repFake:"Fake profile or impersonation",repHarass:"Inappropriate behaviour or harassment",repScam:"Scam or request for money",repOther:"Other reason",unblk:"Unblock",blkedList:"Blocked users",noBlked:"No blocked users.",unblkDone:"User unblocked.",
+langSpk:"Language spoken",lngFr:"French",lngAr:"Arabic",lngBoth:"French & Arabic",lngMap:{fr:"French",ar:"Arabic",both:"French & Arabic",en:"English"},rel:"Religion",relMus:"Muslim",relChr:"Christian",relOth:"Other religion",relMap:{mus:"Muslim",chr:"Christian",oth:"Other religion"},
+mailb:"Google",telb:"Google",eml:"Email address",emE:"Enter a valid email address.",pwd:"Password",pwdPh:"At least 8 characters",pwdE:"Your password must have at least 8 characters.",emReg:"Google sign-in",emLog:"Google sign-in",orDivider:"or",haveAcc:"Sign in with Google",swMail:"Google",swTel:"Google",phs:"Photos & videos",rm:"Remove",add:"Add photo/video",ph5i:"Add up to 5 photos or short videos (10s max).",edt:"Hide face",edh:"Place the circle on your face.",edx:"Horizontal position",edy:"Vertical position",eds:"Mask size",eda:"Add photo",edc:"Cancel",incog:"Incognito mode",incd:"Your profile stays invisible: you can see others, but nobody sees yours.",incl:"Premium only",incb:"Incognito",
+kid:["No children","1 child","2 children","3 or more children"],selfieBadge:"Verified",selfieLock:"The verified selfie is required and can't be removed.",selfieNoFace:"❌ No face detected. Frame your face clearly in good light and try again.",selfieAnalyzing:"Checking your face…",selfieVerified:"Face verified!",noProfilesYet:"Welcome to Chari!",noProfilesDesc:"Be among the first verified members: complete your profile and invite your friends.",
+reqTabName:"Requests",reqSentTab:"Sent",reqReceivedTab:"Received",noReqSent:"No requests sent yet",noReqSentDesc:"Profiles you like will appear here while waiting for a match.",fbTitle:"Give feedback",fbSub:"Share your ideas or suggest an improvement.",fbBtn:"Write feedback",fbModalT:"Your opinion matters",fbModalD:"Help us improve Chari. Share your experience:",fbRatingLbl:"Your overall rating",fbRatingNames:["Very unhappy","Unhappy","Okay","Very good","Excellent!"],fbCatLbl:"Feedback type",fbCatSugg:"💡 Suggestion",fbCatBug:"🛠️ Technical issue / Bug",fbCatLove:"❤️ Compliment / Testimonial",fbCatSec:"🛡️ Safety & moderation",fbMsgPh:"Tell us what you think about Chari...",fbMsgErr:"Please write a few words.",fbSuccess:"Thank you for your feedback!",
+scBlockT:"Screenshots not allowed",scBlockD:"To protect members' privacy, screenshots and screen recordings are not allowed on Chari.",scToast:"⚠️ Screenshot blocked: members' privacy is protected on Chari.",scDismiss:"Continue on Chari",chatTab:"Chats",reqTab:"Match requests",noReq:"No requests received yet",noReqDesc:"New admirers will appear here.",acceptReq:"Like",declineReq:"Pass",reqDeclined:"Request declined. You won't see each other again on Chari.",dailyReqLimit:"Daily limit reached (20/20 requests). Resets at midnight (local time), or go Premium.",dailyAcceptLimit:"Daily limit reached (10/10 accepted). Resets at midnight (local time), or go Premium.",dailyReqQuota:"Requests sent",dailyAcceptQuota:"Requests accepted",resetMidnight:"Resets at midnight (local time)",
+editMsg:"Edit message",editMsgTimeLeft:"Time left to edit this message: ",saveEdit:"Save",cancelEdit:"Cancel",msgEditedTag:"(edited)",editExpired:"The 10-minute window to edit this message has passed.",incogActive:"Incognito on: browse discreetly, nobody can see your profile.",incogInactive:"Incognito off: your profile is visible again.",incogBanner:"Incognito on: your profile is hidden from other members.",viewProfile:"View profile",onbPhotosTitle:"Your profile photos & videos",onbPhotosDesc:"Your selfie is your first verified photo. Add up to 4 photos or short 10s videos:",photosAdvice:"💡 Profiles with photos and short videos get 4 times more matches!",finishOnbPhotos:"Finish and discover profiles ✨",onlyMatchedCanChat:"You need to match before you can chat.",
+resetIn:"Resets in",gfTitle:"Green flags",rfTitle:"Red flags",flagMax:"5 choices maximum.",flagsSec:"Green flags & Red flags",flagsHelp:"What you value (green flags) and what you won't accept (red flags). 5 maximum each.",flagsEmpty:"Add your green and red flags to attract the right people.",flagsEdit:"Edit my flags",waLbl:"WhatsApp number",waPh:"E.g. 7700 900123",waHelp:"Only shared when you and your match both agree to reveal yourselves.",waE:"Invalid WhatsApp number: check the country and the number.",waPrivate:"Visible only after a mutual reveal.",
+confT:"Confirm your email address",confD:"We sent a confirmation link to",confResend:"Resend email",authSignupT:"Create your account",authLoginT:"Welcome back",authSub:"Serious dating with verified profiles.",gContinue:"Continue with Google",authSignupTab:"Sign up",authLoginTab:"Log in",authSignupBtn:"Create my account",authLoginBtn:"Log in",forgotPwd:"Forgot password?",trust1:"Every profile is certified by a checked selfie",trust2:"Photos stay blurred until you both agree",trust3:"Screenshots blocked in the app",emVerif:"Verified email",
+req2:"All fields marked * are required.",secId:"Identity",bdLbl:"Date of birth",bdHelp:"25 minimum. Only your age is shown.",bdReq:"Enter your date of birth.",secWhere:"Where do you live?",ctryLbl:"Country",cityPh:"E.g. N'Djamena, Paris, Dubai…",secAbout:"About you",lngEn:"English",blurPill:"Photos blurred until a mutual reveal",blurInfo:"Your photos stay blurred for others until you both agree to reveal yourselves.",
+revBoth:"You've both revealed yourselves",revWa:"WhatsApp:",revUndo:"Blur me again",revWaitT:"You agreed to reveal yourself",revWaitD:"Waiting for {n} to agree too. Their photos stay blurred until then.",revCancel:"Cancel",revTheyT:"{n} wants to reveal themselves",revAskT:"Blurred photos",revAskD:"When you both agree, your photos become clear and your WhatsApp numbers are exchanged.",revBtn:"Reveal myself",revConfirm:"Your clear photos and WhatsApp will be visible to this person if they agree too. Continue?",
+sfRejT:"Selfie rejected",sfRejD:"Your selfie wasn't approved. Take a clear, front-facing selfie in good light.",sfRetake:"Retake",sfPendT:"Profile under review",sfPendD:"Our team is checking your selfie. Your profile becomes visible once it's certified.",edit:"Edit",view:"View",premUntil:"Premium active until",payOk:"Payment received, thank you! Your Premium activates in a few seconds.",payCancel:"Payment cancelled. You were not charged.",payActive:"Premium active for 30 days.",mainPhoto:"Main",setMain:"Main",secSearch:"What I'm looking for",secSafety:"Safety",priceMain:"5,000 FCFA",month:"month",priceEq:"≈ €7.60 · charged in FCFA, converted by your bank",premF1:"Unlimited profiles for 30 days",premF2:"Unlimited requests and matches",premF3:"Incognito mode",premF4:"No commitment",payCard:"Pay by card",payUnavail:"Payment is temporarily unavailable. Please try again in a few minutes.",
+navMeet:"Discover",navChat:"Chats",navAct:"Activity",recentMatches:"Recent matches",noNewMatch:"No new matches yet. Like profiles to get some!",lastPhoto:"Photo",lastVoice:"Voice message",listEnd:"End of list",startChat:"Message your matches above to start a chat.",total:"Total:",refresh:"Refresh",actLikes:"Likes",actViews:"Views",actFavs:"Favourites",favLbl:"Add to favourites",favAdded:"Added to your favourites",favRemoved:"Removed from your favourites",favRemove:"Remove from favourites",favEmpty:"No favourites yet. Tap the star on a profile to find it here.",viewsEmpty:"Nobody has visited your profile yet. Add great photos and your flags to stand out!",viewsHelp:"People who viewed your profile in the last 30 days.",favHelp:"Your favourites are private: nobody knows who you add.",addedAgo:"Added",viewedAgo:"Viewed",
+certTag:"Verified",blurShort:"Blurred",filters:"Filters",settings:"Settings",certPending:"Your profile is being certified.",certWait:"Pending",promoT:"Go Premium",promoD:"Unlimited profiles and incognito mode",setPrefs:"Preferences",setLang:"Display language",setTheme:"Theme",themeSys:"System",themeLight:"Light",themeDark:"Dark",setPrivacy:"Privacy",setAppPrivacy:"App privacy",setHelp:"Help",setSupport:"Contact support",setAbout:"About",setTerms:"Terms of use",setPolicy:"Privacy policy",delAcc:"Delete my account",delConfirm1:"Permanently delete your account? Your profile, photos, likes and messages will be erased. This can't be undone.",delConfirm2:"To confirm, type DELETE",delWord:"DELETE",delDone:"Your account has been deleted. Thank you for using Chari.",on:"On",off:"Off",ok:"Got it",fAgeMin:"Minimum age",yrs:"yrs",fAgeMax:"Maximum age",apply:"Apply",reset:"Reset",
+showPwd:"Show password",hidePwd:"Hide password",haveAccount:"Already have an account?",noAccount:"No account yet?",
+legalSafety:"<ul><li>Never send money, codes or bank details, even if someone claims it's an emergency.</li><li>Stay on Chari until you trust the person: WhatsApp is only shared after a mutual reveal.</li><li>For a first date, choose a public place and tell someone close to you.</li><li>Have a video call before meeting.</li><li>Report any suspicious behaviour: our team reviews every report within 24 hours.</li></ul>",
+legalTerms:"<p>Chari is for adults aged <b>25 and over</b> looking for a serious relationship.</p><ul><li>One account per person, with your real details and a genuine selfie.</li><li>Not allowed: fake profiles, harassment, hate speech, sexual content, scams and requests for money.</li><li>Taking screenshots of other members' content is not allowed.</li><li>Any breach may lead to account deletion, without refund.</li><li>Premium lasts 30 days, with no automatic renewal.</li></ul>",
+legalPrivacy:"<p>We only collect what the service needs: identity, date of birth, country and city, photos, verification selfie, WhatsApp number and messages.</p><ul><li>Your email, exact date of birth and WhatsApp are never visible to other members. WhatsApp is only exchanged after a mutual reveal.</li><li>Your photos stay blurred for others until a mutual reveal.</li><li>Messages are only accessible to moderation after a report or a safety check.</li><li>Payments are handled by our provider: Chari never sees your card.</li><li>You can delete your account at any time from Settings: all your data is then erased.</li></ul>",
+k:{ser:"Relationship",mar:"Marriage",fam:"Family",etu:"Studies",ent:"Entrepreneurship",foi:"Faith",mus:"Music",foo:"Football",cui:"Cooking",voy:"Travel",fr:"French",ar:"Arabic",sa:"Sara"}});
+T.fr.showPwd="Afficher le mot de passe";T.fr.hidePwd="Masquer le mot de passe";T.fr.haveAccount="Déjà un compte ?";T.fr.noAccount="Pas encore de compte ?";
+T.ar.showPwd="إظهار كلمة المرور";T.ar.hidePwd="إخفاء كلمة المرور";T.ar.haveAccount="لديك حساب؟";T.ar.noAccount="ليس لديك حساب؟";
+const EN_LABELS={spo:"Sport",lec:"Reading",cui:"Cooking",jv:"Video games",voy:"Travel",mus:"Music",foo:"Football",cin:"Cinema",ent:"Business",art:"Art & Fashion",
+honest:"Honest and open",listen:"A good listener",respect:"Respectful",family:"Family-oriented",faith:"Practises their faith",ambition:"Ambitious",humor:"Sense of humour",reliable:"Keeps promises",calm:"Calm in conflicts",generous:"Generous",healthy:"Healthy lifestyle",serious:"Looking for something serious",
+lies:"Lying",jealous:"Excessive jealousy",smoke:"Smoking",alcohol:"Alcohol",disrespect:"Disrespect",ghosting:"Disappearing without a word",money:"Asking for money",violence:"Violence",control:"Controlling behaviour",lazy:"Lack of ambition",rude:"Rudeness",unfaithful:"Infidelity"};
+
 const CI=["N'Djamena","Moundou","Sarh","Abéché","Kélo","Koumra","Pala","Am Timan","Bongor","Mongo","Doba","Ati","Laï","Faya-Largeau","Mao","Biltine","Bol","Goz Beïda","Moussoro","Bokoro"];
 const HOBBIES=[{id:"spo",ic:"🏃",fr:"Sport",ar:"الرياضة"},{id:"lec",ic:"📚",fr:"Lecture",ar:"القراءة"},{id:"cui",ic:"🍳",fr:"Cuisine",ar:"الطبخ"},{id:"jv",ic:"🎮",fr:"Jeux vidéo",ar:"ألعاب فيديو"},{id:"voy",ic:"✈️",fr:"Voyage",ar:"السفر"},{id:"mus",ic:"🎵",fr:"Musique",ar:"الموسيقى"},{id:"foo",ic:"⚽",fr:"Football",ar:"كرة القدم"},{id:"cin",ic:"🎬",fr:"Cinéma",ar:"السينما"},{id:"ent",ic:"💼",fr:"Business",ar:"ريادة الأعمال"},{id:"art",ic:"🎨",fr:"Art & Mode",ar:"الفن والموضة"}];
 /* Pays du monde : code ISO -> indicatif telephonique (WhatsApp) */
 const DIAL="TD:235,CM:237,CF:236,NE:227,NG:234,SD:249,SS:211,LY:218,EG:20,DZ:213,MA:212,TN:216,MR:222,ML:223,SN:221,GM:220,GN:224,GW:245,SL:232,LR:231,CI:225,BF:226,GH:233,TG:228,BJ:229,GA:241,GQ:240,CG:242,CD:243,AO:244,RW:250,BI:257,UG:256,KE:254,TZ:255,ET:251,ER:291,DJ:253,SO:252,MG:261,MU:230,KM:269,SC:248,CV:238,ST:239,ZA:27,ZM:260,ZW:263,MZ:258,MW:265,BW:267,NA:264,LS:266,SZ:268,FR:33,BE:32,CH:41,LU:352,MC:377,DE:49,AT:43,NL:31,GB:44,IE:353,ES:34,PT:351,IT:39,GR:30,SE:46,NO:47,DK:45,FI:358,PL:48,CZ:420,SK:421,HU:36,RO:40,BG:359,HR:385,RS:381,UA:380,RU:7,TR:90,CY:357,MT:356,US:1,CA:1,MX:52,BR:55,AR:54,CL:56,CO:57,PE:51,VE:58,HT:509,CU:53,DO:1,SA:966,AE:971,QA:974,KW:965,BH:973,OM:968,YE:967,JO:962,LB:961,SY:963,IQ:964,IR:98,IL:972,PS:970,IN:91,PK:92,BD:880,LK:94,NP:977,AF:93,CN:86,JP:81,KR:82,ID:62,MY:60,SG:65,TH:66,VN:84,PH:63,AU:61,NZ:64".split(",").map(s=>{const[c,d]=s.split(":");return{c,d}});
-const regionName=(code,lang)=>{try{return new Intl.DisplayNames([lang==="ar"?"ar":"fr"],{type:"region"}).of(code)||code}catch(e){return code}};
-const countryList=lang=>DIAL.slice().sort((a,b)=>regionName(a.c,lang).localeCompare(regionName(b.c,lang),lang==="ar"?"ar":"fr"));
+const regionName=(code,lang)=>{try{return new Intl.DisplayNames([lang==="ar"?"ar":(lang==="en"?"en":"fr")],{type:"region"}).of(code)||code}catch(e){return code}};
+const countryList=lang=>DIAL.slice().sort((a,b)=>regionName(a.c,lang).localeCompare(regionName(b.c,lang),lang==="ar"?"ar":(lang==="en"?"en":"fr")));
 const flagEmoji=c=>c&&c.length===2?String.fromCodePoint(...[...c.toUpperCase()].map(ch=>127397+ch.charCodeAt(0))):"";
 const dialOf=c=>{const f=DIAL.find(x=>x.c===c);return f?f.d:""};
 const guessCountry=()=>{try{const l=(navigator.language||"").split("-")[1];if(l&&DIAL.some(x=>x.c===l.toUpperCase()))return l.toUpperCase()}catch(e){}return "TD"};
@@ -2385,6 +2690,7 @@ const RED_FLAGS=[
 const flagLabel=(list,id)=>{const f=list.find(x=>x.id===id);return f?f[st.lang]||f.fr:""};
 const flagsHtml=(p,compact)=>{const g=(p.gf||[]).map(id=>flagLabel(GREEN_FLAGS,id)).filter(Boolean),r=(p.rf||[]).map(id=>flagLabel(RED_FLAGS,id)).filter(Boolean);if(!g.length&&!r.length)return"";const t=x();return`<div class="flags${compact?" compact":""}">${g.length?`<div class="flag-group"><span class="flag-title green">${t.gfTitle}</span><div class="flag-list">${g.map(l=>`<span class="flag-chip green">${esc(l)}</span>`).join("")}</div></div>`:""}${r.length?`<div class="flag-group"><span class="flag-title red">${t.rfTitle}</span><div class="flag-list">${r.map(l=>`<span class="flag-chip red">${esc(l)}</span>`).join("")}</div></div>`:""}</div>`};
 const flagPicker=(kind)=>{const list=kind==="g"?GREEN_FLAGS:RED_FLAGS,sel=(kind==="g"?st.u.gf:st.u.rf)||[];return`<div class="h-chips flag-picker ${kind==="g"?"green":"red"}" role="group">${list.map(f=>{const on=sel.includes(f.id);return`<button type="button" class="h-chip ${on?"on":""}" data-a="togflag" data-kind="${kind}" data-h="${f.id}" aria-pressed="${on}"><span>${f[st.lang]||f.fr}</span></button>`}).join("")}</div>`};
+[...HOBBIES,...GREEN_FLAGS,...RED_FLAGS].forEach(o=>{o.en=EN_LABELS[o.id]||o.fr});
 const SEED_PROFILES = [];
 let P = [];
 const ME={n:"",bg:[G,B],cl:"#C3CCDB",sk:"#9AA7BB"};
@@ -2444,6 +2750,7 @@ const pool=()=>{
     const pid = String(p.id);
     if (st.g && p.g === st.g) return false;
     if (st.tc && st.tc !== "all" && p.ctry !== st.tc) return false;
+    if (st.filters && p.a && (p.a < (st.filters.amin||25) || p.a > (st.filters.amax||99))) return false;
     if (blockedSet.has(pid)) return false;
     // Permanent exclusion of passed profiles
     if (passedSet.has(pid)) return false;
@@ -2496,9 +2803,9 @@ return "chari_u_"+String(raw).trim().toLowerCase().replace(/[^a-z0-9_-]/g,"_");
 }
 function createBlankState(email="", uid="", name=""){
 return {
-lang:"fr",blur:true,lite:false,tc:"all",mode:"google",em:email||"",ph5:[],inc:false,ed:null,step:0,savedStep:0,showEmailAuth:false,
+lang:(navigator.language||"").toLowerCase().startsWith("en")?"en":"fr",blur:true,lite:false,tc:"all",mode:"google",em:email||"",ph5:[],inc:false,ed:null,step:0,savedStep:0,showEmailAuth:false,
 u:{id:uid||"",n:name||"",jb:"",a:"",bd:"",ctry:guessCountry(),c:"",tc:"all",bio:"",lng:"fr",rel:"mus",kd:0,i:"ser",hb:[],gf:[],rf:[],wa:"",gVerif:true},
-g:"",ph:"",i:0,seen:0,prem:0,pay:0,pp:0,vs:0,selfie:"",selfieStatus:"pending",selfieRejectReason:"",reveals:{},authMode:"signup",
+g:"",ph:"",i:0,seen:0,prem:0,pay:0,pp:0,vs:0,selfie:"",selfieStatus:"pending",selfieRejectReason:"",reveals:{},authMode:"signup",favs:[],viewers:[],theme:"system",filters:{amin:25,amax:70},sub:null,actTab:"likes",
 tab:"d",chat:null,mt:[],ms:{},busy:0,blocked:[],feedbacks:[],mSubTab:"chat",reqSubTab:"rec",
 incomingRequests:[],sentRequests:[],passed:[],reqPhotoIdx:{},dailyLimits:{date:getChadDateKey(),sent:0,accepted:0,seen:0}
 };
@@ -2651,7 +2958,7 @@ localStorage.setItem(k, JSON.stringify({
 lang:st.lang,blur:st.blur,lite:st.lite,tc:st.tc,u:st.u,blocked:st.blocked||[],
 selfie:st.selfie,ph5:st.ph5,feedbacks:st.feedbacks||[],step:st.step,savedStep:st.savedStep||st.step,g:st.g,ph:st.ph,
 em:st.em,mode:st.mode,prem:st.prem,inc:st.inc,seen:st.seen,mt:st.mt||[],ms:st.ms||{},passed:st.passed||[],sentRequests:st.sentRequests||[],
-incomingRequests:st.incomingRequests||[],reqPhotoIdx:st.reqPhotoIdx||{},dailyLimits:st.dailyLimits,mSubTab:st.mSubTab||"chat",reqSubTab:st.reqSubTab||"rec"
+incomingRequests:st.incomingRequests||[],reqPhotoIdx:st.reqPhotoIdx||{},dailyLimits:st.dailyLimits,mSubTab:st.mSubTab||"chat",reqSubTab:st.reqSubTab||"rec",theme:st.theme||"system",filters:st.filters,actTab:st.actTab||"likes"
 }));
 }catch(e){}
 };
@@ -2689,7 +2996,8 @@ return`<div class="pf auth-page">
 <img src="couple.jpg" alt="" class="hero-img">
 <div class="hero-overlay"><span class="logo-big">Chari</span><span class="hero-tag">${t.heroTag}</span></div>
 </div>
-<div class="auth-card">
+<div class="auth-card ${st.authFlip?"flip-in":""}">
+<div class="auth-logo" aria-hidden="true">${ic(signup?"user":"lock")}</div>
 <h1>${signup?t.authSignupT:t.authLoginT}</h1>
 <p class="mut">${t.authSub}</p>
 <button class="btn-google" data-a="launch-google-oauth" type="button" id="btn-google-oauth">
@@ -2697,19 +3005,16 @@ return`<div class="pf auth-page">
 <span>${t.gContinue}</span>
 </button>
 <div class="divider"><span>${t.orDivider}</span></div>
-<div class="seg auth-seg" role="tablist">
-<button type="button" role="tab" data-a="auth-mode" data-k="signup" aria-pressed="${signup}" aria-selected="${signup}">${t.authSignupTab}</button>
-<button type="button" role="tab" data-a="auth-mode" data-k="login" aria-pressed="${!signup}" aria-selected="${!signup}">${t.authLoginTab}</button>
-</div>
 <form class="auth-form" onsubmit="event.preventDefault();submitEmailAuth()">
 <label for="em">${t.eml}</label>
 <input class="fld" id="em" type="email" autocomplete="email" inputmode="email" required placeholder="nom@exemple.com" value="${esc(st.em||"")}">
 <label for="pwd">${t.pwd}</label>
-<input class="fld" id="pwd" type="password" autocomplete="${signup?"new-password":"current-password"}" required minlength="8" placeholder="${t.pwdPh}">
+<div class="pwd-wrap"><input class="fld" id="pwd" type="password" autocomplete="${signup?"new-password":"current-password"}" required minlength="8" placeholder="${t.pwdPh}"><button type="button" class="pwd-toggle" data-a="toggle-pwd" aria-label="${t.showPwd}">${ic("eye")}</button></div>
 <p class="err" id="auth-err" role="alert"></p>
 <button class="btn" id="btn-email-auth" data-a="email-auth" type="submit">${signup?t.authSignupBtn:t.authLoginBtn}</button>
 ${signup?"":`<button type="button" class="link-btn" data-a="reset-pwd">${t.forgotPwd}</button>`}
 </form>
+<div class="switch-area"><span>${signup?t.haveAccount:t.noAccount}</span><button type="button" class="switch-circle" data-a="auth-mode" data-k="${signup?"login":"signup"}" aria-label="${signup?t.authLoginTab:t.authSignupTab}">${ic(signup?"back":"user")}</button></div>
 <ul class="trust">
 <li>${ic("ok")}<span>${t.trust1}</span></li>
 <li>${ic("lock")}<span>${t.trust2}</span></li>
@@ -2860,7 +3165,7 @@ checkAndResetDailyLimits();
 const t=x(),p=pool()[st.i];
 if(st.pay||(!st.prem&&st.seen>=LIM))return payv();
 const present=[...new Set(P.map(q=>q.ctry).filter(Boolean))];
-const cbar=`${selfieStatusBanner()}<div class="cbar"><label class="ctag" for="sel-tc">${t.cityFilt}</label><select class="csel" id="sel-tc" aria-label="${t.tcty}"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${countryList(st.lang).filter(c=>present.includes(c.c)||st.tc===c.c).map(c=>`<option value="${c.c}" ${st.tc===c.c?"selected":""}>${flagEmoji(c.c)} ${esc(regionName(c.c,st.lang))}</option>`).join("")}</select></div>`;
+const cbar=`${selfieStatusBanner()}<div class="cbar"><label class="ctag" for="sel-tc">${t.cityFilt}</label><select class="csel" id="sel-tc" aria-label="${t.tcty}"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${countryList(st.lang).filter(c=>present.includes(c.c)||st.tc===c.c).map(c=>`<option value="${c.c}" ${st.tc===c.c?"selected":""}>${flagEmoji(c.c)} ${esc(regionName(c.c,st.lang))}</option>`).join("")}</select><button type="button" class="filter-btn" data-a="open-filters" aria-label="${t.filters}">${ic("gear")}<span>${t.filters}</span></button></div>`;
 const seenRem=Math.max(0,LIM-st.seen);
 const cnt=`<p class="cnt">${st.prem?t.unl:`${st.seen}/${LIM} ${t.pj} <span style="font-size:11.5px;font-weight:500;color:var(--mut)">(${st.lang==="ar"?"متبقي":"reste"} ${seenRem})</span>`}${st.inc?`<span class="badge" style="background:#1E293B;color:#fff">🕶️ ${t.incb}</span>`:""}</p>${st.prem?"":`<div class="bar" aria-hidden="true"><i style="width:${Math.min(100,st.seen*100/LIM)}%"></i></div>`}`;
 const sentCount=(st.dailyLimits&&st.dailyLimits.sent)||0;
@@ -2897,10 +3202,10 @@ ${isVid?`
 <img src="${activeUrl}" class="card-real-photo" alt="${esc(p.n)}" onerror="this.onerror=null;this.src='couple.jpg'">
 `}
 <button class="ib" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.5);color:#fff;border-radius:50%;width:36px;height:36px;backdrop-filter:blur(4px);z-index:7" data-a="open-opt" data-id="${p.id}" aria-label="${t.opt}" title="${t.opt}">${ic("dots")}</button>
-<button class="btn sec" style="position:absolute;bottom:10px;left:10px;width:auto;min-height:30px;padding:3px 12px;font-size:12px;background:rgba(0,0,0,0.65);color:#fff;border:1px solid rgba(255,255,255,0.4);border-radius:999px;backdrop-filter:blur(4px);z-index:7" data-a="view-user-profile" data-id="${p.id}">👁️ ${t.viewProfile||"Voir le profil"}</button>
+
 </div>`
 :`<div class="card-photo-container">${av(p,st.blur)}<button class="ib" style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.5);color:#fff;border-radius:50%;width:36px;height:36px;backdrop-filter:blur(4px);z-index:7" data-a="open-opt" data-id="${p.id}">${ic("dots")}</button></div>`;
-return cbar+incBanner+qBadge+cnt+`<article class="card"><div class="ph">${photoHtml}${p.revealed?"":`<span class="pill">${ic("lock")} ${t.blurPill}</span>`}</div><div class="bd" style="cursor:pointer" data-a="view-user-profile" data-id="${p.id}"><h2>${esc(p.n)}, ${p.a}${p.is_verified?`<span class="vbadge" title="${t.selfieBadge}">${ic("ok")}</span>`:""}</h2><p class="mut">${p.c?esc(p.c)+" · ":""}${p.ctry?flagEmoji(p.ctry)+" "+esc(regionName(p.ctry,st.lang)):""}<span class="badge">${(t.k&&t.k[p.i])||t.k.ser}</span></p><p class="b">${esc(bioText)}</p>${flagsHtml(p,true)}<ul class="chips"><li>${(t.relMap&&t.relMap[p.rel])||t.relMus}</li><li>${(t.lngMap&&t.lngMap[p.lng])||t.lngFr}</li><li>${(t.kid&&t.kid[p.kd])||t.kid[0]}</li>${(p.hb||[]).map(id=>{const h=HOBBIES.find(z=>z.id===id);return h?`<li>${h[st.lang]}</li>`:""}).join("")}</ul></div></article><div class="acts"><button class="act" data-a="pass" aria-label="${t.pass}">${ic("x")}<span>${t.pass}</span></button><button class="act like" data-a="like" aria-label="${t.like}">${ic("heart")}<span>${t.like}</span></button></div>`;
+return cbar+incBanner+`<article class="card swipe-card"><div class="ph">${photoHtml}<div class="card-shade" aria-hidden="true"></div><button class="fav-btn ${isFav(p.id)?"on":""}" data-a="fav" data-id="${p.id}" aria-pressed="${isFav(p.id)}" aria-label="${t.favLbl}">${ic("star")}</button><div class="card-info" data-a="view-user-profile" data-id="${p.id}"><div class="card-tags">${p.is_verified?`<span class="tag cert">${ic("ok")} ${t.certTag}</span>`:""}<span class="tag">${(t.k&&t.k[p.i])||t.k.ser}</span>${p.revealed?"":`<span class="tag dim">${ic("lock")} ${t.blurShort}</span>`}</div><h2>${esc(p.n)}, ${p.a}</h2><p>${esc([p.c,p.ctry?regionName(p.ctry,st.lang):""].filter(Boolean).join(", "))}</p>${flagsHtml(p,true)}</div></div></article><div class="acts"><button class="act" data-a="pass" aria-label="${t.pass}">${ic("x")}</button><button class="act mid" data-a="view-user-profile" data-id="${p.id}" aria-label="${t.viewProfile}">${ic("eye")}</button><button class="act like" data-a="like" aria-label="${t.like}">${ic("heart")}</button></div>${qBadge}${cnt}`;
 }
 function reqView(){
 checkAndResetDailyLimits();
@@ -3020,30 +3325,65 @@ return `<div class="req-card" style="border-inline-start:4px solid var(--highlig
 return subtabsHtml+quotaHtml+`<div class="req-list">${sentCards}</div>`;
 }
 }
+/* Activite : Likes (recus / envoyes), Vues, Favoris */
+function personGrid(rows,kind){
+const t=x();
+const items=rows.map(r=>({r,p:byId(r.id)})).filter(o=>o.p);
+if(!items.length)return`<div class="empty"><span class="empty-ic">${ic(kind==="fav"?"star":"eye")}</span><p>${kind==="fav"?t.favEmpty:t.viewsEmpty}</p></div>`;
+return`<div class="p-grid">${items.map(({r,p})=>{const ph=getProfilePhotos(p)[0];const src=(ph&&(ph.poster||getMediaUrl(ph)))||p.selfie_url||"couple.jpg";return`<div class="p-tile"><button class="p-open" data-a="view-user-profile" data-id="${p.id}" aria-label="${esc(p.n)}"><img src="${esc(src)}" alt="" loading="lazy" onerror="this.onerror=null;this.src='couple.jpg'"><span class="p-meta"><strong>${esc(p.n)}${p.is_verified?` <span class="vb">${ic("ok")}</span>`:""}</strong><small>${kind==="fav"?t.addedAgo+" "+timeAgo(r.at):t.viewedAgo+" "+timeAgo(r.at)}</small></span></button>${kind==="fav"?`<button class="p-x" data-a="fav" data-id="${p.id}" aria-label="${t.favRemove}">${ic("x")}</button>`:""}</div>`}).join("")}</div>`;
+}
+function actView(){
+const t=x(),tab=st.actTab||"likes";
+const reqCount=(st.incomingRequests||[]).filter(r=>!(st.blocked||[]).includes(r.id)&&!(st.mt||[]).includes(r.id)&&!(st.passed||[]).includes(r.id)).length;
+const tabs=[["likes",t.actLikes,reqCount],["views",t.actViews,(st.viewers||[]).length],["favs",t.actFavs,(st.favs||[]).length]];
+const head=`<section class="hero-band compact"><h1>${t.navAct}</h1><div class="act-tabs" role="tablist">${tabs.map(([k,l,n])=>`<button role="tab" aria-selected="${tab===k}" class="${tab===k?"on":""}" data-a="act-tab" data-k="${k}">${n?`<span class="pill-n">${n}</span>`:""}${l}</button>`).join("")}</div></section>`;
+let body="";
+if(tab==="likes")body=reqView();
+else if(tab==="views")body=`<p class="help center">${st.prem?t.viewsHelp:t.viewsHelp}</p>`+personGrid(st.viewers||[],"view");
+else body=`<p class="help center">${t.favHelp}</p>`+personGrid(st.favs||[],"fav");
+return`<div class="pf act-page">${head}<div class="sheet">${body}</div></div>`;
+}
 function msgs(){
 checkAndResetDailyLimits();
 const t=x();
-const mtList=(st.mt||[]).filter(id=>!(st.blocked||[]).includes(id));
-if(!mtList.length)return`<div class="empty"><div style="font-size:42px;margin-bottom:8px">💬</div><h2>${t.none}</h2><p>${t.nh}</p><button class="btn" data-a="tab" data-k="d" style="max-width:240px;margin:12px auto 0">${t.d}</button></div>`;
-return`<div class="pf" style="padding-top:8px"><h1 style="font-size:22px;margin-bottom:12px">💬 ${t.chatTab}</h1><ul class="list">${mtList.map(id=>{const p=byId(id);if(!p)return"";const l=st.ms[id]&&st.ms[id].slice(-1)[0];return`<li><button class="row" data-a="open" data-id="${id}"><span class="av">${av(p)}</span><span><strong>${esc(p.n)}</strong><br><span class="mut">${l?(l.img?"[Photo]":(l.voice?"[Note vocale]":(esc(l.t)+(l.isEdited?(" "+t.msgEditedTag):"")))):t.mt}</span></span></button></li>`}).join("")}</ul></div>`;
+const mtList=(st.mt||[]).filter(id=>!(st.blocked||[]).includes(id)).map(id=>({id,p:byId(id),last:(st.ms[id]||[]).slice(-1)[0]})).filter(r=>r.p);
+const fresh=mtList.filter(r=>!r.last);
+const convs=mtList.filter(r=>r.last).sort((a,b)=>(b.last.time||0)-(a.last.time||0));
+const head=`<section class="hero-band"><h2>${t.recentMatches}</h2>${fresh.length?`<div class="match-row">${fresh.map(r=>`<button class="match-bubble" data-a="open" data-id="${r.id}"><span class="av m">${av(r.p)}</span><span>${esc(r.p.n)}</span></button>`).join("")}</div>`:`<div class="match-empty"><span class="match-count">${ic("heart")}<b>0</b></span><p>${t.noNewMatch}</p></div>`}</section>`;
+const list=convs.length?`<ul class="list conv-list">${convs.map(({id,p,last:l})=>`<li><button class="row" data-a="open" data-id="${id}"><span class="av">${av(p)}${p.is_verified?`<i class="av-badge">${ic("ok")}</i>`:""}</span><span class="row-main"><strong>${esc(p.n)}</strong><span class="mut">${l.img?t.lastPhoto:(l.voice?t.lastVoice:esc(l.t)+(l.isEdited?(" "+t.msgEditedTag):""))}</span></span><span class="row-time">${l.time?new Date(l.time).toLocaleTimeString(st.lang==="ar"?"ar":"fr-FR",{hour:"2-digit",minute:"2-digit"}):""}</span></button></li>`).join("")}</ul><p class="list-end">${t.listEnd}</p>`:`<div class="empty small-empty"><p>${mtList.length?t.startChat:t.nh}</p>${mtList.length?"":`<button class="btn small" data-a="tab" data-k="d">${t.navMeet}</button>`}</div>`;
+return`<div class="pf chat-home">${head}<div class="sheet"><div class="sheet-head"><span>${t.total} ${convs.length}</span><button class="link-btn" data-a="refresh-chats">${t.refresh}</button></div>${list}</div></div>`;
 }
 function chat(){const t=x(),p=byId(st.chat);if(!p)return msgs();
 return`<div class="ch"><div class="chh"><button class="ib" data-a="back" aria-label="${t.bk}">${ic("back")}</button><span class="av s">${av(p)}</span><h2 style="flex:1;min-width:0;display:flex;align-items:center;gap:6px"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.n)}</span>${p.ctry?`<span aria-hidden="true">${flagEmoji(p.ctry)}</span>`:""}</h2><button class="ib" data-a="start-call" data-id="${p.id}" style="color:var(--brand)" title="${t.vidCall}" aria-label="${t.vidCall}">${ic("video")}</button><button class="ib" data-a="open-opt" data-id="${p.id}" title="${t.opt}" aria-label="${t.opt}">${ic("dots")}</button></div><div id="reveal-bar">${revealBar(p)}</div><p class="note">${ic("shield")}<span>${t.st}</span></p><div id="log" class="log" aria-live="polite"></div><div class="inp"><input id="chat-file" type="file" accept="image/*" hidden><button class="ib" data-a="chat-pic" title="Photo" aria-label="Photo">${ic("cam")}</button><button class="ib btn-voice-rec" data-a="chat-rec" id="btn-rec" title="Vocale" aria-label="Vocale">${ic("mic")}</button><input id="in" type="text" placeholder="${t.ph}" aria-label="${t.ph}" autocomplete="off"><button class="send" data-a="send" aria-label="${t.snd}">${ic("send")}</button></div></div>`}
 function prof(){const t=x(),u=st.u,n=st.ph5.length;
 const hbList=(u.hb||[]);
 const uBio=u.bio||t.bioDef;
-const blkCount=(st.blocked||[]).length;
 const ctryName=u.ctry?flagEmoji(u.ctry)+" "+regionName(u.ctry,st.lang):"";
 const row=(title,val,act,btn)=>`<div class="sf"><div><h3>${title}</h3><p>${val}</p></div>${act?`<button class="btn sec small" data-a="${act}">${btn||t.edit}</button>`:""}</div>`;
 const ctryOpts=countryList(st.lang).map(c=>`<option value="${c.c}" ${u.ctry===c.c?"selected":""}>${flagEmoji(c.c)} ${esc(regionName(c.c,st.lang))}</option>`).join("");
-return`<div class="pf">
-<h1>${t.my}</h1>
-${selfieStatusBanner()}
-<div class="card me-card"><div class="bd"><div class="chh"><span class="av l">${me(1)}</span><div><h2>${esc(u.n||"")}, ${u.bd?ageFrom(u.bd):u.a}${st.selfieStatus==="approved"?`<span class="vbadge" title="${t.selfieBadge}">${ic("ok")}</span>`:""}</h2><p class="mut">${u.jb?esc(u.jb)+" · ":""}${esc(u.c||"")}${ctryName?" · "+esc(ctryName):""}</p></div></div>
+const certCta=st.selfieStatus==="approved"?"":`<div class="cert-cta ${st.selfieStatus==="rejected"?"bad":""}"><span>${st.selfieStatus==="rejected"?t.sfRejT:t.certPending}</span>${st.selfieStatus==="rejected"?`<button class="btn small light" data-a="retake-selfie-profile">${t.sfRetake}</button>`:`<span class="chip-wait">${ic("shield")} ${t.certWait}</span>`}</div>`;
+return`<div class="pf prof-page">
+<section class="hero-band prof-hero">
+<button class="ib hero-gear" data-a="open-settings" aria-label="${t.settings}">${ic("gear")}</button>
+<div class="prof-av"><span class="av xl">${me(1)}</span><button class="av-edit" data-a="addp" aria-label="${t.add}">${ic("edit")}</button></div>
+<h1>${esc(u.n||"")}, ${u.bd?ageFrom(u.bd):u.a}${st.selfieStatus==="approved"?` <span class="vbadge light">${ic("ok")}</span>`:""}</h1>
+<p class="hero-sub">${esc([u.jb,u.c,ctryName].filter(Boolean).join(" · "))}</p>
+${certCta}
+</section>
+<div class="sheet">
+<div class="tiles">
+<button class="tile" data-a="act-go" data-k="views">${ic("eye")}<b>${(st.viewers||[]).length}</b><span>${t.actViews}</span></button>
+<button class="tile" data-a="act-go" data-k="likes">${ic("heart")}<b>${(st.incomingRequests||[]).length}</b><span>${t.actLikes}</span></button>
+<button class="tile" data-a="act-go" data-k="favs">${ic("star")}<b>${(st.favs||[]).length}</b><span>${t.actFavs}</span></button>
+</div>
+${st.prem?"":`<button class="promo" data-a="up"><span class="promo-ic">${ic("heart")}</span><span><b>${t.promoT}</b><small>${t.promoD}</small></span>${ic("chev")}</button>`}
 <p class="quote" data-a="edbio" title="${t.edBio}">“${esc(uBio)}”</p>
 ${flagsHtml({gf:u.gf,rf:u.rf})||`<p class="help">${t.flagsEmpty}</p>`}
 <button class="btn sec small" data-a="open-flags">${t.flagsEdit}</button>
-</div></div>
+<h2 class="sec-title">${t.phs} (${n}/5)</h2>
+<p class="help">${t.ph5i} ${t.blurInfo}</p>
+<div class="grid5">${st.ph5.map((q,i)=>{const isVid=q.isVideo;const imgSrc=(isVid&&q.poster)?q.poster:(q.p||q.o);return`<div class="pt ${q.isSelfie?'pt-selfie':''}"><img src="${imgSrc}" alt="${isVid?'Vidéo':'Photo'} ${i+1}" onerror="this.onerror=null;this.src='couple.jpg'">${isVid?`<span class="video-grid-badge">${ic("video")}</span>`:''}${i===0?`<span class="profile-main-badge">${t.mainPhoto}</span>`:`<button type="button" class="btn-make-avatar" data-a="set-avatar" data-k="${i}">${t.setMain}</button>`}${q.isSelfie?`<span class="selfie-badge">${ic("ok")} ${t.selfieBadge}</span>`:`<button class="ib rmb" data-a="rmp" data-k="${i}" aria-label="${t.rm}">${ic("x")}</button>`}</div>`}).join("")}${n<5?`<button class="pt add" data-a="addp" aria-label="${t.add}">${ic("cam")}<span>${t.add}</span></button>`:""}</div>
+<input id="pf" type="file" accept="image/*,video/*" hidden>
 <h2 class="sec-title">${t.secAbout}</h2>
 ${row(t.bio,`<span style="white-space:pre-wrap">${esc(uBio)}</span>`,"edbio")}
 ${row(t.job,esc(u.jb||""),"edj")}
@@ -3053,24 +3393,62 @@ ${row(t.waLbl,`${esc(u.wa||"—")}<br><small class="mut">${t.waPrivate}</small>`
 ${row(t.bdLbl,u.bd?new Date(u.bd+"T00:00:00").toLocaleDateString(st.lang==="ar"?"ar":"fr-FR"):"—")}
 ${row(t.rel+" & "+t.langSpk,`${(t.relMap&&t.relMap[u.rel])||t.relMus} · ${(t.lngMap&&t.lngMap[u.lng])||t.lngFr}`,"edrel")}
 ${row(t.hob,hbList.length?hbList.map(id=>{const h=HOBBIES.find(z=>z.id===id);return h?h[st.lang]:""}).filter(Boolean).join(" · "):t.hobHint,"open-edhb")}
-<h2 class="sec-title">${t.phs} (${n}/5)</h2>
-<p class="help">${t.ph5i} ${t.blurInfo}</p>
-<div class="grid5">${st.ph5.map((q,i)=>{const isVid=q.isVideo;const imgSrc=(isVid&&q.poster)?q.poster:(q.p||q.o);return`<div class="pt ${q.isSelfie?'pt-selfie':''}"><img src="${imgSrc}" alt="${isVid?'Vidéo':'Photo'} ${i+1}" onerror="this.onerror=null;this.src='couple.jpg'">${isVid?`<span class="video-grid-badge">${ic("video")}</span>`:''}${i===0?`<span class="profile-main-badge">${t.mainPhoto}</span>`:`<button type="button" class="btn-make-avatar" data-a="set-avatar" data-k="${i}">${t.setMain}</button>`}${q.isSelfie?`<span class="selfie-badge">${ic("ok")} ${t.selfieBadge}</span>`:`<button class="ib rmb" data-a="rmp" data-k="${i}" aria-label="${t.rm}">${ic("x")}</button>`}</div>`}).join("")}${n<5?`<button class="pt add" data-a="addp" aria-label="${t.add}">${ic("cam")}<span>${t.add}</span></button>`:""}</div>
-<input id="pf" type="file" accept="image/*,video/*" hidden>
-<h2 class="sec-title">${t.secSearch}</h2>
-<div class="sf"><div><h3>${t.tcty}</h3><p>${st.tc==="all"?t.allC:esc(regionName(st.tc,st.lang))}</p></div><select class="fld small" id="p-tc" aria-label="${t.tcty}"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${countryList(st.lang).map(c=>`<option value="${c.c}" ${st.tc===c.c?"selected":""}>${flagEmoji(c.c)} ${esc(regionName(c.c,st.lang))}</option>`).join("")}</select></div>
 <h2 class="sec-title">${t.plan}</h2>
 <div class="sf ${st.prem?"prem":""}"><div><h3>${st.prem?t.prem:t.free}</h3><p>${st.prem&&st.premUntil?t.premUntil+" "+new Date(st.premUntil).toLocaleDateString(st.lang==="ar"?"ar":"fr-FR"):t.pss2}</p></div></div>
 ${st.prem?"":`<button class="btn" data-a="up">${t.up}</button>`}
-${st.prem?(sw("inc",t.incog)+`<p class="help">${t.incd}</p>`):`<button class="sw" data-a="up"><span>${t.incog}<br><small>${t.incl}</small></span>${ic("lock")}</button>`}
-${sw("lite",t.lite)}
-<h2 class="sec-title">${t.secSafety}</h2>
-<div class="sf">${ic("shield")}<div><h3>${t.sf}</h3><p>${t.st}</p></div></div>
-${row(t.blkedList+" ("+blkCount+")",blkCount?blkCount+" "+(st.lang==="ar"?"مستخدم محظور":"utilisateur(s) bloqué(s)"):t.noBlked,"open-blocked",t.view)}
-<div class="sf accent"><div><h3>${t.fbTitle}</h3><p>${t.fbSub}</p></div><button class="btn small" data-a="open-fb">${t.fbBtn}</button></div>
-<button class="btn danger-outline" data-a="logout">${ic("phone-off")}<span>${t.logout}</span></button>
-<p class="mut small center">${t.age}</p>
+<button class="settings-link" data-a="open-settings">${ic("gear")}<span>${t.settings}</span>${ic("chev")}</button>
+</div>
 </div>`}
+function settingsView(){
+const t=x(),it=(a,l,v,cls)=>`<button class="set-row ${cls||""}" data-a="${a}"><span>${l}</span>${v?`<span class="set-val">${v}</span>`:""}${ic("chev")}</button>`;
+const themeLbl={system:t.themeSys,light:t.themeLight,dark:t.themeDark}[st.theme||"system"];
+return`<div class="pf settings-page">
+<div class="form-head"><button class="ib" data-a="close-settings" aria-label="${t.bk}">${ic("back")}</button><h1>${t.settings}</h1></div>
+<h2 class="set-title">${t.setPrefs}</h2>
+<div class="set-group">
+${it("set-lang",t.setLang,st.lang==="en"?"English":"Français")}
+${it("cycle-theme",t.setTheme,themeLbl)}
+${it("open-filters",t.filters,`${st.filters.amin}–${st.filters.amax} ${t.yrs}`)}
+${`<div class="set-row static"><span>${t.lite}</span>${sw("lite","")}</div>`}
+</div>
+<h2 class="set-title">${t.setPrivacy}</h2>
+<div class="set-group">
+${it("open-blocked",t.blkedList,String((st.blocked||[]).length))}
+${it(st.prem?"toggle-incog":"up",t.incog,st.prem?(st.inc?t.on:t.off):t.incl)}
+${it("open-legal-privacy",t.setAppPrivacy)}
+</div>
+<h2 class="set-title">${t.setHelp}</h2>
+<div class="set-group">
+${it("open-fb",t.setSupport)}
+</div>
+<h2 class="set-title">${t.setAbout}</h2>
+<div class="set-group">
+${it("open-legal-safety",t.sf)}
+${it("open-legal-terms",t.setTerms)}
+${it("open-legal-privacy",t.setPolicy)}
+</div>
+<div class="set-group">
+<button class="set-row danger" data-a="logout"><span>${t.logout}</span></button>
+<button class="set-row danger" data-a="delete-account"><span>${t.delAcc}</span>${ic("chev")}</button>
+</div>
+<p class="mut small center">© ${new Date().getFullYear()} Chari · ${t.age}</p>
+</div>`}
+function openLegal(kind){
+const t=x(),o=$("#ov");
+const body={safety:t.legalSafety,terms:t.legalTerms,privacy:t.legalPrivacy}[kind]||"";
+const title={safety:t.sf,terms:t.setTerms,privacy:t.setPolicy}[kind]||"";
+o.innerHTML=`<div class="modal-wrap"><div class="g-modal legal"><h2>${title}</h2><div class="legal-body">${body}</div><button class="btn" data-a="cm">${t.ok}</button></div></div>`;
+o.hidden=false;
+}
+function openFiltersModal(){
+const t=x(),o=$("#ov"),f=st.filters;
+o.innerHTML=`<div class="modal-wrap"><div class="g-modal"><h2>${t.filters}</h2>
+<label for="f-amin">${t.fAgeMin} : <b id="f-amin-v">${f.amin}</b></label><input class="rg" id="f-amin" type="range" min="25" max="80" value="${f.amin}">
+<label for="f-amax">${t.fAgeMax} : <b id="f-amax-v">${f.amax}</b></label><input class="rg" id="f-amax" type="range" min="25" max="99" value="${f.amax}">
+<label for="f-ctry">${t.tcty}</label><select class="fld" id="f-ctry"><option value="all" ${st.tc==="all"?"selected":""}>${t.allC}</option>${countryList(st.lang).map(c=>`<option value="${c.c}" ${st.tc===c.c?"selected":""}>${flagEmoji(c.c)} ${esc(regionName(c.c,st.lang))}</option>`).join("")}</select>
+<button class="btn" data-a="save-filters">${t.apply}</button><button class="btn ghost" data-a="reset-filters">${t.reset}</button></div></div>`;
+o.hidden=false;
+}
 function prot(src,e){const c=document.createElement("canvas");c.width=c.height=360;const g=c.getContext("2d");g.drawImage(src,0,0);
 const X=e.x*3.6,Y=e.y*3.6,R=e.r*3.6,m=document.createElement("canvas");m.width=m.height=8;m.getContext("2d").drawImage(src,X-R,Y-R,2*R,2*R,0,0,8,8);
 g.save();g.beginPath();g.ellipse(X,Y,R*.8,R,0,0,7);g.clip();g.imageSmoothingEnabled=false;g.drawImage(m,X-R,Y-R,2*R,2*R);g.restore();return c}
@@ -3174,10 +3552,11 @@ const stEl=$("#sc-shield-t"),sdEl=$("#sc-shield-d"),sbEl=$("[data-a=dismiss-shie
 if(stEl)stEl.textContent=t.scBlockT;if(sdEl)sdEl.textContent=t.scBlockD;if(sbEl)sbEl.textContent=t.scDismiss;
 const reqCount=(st.incomingRequests||[]).filter(r=>!(st.blocked||[]).includes(r.id)&&!(st.mt||[]).includes(r.id)&&!(st.passed||[]).includes(r.id)).length;
 const msgCount=(st.mt||[]).filter(id=>!(st.blocked||[]).includes(id)).length;
+applyTheme();
 $("#nav").innerHTML=on?"":[
-["d","compass",t.d,0],
-["req","heart",t.reqTabName||"Demandes",reqCount],
-["m","chat",t.m,msgCount],
+["d","grid",t.navMeet,0],
+["m","chat",t.navChat,0],
+["req","heart",t.navAct,reqCount],
 ["p","user",t.p,0]
 ].map(([k,i,l,cnt])=>`<button data-a="tab" data-k="${k}" ${st.tab===k?'aria-current="page"':""} style="position:relative">${ic(i)}<span>${l}</span>${cnt>0?`<span class="nav-badge">${cnt}</span>`:""}</button>`).join("");
 const currentIn=$("#in");
@@ -3194,7 +3573,7 @@ l.scrollTop=l.scrollHeight;
 }
 return;
 }
-$("#v").innerHTML=on?onb():st.tab==="d"?dis():st.tab==="req"?reqView():st.tab==="m"?(st.chat?chat():msgs()):(st.ed?edv():prof());
+$("#v").innerHTML=on?onb():st.tab==="d"?dis():st.tab==="req"?actView():st.tab==="m"?(st.chat?chat():msgs()):(st.ed?edv():(st.sub==="settings"?settingsView():prof()));
 if(st.ed&&!on&&st.tab==="p")drawEd();
 if(!on&&st.tab==="m"&&st.chat){const l=$("#log");if(l){l.innerHTML="";(st.ms[st.chat]||[]).forEach((m,idx)=>bub(l,m,idx,st.chat));l.scrollTop=l.scrollHeight;}}}
 let camStream=null;
@@ -3379,6 +3758,40 @@ st.reveals[String(id)]={me:false,them:(st.reveals[String(id)]||{}).them,both:fal
 updateRevealBar();loadProfilesFromSupabase();
 }
 function loadReveals(){return loadProfilesFromSupabase()}
+/* ---- Activite : favoris (prives) et vues de profil ---- */
+async function loadActivity(){
+if(!sbClient||!st.u||!st.u.id)return;
+try{
+const [f,v]=await Promise.all([sbClient.from('favorites').select('target_id,created_at').order('created_at',{ascending:false}),sbClient.rpc('my_viewers')]);
+if(!f.error&&Array.isArray(f.data)){st.favs=f.data.map(r=>({id:r.target_id,at:r.created_at}));}
+if(!v.error&&Array.isArray(v.data)){st.viewers=v.data.map(r=>({id:r.viewer_id,at:r.viewed_at}));}
+const need=[...st.favs,...st.viewers].map(r=>String(r.id)).filter(id=>!byId(id));
+if(need.length){const {data}=await sbClient.rpc('list_members',{p_ids:[...new Set(need)]});if(Array.isArray(data))P=P.concat(data.map(memberToP).filter(q=>!P.some(o=>String(o.id)===String(q.id))));}
+if(st.tab==="req"&&!$("#ov:not([hidden])"))render();
+}catch(e){console.warn("loadActivity:",e)}
+}
+const isFav=id=>(st.favs||[]).some(f=>String(f.id)===String(id));
+async function toggleFav(id){
+if(!id)return;
+const on=isFav(id);
+if(on)st.favs=st.favs.filter(f=>String(f.id)!==String(id));else st.favs=[{id,at:new Date().toISOString()},...(st.favs||[])];
+save();
+document.querySelectorAll(`[data-a="fav"][data-id="${id}"]`).forEach(b=>{b.classList.toggle("on",!on);b.setAttribute("aria-pressed",String(!on))});
+say(on?x().favRemoved:x().favAdded);
+if(!sbClient)return;
+const uid=await ensureUserProfileId();if(!uid)return;
+if(on)await sbClient.from('favorites').delete().eq('user_id',uid).eq('target_id',id);
+else await sbClient.from('favorites').insert({user_id:uid,target_id:id});
+}
+const viewedOnce=new Set();
+function recordView(id){
+if(!id||viewedOnce.has(String(id))||!sbClient)return;
+viewedOnce.add(String(id));
+sbClient.rpc('record_view',{p_target:id}).then(()=>{},()=>{});
+}
+const timeAgo=iso=>{const d=(Date.now()-new Date(iso).getTime())/1000,ar=st.lang==="ar";if(!iso||isNaN(d))return"";if(d<3600){const m=Math.max(1,Math.round(d/60));return ar?`منذ ${m} د`:`il y a ${m} min`}if(d<86400){const h=Math.round(d/3600);return ar?`منذ ${h} س`:`il y a ${h} h`}const j=Math.round(d/86400);return ar?`منذ ${j} يوم`:`il y a ${j} j`};
+/* Theme : systeme, clair ou sombre */
+function applyTheme(){const h=document.documentElement;if(st.theme==="light"||st.theme==="dark")h.setAttribute("data-theme",st.theme);else h.removeAttribute("data-theme")}
 /* Bandeau de certification du selfie (valide par l'administrateur) */
 function selfieStatusBanner(){
 const t=x();
@@ -4272,17 +4685,45 @@ add(id,msgObj);i.value="";
 recordMessageInSupabase(id,v,null,null,null,msgObj);
 }
 document.addEventListener("click",async e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,k=b.dataset.k,t=x();
-if(a==="tab"){st.tab=k;st.chat=null;render();if(k==="d"){loadBlockedUsersFromSupabase();loadProfilesFromSupabase();}if(k==="m"||k==="req"){loadBlockedUsersFromSupabase();loadLikesAndMatchesFromSupabase();}}
+if(a==="tab"){st.tab=k;st.chat=null;st.sub=null;render();if(k==="req"||k==="p")loadActivity();if(k==="d"){loadBlockedUsersFromSupabase();loadProfilesFromSupabase();}if(k==="m"||k==="req"){loadBlockedUsersFromSupabase();loadLikesAndMatchesFromSupabase();}}
 else if(a==="lang"){syncStep2InputsToState();st.lang=st.lang==="fr"?"ar":"fr";save();render();$("#lang").focus()}
 else if(a==="gauth"||a==="launch-google-oauth"){closeM();launchGoogleOAuth()}
 else if(a==="toggle-email-auth"){st.showEmailAuth=!st.showEmailAuth;render()}
 else if(a==="back-to-step0"||a==="back-to-step1"){go(0,"#em")}
 else if(a==="back-to-step2"){go(2,"#nm")}
 else if(a==="email-auth"){submitEmailAuth()}
-else if(a==="auth-mode"){st.authMode=k;st.pendingConfirm="";render();const em=$("#em");if(em)em.focus()}
+else if(a==="set-lang"){st.lang=st.lang==="en"?"fr":"en";save();render()}
+else if(a==="fav"){e.stopPropagation();toggleFav(b.dataset.id);if(st.tab==="req"&&st.actTab==="favs")render()}
+else if(a==="act-tab"){st.actTab=k;save();render();if(k!=="likes")loadActivity()}
+else if(a==="act-go"){st.actTab=k;st.tab="req";st.sub=null;save();render();loadActivity()}
+else if(a==="open-settings"){st.sub="settings";render();$("#v").scrollTop=0}
+else if(a==="close-settings"){st.sub=null;render()}
+else if(a==="cycle-theme"){const order=["system","light","dark"];st.theme=order[(order.indexOf(st.theme||"system")+1)%3];save();render()}
+else if(a==="open-filters"){openFiltersModal()}
+else if(a==="save-filters"){let mn=+$("#f-amin").value,mx=+$("#f-amax").value;if(mn>mx)[mn,mx]=[mx,mn];st.filters={amin:mn,amax:mx};st.tc=$("#f-ctry").value;if(st.u)st.u.tc=st.tc;st.i=0;st.cardPhotoIdx=0;save();syncProfileToSupabase();closeM();render()}
+else if(a==="reset-filters"){st.filters={amin:25,amax:70};st.tc="all";st.i=0;save();closeM();render()}
+else if(a==="toggle-incog"){st.inc=!st.inc;say(st.inc?t.incogActive:t.incogInactive);save();syncProfileToSupabase();render()}
+else if(a==="open-legal-privacy"){openLegal("privacy")}
+else if(a==="open-legal-terms"){openLegal("terms")}
+else if(a==="open-legal-safety"){openLegal("safety")}
+else if(a==="refresh-chats"){loadLikesAndMatchesFromSupabase().then(loadProfilesFromSupabase);say(t.refresh)}
+else if(a==="delete-account"){
+if(!confirm(t.delConfirm1))return;
+const typed=prompt(t.delConfirm2);
+if(!typed||typed.trim().toUpperCase()!==t.delWord)return;
+(async()=>{
+try{
+if(sbClient){const {error}=await sbClient.rpc('delete_my_account');if(error){alert(error.message);return}await sbClient.auth.signOut().catch(()=>{});}
+try{localStorage.removeItem(getUserKey(st.u&&st.u.id,st.em));localStorage.removeItem("chari_active_key");}catch(err){}
+const blank=createBlankState();for(let kk in blank)st[kk]=blank[kk];st.step=0;render();alert(t.delDone);
+}catch(err){alert(err.message||String(err))}
+})();
+}
+else if(a==="auth-mode"){st.authMode=k;st.pendingConfirm="";st.authFlip=true;render();st.authFlip=false;const em=$("#em");if(em)em.focus()}
 else if(a==="reset-pwd"){sendPasswordReset()}
 else if(a==="resend-conf"){resendConfirmationEmail()}
 else if(a==="auth-back"){st.pendingConfirm="";render()}
+else if(a==="toggle-pwd"){const f=$("#pwd");if(f){f.type=f.type==="password"?"text":"password";b.setAttribute("aria-label",f.type==="password"?t.showPwd:t.hidePwd)}}
 else if(a==="togflag"){
 const kind=b.dataset.kind,hid=b.dataset.h,key=kind==="g"?"gf":"rf";
 if(!st.u[key])st.u[key]=[];
@@ -4404,6 +4845,7 @@ render();
 }
 else if(a==="view-user-profile"||a==="view-req-profile"){
 const initialIdx=(st.reqPhotoIdx&&st.reqPhotoIdx[b.dataset.id])||0;
+recordView(b.dataset.id);
 openProfileDetailsModal(b.dataset.id,initialIdx);
 }
 else if(a==="modal-photo-switch"){
@@ -4506,6 +4948,7 @@ if(f){handleDirectMediaUpload(f);e.target.value="";}
 });
 document.addEventListener("input",e=>{
 const d=e.target.dataset.e;if(d&&st.ed){st.ed[d]=+e.target.value;drawEd()}
+if(e.target.id==="f-amin"||e.target.id==="f-amax"){const v=$("#"+e.target.id+"-v");if(v)v.textContent=e.target.value}
 if(e.target.id==="pp"||e.target.id==="ph")st.ph=e.target.value;
 if(e.target.id==="em")st.em=e.target.value;
 });
@@ -4606,7 +5049,7 @@ try{const raw=localStorage.getItem(targetKey);if(raw)saved=JSON.parse(raw);}catc
 const blank=createBlankState(gEmail,uid,gName);
 for(let k in blank)st[k]=blank[k];
 if(saved){
-["lang","blur","lite","mSubTab","reqSubTab","passed","blocked","sentRequests","incomingRequests","mt","ms"].forEach(k=>{if(k in saved)st[k]=saved[k]});
+["lang","blur","lite","mSubTab","reqSubTab","passed","blocked","sentRequests","incomingRequests","mt","ms","theme","filters","actTab"].forEach(k=>{if(k in saved)st[k]=saved[k]});
 const todayKey=getChadDateKey();
 if(saved.dailyLimits&&saved.dailyLimits.date===todayKey){st.dailyLimits=saved.dailyLimits;st.seen=saved.dailyLimits.seen||0;}
 }
@@ -4623,7 +5066,7 @@ initIncomingRequests();
 if(isProfileComplete(st)&&hasVerifiedSelfie(st)){
 st.step=5;st.savedStep=5;st.tab=st.tab||"d";
 save();go(5);
-loadBlockedUsersFromSupabase();loadLikesAndMatchesFromSupabase().then(loadProfilesFromSupabase);loadReveals();
+loadBlockedUsersFromSupabase();loadLikesAndMatchesFromSupabase().then(loadProfilesFromSupabase).then(loadActivity);
 }else if(isProfileComplete(st)){
 st.step=3;st.savedStep=3;save();go(3);
 }else{
