@@ -2739,9 +2739,7 @@ const GREEN_FLAGS=[
 {id:"humor",fr:"Sens de l'humour",ar:"روح الدعابة"},
 {id:"reliable",fr:"Tient ses promesses",ar:"يفي بوعوده"},
 {id:"calm",fr:"Calme dans les conflits",ar:"هادئ(ة) عند الخلاف"},
-{id:"generous",fr:"Généreux(se)",ar:"كريم(ة)"},
-{id:"healthy",fr:"Mode de vie sain",ar:"نمط حياة صحي"},
-{id:"serious",fr:"Cherche du sérieux",ar:"يبحث عن الجدية"}];
+{id:"generous",fr:"Généreux(se)",ar:"كريم(ة)"}];
 const RED_FLAGS=[
 {id:"lies",fr:"Le mensonge",ar:"الكذب"},
 {id:"jealous",fr:"Jalousie excessive",ar:"الغيرة المفرطة"},
@@ -2752,8 +2750,8 @@ const RED_FLAGS=[
 {id:"money",fr:"Demander de l'argent",ar:"طلب المال"},
 {id:"violence",fr:"La violence",ar:"العنف"},
 {id:"control",fr:"Vouloir tout contrôler",ar:"حب السيطرة"},
-{id:"lazy",fr:"Le manque d'ambition",ar:"انعدام الطموح"},
-{id:"rude",fr:"L'impolitesse",ar:"قلة الأدب"},
+
+
 {id:"unfaithful",fr:"L'infidélité",ar:"الخيانة"}];
 const flagLabel=(list,id)=>{const f=list.find(x=>x.id===id);return f?f[st.lang]||f.fr:""};
 const flagsHtml=(p,compact)=>{const g=(p.gf||[]).map(id=>flagLabel(GREEN_FLAGS,id)).filter(Boolean),r=(p.rf||[]).map(id=>flagLabel(RED_FLAGS,id)).filter(Boolean);if(!g.length&&!r.length)return"";const t=x();return`<div class="flags${compact?" compact":""}">${g.length?`<div class="flag-group"><span class="flag-title green">${t.gfTitle}</span><div class="flag-list">${g.map(l=>`<span class="flag-chip green">${esc(l)}</span>`).join("")}</div></div>`:""}${r.length?`<div class="flag-group"><span class="flag-title red">${t.rfTitle}</span><div class="flag-list">${r.map(l=>`<span class="flag-chip red">${esc(l)}</span>`).join("")}</div></div>`:""}</div>`};
