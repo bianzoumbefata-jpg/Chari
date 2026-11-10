@@ -2468,7 +2468,7 @@ missingIds.forEach(pid=>{
 const sPid=String(pid);
 if(passedSet.has(sPid)||blockedSet.has(sPid)||st.mt.map(String).includes(sPid))return;
 const row=profRows.find(r=>String(r.id)===sPid);
-if(!row)return;
+if(!row||(st.g&&row.gender===st.g))return;
 const reqItem=Object.assign(memberToP(row),{time:Date.now()});
 const existingIdx=st.incomingRequests.findIndex(r=>String(r.id)===sPid);
 if(existingIdx>=0){
@@ -2582,7 +2582,7 @@ if(linked.length){
 const {data:more}=await sbClient.rpc('list_members',{p_ids:[...new Set(linked)]});
 if(Array.isArray(more))rows=rows.concat(more);
 }
-P=rows.filter(r=>r&&r.name&&r.name!=='__DELETED__'&&String(r.id)!==String(st.u.id)).map(memberToP);
+P=rows.filter(r=>r&&r.name&&r.name!=='__DELETED__'&&String(r.id)!==String(st.u.id)&&(!st.g||r.gender!==st.g)).map(memberToP);
 if(st.tab==='d'&&!$("#ov:not([hidden])"))render();
 else if(st.tab==='m'&&st.chat)updateRevealBar();
 }catch(e){console.warn("loadProfilesFromSupabase err:",e)}
@@ -3398,7 +3398,7 @@ return subtabsHtml+quotaHtml+`<div class="req-list">${sentCards}</div>`;
 /* Activite : Likes (recus / envoyes), Vues, Favoris */
 function personGrid(rows,kind){
 const t=x();
-const items=rows.map(r=>({r,p:byId(r.id)})).filter(o=>o.p);
+const items=rows.map(r=>({r,p:byId(r.id)})).filter(o=>o.p&&(!st.g||o.p.g!==st.g));
 if(!items.length)return`<div class="empty"><span class="empty-ic">${ic(kind==="fav"?"star":"eye")}</span><p>${kind==="fav"?t.favEmpty:t.viewsEmpty}</p></div>`;
 return`<div class="p-grid">${items.map(({r,p})=>{const ph=getProfilePhotos(p)[0];const src=(ph&&(ph.poster||getMediaUrl(ph)))||p.selfie_url||"couple.jpg";return`<div class="p-tile"><button class="p-open" data-a="view-user-profile" data-id="${p.id}" aria-label="${esc(p.n)}"><img src="${esc(src)}" alt="" loading="lazy" onerror="this.onerror=null;this.src='couple.jpg'"><span class="p-meta"><strong>${esc(p.n)}${p.is_verified?` <span class="vb">${ic("ok")}</span>`:""}</strong><small>${kind==="fav"?t.addedAgo+" "+timeAgo(r.at):t.viewedAgo+" "+timeAgo(r.at)}</small></span></button>${kind==="fav"?`<button class="p-x" data-a="fav" data-id="${p.id}" aria-label="${t.favRemove}">${ic("x")}</button>`:""}</div>`}).join("")}</div>`;
 }
