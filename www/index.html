@@ -2008,12 +2008,69 @@ select.fld:focus,select.csel:focus{animation:none;background:var(--neu-bg);borde
 .auth-hero{box-shadow:var(--neu-out)}
 .hero-band{box-shadow:0 12px 26px -10px rgba(194,24,91,.45)}
 @media (prefers-reduced-motion:reduce){.bg-circle,.fld:focus,.btn:hover::before{animation:none!important}}
+
+/* =====================================================================
+   Page d'accueil : copie fidele du formulaire "Login & Sign Up"
+   (carte 3D qui pivote, labels flottants, bordure electrique)
+   Couleurs adaptees au rose Chari.
+   ===================================================================== */
+body.on-auth header,body.on-auth nav,body.on-auth .strip{display:none!important}
+body.on-auth main{display:flex;align-items:center;justify-content:center;padding:24px 0}
+.auth-screen{width:100%;display:flex;justify-content:center;align-items:center;min-height:100%}
+.auth-screen *{font-family:"Poppins","IBM Plex Sans Arabic",sans-serif}
+.auth-wrapper{width:400px;max-width:92%;perspective:1600px}
+.auth-flip{position:relative;width:100%;min-height:610px;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.68,-0.55,.27,1.55)}
+.auth-flip.flipped{transform:rotateY(180deg)}
+.auth-screen .form-panel{position:absolute;inset:0;padding:40px 38px;border-radius:35px;background:var(--neu-bg);box-shadow:20px 20px 40px var(--neu-dark),-20px -20px 40px var(--neu-light);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.auth-screen .signup-panel{transform:rotateY(180deg)}
+.auth-screen .auth-logo{width:86px;height:86px;margin:0 auto 18px;display:flex;justify-content:center;align-items:center;border-radius:50%;color:var(--rose-600);background:var(--neu-bg);box-shadow:9px 9px 18px var(--neu-dark),-9px -9px 18px var(--neu-light);transition:.4s ease}
+.auth-screen .auth-logo:hover{transform:translateY(-5px) rotate(8deg)}
+.auth-screen .auth-logo .i{width:30px;height:30px}
+.auth-screen h1{text-align:center;font-size:27px;color:var(--ink);margin-bottom:7px;font-weight:700;letter-spacing:0}
+.auth-screen .subtitle{text-align:center;color:var(--mut);font-size:13px;margin:0 0 30px}
+.auth-screen form{display:block}
+.auth-screen .input-group{position:relative;width:100%;height:58px;margin-bottom:19px}
+.auth-screen .electric-border{position:absolute;inset:-2px;border-radius:19px;overflow:hidden;pointer-events:none;opacity:0;transition:opacity .2s ease}
+.auth-screen .electric-border::before{content:"";position:absolute;width:170%;height:170%;left:-35%;top:-35%;background:conic-gradient(from 0deg,transparent 0deg,transparent 30deg,#FFB3D1 45deg,#F06292 65deg,#C2185B 80deg,transparent 105deg,transparent 360deg);animation:electricRotate 1.1s linear infinite}
+.auth-screen .electric-border::after{content:"";position:absolute;inset:2px;border-radius:17px;background:var(--neu-bg)}
+.auth-screen .electric-glow{position:absolute;inset:-4px;border-radius:21px;pointer-events:none;opacity:0;filter:blur(7px);background:conic-gradient(from 0deg,transparent,#F06292,transparent 40%)}
+.auth-screen .input-group:focus-within .electric-border{opacity:1}
+.auth-screen .input-group:focus-within .electric-glow{opacity:.55;animation:electricRotate 1.1s linear infinite}
+@keyframes electricRotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.auth-screen .input-group input{position:absolute;inset:2px;width:calc(100% - 4px);height:54px;border:none;outline:none;border-radius:16px;background:var(--neu-bg);color:var(--ink);font-size:15px;padding:0 48px 0 18px;z-index:20;box-shadow:inset 6px 6px 12px var(--neu-dark),inset -6px -6px 12px var(--neu-light);transition:box-shadow .25s ease}
+[dir=rtl] .auth-screen .input-group input{padding:0 18px 0 48px}
+.auth-screen .input-group input:focus{box-shadow:inset 3px 3px 7px var(--neu-dark),inset -3px -3px 7px var(--neu-light);animation:none}
+.auth-screen .input-group label{position:absolute;inset-inline-start:18px;top:18px;z-index:30;color:var(--mut);font-size:16px;font-weight:400;margin:0;pointer-events:none;transition:all .25s ease}
+.auth-screen .input-group input:focus+label,.auth-screen .input-group input:not(:placeholder-shown)+label{top:-8px;inset-inline-start:13px;padding:2px 8px;border-radius:7px;background:var(--rose-600);color:#fff;font-size:10px;line-height:14px;white-space:nowrap}
+.auth-screen .password-toggle{position:absolute;inset-inline-end:14px;top:15px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;color:var(--mut);cursor:pointer;z-index:40;padding:0}
+.auth-screen .password-toggle:hover{color:var(--rose-600);transform:scale(1.1)}
+.auth-screen .password-toggle .i{width:18px;height:18px}
+.auth-screen .options{display:flex;justify-content:space-between;align-items:center;margin:5px 3px 24px;color:var(--mut);font-size:14px;gap:8px}
+.auth-screen .checkbox{display:flex;align-items:center;gap:7px;margin:0;font-weight:400;color:var(--mut);font-size:14px}
+.auth-screen .checkbox input{accent-color:var(--rose-600);width:16px;height:16px}
+.auth-screen .options a{color:var(--rose-600);text-decoration:none}
+.auth-screen .err{text-align:center;margin:-8px 0 12px}
+.auth-screen .main-btn{position:relative;isolation:isolate;width:100%;height:55px;border:none;border-radius:17px;background:var(--neu-bg);color:var(--rose-600);font-size:14px;font-weight:700;letter-spacing:.4px;cursor:pointer;overflow:hidden;box-shadow:8px 8px 16px var(--neu-dark),-8px -8px 16px var(--neu-light);transition:.3s ease}
+.auth-screen .main-btn::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,#C2185B,#F06292,#C2185B);background-size:200% 100%;transform:translateY(100%);transition:transform .35s ease;z-index:-1}
+.auth-screen .main-btn:hover::before{transform:translateY(0);animation:buttonMove 1.5s linear infinite}
+@keyframes buttonMove{from{background-position:0 50%}to{background-position:200% 50%}}
+.auth-screen .main-btn:hover{color:#fff;transform:translateY(-3px);box-shadow:0 10px 25px rgba(194,24,91,.35)}
+.auth-screen .main-btn:active{transform:scale(.97)}
+.auth-screen .main-btn:disabled{opacity:.6;cursor:wait}
+.auth-screen .switch-area{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:27px;font-size:12px;color:var(--mut)}
+.auth-screen .switch-circle{width:49px;height:49px;border:none;border-radius:50%;background:var(--neu-bg);color:var(--rose-600);cursor:pointer;display:flex;justify-content:center;align-items:center;box-shadow:7px 7px 14px var(--neu-dark),-7px -7px 14px var(--neu-light);transition:.35s ease}
+.auth-screen .switch-circle .i{width:22px;height:22px}
+.auth-screen .switch-circle:hover{color:#fff;background:var(--rose-600);transform:rotate(180deg) scale(1.08);box-shadow:0 8px 25px rgba(194,24,91,.35)}
+.auth-screen .switch-circle:active{transform:scale(.9)}
+@media (max-width:380px){.auth-screen .form-panel{padding:34px 24px}}
+@media (prefers-reduced-motion:reduce){.auth-flip{transition:none}.auth-screen .electric-border::before,.auth-screen .main-btn:hover::before{animation:none}}
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
 <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></symbol>
 <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
 <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2.8 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.6l-5.8 3.1 1.1-6.5L2.6 9.6l6.5-.9z"/></symbol>
 <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
 <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
@@ -2058,6 +2115,17 @@ select.fld:focus,select.csel:focus{animation:none;background:var(--neu-bg);borde
 </div>
 <script>
 try{localStorage.removeItem("chari_admin_login");}catch(e){}
+/* "Se souvenir de moi" decoche : la session se ferme a la fermeture du navigateur */
+(function rememberGuard(){
+try{
+if(localStorage.getItem("chari_remember")==="0"&&!sessionStorage.getItem("chari_alive")){
+const k=Object.keys(localStorage).filter(k=>/^sb-.*-auth-token$/.test(k));
+k.forEach(x=>localStorage.removeItem(x));
+localStorage.removeItem("chari_active_key");
+}
+sessionStorage.setItem("chari_alive","1");
+}catch(e){}
+})();
 </script>
 <script src="supabase.js"></script>
 <script>
@@ -2564,7 +2632,7 @@ lngMap:{fr:"Français",ar:"Arabe",both:"Français & Arabe",en:"Anglais"},relMap:
 navMeet:"Rencontres",navChat:"Discussions",navAct:"Activité",recentMatches:"Matchs récents",noNewMatch:"Pas encore de nouveau match. Likez des profils pour en recevoir !",lastPhoto:"Photo",lastVoice:"Message vocal",listEnd:"Fin de la liste",startChat:"Écrivez à vos matchs ci-dessus pour démarrer une discussion.",total:"Total :",refresh:"Actualiser",
 actLikes:"Likes",actViews:"Vues",actFavs:"Favoris",favLbl:"Ajouter aux favoris",favAdded:"Ajouté à vos favoris",favRemoved:"Retiré de vos favoris",favRemove:"Retirer des favoris",favEmpty:"Aucun favori pour l'instant. Touchez l'étoile sur un profil pour le retrouver ici.",viewsEmpty:"Personne n'a encore visité votre profil. Ajoutez de belles photos et vos flags pour attirer l'attention !",viewsHelp:"Les personnes qui ont consulté votre profil ces 30 derniers jours.",favHelp:"Vos favoris sont privés : personne ne sait qui vous ajoutez.",addedAgo:"Ajouté",viewedAgo:"Vu",
 certTag:"Certifié",blurShort:"Flouté",filters:"Filtres",settings:"Paramètres",certPending:"Votre profil est en cours de certification.",certWait:"En attente",promoT:"Passez Premium",promoD:"Profils illimités et mode incognito",
-setPrefs:"Préférences",setLang:"Langue d'affichage",setTheme:"Thème",themeSys:"Système",themeLight:"Clair",themeDark:"Sombre",setPrivacy:"Vie privée",setAppPrivacy:"Confidentialité de l'app",setHelp:"Assistance",setSupport:"Contacter le support",setAbout:"À propos",setTerms:"Conditions d'utilisation",setPolicy:"Politique de confidentialité",delAcc:"Supprimer mon compte",delConfirm1:"Supprimer définitivement votre compte ? Profil, photos, likes et messages seront effacés. Cette action est irréversible.",delConfirm2:"Pour confirmer, tapez SUPPRIMER",delWord:"SUPPRIMER",delDone:"Votre compte a été supprimé. Au revoir et merci d'avoir utilisé Chari.",on:"Activé",off:"Désactivé",ok:"J'ai compris",fAgeMin:"Âge minimum",yrs:"ans",fAgeMax:"Âge maximum",apply:"Appliquer",reset:"Réinitialiser",
+setPrefs:"Préférences",setLang:"Langue d'affichage",setTheme:"Thème",themeSys:"Système",themeLight:"Clair",themeDark:"Sombre",setPrivacy:"Vie privée",setAppPrivacy:"Confidentialité de l'app",setHelp:"Assistance",setSupport:"Contacter le support",setAbout:"À propos",setTerms:"Conditions d'utilisation",setPolicy:"Politique de confidentialité",delAcc:"Supprimer mon compte",delConfirm1:"Supprimer définitivement votre compte ? Profil, photos, likes et messages seront effacés. Cette action est irréversible.",delConfirm2:"Pour confirmer, tapez SUPPRIMER",delWord:"SUPPRIMER",delDone:"Votre compte a été supprimé. Au revoir et merci d'avoir utilisé Chari.",on:"Activé",off:"Désactivé",ok:"J'ai compris",authLoginT:"Bienvenue",authLoginSub:"Connectez-vous pour poursuivre votre voyage",authSignupT:"Créer un compte",authSignupSub:"Commencez votre voyage avec nous",fullName:"Nom complet",pwdConfirm:"Confirmer le mot de passe",rememberMe:"Se souvenir de moi",authLoginBtn:"Se connecter",authSignupBtn:"CRÉER UN COMPTE",noAccount:"Vous n'avez pas de compte ?",haveAccount:"Vous avez déjà un compte ?",nameE:"Entrez votre nom complet.",pwdMismatch:"Les deux mots de passe ne sont pas identiques.",emailExists:"Cette adresse a déjà un compte : connectez-vous.",badLogin:"E-mail ou mot de passe incorrect.",svcDown:"Service indisponible, réessayez dans un instant.",eml:"Adresse e-mail",pwd:"Mot de passe",fAgeMin:"Âge minimum",yrs:"ans",fAgeMax:"Âge maximum",apply:"Appliquer",reset:"Réinitialiser",
 legalSafety:"<ul><li>Ne donnez jamais d'argent, de codes ou de coordonnées bancaires, même en cas d'urgence annoncée.</li><li>Restez sur Chari tant que vous n'êtes pas en confiance : le WhatsApp n'est partagé qu'après dévoilement mutuel.</li><li>Pour une première rencontre, choisissez un lieu public et prévenez un proche.</li><li>Faites un appel vidéo avant de vous rencontrer.</li><li>Signalez tout comportement suspect : notre équipe examine chaque signalement sous 24 h.</li></ul>",
 legalTerms:"<p>Chari est réservé aux personnes majeures de <b>25 ans et plus</b>, à la recherche d'une relation sérieuse.</p><ul><li>Un seul compte par personne, avec vos vraies informations et un selfie authentique.</li><li>Interdits : faux profils, harcèlement, propos haineux, contenus sexuels, arnaques et demandes d'argent.</li><li>Les captures d'écran du contenu des autres membres sont interdites.</li><li>Tout manquement peut entraîner la suppression du compte, sans remboursement.</li><li>L'abonnement Premium dure 30 jours, sans renouvellement automatique.</li></ul>",
 legalPrivacy:"<p>Nous collectons uniquement ce qui est nécessaire au service : identité, date de naissance, pays et ville, photos, selfie de vérification, numéro WhatsApp et messages.</p><ul><li>Votre e-mail, votre date de naissance exacte et votre WhatsApp ne sont jamais visibles par les autres membres. Le WhatsApp n'est échangé qu'après dévoilement mutuel.</li><li>Vos photos restent floutées pour les autres jusqu'au dévoilement mutuel.</li><li>Les messages sont accessibles à la modération uniquement en cas de signalement ou de contrôle de sécurité.</li><li>Les paiements sont traités par notre prestataire : Chari ne voit jamais votre carte.</li><li>Vous pouvez supprimer votre compte à tout moment depuis Paramètres : toutes vos données sont alors effacées.</li></ul>",
@@ -2611,7 +2679,7 @@ lngMap:{fr:"الفرنسية",ar:"العربية",both:"الفرنسية وال�
 navMeet:"تعارف",navChat:"المحادثات",navAct:"النشاط",recentMatches:"تطابقات حديثة",noNewMatch:"لا يوجد تطابق جديد بعد. أعجب بملفات لتحصل على تطابقات!",lastPhoto:"صورة",lastVoice:"رسالة صوتية",listEnd:"نهاية القائمة",startChat:"راسل تطابقاتك أعلاه لبدء محادثة.",total:"المجموع:",refresh:"تحديث",
 actLikes:"الإعجابات",actViews:"الزيارات",actFavs:"المفضلة",favLbl:"إضافة إلى المفضلة",favAdded:"تمت الإضافة إلى المفضلة",favRemoved:"تمت الإزالة من المفضلة",favRemove:"إزالة من المفضلة",favEmpty:"لا توجد مفضلة بعد. اضغط على النجمة في أي ملف لتجده هنا.",viewsEmpty:"لم يزر أحد ملفك بعد. أضف صوراً جميلة وصفاتك لجذب الانتباه!",viewsHelp:"الأشخاص الذين زاروا ملفك خلال آخر 30 يوماً.",favHelp:"مفضلتك خاصة: لا أحد يعرف من تضيف.",addedAgo:"أضيف",viewedAgo:"زار",
 certTag:"موثّق",blurShort:"مموّه",filters:"الفلاتر",settings:"الإعدادات",certPending:"ملفك قيد التوثيق.",certWait:"قيد الانتظار",promoT:"اشترك في بريميوم",promoD:"ملفات غير محدودة ووضع التخفّي",
-setPrefs:"التفضيلات",setLang:"لغة العرض",setTheme:"المظهر",themeSys:"النظام",themeLight:"فاتح",themeDark:"داكن",setPrivacy:"الخصوصية",setAppPrivacy:"خصوصية التطبيق",setHelp:"المساعدة",setSupport:"التواصل مع الدعم",setAbout:"حول التطبيق",setTerms:"شروط الاستخدام",setPolicy:"سياسة الخصوصية",delAcc:"حذف حسابي",delConfirm1:"هل تريد حذف حسابك نهائياً؟ سيتم مسح ملفك وصورك وإعجاباتك ورسائلك. لا يمكن التراجع.",delConfirm2:"للتأكيد، اكتب SUPPRIMER",delWord:"SUPPRIMER",delDone:"تم حذف حسابك. شكراً لاستخدامك شاري.",on:"مفعّل",off:"غير مفعّل",ok:"فهمت",fAgeMin:"العمر الأدنى",yrs:"سنة",fAgeMax:"العمر الأقصى",apply:"تطبيق",reset:"إعادة تعيين",
+setPrefs:"التفضيلات",setLang:"لغة العرض",setTheme:"المظهر",themeSys:"النظام",themeLight:"فاتح",themeDark:"داكن",setPrivacy:"الخصوصية",setAppPrivacy:"خصوصية التطبيق",setHelp:"المساعدة",setSupport:"التواصل مع الدعم",setAbout:"حول التطبيق",setTerms:"شروط الاستخدام",setPolicy:"سياسة الخصوصية",delAcc:"حذف حسابي",delConfirm1:"هل تريد حذف حسابك نهائياً؟ سيتم مسح ملفك وصورك وإعجاباتك ورسائلك. لا يمكن التراجع.",delConfirm2:"للتأكيد، اكتب SUPPRIMER",delWord:"SUPPRIMER",delDone:"تم حذف حسابك. شكراً لاستخدامك شاري.",on:"مفعّل",off:"غير مفعّل",ok:"فهمت",authLoginT:"مرحباً",authLoginSub:"سجّل الدخول لمتابعة رحلتك",authSignupT:"إنشاء حساب",authSignupSub:"ابدأ رحلتك معنا",fullName:"الاسم الكامل",pwdConfirm:"تأكيد كلمة المرور",rememberMe:"تذكرني",authLoginBtn:"تسجيل الدخول",authSignupBtn:"إنشاء حساب",noAccount:"ليس لديك حساب؟",haveAccount:"لديك حساب بالفعل؟",nameE:"أدخل اسمك الكامل.",pwdMismatch:"كلمتا المرور غير متطابقتين.",emailExists:"هذا البريد مسجل بالفعل: سجّل الدخول.",badLogin:"البريد أو كلمة المرور غير صحيحة.",svcDown:"الخدمة غير متاحة حالياً.",fAgeMin:"العمر الأدنى",yrs:"سنة",fAgeMax:"العمر الأقصى",apply:"تطبيق",reset:"إعادة تعيين",
 legalSafety:"<ul><li>لا ترسل المال أو الرموز أو بياناتك البنكية أبداً، حتى في حالة طارئة مزعومة.</li><li>ابقَ على شاري حتى تثق بالشخص: لا يُشارك رقم واتساب إلا بعد الكشف المتبادل.</li><li>في اللقاء الأول اختر مكاناً عاماً وأخبر شخصاً مقرباً.</li><li>أجرِ مكالمة فيديو قبل اللقاء.</li><li>أبلغ عن أي سلوك مريب: يراجع فريقنا كل بلاغ خلال 24 ساعة.</li></ul>",
 legalTerms:"<p>شاري مخصص للبالغين من <b>25 سنة فأكثر</b> الباحثين عن علاقة جادة.</p><ul><li>حساب واحد لكل شخص، بمعلومات حقيقية وسيلفي أصلي.</li><li>يُمنع: الملفات المزيفة، المضايقة، خطاب الكراهية، المحتوى الجنسي، الاحتيال وطلب المال.</li><li>يُمنع تصوير محتوى الأعضاء الآخرين.</li><li>أي مخالفة قد تؤدي إلى حذف الحساب دون استرداد.</li><li>اشتراك بريميوم لمدة 30 يوماً دون تجديد تلقائي.</li></ul>",
 legalPrivacy:"<p>نجمع فقط ما يلزم للخدمة: الهوية، تاريخ الميلاد، الدولة والمدينة، الصور، سيلفي التوثيق، رقم واتساب والرسائل.</p><ul><li>بريدك وتاريخ ميلادك الدقيق ورقم واتساب لا تظهر أبداً للأعضاء الآخرين، ويُتبادل واتساب فقط بعد الكشف المتبادل.</li><li>تبقى صورك مموّهة حتى الكشف المتبادل.</li><li>لا يطّلع فريق الإشراف على الرسائل إلا عند وجود بلاغ أو فحص أمني.</li><li>تتم معالجة المدفوعات لدى مزوّد الدفع: لا يرى شاري بطاقتك أبداً.</li><li>يمكنك حذف حسابك في أي وقت من الإعدادات، فتُمسح جميع بياناتك.</li></ul>",
@@ -2634,13 +2702,13 @@ req2:"All fields marked * are required.",secId:"Identity",bdLbl:"Date of birth",
 revBoth:"You've both revealed yourselves",revWa:"WhatsApp:",revUndo:"Blur me again",revWaitT:"You agreed to reveal yourself",revWaitD:"Waiting for {n} to agree too. Their photos stay blurred until then.",revCancel:"Cancel",revTheyT:"{n} wants to reveal themselves",revAskT:"Blurred photos",revAskD:"When you both agree, your photos become clear and your WhatsApp numbers are exchanged.",revBtn:"Reveal myself",revConfirm:"Your clear photos and WhatsApp will be visible to this person if they agree too. Continue?",
 sfRejT:"Selfie rejected",sfRejD:"Your selfie wasn't approved. Take a clear, front-facing selfie in good light.",sfRetake:"Retake",sfPendT:"Profile under review",sfPendD:"Our team is checking your selfie. Your profile becomes visible once it's certified.",edit:"Edit",view:"View",premUntil:"Premium active until",payOk:"Payment received, thank you! Your Premium activates in a few seconds.",payCancel:"Payment cancelled. You were not charged.",payActive:"Premium active for 30 days.",mainPhoto:"Main",setMain:"Main",secSearch:"What I'm looking for",secSafety:"Safety",priceMain:"5,000 FCFA",month:"month",priceEq:"≈ €7.60 · charged in FCFA, converted by your bank",premF1:"Unlimited profiles for 30 days",premF2:"Unlimited requests and matches",premF3:"Incognito mode",premF4:"No commitment",payCard:"Pay by card",payUnavail:"Payment is temporarily unavailable. Please try again in a few minutes.",
 navMeet:"Discover",navChat:"Chats",navAct:"Activity",recentMatches:"Recent matches",noNewMatch:"No new matches yet. Like profiles to get some!",lastPhoto:"Photo",lastVoice:"Voice message",listEnd:"End of list",startChat:"Message your matches above to start a chat.",total:"Total:",refresh:"Refresh",actLikes:"Likes",actViews:"Views",actFavs:"Favourites",favLbl:"Add to favourites",favAdded:"Added to your favourites",favRemoved:"Removed from your favourites",favRemove:"Remove from favourites",favEmpty:"No favourites yet. Tap the star on a profile to find it here.",viewsEmpty:"Nobody has visited your profile yet. Add great photos and your flags to stand out!",viewsHelp:"People who viewed your profile in the last 30 days.",favHelp:"Your favourites are private: nobody knows who you add.",addedAgo:"Added",viewedAgo:"Viewed",
-certTag:"Verified",blurShort:"Blurred",filters:"Filters",settings:"Settings",certPending:"Your profile is being certified.",certWait:"Pending",promoT:"Go Premium",promoD:"Unlimited profiles and incognito mode",setPrefs:"Preferences",setLang:"Display language",setTheme:"Theme",themeSys:"System",themeLight:"Light",themeDark:"Dark",setPrivacy:"Privacy",setAppPrivacy:"App privacy",setHelp:"Help",setSupport:"Contact support",setAbout:"About",setTerms:"Terms of use",setPolicy:"Privacy policy",delAcc:"Delete my account",delConfirm1:"Permanently delete your account? Your profile, photos, likes and messages will be erased. This can't be undone.",delConfirm2:"To confirm, type DELETE",delWord:"DELETE",delDone:"Your account has been deleted. Thank you for using Chari.",on:"On",off:"Off",ok:"Got it",fAgeMin:"Minimum age",yrs:"yrs",fAgeMax:"Maximum age",apply:"Apply",reset:"Reset",
-showPwd:"Show password",hidePwd:"Hide password",haveAccount:"Already have an account?",noAccount:"No account yet?",
+certTag:"Verified",blurShort:"Blurred",filters:"Filters",settings:"Settings",certPending:"Your profile is being certified.",certWait:"Pending",promoT:"Go Premium",promoD:"Unlimited profiles and incognito mode",setPrefs:"Preferences",setLang:"Display language",setTheme:"Theme",themeSys:"System",themeLight:"Light",themeDark:"Dark",setPrivacy:"Privacy",setAppPrivacy:"App privacy",setHelp:"Help",setSupport:"Contact support",setAbout:"About",setTerms:"Terms of use",setPolicy:"Privacy policy",delAcc:"Delete my account",delConfirm1:"Permanently delete your account? Your profile, photos, likes and messages will be erased. This can't be undone.",delConfirm2:"To confirm, type DELETE",delWord:"DELETE",delDone:"Your account has been deleted. Thank you for using Chari.",on:"On",off:"Off",ok:"Got it",authLoginT:"Welcome",authLoginSub:"Login to continue your journey",authSignupT:"Create Account",authSignupSub:"Start your journey with us",fullName:"Full Name",pwdConfirm:"Confirm Password",rememberMe:"Remember me",authLoginBtn:"Login",authSignupBtn:"CREATE ACCOUNT",noAccount:"Don't have an account?",haveAccount:"Already have an account?",nameE:"Enter your full name.",pwdMismatch:"The two passwords don't match.",emailExists:"This email already has an account: please log in.",badLogin:"Incorrect email or password.",svcDown:"Service unavailable, please try again shortly.",eml:"Email Address",pwd:"Password",fAgeMin:"Minimum age",yrs:"yrs",fAgeMax:"Maximum age",apply:"Apply",reset:"Reset",
+showPwd:"Show password",hidePwd:"Hide password",haveAccount:"Already have an account?",noAccount:"Don't have an account?",
 legalSafety:"<ul><li>Never send money, codes or bank details, even if someone claims it's an emergency.</li><li>Stay on Chari until you trust the person: WhatsApp is only shared after a mutual reveal.</li><li>For a first date, choose a public place and tell someone close to you.</li><li>Have a video call before meeting.</li><li>Report any suspicious behaviour: our team reviews every report within 24 hours.</li></ul>",
 legalTerms:"<p>Chari is for adults aged <b>25 and over</b> looking for a serious relationship.</p><ul><li>One account per person, with your real details and a genuine selfie.</li><li>Not allowed: fake profiles, harassment, hate speech, sexual content, scams and requests for money.</li><li>Taking screenshots of other members' content is not allowed.</li><li>Any breach may lead to account deletion, without refund.</li><li>Premium lasts 30 days, with no automatic renewal.</li></ul>",
 legalPrivacy:"<p>We only collect what the service needs: identity, date of birth, country and city, photos, verification selfie, WhatsApp number and messages.</p><ul><li>Your email, exact date of birth and WhatsApp are never visible to other members. WhatsApp is only exchanged after a mutual reveal.</li><li>Your photos stay blurred for others until a mutual reveal.</li><li>Messages are only accessible to moderation after a report or a safety check.</li><li>Payments are handled by our provider: Chari never sees your card.</li><li>You can delete your account at any time from Settings: all your data is then erased.</li></ul>",
 k:{ser:"Relationship",mar:"Marriage",fam:"Family",etu:"Studies",ent:"Entrepreneurship",foi:"Faith",mus:"Music",foo:"Football",cui:"Cooking",voy:"Travel",fr:"French",ar:"Arabic",sa:"Sara"}});
-T.fr.showPwd="Afficher le mot de passe";T.fr.hidePwd="Masquer le mot de passe";T.fr.haveAccount="Déjà un compte ?";T.fr.noAccount="Pas encore de compte ?";
+T.fr.showPwd="Afficher le mot de passe";T.fr.hidePwd="Masquer le mot de passe";T.fr.haveAccount="Vous avez déjà un compte ?";T.fr.noAccount="Vous n'avez pas de compte ?";
 T.ar.showPwd="إظهار كلمة المرور";T.ar.hidePwd="إخفاء كلمة المرور";T.ar.haveAccount="لديك حساب؟";T.ar.noAccount="ليس لديك حساب؟";
 const EN_LABELS={spo:"Sport",lec:"Reading",cui:"Cooking",jv:"Video games",voy:"Travel",mus:"Music",foo:"Football",cin:"Cinema",ent:"Business",art:"Art & Fashion",
 honest:"Honest and open",listen:"A good listener",respect:"Respectful",family:"Family-oriented",faith:"Practises their faith",ambition:"Ambitious",humor:"Sense of humour",reliable:"Keeps promises",calm:"Calm in conflicts",generous:"Generous",healthy:"Healthy lifestyle",serious:"Looking for something serious",
@@ -2805,7 +2873,7 @@ function createBlankState(email="", uid="", name=""){
 return {
 lang:(navigator.language||"").toLowerCase().startsWith("en")?"en":"fr",blur:true,lite:false,tc:"all",mode:"google",em:email||"",ph5:[],inc:false,ed:null,step:0,savedStep:0,showEmailAuth:false,
 u:{id:uid||"",n:name||"",jb:"",a:"",bd:"",ctry:guessCountry(),c:"",tc:"all",bio:"",lng:"fr",rel:"mus",kd:0,i:"ser",hb:[],gf:[],rf:[],wa:"",gVerif:true},
-g:"",ph:"",i:0,seen:0,prem:0,pay:0,pp:0,vs:0,selfie:"",selfieStatus:"pending",selfieRejectReason:"",reveals:{},authMode:"signup",favs:[],viewers:[],theme:"system",filters:{amin:25,amax:70},sub:null,actTab:"likes",
+g:"",ph:"",i:0,seen:0,prem:0,pay:0,pp:0,vs:0,selfie:"",selfieStatus:"pending",selfieRejectReason:"",reveals:{},authMode:"login",favs:[],viewers:[],theme:"system",filters:{amin:25,amax:70},sub:null,actTab:"likes",
 tab:"d",chat:null,mt:[],ms:{},busy:0,blocked:[],feedbacks:[],mSubTab:"chat",reqSubTab:"rec",
 incomingRequests:[],sentRequests:[],passed:[],reqPhotoIdx:{},dailyLimits:{date:getChadDateKey(),sent:0,accepted:0,seen:0}
 };
@@ -2980,7 +3048,7 @@ const sw=(k,l)=>`<button class="sw" role="switch" aria-checked="${st[k]}" data-a
 function onb(){const t=x(),s=st.step;
 if(s===0 || s===1){
 const isAr=st.lang==="ar";
-const signup=st.authMode!=="login";
+const signup=st.authMode==="signup";
 if(st.pendingConfirm){
 return`<div class="pf auth-page">
 <div class="auth-card" style="text-align:center">
@@ -2991,37 +3059,39 @@ return`<div class="pf auth-page">
 <button class="btn ghost" data-a="auth-back" type="button">${t.bk}</button>
 </div></div>`;
 }
-return`<div class="pf auth-page">
-<div class="auth-hero">
-<img src="couple.jpg" alt="" class="hero-img">
-<div class="hero-overlay"><span class="logo-big">Chari</span><span class="hero-tag">${t.heroTag}</span></div>
-</div>
-<div class="auth-card ${st.authFlip?"flip-in":""}">
-<div class="auth-logo" aria-hidden="true">${ic(signup?"user":"lock")}</div>
-<h1>${signup?t.authSignupT:t.authLoginT}</h1>
-<p class="mut">${t.authSub}</p>
-<button class="btn-google" data-a="launch-google-oauth" type="button" id="btn-google-oauth">
-<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-<span>${t.gContinue}</span>
-</button>
-<div class="divider"><span>${t.orDivider}</span></div>
-<form class="auth-form" onsubmit="event.preventDefault();submitEmailAuth()">
-<label for="em">${t.eml}</label>
-<input class="fld" id="em" type="email" autocomplete="email" inputmode="email" required placeholder="nom@exemple.com" value="${esc(st.em||"")}">
-<label for="pwd">${t.pwd}</label>
-<div class="pwd-wrap"><input class="fld" id="pwd" type="password" autocomplete="${signup?"new-password":"current-password"}" required minlength="8" placeholder="${t.pwdPh}"><button type="button" class="pwd-toggle" data-a="toggle-pwd" aria-label="${t.showPwd}">${ic("eye")}</button></div>
+const grp=(id,type,label,ac,extra)=>`<div class="input-group"><div class="electric-glow"></div><div class="electric-border"></div><input type="${type}" id="${id}" placeholder=" " autocomplete="${ac}" required ${extra||""}><label for="${id}">${label}</label>${type==="password"&&id!=="su-pwd2"?`<button type="button" class="password-toggle" data-a="toggle-pwd" data-id="${id}" aria-label="${t.showPwd}">${ic("eye")}</button>`:""}</div>`;
+return`<div class="auth-screen">
+<div class="auth-wrapper">
+<div class="auth-flip ${signup?"flipped":""}" id="authCard">
+<div class="form-panel login-panel" ${signup?'aria-hidden="true" inert':""}>
+<div class="auth-logo" aria-hidden="true">${ic("lock")}</div>
+<h1>${t.authLoginT}</h1>
+<p class="subtitle">${t.authLoginSub}</p>
+<form novalidate onsubmit="event.preventDefault();submitEmailAuth()">
+${grp("em","email",t.eml,"email",`value="${esc(st.em||"")}"`)}
+${grp("pwd","password",t.pwd,"current-password")}
+<div class="options"><label class="checkbox"><input type="checkbox" id="remember" ${st.remember!==false?"checked":""}> ${t.rememberMe}</label><a href="#" data-a="reset-pwd">${t.forgotPwd}</a></div>
 <p class="err" id="auth-err" role="alert"></p>
-<button class="btn" id="btn-email-auth" data-a="email-auth" type="submit">${signup?t.authSignupBtn:t.authLoginBtn}</button>
-${signup?"":`<button type="button" class="link-btn" data-a="reset-pwd">${t.forgotPwd}</button>`}
+<button type="submit" class="main-btn" id="btn-email-auth">${t.authLoginBtn}</button>
 </form>
-<div class="switch-area"><span>${signup?t.haveAccount:t.noAccount}</span><button type="button" class="switch-circle" data-a="auth-mode" data-k="${signup?"login":"signup"}" aria-label="${signup?t.authLoginTab:t.authSignupTab}">${ic(signup?"back":"user")}</button></div>
-<ul class="trust">
-<li>${ic("ok")}<span>${t.trust1}</span></li>
-<li>${ic("lock")}<span>${t.trust2}</span></li>
-<li>${ic("shield")}<span>${t.trust3}</span></li>
-</ul>
+<div class="switch-area"><span>${t.noAccount}</span><button type="button" class="switch-circle" data-a="auth-mode" data-k="signup" aria-label="${t.authSignupTab}">${ic("plus")}</button></div>
 </div>
-<p class="mut small center">${t.age}</p>
+<div class="form-panel signup-panel" ${signup?"":'aria-hidden="true" inert'}>
+<div class="auth-logo" aria-hidden="true">${ic("user")}</div>
+<h1>${t.authSignupT}</h1>
+<p class="subtitle">${t.authSignupSub}</p>
+<form novalidate onsubmit="event.preventDefault();submitEmailAuth()">
+${grp("su-name","text",t.fullName,"name",`maxlength="30" value="${esc(st.u&&st.u.n||"")}"`)}
+${grp("su-em","email",t.eml,"email",`value="${esc(st.em||"")}"`)}
+${grp("su-pwd","password",t.pwd,"new-password",'minlength="8"')}
+${grp("su-pwd2","password",t.pwdConfirm,"new-password",'minlength="8"')}
+<p class="err" id="su-err" role="alert"></p>
+<button type="submit" class="main-btn" id="btn-signup">${t.authSignupBtn}</button>
+</form>
+<div class="switch-area"><span>${t.haveAccount}</span><button type="button" class="switch-circle" data-a="auth-mode" data-k="login" aria-label="${t.authLoginTab}">${ic("back")}</button></div>
+</div>
+</div>
+</div>
 </div>`;
 }
 if(s===2){
@@ -3547,7 +3617,7 @@ if(!isProfileComplete()){st.step=2;}
 else if(!hasVerifiedSelfie()){st.step=3;}
 }
 const t=x(),h=document.documentElement,on=st.step<5;
-h.lang=st.lang;h.dir=st.lang==="ar"?"rtl":"ltr";h.classList.toggle("lite",st.lite);$("#lang").textContent=t.lgb;
+h.lang=st.lang;h.dir=st.lang==="ar"?"rtl":"ltr";document.body.classList.toggle("on-auth",st.step<2&&!st.pendingConfirm);h.classList.toggle("lite",st.lite);$("#lang").textContent=t.lgb;
 const stEl=$("#sc-shield-t"),sdEl=$("#sc-shield-d"),sbEl=$("[data-a=dismiss-shield]");
 if(stEl)stEl.textContent=t.scBlockT;if(sdEl)sdEl.textContent=t.scBlockD;if(sbEl)sbEl.textContent=t.scDismiss;
 const reqCount=(st.incomingRequests||[]).filter(r=>!(st.blocked||[]).includes(r.id)&&!(st.mt||[]).includes(r.id)&&!(st.passed||[]).includes(r.id)).length;
@@ -3810,21 +3880,37 @@ function authBusy(on){const b=$("#btn-email-auth");if(b){b.disabled=!!on;b.setAt
 async function submitEmailAuth(){
 initSupabase();
 const t=x(),isAr=st.lang==="ar";
-const email=($("#em")?$("#em").value:"").trim().toLowerCase();
-const pwd=$("#pwd")?$("#pwd").value:"";
-authErr("");
-if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){authErr(t.emE);$("#em").focus();return}
-if(pwd.length<8){authErr(t.pwdE);$("#pwd").focus();return}
-if(!sbClient||!sbClient.auth){authErr(isAr?"الخدمة غير متاحة حالياً.":"Service indisponible, réessayez dans un instant.");return}
-authBusy(true);
+const signup=st.authMode==="signup";
+const errId=signup?"#su-err":"#auth-err";
+const fail=(msg,sel)=>{const e=$(errId);if(e)e.textContent=msg||"";const el=sel&&$(sel);if(el)el.focus();};
+fail("");
+const email=($(signup?"#su-em":"#em")||{value:""}).value.trim().toLowerCase();
+const pwd=($(signup?"#su-pwd":"#pwd")||{value:""}).value;
+if(signup){
+const name=($("#su-name")||{value:""}).value.trim();
+if(name.length<2)return fail(t.nameE,"#su-name");
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return fail(t.emE,"#su-em");
+if(pwd.length<8)return fail(t.pwdE,"#su-pwd");
+if(pwd!==($("#su-pwd2")||{value:""}).value)return fail(t.pwdMismatch,"#su-pwd2");
+if(!st.u)st.u={};st.u.n=name;
+}else{
+if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return fail(t.emE,"#em");
+if(pwd.length<8)return fail(t.pwdE,"#pwd");
+const rem=$("#remember");st.remember=rem?rem.checked:true;
+try{localStorage.setItem("chari_remember",st.remember?"1":"0");sessionStorage.setItem("chari_alive","1");}catch(e){}
+}
+if(!sbClient||!sbClient.auth)return fail(isAr?"الخدمة غير متاحة حالياً.":t.svcDown);
+const btn=$(signup?"#btn-signup":"#btn-email-auth");
+if(btn){btn.disabled=true;btn.setAttribute("aria-busy","true");}
 try{
-if(st.authMode==="signup"){
-const {data,error}=await sbClient.auth.signUp({email,password:pwd,options:{emailRedirectTo:getOAuthRedirectUrl()}});
+if(signup){
+const {data,error}=await sbClient.auth.signUp({email,password:pwd,options:{emailRedirectTo:getOAuthRedirectUrl(),data:{full_name:st.u.n}}});
 if(error){
-if(/already|registered|exists/i.test(error.message||"")){st.authMode="login";render();authErr(isAr?"هذا البريد مسجل بالفعل. سجّل الدخول.":"Cette adresse a déjà un compte : connectez-vous.");}
-else authErr(error.message);
+if(/already|registered|exists/i.test(error.message||"")){flipAuth("login");const e=$("#auth-err");if(e)e.textContent=t.emailExists;const f=$("#em");if(f)f.value=email;}
+else fail(error.message);
 return;
 }
+try{sessionStorage.setItem("chari_alive","1");}catch(e){}
 if(data&&data.session){await handleUserAuthSession(data.session);return}
 st.pendingConfirm=email;render();
 }else{
@@ -3832,14 +3918,28 @@ const {data,error}=await sbClient.auth.signInWithPassword({email,password:pwd});
 if(error){
 const m=(error.message||"").toLowerCase();
 if(m.includes("not confirmed")){st.pendingConfirm=email;render();return}
-authErr(m.includes("invalid")?(isAr?"البريد أو كلمة المرور غير صحيحة.":"E-mail ou mot de passe incorrect."):error.message);
+fail(m.includes("invalid")?t.badLogin:error.message);
 return;
 }
 if(data&&data.session)await handleUserAuthSession(data.session);
 }
-}catch(e){authErr(e.message||String(e))}
-finally{authBusy(false)}
+}catch(e){fail(e.message||String(e))}
+finally{if(btn){btn.disabled=false;btn.removeAttribute("aria-busy");}}
 }
+/* Retourne la carte Connexion <-> Inscription (animation 3D, sans recharger) */
+function flipAuth(mode){
+st.authMode=mode;
+const card=$("#authCard");
+if(!card){render();return}
+card.classList.toggle("flipped",mode==="signup");
+const lp=card.querySelector(".login-panel"),sp=card.querySelector(".signup-panel");
+if(lp&&sp){
+[lp,sp].forEach(el=>{el.removeAttribute("inert");el.removeAttribute("aria-hidden")});
+const hide=mode==="signup"?lp:sp;hide.setAttribute("inert","");hide.setAttribute("aria-hidden","true");
+}
+setTimeout(()=>{const f=$(mode==="signup"?"#su-name":"#em");if(f)f.focus({preventScroll:true})},650);
+}
+
 async function resendConfirmationEmail(){
 const email=st.pendingConfirm;if(!email||!sbClient)return;
 const {error}=await sbClient.auth.resend({type:'signup',email,options:{emailRedirectTo:getOAuthRedirectUrl()}});
@@ -4719,11 +4819,11 @@ const blank=createBlankState();for(let kk in blank)st[kk]=blank[kk];st.step=0;re
 }catch(err){alert(err.message||String(err))}
 })();
 }
-else if(a==="auth-mode"){st.authMode=k;st.pendingConfirm="";st.authFlip=true;render();st.authFlip=false;const em=$("#em");if(em)em.focus()}
-else if(a==="reset-pwd"){sendPasswordReset()}
+else if(a==="auth-mode"){st.pendingConfirm="";flipAuth(k)}
+else if(a==="reset-pwd"){e.preventDefault();sendPasswordReset()}
 else if(a==="resend-conf"){resendConfirmationEmail()}
 else if(a==="auth-back"){st.pendingConfirm="";render()}
-else if(a==="toggle-pwd"){const f=$("#pwd");if(f){f.type=f.type==="password"?"text":"password";b.setAttribute("aria-label",f.type==="password"?t.showPwd:t.hidePwd)}}
+else if(a==="toggle-pwd"){e.preventDefault();const f=$("#"+(b.dataset.id||"pwd"));if(f){f.type=f.type==="password"?"text":"password";b.setAttribute("aria-label",f.type==="password"?t.showPwd:t.hidePwd)}}
 else if(a==="togflag"){
 const kind=b.dataset.kind,hid=b.dataset.h,key=kind==="g"?"gf":"rf";
 if(!st.u[key])st.u[key]=[];
